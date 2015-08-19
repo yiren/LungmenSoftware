@@ -1,0 +1,484 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="LungmenSoftwareDataModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="FoxSoftwares">
+          <Key>
+            <PropertyRef Name="FoxSoftwareId" />
+          </Key>
+          <Property Name="FoxSoftwareId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="SoftwareName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Procedure" Type="nvarchar" MaxLength="50" />
+          <Property Name="FoxSoftware_WorkstationTypeId" Type="int" />
+          <Property Name="FoxSoftwareTypeId" Type="int" />
+        </EntityType>
+        <EntityType Name="FoxSoftwareTypes">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="SoftwareTypeName" Type="nvarchar(max)" Nullable="false" />
+        </EntityType>
+        <EntityType Name="FoxWorkStationFoxSysSoftware">
+          <Key>
+            <PropertyRef Name="FoxWorkStations_WorkStationId" />
+            <PropertyRef Name="FoxSoftwares_FoxSoftwareId" />
+          </Key>
+          <Property Name="FoxWorkStations_WorkStationId" Type="int" Nullable="false" />
+          <Property Name="FoxSoftwares_FoxSoftwareId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="FoxWorkStations">
+          <Key>
+            <PropertyRef Name="WorkStationId" />
+          </Key>
+          <Property Name="WorkStationId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="WorkStationName" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="Owner" Type="nvarchar" MaxLength="50" />
+          <Property Name="WorkStationHardwareTypeId" Type="int" />
+          <Property Name="WorkStationSoftwareTypeId" Type="int" />
+          <Property Name="LastModifiedDate" Type="datetime" />
+        </EntityType>
+        <EntityType Name="HistorialChangeRecords">
+          <Key>
+            <PropertyRef Name="HistorialChangeRecordId" />
+          </Key>
+          <Property Name="HistorialChangeRecordId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+        </EntityType>
+        <EntityType Name="WKAndFoxJoinTable">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Rev" Type="nvarchar(max)" />
+          <Property Name="LastModifiedDate" Type="datetime" />
+          <Property Name="FoxWorkStationId" Type="int" />
+          <Property Name="FoxSoftwareId" Type="int" />
+          <Property Name="LastModifier" Type="nvarchar(max)" />
+          <Property Name="Software_Library_Identification" Type="nvarchar" MaxLength="50" />
+          <Property Name="Media_Identification" Type="nvarchar" MaxLength="50" />
+          <Property Name="Note" Type="nvarchar(max)" />
+          <Property Name="IsLocked" Type="bit" />
+        </EntityType>
+        <EntityType Name="WorkStationHardwareTypes">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="HardwareTypeName" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="WorkStationSoftwareTypes">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="FunctionTypeName" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_FoxSoftwareTypeFoxSoftware">
+          <End Role="FoxSoftwareTypes" Type="Self.FoxSoftwareTypes" Multiplicity="0..1" />
+          <End Role="FoxSoftwares" Type="Self.FoxSoftwares" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="FoxSoftwareTypes">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="FoxSoftwares">
+              <PropertyRef Name="FoxSoftwareTypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_FoxSysSoftwareWKAndSysJoinTable">
+          <End Role="FoxSoftwares" Type="Self.FoxSoftwares" Multiplicity="0..1" />
+          <End Role="WKAndFoxJoinTable" Type="Self.WKAndFoxJoinTable" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="FoxSoftwares">
+              <PropertyRef Name="FoxSoftwareId" />
+            </Principal>
+            <Dependent Role="WKAndFoxJoinTable">
+              <PropertyRef Name="FoxSoftwareId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_FoxWorkStationFoxSysSoftware_FoxSysSoftware">
+          <End Role="FoxSoftwares" Type="Self.FoxSoftwares" Multiplicity="1" />
+          <End Role="FoxWorkStationFoxSysSoftware" Type="Self.FoxWorkStationFoxSysSoftware" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="FoxSoftwares">
+              <PropertyRef Name="FoxSoftwareId" />
+            </Principal>
+            <Dependent Role="FoxWorkStationFoxSysSoftware">
+              <PropertyRef Name="FoxSoftwares_FoxSoftwareId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_FoxWorkStationFoxSysSoftware_FoxWorkStation">
+          <End Role="FoxWorkStations" Type="Self.FoxWorkStations" Multiplicity="1" />
+          <End Role="FoxWorkStationFoxSysSoftware" Type="Self.FoxWorkStationFoxSysSoftware" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="FoxWorkStations">
+              <PropertyRef Name="WorkStationId" />
+            </Principal>
+            <Dependent Role="FoxWorkStationFoxSysSoftware">
+              <PropertyRef Name="FoxWorkStations_WorkStationId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_FoxWorkStationWKAndSysJoinTable">
+          <End Role="FoxWorkStations" Type="Self.FoxWorkStations" Multiplicity="0..1" />
+          <End Role="WKAndFoxJoinTable" Type="Self.WKAndFoxJoinTable" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="FoxWorkStations">
+              <PropertyRef Name="WorkStationId" />
+            </Principal>
+            <Dependent Role="WKAndFoxJoinTable">
+              <PropertyRef Name="FoxWorkStationId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_WorkStationHardwareTypeFoxWorkStation">
+          <End Role="WorkStationHardwareTypes" Type="Self.WorkStationHardwareTypes" Multiplicity="0..1" />
+          <End Role="FoxWorkStations" Type="Self.FoxWorkStations" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="WorkStationHardwareTypes">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="FoxWorkStations">
+              <PropertyRef Name="WorkStationHardwareTypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_WorkStationSoftwareTypeFoxWorkStation">
+          <End Role="WorkStationSoftwareTypes" Type="Self.WorkStationSoftwareTypes" Multiplicity="0..1" />
+          <End Role="FoxWorkStations" Type="Self.FoxWorkStations" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="WorkStationSoftwareTypes">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="FoxWorkStations">
+              <PropertyRef Name="WorkStationSoftwareTypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="LungmenSoftwareDataModelStoreContainer">
+          <EntitySet Name="FoxSoftwares" EntityType="Self.FoxSoftwares" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="FoxSoftwareTypes" EntityType="Self.FoxSoftwareTypes" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="FoxWorkStationFoxSysSoftware" EntityType="Self.FoxWorkStationFoxSysSoftware" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="FoxWorkStations" EntityType="Self.FoxWorkStations" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="HistorialChangeRecords" EntityType="Self.HistorialChangeRecords" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="WKAndFoxJoinTable" EntityType="Self.WKAndFoxJoinTable" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="WorkStationHardwareTypes" EntityType="Self.WorkStationHardwareTypes" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="WorkStationSoftwareTypes" EntityType="Self.WorkStationSoftwareTypes" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_FoxSoftwareTypeFoxSoftware" Association="Self.FK_FoxSoftwareTypeFoxSoftware">
+            <End Role="FoxSoftwareTypes" EntitySet="FoxSoftwareTypes" />
+            <End Role="FoxSoftwares" EntitySet="FoxSoftwares" />
+          </AssociationSet>
+          <AssociationSet Name="FK_FoxSysSoftwareWKAndSysJoinTable" Association="Self.FK_FoxSysSoftwareWKAndSysJoinTable">
+            <End Role="FoxSoftwares" EntitySet="FoxSoftwares" />
+            <End Role="WKAndFoxJoinTable" EntitySet="WKAndFoxJoinTable" />
+          </AssociationSet>
+          <AssociationSet Name="FK_FoxWorkStationFoxSysSoftware_FoxSysSoftware" Association="Self.FK_FoxWorkStationFoxSysSoftware_FoxSysSoftware">
+            <End Role="FoxSoftwares" EntitySet="FoxSoftwares" />
+            <End Role="FoxWorkStationFoxSysSoftware" EntitySet="FoxWorkStationFoxSysSoftware" />
+          </AssociationSet>
+          <AssociationSet Name="FK_FoxWorkStationFoxSysSoftware_FoxWorkStation" Association="Self.FK_FoxWorkStationFoxSysSoftware_FoxWorkStation">
+            <End Role="FoxWorkStations" EntitySet="FoxWorkStations" />
+            <End Role="FoxWorkStationFoxSysSoftware" EntitySet="FoxWorkStationFoxSysSoftware" />
+          </AssociationSet>
+          <AssociationSet Name="FK_FoxWorkStationWKAndSysJoinTable" Association="Self.FK_FoxWorkStationWKAndSysJoinTable">
+            <End Role="FoxWorkStations" EntitySet="FoxWorkStations" />
+            <End Role="WKAndFoxJoinTable" EntitySet="WKAndFoxJoinTable" />
+          </AssociationSet>
+          <AssociationSet Name="FK_WorkStationHardwareTypeFoxWorkStation" Association="Self.FK_WorkStationHardwareTypeFoxWorkStation">
+            <End Role="WorkStationHardwareTypes" EntitySet="WorkStationHardwareTypes" />
+            <End Role="FoxWorkStations" EntitySet="FoxWorkStations" />
+          </AssociationSet>
+          <AssociationSet Name="FK_WorkStationSoftwareTypeFoxWorkStation" Association="Self.FK_WorkStationSoftwareTypeFoxWorkStation">
+            <End Role="WorkStationSoftwareTypes" EntitySet="WorkStationSoftwareTypes" />
+            <End Role="FoxWorkStations" EntitySet="FoxWorkStations" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="LungmenSoftwareDataModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="LungmenSoftwareDataEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="FoxSoftwares" EntityType="LungmenSoftwareDataModel.FoxSoftware" />
+          <EntitySet Name="FoxSoftwareTypes" EntityType="LungmenSoftwareDataModel.FoxSoftwareType" />
+          <EntitySet Name="FoxWorkStations" EntityType="LungmenSoftwareDataModel.FoxWorkStation" />
+          <EntitySet Name="HistorialChangeRecords" EntityType="LungmenSoftwareDataModel.HistorialChangeRecord" />
+          <EntitySet Name="WKAndFoxJoinTables" EntityType="LungmenSoftwareDataModel.WKAndFoxJoinTable" />
+          <EntitySet Name="WorkStationHardwareTypes" EntityType="LungmenSoftwareDataModel.WorkStationHardwareType" />
+          <EntitySet Name="WorkStationSoftwareTypes" EntityType="LungmenSoftwareDataModel.WorkStationSoftwareType" />
+          <AssociationSet Name="FK_FoxSoftwareTypeFoxSoftware" Association="LungmenSoftwareDataModel.FK_FoxSoftwareTypeFoxSoftware">
+            <End Role="FoxSoftwareType" EntitySet="FoxSoftwareTypes" />
+            <End Role="FoxSoftware" EntitySet="FoxSoftwares" />
+          </AssociationSet>
+          <AssociationSet Name="FK_FoxSysSoftwareWKAndSysJoinTable" Association="LungmenSoftwareDataModel.FK_FoxSysSoftwareWKAndSysJoinTable">
+            <End Role="FoxSoftware" EntitySet="FoxSoftwares" />
+            <End Role="WKAndFoxJoinTable" EntitySet="WKAndFoxJoinTables" />
+          </AssociationSet>
+          <AssociationSet Name="FK_FoxWorkStationWKAndSysJoinTable" Association="LungmenSoftwareDataModel.FK_FoxWorkStationWKAndSysJoinTable">
+            <End Role="FoxWorkStation" EntitySet="FoxWorkStations" />
+            <End Role="WKAndFoxJoinTable" EntitySet="WKAndFoxJoinTables" />
+          </AssociationSet>
+          <AssociationSet Name="FK_WorkStationHardwareTypeFoxWorkStation" Association="LungmenSoftwareDataModel.FK_WorkStationHardwareTypeFoxWorkStation">
+            <End Role="WorkStationHardwareType" EntitySet="WorkStationHardwareTypes" />
+            <End Role="FoxWorkStation" EntitySet="FoxWorkStations" />
+          </AssociationSet>
+          <AssociationSet Name="FK_WorkStationSoftwareTypeFoxWorkStation" Association="LungmenSoftwareDataModel.FK_WorkStationSoftwareTypeFoxWorkStation">
+            <End Role="WorkStationSoftwareType" EntitySet="WorkStationSoftwareTypes" />
+            <End Role="FoxWorkStation" EntitySet="FoxWorkStations" />
+          </AssociationSet>
+          <AssociationSet Name="FoxWorkStationFoxSysSoftware" Association="LungmenSoftwareDataModel.FoxWorkStationFoxSysSoftware">
+            <End Role="FoxSoftware" EntitySet="FoxSoftwares" />
+            <End Role="FoxWorkStation" EntitySet="FoxWorkStations" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="FoxSoftware">
+          <Key>
+            <PropertyRef Name="FoxSoftwareId" />
+          </Key>
+          <Property Name="FoxSoftwareId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="SoftwareName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Procedure" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="FoxSoftware_WorkstationTypeId" Type="Int32" />
+          <Property Name="FoxSoftwareTypeId" Type="Int32" />
+          <NavigationProperty Name="FoxSoftwareType" Relationship="LungmenSoftwareDataModel.FK_FoxSoftwareTypeFoxSoftware" FromRole="FoxSoftware" ToRole="FoxSoftwareType" />
+          <NavigationProperty Name="WKAndFoxJoinTables" Relationship="LungmenSoftwareDataModel.FK_FoxSysSoftwareWKAndSysJoinTable" FromRole="FoxSoftware" ToRole="WKAndFoxJoinTable" />
+          <NavigationProperty Name="FoxWorkStations" Relationship="LungmenSoftwareDataModel.FoxWorkStationFoxSysSoftware" FromRole="FoxSoftware" ToRole="FoxWorkStation" />
+        </EntityType>
+        <EntityType Name="FoxSoftwareType">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="SoftwareTypeName" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="FoxSoftwares" Relationship="LungmenSoftwareDataModel.FK_FoxSoftwareTypeFoxSoftware" FromRole="FoxSoftwareType" ToRole="FoxSoftware" />
+        </EntityType>
+        <EntityType Name="FoxWorkStation">
+          <Key>
+            <PropertyRef Name="WorkStationId" />
+          </Key>
+          <Property Name="WorkStationId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="WorkStationName" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="Owner" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="WorkStationHardwareTypeId" Type="Int32" />
+          <Property Name="WorkStationSoftwareTypeId" Type="Int32" />
+          <Property Name="LastModifiedDate" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="WKAndFoxJoinTables" Relationship="LungmenSoftwareDataModel.FK_FoxWorkStationWKAndSysJoinTable" FromRole="FoxWorkStation" ToRole="WKAndFoxJoinTable" />
+          <NavigationProperty Name="WorkStationHardwareType" Relationship="LungmenSoftwareDataModel.FK_WorkStationHardwareTypeFoxWorkStation" FromRole="FoxWorkStation" ToRole="WorkStationHardwareType" />
+          <NavigationProperty Name="WorkStationSoftwareType" Relationship="LungmenSoftwareDataModel.FK_WorkStationSoftwareTypeFoxWorkStation" FromRole="FoxWorkStation" ToRole="WorkStationSoftwareType" />
+          <NavigationProperty Name="FoxSoftwares" Relationship="LungmenSoftwareDataModel.FoxWorkStationFoxSysSoftware" FromRole="FoxWorkStation" ToRole="FoxSoftware" />
+        </EntityType>
+        <EntityType Name="HistorialChangeRecord">
+          <Key>
+            <PropertyRef Name="HistorialChangeRecordId" />
+          </Key>
+          <Property Name="HistorialChangeRecordId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+        </EntityType>
+        <EntityType Name="WKAndFoxJoinTable">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Rev" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="LastModifiedDate" Type="DateTime" Precision="3" />
+          <Property Name="FoxWorkStationId" Type="Int32" />
+          <Property Name="FoxSoftwareId" Type="Int32" />
+          <Property Name="LastModifier" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Software_Library_Identification" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Media_Identification" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Note" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="IsLocked" Type="Boolean" />
+          <NavigationProperty Name="FoxSoftware" Relationship="LungmenSoftwareDataModel.FK_FoxSysSoftwareWKAndSysJoinTable" FromRole="WKAndFoxJoinTable" ToRole="FoxSoftware" />
+          <NavigationProperty Name="FoxWorkStation" Relationship="LungmenSoftwareDataModel.FK_FoxWorkStationWKAndSysJoinTable" FromRole="WKAndFoxJoinTable" ToRole="FoxWorkStation" />
+        </EntityType>
+        <EntityType Name="WorkStationHardwareType">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="HardwareTypeName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="FoxWorkStations" Relationship="LungmenSoftwareDataModel.FK_WorkStationHardwareTypeFoxWorkStation" FromRole="WorkStationHardwareType" ToRole="FoxWorkStation" />
+        </EntityType>
+        <EntityType Name="WorkStationSoftwareType">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FunctionTypeName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="FoxWorkStations" Relationship="LungmenSoftwareDataModel.FK_WorkStationSoftwareTypeFoxWorkStation" FromRole="WorkStationSoftwareType" ToRole="FoxWorkStation" />
+        </EntityType>
+        <Association Name="FK_FoxSoftwareTypeFoxSoftware">
+          <End Type="LungmenSoftwareDataModel.FoxSoftwareType" Role="FoxSoftwareType" Multiplicity="0..1" />
+          <End Type="LungmenSoftwareDataModel.FoxSoftware" Role="FoxSoftware" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="FoxSoftwareType">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="FoxSoftware">
+              <PropertyRef Name="FoxSoftwareTypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_FoxSysSoftwareWKAndSysJoinTable">
+          <End Type="LungmenSoftwareDataModel.FoxSoftware" Role="FoxSoftware" Multiplicity="0..1" />
+          <End Type="LungmenSoftwareDataModel.WKAndFoxJoinTable" Role="WKAndFoxJoinTable" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="FoxSoftware">
+              <PropertyRef Name="FoxSoftwareId" />
+            </Principal>
+            <Dependent Role="WKAndFoxJoinTable">
+              <PropertyRef Name="FoxSoftwareId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_FoxWorkStationWKAndSysJoinTable">
+          <End Type="LungmenSoftwareDataModel.FoxWorkStation" Role="FoxWorkStation" Multiplicity="0..1" />
+          <End Type="LungmenSoftwareDataModel.WKAndFoxJoinTable" Role="WKAndFoxJoinTable" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="FoxWorkStation">
+              <PropertyRef Name="WorkStationId" />
+            </Principal>
+            <Dependent Role="WKAndFoxJoinTable">
+              <PropertyRef Name="FoxWorkStationId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_WorkStationHardwareTypeFoxWorkStation">
+          <End Type="LungmenSoftwareDataModel.WorkStationHardwareType" Role="WorkStationHardwareType" Multiplicity="0..1" />
+          <End Type="LungmenSoftwareDataModel.FoxWorkStation" Role="FoxWorkStation" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="WorkStationHardwareType">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="FoxWorkStation">
+              <PropertyRef Name="WorkStationHardwareTypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_WorkStationSoftwareTypeFoxWorkStation">
+          <End Type="LungmenSoftwareDataModel.WorkStationSoftwareType" Role="WorkStationSoftwareType" Multiplicity="0..1" />
+          <End Type="LungmenSoftwareDataModel.FoxWorkStation" Role="FoxWorkStation" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="WorkStationSoftwareType">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="FoxWorkStation">
+              <PropertyRef Name="WorkStationSoftwareTypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FoxWorkStationFoxSysSoftware">
+          <End Type="LungmenSoftwareDataModel.FoxSoftware" Role="FoxSoftware" Multiplicity="*" />
+          <End Type="LungmenSoftwareDataModel.FoxWorkStation" Role="FoxWorkStation" Multiplicity="*" />
+        </Association>
+        </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="LungmenSoftwareDataModelStoreContainer" CdmEntityContainer="LungmenSoftwareDataEntities">
+          <EntitySetMapping Name="FoxSoftwares">
+            <EntityTypeMapping TypeName="LungmenSoftwareDataModel.FoxSoftware">
+              <MappingFragment StoreEntitySet="FoxSoftwares">
+                <ScalarProperty Name="FoxSoftwareTypeId" ColumnName="FoxSoftwareTypeId" />
+                <ScalarProperty Name="FoxSoftware_WorkstationTypeId" ColumnName="FoxSoftware_WorkstationTypeId" />
+                <ScalarProperty Name="Procedure" ColumnName="Procedure" />
+                <ScalarProperty Name="SoftwareName" ColumnName="SoftwareName" />
+                <ScalarProperty Name="FoxSoftwareId" ColumnName="FoxSoftwareId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="FoxSoftwareTypes">
+            <EntityTypeMapping TypeName="LungmenSoftwareDataModel.FoxSoftwareType">
+              <MappingFragment StoreEntitySet="FoxSoftwareTypes">
+                <ScalarProperty Name="SoftwareTypeName" ColumnName="SoftwareTypeName" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="FoxWorkStations">
+            <EntityTypeMapping TypeName="LungmenSoftwareDataModel.FoxWorkStation">
+              <MappingFragment StoreEntitySet="FoxWorkStations">
+                <ScalarProperty Name="LastModifiedDate" ColumnName="LastModifiedDate" />
+                <ScalarProperty Name="WorkStationSoftwareTypeId" ColumnName="WorkStationSoftwareTypeId" />
+                <ScalarProperty Name="WorkStationHardwareTypeId" ColumnName="WorkStationHardwareTypeId" />
+                <ScalarProperty Name="Owner" ColumnName="Owner" />
+                <ScalarProperty Name="WorkStationName" ColumnName="WorkStationName" />
+                <ScalarProperty Name="WorkStationId" ColumnName="WorkStationId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="HistorialChangeRecords">
+            <EntityTypeMapping TypeName="LungmenSoftwareDataModel.HistorialChangeRecord">
+              <MappingFragment StoreEntitySet="HistorialChangeRecords">
+                <ScalarProperty Name="HistorialChangeRecordId" ColumnName="HistorialChangeRecordId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="WKAndFoxJoinTables">
+            <EntityTypeMapping TypeName="LungmenSoftwareDataModel.WKAndFoxJoinTable">
+              <MappingFragment StoreEntitySet="WKAndFoxJoinTable">
+                <ScalarProperty Name="IsLocked" ColumnName="IsLocked" />
+                <ScalarProperty Name="Note" ColumnName="Note" />
+                <ScalarProperty Name="Media_Identification" ColumnName="Media_Identification" />
+                <ScalarProperty Name="Software_Library_Identification" ColumnName="Software_Library_Identification" />
+                <ScalarProperty Name="LastModifier" ColumnName="LastModifier" />
+                <ScalarProperty Name="FoxSoftwareId" ColumnName="FoxSoftwareId" />
+                <ScalarProperty Name="FoxWorkStationId" ColumnName="FoxWorkStationId" />
+                <ScalarProperty Name="LastModifiedDate" ColumnName="LastModifiedDate" />
+                <ScalarProperty Name="Rev" ColumnName="Rev" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="WorkStationHardwareTypes">
+            <EntityTypeMapping TypeName="LungmenSoftwareDataModel.WorkStationHardwareType">
+              <MappingFragment StoreEntitySet="WorkStationHardwareTypes">
+                <ScalarProperty Name="HardwareTypeName" ColumnName="HardwareTypeName" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="WorkStationSoftwareTypes">
+            <EntityTypeMapping TypeName="LungmenSoftwareDataModel.WorkStationSoftwareType">
+              <MappingFragment StoreEntitySet="WorkStationSoftwareTypes">
+                <ScalarProperty Name="FunctionTypeName" ColumnName="FunctionTypeName" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <AssociationSetMapping Name="FoxWorkStationFoxSysSoftware" TypeName="LungmenSoftwareDataModel.FoxWorkStationFoxSysSoftware" StoreEntitySet="FoxWorkStationFoxSysSoftware">
+            <EndProperty Name="FoxWorkStation">
+              <ScalarProperty Name="WorkStationId" ColumnName="FoxWorkStations_WorkStationId" />
+            </EndProperty>
+            <EndProperty Name="FoxSoftware">
+              <ScalarProperty Name="FoxSoftwareId" ColumnName="FoxSoftwares_FoxSoftwareId" />
+            </EndProperty>
+          </AssociationSetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

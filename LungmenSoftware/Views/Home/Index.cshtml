@@ -1,0 +1,34 @@
+﻿@{
+    ViewBag.Title = "龍門非安全軟體構型管理系統";
+}
+
+<div class="jumbotron" style="background-color:whitesmoke">
+    <h2 ><strong>龍門非安全軟體構型管理系統</strong> </h2>
+    <p class="lead" >本管理系統提供Invensys工作站以及其相關軟體之資料，並提供線上軟體修改管控機制，提供軟體構型管理之功能</p>
+</div>
+
+<div class="row">
+    <div id="invensys" class="col-md-4">
+        <h3>Invensys工作站相關資訊</h3>
+        <p>
+            提供龍門電廠Invensys所有工作站清單，亦可瀏覽每台工作站所安裝之軟體。
+        </p>
+        <p><a class="btn btn-default" href="@Url.Action("ListOfWorkStations")">Learn more &raquo;</a></p>
+    </div>
+    <div class="col-md-4">
+        <h3>相關軟體資訊</h3>
+        <p>
+            相關軟體分為二類，工作站系統(System)軟體及Invensys應用軟體，除提供清單外，亦可查詢相關軟體被安裝於哪些工作站上。
+        </p>
+        <p><a class="btn btn-default" href="#">Learn more &raquo;</a></p>
+    </div>
+    <div class="col-md-4">
+        <h3>軟體修改流程及管控</h3>
+        <p>透過線上作業流程管控軟體修改，使得相關軟體版本或參數可具追溯性，以達軟體構型管理之功能</p>
+        <p><a class="btn btn-default" href="#">Learn more &raquo;</a></p>
+    </div>
+</div>
+
+@section scripts{
+    <script src="~/js/myjQuery.js"></script>
+}

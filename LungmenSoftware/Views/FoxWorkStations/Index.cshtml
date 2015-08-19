@@ -1,0 +1,95 @@
+﻿@using LungmenSoftware.Models.ViewModel
+@model FoxWorkStationView
+
+
+<div class="row">
+    <div class="col-md-5">
+
+        <table class="table table-bordered table-striped table-hover">
+            <thead>WP Workstations</thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.WPList[0].WorkStationName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.WPList[0].WorkStationHardwareType)
+                </th>
+                <th>軟體安裝資訊</th>
+            </tr>
+
+            @foreach (var item in Model.WPList)
+            {
+                <tr>
+                    <td>
+                        @Html.ActionLink(item.WorkStationName, "EditWorkStation", new { id = item.WorkStationId })  
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.WorkStationHardwareType.HardwareTypeName)
+                    </td>
+                    <td>
+                        @Html.ActionLink("相關已安裝軟體", "InstalledSoftwaresByWorkStationId", new { id = item.WorkStationId })
+                    </td>
+                </tr>
+            }
+        </table>
+
+        <table class="table table-bordered table-striped table-hover">
+            <thead>Other Workstations</thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.WPList[0].WorkStationName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.WPList[0].WorkStationHardwareType)
+                </th>
+                <th>軟體安裝資訊</th>
+            </tr>
+
+            @foreach (var item in Model.OtherList)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.WorkStationName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.WorkStationHardwareType.HardwareTypeName)
+                    </td>
+                    <td>
+                        @Html.ActionLink("相關已安裝軟體", "Details", new { id = item.WorkStationId })
+                    </td>
+                </tr>
+            }
+        </table>
+    </div>
+
+    <div class="col-md-5">
+        <table class="table table-bordered table-striped table-hover">
+            <thead>AW Workstations</thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.OtherList[0].WorkStationName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.OtherList[0].WorkStationHardwareType)
+                </th>
+                <th>軟體安裝資訊</th>
+            </tr>
+
+            @foreach (var item in Model.AWList)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.WorkStationName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.WorkStationHardwareType.HardwareTypeName)
+                    </td>
+                    <td>
+                        @Html.ActionLink("相關已安裝軟體", "Details", new { id = item.WorkStationId })
+                    </td>
+                </tr>
+            }
+        </table>
+    </div>
+</div>
+
