@@ -1,0 +1,35 @@
+﻿@model LungmenSoftware.Models.ViewModel.FoxWorkStationView
+
+@{
+    ViewBag.Title = "相關工作站清單";
+}
+
+<h2>@Model.WorkStationsBySoftwareId[0].SoftwareName 安裝於以下工作站</h2>
+
+<div>
+    <h4>@Html.ActionLink("上一頁", "Index")</h4>
+    <hr />
+    <table class="table table-bordered table-hover table-striped">
+        <tr>
+            <th>@Html.DisplayNameFor(model => model.WorkStationsBySoftwareId[0].WorkStationName)</th>
+            <th>@Html.DisplayNameFor(model => model.WorkStationsBySoftwareId[0].Rev)</th>
+            <th>@Html.DisplayNameFor(model => model.WorkStationsBySoftwareId[0].Procedure)</th>
+            <th>@Html.DisplayNameFor(model => model.WorkStationsBySoftwareId[0].Note)</th>
+            <th>相關資訊修改</th>
+        </tr>
+        @foreach (var item in Model.WorkStationsBySoftwareId)
+        {
+            <tr>
+                <td>@Html.DisplayFor(model => item.WorkStationName)</td>
+                <td>@Html.DisplayFor(model => item.Rev)</td>
+                <td>@Html.DisplayFor(model => item.Procedure)</td>
+                <td>@Html.DisplayFor(model => item.Note)</td>
+                <td>@Html.ActionLink("修改", "FoxAppRevModify")</td>
+            </tr>
+        }
+
+    </table>
+</div>
+<p>
+    @Html.ActionLink("Back to List", "Index")
+</p>

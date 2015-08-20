@@ -12,16 +12,16 @@ namespace LungmenSoftware.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class WorkStationSoftwareType
+    public partial class ImpDocType
     {
-        public WorkStationSoftwareType()
+        public ImpDocType()
         {
-            this.FoxWorkStations = new HashSet<FoxWorkStation>();
+            this.ImpDocs = new HashSet<ImpDoc>();
         }
     
-        public int Id { get; set; }
-        public string FunctionTypeName { get; set; }
+        public int ImpDocTypeId { get; set; }
+        public string DocTypeName { get; set; }
     
-        public virtual ICollection<FoxWorkStation> FoxWorkStations { get; set; }
+        public virtual ICollection<ImpDoc> ImpDocs { get; set; }
     }
 }

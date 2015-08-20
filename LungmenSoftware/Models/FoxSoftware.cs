@@ -17,17 +17,19 @@ namespace LungmenSoftware.Models
         public FoxSoftware()
         {
             this.WKAndFoxJoinTables = new HashSet<WKAndFoxJoinTable>();
-            this.FoxWorkStations = new HashSet<FoxWorkStation>();
+            this.ImpDocs = new HashSet<ImpDoc>();
         }
     
         public int FoxSoftwareId { get; set; }
         public string SoftwareName { get; set; }
+        public string Software_Library_Identification { get; set; }
+        public string Media_Identification { get; set; }
         public string Procedure { get; set; }
         public Nullable<int> FoxSoftware_WorkstationTypeId { get; set; }
         public Nullable<int> FoxSoftwareTypeId { get; set; }
     
         public virtual FoxSoftwareType FoxSoftwareType { get; set; }
         public virtual ICollection<WKAndFoxJoinTable> WKAndFoxJoinTables { get; set; }
-        public virtual ICollection<FoxWorkStation> FoxWorkStations { get; set; }
+        public virtual ICollection<ImpDoc> ImpDocs { get; set; }
     }
 }

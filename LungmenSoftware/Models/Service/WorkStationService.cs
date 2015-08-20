@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using LungmenSoftware.Models.ViewModel;
 
 
 namespace LungmenSoftware.Models.Service
@@ -52,5 +53,27 @@ namespace LungmenSoftware.Models.Service
         {
             return ldb.WorkStationHardwareTypes.ToList();
         }
+
+        public List<FoxWorkStationInfo> GetWorkStationsBySoftwareId(int softId)
+        {
+            var softwareName = ldb.FoxSoftwares.Find(softId).SoftwareName;
+            var query = from soft in ldb.FoxSoftwares.Where(s => s.FoxSoftwareId == softId)
+                join wkJoinTable in ldb.WKAndFoxJoinTables 
+                    on soft.FoxSoftwareId equals wkJoinTable.FoxSoftwareId
+                join wk in ldb.FoxWorkStations
+                    on wkJoinTable.FoxWorkStationId equals wk.WorkStationId
+                select new FoxWorkStationInfo()
+                {
+                    WorkStationName = wk.WorkStationName,
+                    SoftwareName=soft.SoftwareName,
+                    Rev=wkJoinTable.Rev,
+                    Procedure=soft.Procedure,
+                    Note=wkJoinTable.Note
+                };
+            
+        
+
+            return query.ToList();
+        } 
     }
 }

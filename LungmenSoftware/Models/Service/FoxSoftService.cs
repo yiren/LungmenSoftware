@@ -15,6 +15,11 @@ namespace LungmenSoftware.Models.Service
             this.ldb = new LungmenSoftwareDataEntities();
         }
 
+        public List<FoxSoftware> GetFoxSoftwaresByTypeId(int softTypeId)
+        {
+            return ldb.FoxSoftwares.Where(t => t.FoxSoftwareTypeId == softTypeId).ToList();
+        }
+
         public List<FoxSoftwareInfo> GetFoxSoftwareListByWorkStationId(int wkId)
         {
             //var joinTable = ldb.WKAndFoxJoinTables.Where(j => j.FoxWorkStationId == wkId).Select(s=>s.FoxSoftwareId);

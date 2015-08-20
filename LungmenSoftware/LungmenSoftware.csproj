@@ -260,6 +260,21 @@
     <Compile Include="Controllers\FoxWorkStationsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Models\ChangeDelta.cs">
+      <DependentUpon>LungmenData.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ChangeRequest.cs">
+      <DependentUpon>LungmenData.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ChangeRequestProcessLog.cs">
+      <DependentUpon>LungmenData.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ChangeRequestType.cs">
+      <DependentUpon>LungmenData.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ChangeStatu.cs">
+      <DependentUpon>LungmenData.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\FoxSoftware.cs">
       <DependentUpon>LungmenData.tt</DependentUpon>
     </Compile>
@@ -273,6 +288,12 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\HistorialChangeRecord.cs">
+      <DependentUpon>LungmenData.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ImpDoc.cs">
+      <DependentUpon>LungmenData.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ImpDocType.cs">
       <DependentUpon>LungmenData.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\LungmenData.Context.cs">
@@ -302,6 +323,7 @@
     <Compile Include="Models\Service\WorkStationService.cs" />
     <Compile Include="Models\ViewModel\FoxSoftView.cs" />
     <Compile Include="Models\ViewModel\FoxSoftwareInfo.cs" />
+    <Compile Include="Models\ViewModel\FoxWorkStationInfo.cs" />
     <Compile Include="Models\ViewModel\FoxWorkStationView.cs" />
     <Compile Include="Models\ViewModel\WorkStationSearchViewModel.cs" />
     <Compile Include="Models\ViewModel\WorkStationsSearchViewModel.cs" />
@@ -309,9 +331,6 @@
       <DependentUpon>LungmenData.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\WorkStationHardwareType.cs">
-      <DependentUpon>LungmenData.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\WorkStationSoftwareType.cs">
       <DependentUpon>LungmenData.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -1276,11 +1295,12 @@
     <Content Include="Scripts\version.json" />
     <Content Include="Views\FoxWorkStations\EditWorkStation.cshtml" />
     <Content Include="Views\FoxWorkStations\InstalledSoftwaresByWorkStationId.cshtml" />
+    <Content Include="Views\FoxSoftwares\Index.cshtml" />
+    <Content Include="Views\FoxSoftwares\InstalledInWorkstations.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Helper\" />
-    <Folder Include="Views\FoxSoftwares\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />

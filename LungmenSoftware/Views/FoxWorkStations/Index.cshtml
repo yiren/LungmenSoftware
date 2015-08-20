@@ -55,7 +55,7 @@
                         @Html.DisplayFor(modelItem => item.WorkStationHardwareType.HardwareTypeName)
                     </td>
                     <td>
-                        @Html.ActionLink("相關已安裝軟體", "Details", new { id = item.WorkStationId })
+                        @Html.ActionLink("相關已安裝軟體", "InstalledSoftwaresByWorkStationId", new { id = item.WorkStationId })
                     </td>
                 </tr>
             }
@@ -85,7 +85,7 @@
                         @Html.DisplayFor(modelItem => item.WorkStationHardwareType.HardwareTypeName)
                     </td>
                     <td>
-                        @Html.ActionLink("相關已安裝軟體", "Details", new { id = item.WorkStationId })
+                        @Html.ActionLink("相關已安裝軟體", "InstalledSoftwaresByWorkStationId", new { id = item.WorkStationId })
                     </td>
                 </tr>
             }
