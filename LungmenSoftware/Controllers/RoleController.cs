@@ -3,14 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using IdentityPractice.Models;
-using LungmenSoftware;
 using LungmenSoftware.Models;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.Identity.Owin;
 
-namespace IdentityPractice.Controllers
+namespace LungmenSoftware.Controllers
 {
     [Authorize]
     public class RoleController : Controller
@@ -35,8 +33,9 @@ namespace IdentityPractice.Controllers
 
         public ActionResult ListOfRoles()
         {
-            
-            return View(RoleManager.Roles.ToList());
+
+            var roles = RoleManager.Roles.ToList();
+            return View(roles);
         }
 
 

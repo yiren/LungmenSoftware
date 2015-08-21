@@ -22,7 +22,7 @@ namespace IdentityPractice.Controllers
         {
             get
             {
-                return _userManager ?? HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>(); //可以考慮寫個helper
+                return _userManager ?? HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>(); 
             }
             private set
             {
@@ -71,7 +71,6 @@ namespace IdentityPractice.Controllers
         {
             UserView dataForview=new UserView();
             dataForview.Users = UserManager.Users.ToList();
-
             return View(dataForview);
         }
 
