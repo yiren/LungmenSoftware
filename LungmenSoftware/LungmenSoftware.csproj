@@ -260,6 +260,18 @@
     <Compile Include="Controllers\FoxWorkStationsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\RoleController.cs" />
+    <Compile Include="Controllers\UserController.cs" />
+    <Compile Include="Helper\RoleHelper.cs" />
+    <Compile Include="Migrations\201508210109128_Initial.cs" />
+    <Compile Include="Migrations\201508210109128_Initial.Designer.cs">
+      <DependentUpon>201508210109128_Initial.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201508210113075_ChangeMiniLengthForTPCId.cs" />
+    <Compile Include="Migrations\201508210113075_ChangeMiniLengthForTPCId.Designer.cs">
+      <DependentUpon>201508210113075_ChangeMiniLengthForTPCId.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\ChangeDelta.cs">
       <DependentUpon>LungmenData.tt</DependentUpon>
     </Compile>
@@ -319,10 +331,14 @@
     <Compile Include="Models\Metadata\FoxAppSoftware.cs" />
     <Compile Include="Models\Metadata\FoxWorkStation.cs" />
     <Compile Include="Models\Metadata\WorkStationHardwareType.cs" />
+    <Compile Include="Models\Service\IUserService.cs" />
+    <Compile Include="Models\Service\UserService.cs" />
+    <Compile Include="Models\ViewModel\RoleView.cs" />
     <Compile Include="Models\Service\FoxSoftService.cs" />
     <Compile Include="Models\Service\IFoxAppSoftwareService.cs" />
     <Compile Include="Models\Service\IWorkStationService.cs" />
     <Compile Include="Models\Service\WorkStationService.cs" />
+    <Compile Include="Models\ViewModel\UserView.cs" />
     <Compile Include="Models\ViewModel\FoxSoftView.cs" />
     <Compile Include="Models\ViewModel\FoxSoftwareInfo.cs" />
     <Compile Include="Models\ViewModel\FoxWorkStationInfo.cs" />
@@ -1242,7 +1258,9 @@
     <Content Include="Views\FoxAppSoftwares\FoxAppDetails.cshtml">
       <SubType>Code</SubType>
     </Content>
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
@@ -1298,10 +1316,14 @@
     <Content Include="Views\FoxSoftwares\Index.cshtml" />
     <Content Include="Views\FoxSoftwares\InstalledInWorkstations.cshtml" />
     <Content Include="Scripts\version.json" />
+    <Content Include="Views\User\EditUser.cshtml" />
+    <Content Include="Views\User\ListOfUsers.cshtml" />
+    <Content Include="Views\Role\CreateRole.cshtml" />
+    <Content Include="Views\Role\EditRole.cshtml" />
+    <Content Include="Views\Role\ListOfRoles.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Helper\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
@@ -1309,6 +1331,14 @@
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201508210109128_Initial.resx">
+      <DependentUpon>201508210109128_Initial.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201508210113075_ChangeMiniLengthForTPCId.resx">
+      <DependentUpon>201508210113075_ChangeMiniLengthForTPCId.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

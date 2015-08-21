@@ -1,0 +1,75 @@
+﻿@model IdentityPractice.Models.UserView
+
+@{
+    ViewBag.Title = "使用者清單";
+}
+
+<h2>使用者名單</h2>
+
+
+<table class="table table-bordered table-striped table-hover">
+    <tr>
+        <th>
+            帳號
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Users[0].TPCId)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Users[0].EmployeeName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Users[0].Department)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Users[0].IsDisabled)
+        </th>
+        
+        
+        <th></th>
+    </tr>
+@if (!Model.Users.Count.Equals(0))
+{
+    foreach (var item in Model.Users)
+    {
+        <tr>
+            <td>
+                @item.UserName
+            </td>
+            <td>
+                @item.TPCId
+            </td>
+            <td>
+                @item.EmployeeName
+            </td>
+            <td>
+                @item.Department
+            </td>
+
+            <td>
+                @item.IsDisabled
+            </td>
+
+            <td>
+                @Html.ActionLink("修改", "EditUser", new {Id=item.Id})
+                <br/>
+            @*
+    @Html.ActionLink("停用帳號","DeleteUser", new {Id=item.Id})
+            *@
+            </td>
+        </tr>
+    }
+}
+else
+{
+    <tr>
+        <td>
+            沒有資料!?
+        </td>
+    </tr>
+}
+
+</table>
+@*
+    @Html.Action("ListOfRoles", "Role")
+*@
