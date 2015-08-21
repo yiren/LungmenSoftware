@@ -1,6 +1,4 @@
 ﻿using System;
-using IdentityPractice;
-using IdentityPractice.Models;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin;

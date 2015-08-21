@@ -3,10 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using IdentityPractice.Models;
 using LungmenSoftware.Models;
 
-namespace IdentityPractice.Service
+namespace LungmenSoftware.Service
 {
     interface IUserService
     {

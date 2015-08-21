@@ -4,15 +4,15 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
-using IdentityPractice.Models;
-using IdentityPractice.Service;
 using LungmenSoftware;
 using LungmenSoftware.Models;
+using LungmenSoftware.Models.ViewModel;
+using LungmenSoftware.Service;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using WebGrease.Css.Extensions;
 
-namespace IdentityPractice.Controllers
+namespace LungmenSoftware.Controllers
 {
     [Authorize]
     public class UserController : Controller
@@ -52,13 +52,13 @@ namespace IdentityPractice.Controllers
         // GET: User
         public ActionResult Index()
         {
-            if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
+            if (User.Identity.IsAuthenticated && (User.IsInRole("Admin")||User.IsInRole("Reviewer")))
             {
                 return RedirectToAction("ListOfUsers");
             }
             else if (User.Identity.IsAuthenticated)
             {
-                return RedirectToAction("UserDetail");
+                return RedirectToAction("UserDetail",new {Id=User.Identity.GetUserId()});
             }
             else
             {
@@ -70,54 +70,119 @@ namespace IdentityPractice.Controllers
         public ActionResult ListOfUsers()
         {
             UserView dataForview=new UserView();
-            dataForview.Users = UserManager.Users.ToList();
+            
+            var users = UserManager.Users.ToList();
+
+            dataForview.Users = users;
+
+            foreach (var user in users)
+            {
+                foreach (var role in user.Roles)
+                {
+                    
+                }    
+            }
+            //var query = from users in UserManager.Users
+            //            join roles in RoleManager.Roles
+            //             on users.Roles
+            
+
             return View(dataForview);
         }
 
         
-        public ActionResult UserDetail()
+        public ActionResult UserDetail(string id)
         {
-            throw new NotImplementedException();
+            return View(UserManager.FindById(id));
         }
 
         
         public ActionResult EditUser(string id)
         {
+            
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            
-            var record = userService.FindApplicationUserById(id);
-            if (record==null)
+            var user = UserManager.FindById(id);
+            if (user == null)
             {
                 return HttpNotFound();
             }
-            return View(record);
+            var roles = GetRolesFromUserId(id);
+            ViewBag.RoleListForUser= RoleManager.Roles.ToList().Select(r => new SelectListItem()
+                    {
+                        Selected = roles.Contains(r.Name),
+                        Text = r.Name,
+                        Value = r.Name
+                    }
+                );
+            
+           
+            return View(user);
         }
 
-       [HttpPost]
-       [ValidateAntiForgeryToken]
-        public ActionResult PostToUpdate(//注意傳遞的Model物件是否有包含需驗證欄位
-            ApplicationUser userToUpdate)
+        private List<String> GetRolesFromUserId(string id)
         {
-            var user = userService.FindApplicationUserById(userToUpdate.Id);
+            return UserManager.GetRoles(id).ToList();
+        }
+
+        [HttpPost]
+       [ValidateAntiForgeryToken]
+        public ActionResult EditUser(//注意傳遞的Model物件是否有包含需驗證欄位
+            ApplicationUser userToUpdate, params string[] selectedRole)
+        {
+            var user = UserManager.FindById(userToUpdate.Id);
+            var userRoles = UserManager.GetRoles(userToUpdate.Id);
             if (user == null)
             {
                 return HttpNotFound();
             }
             //要Update的屬性
-            user.Department = userToUpdate.Department;
-            user.EmployeeName = userToUpdate.EmployeeName;
-           user.IsDisabled = userToUpdate.IsDisabled;
-            
+
             //userService.UpdateApplicationUser(userToUpdate);
+
+            selectedRole = selectedRole ?? new string[] {};
+            //var role=RoleManager.FindByName(selectedRole);
+
             
+
             if (ModelState.IsValid)
             {
                 //userService.UpdateApplicationUser(userToUpdate);
-                
-                userService.UpdateApplicationUser(user);
+                user.Department = userToUpdate.Department;
+                user.EmployeeName = userToUpdate.EmployeeName;
+                user.IsDisabled = userToUpdate.IsDisabled;
+                foreach (var role in selectedRole.Except(userRoles))
+                {
+                    var result = UserManager.AddToRole(user.Id, role);
+                    if (!result.Succeeded)
+                    {
+                        ModelState.AddModelError("", result.Errors.First());
+                    }
+                }
+
+                foreach (var role in userRoles.Except(selectedRole))
+                {
+                    var result = UserManager.RemoveFromRole(user.Id, role);
+                    if (!result.Succeeded)
+                    {
+                        ModelState.AddModelError("", result.Errors.First());
+                    }
+                }
+
+                var Valid = UserManager.Update(user);
+                if (Valid.Succeeded)
+                {
+                    return RedirectToAction("ListOfUsers");
+                }
+                else
+                {
+                    foreach (var item in Valid.Errors)
+                    {
+                        ModelState.AddModelError("", item);
+                    }
+                }
 
             }
             else

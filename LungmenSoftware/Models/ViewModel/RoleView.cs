@@ -6,7 +6,7 @@ using System.Web.UI.WebControls;
 using LungmenSoftware.Models;
 using Microsoft.AspNet.Identity.EntityFramework;
 
-namespace IdentityPractice.Models
+namespace LungmenSoftware.Models.ViewModel
 {
     public class RoleView
     {

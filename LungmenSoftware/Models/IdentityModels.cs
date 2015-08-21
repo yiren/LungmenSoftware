@@ -96,6 +96,8 @@ namespace LungmenSoftware.Models
 
         public System.Data.Entity.DbSet<LungmenSoftware.Models.ApplicationRole> IdentityRoles { get; set; }
 
+        //public System.Data.Entity.DbSet<LungmenSoftware.Models.ApplicationUser> ApplicationUsers { get; set; }
+
         //public System.Data.Entity.DbSet<IdentityPractice.Models.ApplicationUser> ApplicationUsers { get; }
     }
 }

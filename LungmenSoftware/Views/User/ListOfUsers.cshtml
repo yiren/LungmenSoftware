@@ -1,4 +1,4 @@
-﻿@model IdentityPractice.Models.UserView
+﻿@model LungmenSoftware.Models.ViewModel.UserView
 
 @{
     ViewBag.Title = "使用者清單";
@@ -11,6 +11,9 @@
     <tr>
         <th>
             帳號
+        </th>
+        <th>
+            權限
         </th>
         <th>
             @Html.DisplayNameFor(model => model.Users[0].TPCId)
@@ -34,7 +37,10 @@
     {
         <tr>
             <td>
-                @item.UserName
+                @Html.ActionLink(item.UserName, "UserDetail", new {Id=item.Id})
+            </td>
+            <td>
+                
             </td>
             <td>
                 @item.TPCId

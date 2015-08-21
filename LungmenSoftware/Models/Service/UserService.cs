@@ -4,12 +4,11 @@ using System.Data.Entity;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using IdentityPractice.Models;
 using LungmenSoftware.Models;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.AspNet.Identity;
 
-namespace IdentityPractice.Service
+namespace LungmenSoftware.Service
 {
     public class UserService:Controller, IUserService
     {

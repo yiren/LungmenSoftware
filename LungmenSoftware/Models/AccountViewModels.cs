@@ -70,7 +70,7 @@ namespace LungmenSoftware.Models
         public string TPCId { get; set; }
 
         [Required]
-        [Display(Name = "請再次姓名代號，註冊後會送出確認Email")]
+        [Display(Name = "請輸入再次姓名代號")]
         [Compare("TPCId", ErrorMessage = "請確認姓名代號輸入一致")]
         public string ConfirmTPCId { get; set; }
 

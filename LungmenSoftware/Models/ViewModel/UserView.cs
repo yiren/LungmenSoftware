@@ -3,9 +3,11 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
+using System.Web.Mvc;
 using LungmenSoftware.Models;
+using Microsoft.AspNet.Identity.EntityFramework;
 
-namespace IdentityPractice.Models
+namespace LungmenSoftware.Models.ViewModel
 {
     public class UserView
     {
@@ -13,16 +15,9 @@ namespace IdentityPractice.Models
 
         public List<ApplicationUser> Users { get; set; }
 
-        [Required]
-        [StringLength(100, ErrorMessage = "{0} 必須至少 {2} 六位英文與數字的組合.", MinimumLength = 6)]
-        [DataType(DataType.Password)]
-        [Display(Name = "Password")]
-        public string Password { get; set; }
+        public List<IdentityRole> Roles { get; set; }  
 
-        [DataType(DataType.Password)]
-        [Display(Name = "Confirm password")]
-        [Compare("Password", ErrorMessage = "兩次密碼輸入不一致")]
-        public string ConfirmPassword { get; set; }
+        public IEnumerable<SelectListItem> RolesFromUserId { get; set; }
 
     }
 }

@@ -1,13 +1,12 @@
 ﻿@model LungmenSoftware.Models.ApplicationUser
-
 @{
-    ViewBag.Title = "EditUser";
+    ViewBag.Title = "編輯使用者個人資料";
 }
 
 <h2>@Model.UserName 個人資料</h2>
 
 
-@using (Html.BeginForm("PostToUpdate", "User", FormMethod.Post))
+@using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
     
@@ -17,7 +16,23 @@
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         @Html.HiddenFor(model=>model.Id)
         @Html.HiddenFor(model=>model.TPCId)
+
         
+        <div class="form-group">
+            <label class="control-label col-md-2">權限</label>
+            <div class="col-md-10">
+                @foreach (var item in ViewBag.RoleListForUser)
+                {
+                    <div class="radio">
+                        <label>
+                            <input type="radio" name="SelectedRole" value="@item.Value" checked="@item.Selected">
+                            @item.Text
+                        </label>
+                    </div>
+                }
+            </div>
+        </div>
+
         <div class="form-group">
             @Html.LabelFor(model => model.EmployeeName, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
