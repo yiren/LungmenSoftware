@@ -294,6 +294,7 @@
     <Compile Include="Models\CodeFirst\ChangeProcessDbContext.cs" />
     <Compile Include="Models\CodeFirst\Entities\ChangeRequest.cs" />
     <Compile Include="Models\CodeFirst\Entities\ChangeRequestStatus.cs" />
+    <Compile Include="Models\CodeFirst\Entities\ChangeRequestStatusType.cs" />
     <Compile Include="Models\FoxSoftware.cs">
       <DependentUpon>LungmenData.tt</DependentUpon>
     </Compile>

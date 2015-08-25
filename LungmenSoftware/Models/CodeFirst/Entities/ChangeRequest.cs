@@ -12,7 +12,10 @@ namespace LungmenSoftware.Models.CodeFirst.Entities
         public Guid ChangeRequestId { get; set; }
         public string SerialNumber { get; set; }
 
-        //Status Pattern
+        public DateTime LastModifiedDate { get; set; }
+
+        //Status Pattern Level 1
+
         public DateTime CreateDate { get; set; }
 
         public DateTime ReviewDate { get; set; }
@@ -23,7 +26,11 @@ namespace LungmenSoftware.Models.CodeFirst.Entities
         
         public DateTime? CompletedDate { get; set; }
 
-        public DateTime LastModifiedDate { get; set; }
+        //Status Pattern Level 2
+        public int ChangeStatus { get; set; }
+
+        public DateTime StatusDate { get; set; }
+
 
     }
 }
