@@ -20,6 +20,14 @@ namespace LungmenSoftware.Service
             return db.Users.ToList();
         }
 
+        public void GetUserRoles()
+        {
+            //var query=from users in db.Users                      
+            //    join role in db.Roles on users. equals EXPR2
+            
+            
+        }
+
         public void DeleteApplicationUser(string id)
         {
              

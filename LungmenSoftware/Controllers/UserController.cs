@@ -71,21 +71,43 @@ namespace LungmenSoftware.Controllers
         {
             UserView dataForview=new UserView();
             
+            var userListForView=new List<UserAttriForList>();
+
             var users = UserManager.Users.ToList();
-
-            dataForview.Users = users;
-
+            //var userRoles=users.GetUserRoles
+            
+            
+            //var query= from u in users
+            //           join r in roles
+                         
+                           
+            
             foreach (var user in users)
             {
-                foreach (var role in user.Roles) //拿到所有role id
+                UserAttriForList userForList = new UserAttriForList();
+                var roles = UserManager.GetRoles(user.Id);
+                foreach (var role in roles)
                 {
-                    string roleName=RoleManager.FindById(role.RoleId).Name;
-                }    
+                    
+                    userForList.UserName = user.UserName;
+                    userForList.Department = user.Department;
+                    userForList.IsDisabled = user.IsDisabled;
+                    userForList.Role = role;
+                    userForList.TPCId = user.TPCId;
+                    userForList.EmployeeName = user.EmployeeName;
+                    userForList.UserId = user.Id;
+                    userListForView.Add(userForList);
+                }
+                    
+                    
             }
+
+            dataForview.UsersForList = userListForView;
+
             //var query = from users in UserManager.Users
             //            join roles in RoleManager.Roles
             //             on users.Roles
-            
+
 
             return View(dataForview);
         }

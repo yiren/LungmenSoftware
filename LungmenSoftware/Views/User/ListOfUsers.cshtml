@@ -31,17 +31,19 @@
         
         <th></th>
     </tr>
-@if (!Model.Users.Count.Equals(0))
+@if (!Model.UsersForList.Count.Equals(0))
 {
-    foreach (var item in Model.Users)
+    foreach (var item in Model.UsersForList)
     {
         <tr>
             <td>
-                @Html.ActionLink(item.UserName, "UserDetail", new {Id=item.Id})
+                @Html.ActionLink(item.UserName, "UserDetail", new {Id = item.UserId})
             </td>
+
             <td>
-                
+               @item.Role
             </td>
+
             <td>
                 @item.TPCId
             </td>
@@ -57,7 +59,7 @@
             </td>
 
             <td>
-                @Html.ActionLink("修改", "EditUser", new {Id=item.Id})
+                @Html.ActionLink("修改", "EditUser", new {Id=item.UserId})
                 <br/>
             @*
     @Html.ActionLink("停用帳號","DeleteUser", new {Id=item.Id})

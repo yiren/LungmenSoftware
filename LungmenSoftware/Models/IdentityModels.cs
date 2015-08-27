@@ -85,6 +85,7 @@ namespace LungmenSoftware.Models
         public ApplicationDbContext()
             : base("ASPIdentity", throwIfV1Schema: false)
         {
+
         }
 
 
