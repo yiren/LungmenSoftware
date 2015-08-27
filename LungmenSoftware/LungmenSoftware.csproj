@@ -260,6 +260,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\ChangeRequestController.cs" />
     <Compile Include="Controllers\FoxSoftwaresController.cs" />
     <Compile Include="Controllers\FoxWorkStationsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -267,6 +268,19 @@
     <Compile Include="Controllers\RoleController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Helper\RoleHelper.cs" />
+    <Compile Include="MigrationForChangeRequestData\201508270313558_InitialConfiguration.cs" />
+    <Compile Include="MigrationForChangeRequestData\201508270313558_InitialConfiguration.Designer.cs">
+      <DependentUpon>201508270313558_InitialConfiguration.cs</DependentUpon>
+    </Compile>
+    <Compile Include="MigrationForChangeRequestData\201508270539103_ResetToInitial.cs" />
+    <Compile Include="MigrationForChangeRequestData\201508270539103_ResetToInitial.Designer.cs">
+      <DependentUpon>201508270539103_ResetToInitial.cs</DependentUpon>
+    </Compile>
+    <Compile Include="MigrationForChangeRequestData\201508270721583_AddCreateDateForChangeRequest.cs" />
+    <Compile Include="MigrationForChangeRequestData\201508270721583_AddCreateDateForChangeRequest.Designer.cs">
+      <DependentUpon>201508270721583_AddCreateDateForChangeRequest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="MigrationForChangeRequestData\Configuration.cs" />
     <Compile Include="Migrations\201508210109128_Initial.cs" />
     <Compile Include="Migrations\201508210109128_Initial.Designer.cs">
       <DependentUpon>201508210109128_Initial.cs</DependentUpon>
@@ -277,9 +291,6 @@
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\ChangeDelta.cs">
-      <DependentUpon>LungmenData.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\ChangeRequest.cs">
       <DependentUpon>LungmenData.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\ChangeRequestProcessLog.cs">
@@ -339,6 +350,7 @@
     <Compile Include="Models\Metadata\WorkStationHardwareType.cs" />
     <Compile Include="Models\Service\IUserService.cs" />
     <Compile Include="Models\Service\UserService.cs" />
+    <Compile Include="Models\ViewModel\ChangeRequestView.cs" />
     <Compile Include="Models\ViewModel\RoleView.cs" />
     <Compile Include="Models\Service\FoxSoftService.cs" />
     <Compile Include="Models\Service\IFoxAppSoftwareService.cs" />
@@ -1328,6 +1340,7 @@
     <Content Include="Views\Role\EditRole.cshtml" />
     <Content Include="Views\Role\ListOfRoles.cshtml" />
     <Content Include="Views\User\UserDetail.cshtml" />
+    <Content Include="Views\ChangeRequest\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -1340,6 +1353,15 @@
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="MigrationForChangeRequestData\201508270313558_InitialConfiguration.resx">
+      <DependentUpon>201508270313558_InitialConfiguration.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MigrationForChangeRequestData\201508270539103_ResetToInitial.resx">
+      <DependentUpon>201508270539103_ResetToInitial.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MigrationForChangeRequestData\201508270721583_AddCreateDateForChangeRequest.resx">
+      <DependentUpon>201508270721583_AddCreateDateForChangeRequest.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201508210109128_Initial.resx">
       <DependentUpon>201508210109128_Initial.cs</DependentUpon>
     </EmbeddedResource>
