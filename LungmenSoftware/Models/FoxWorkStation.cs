@@ -17,7 +17,6 @@ namespace LungmenSoftware.Models
         public FoxWorkStation()
         {
             this.WKAndFoxJoinTables = new HashSet<WKAndFoxJoinTable>();
-            this.ImpDocs = new HashSet<ImpDoc>();
         }
     
         public int WorkStationId { get; set; }
@@ -29,6 +28,5 @@ namespace LungmenSoftware.Models
     
         public virtual ICollection<WKAndFoxJoinTable> WKAndFoxJoinTables { get; set; }
         public virtual WorkStationHardwareType WorkStationHardwareType { get; set; }
-        public virtual ICollection<ImpDoc> ImpDocs { get; set; }
     }
 }

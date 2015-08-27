@@ -25,17 +25,10 @@ namespace LungmenSoftware.Models
             throw new UnintentionalCodeFirstException();
         }
     
-        public virtual DbSet<ChangeDelta> ChangeDeltas { get; set; }
-        public virtual DbSet<ChangeRequestProcessLog> ChangeRequestProcessLogs { get; set; }
-        public virtual DbSet<ChangeRequest> ChangeRequests { get; set; }
-        public virtual DbSet<ChangeRequestType> ChangeRequestTypes { get; set; }
-        public virtual DbSet<ChangeStatu> ChangeStatus { get; set; }
+        public virtual DbSet<FoxSoftware_WorkstationType> FoxSoftware_WorkstationType { get; set; }
         public virtual DbSet<FoxSoftware> FoxSoftwares { get; set; }
         public virtual DbSet<FoxSoftwareType> FoxSoftwareTypes { get; set; }
         public virtual DbSet<FoxWorkStation> FoxWorkStations { get; set; }
-        public virtual DbSet<HistorialChangeRecord> HistorialChangeRecords { get; set; }
-        public virtual DbSet<ImpDoc> ImpDocs { get; set; }
-        public virtual DbSet<ImpDocType> ImpDocTypes { get; set; }
         public virtual DbSet<WKAndFoxJoinTable> WKAndFoxJoinTables { get; set; }
         public virtual DbSet<WorkStationHardwareType> WorkStationHardwareTypes { get; set; }
     }

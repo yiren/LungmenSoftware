@@ -5,55 +5,12 @@
     <!-- SSDL content -->
     <edmx:StorageModels>
     <Schema Namespace="LungmenSoftwareDataModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
-        <EntityType Name="ChangeDeltas">
-          <Key>
-            <PropertyRef Name="ChangeDeltaId" />
-          </Key>
-          <Property Name="ChangeDeltaId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="AttributeChanged" Type="nvarchar(max)" Nullable="false" />
-          <Property Name="OriginalValue" Type="nvarchar(max)" Nullable="false" />
-          <Property Name="DeltaValue" Type="nvarchar(max)" Nullable="false" />
-          <Property Name="ImpDocId" Type="bigint" />
-        </EntityType>
-        <EntityType Name="ChangeRequestProcessLogs">
-          <Key>
-            <PropertyRef Name="ChangeLogId" />
-          </Key>
-          <Property Name="ChangeLogId" Type="uniqueidentifier" Nullable="false" />
-          <Property Name="ChangeRequestId" Type="nvarchar(max)" Nullable="false" />
-          <Property Name="StatusDate" Type="nvarchar(max)" Nullable="false" />
-        </EntityType>
-        <EntityType Name="ChangeRequests">
-          <Key>
-            <PropertyRef Name="ChangeRequestId" />
-          </Key>
-          <Property Name="ChangeRequestId" Type="uniqueidentifier" Nullable="false" />
-          <Property Name="CompletedDate" Type="datetime" />
-          <Property Name="InitialDate" Type="datetime" />
-          <Property Name="LastModifiedDate" Type="datetime" />
-          <Property Name="LastModifier" Type="nvarchar(max)" />
-          <Property Name="Reviewer" Type="nvarchar(max)" />
-          <Property Name="Initiator" Type="nvarchar(max)" />
-          <Property Name="ChangeStatusId" Type="int" />
-          <Property Name="RequestNo" Type="nvarchar(max)" Nullable="false" />
-          <Property Name="IsApproved" Type="bit" />
-          <Property Name="IsFailed" Type="bit" />
-          <Property Name="StatusProcessDate" Type="datetime" />
-          <Property Name="ChangeRequestTypeId" Type="int" />
-        </EntityType>
-        <EntityType Name="ChangeRequestTypes">
+        <EntityType Name="FoxSoftware_WorkstationType">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="RequestTypeName" Type="nvarchar(max)" Nullable="false" />
-        </EntityType>
-        <EntityType Name="ChangeStatus">
-          <Key>
-            <PropertyRef Name="ChangeStatusId" />
-          </Key>
-          <Property Name="ChangeStatusId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Status" Type="nvarchar" MaxLength="30" Nullable="false" />
+          <Property Name="SoftwareTypeName" Type="nvarchar(max)" Nullable="false" />
         </EntityType>
         <EntityType Name="FoxSoftwares">
           <Key>
@@ -85,52 +42,6 @@
           <Property Name="WorkStationSoftwareTypeId" Type="int" />
           <Property Name="LastModifiedDate" Type="datetime" />
         </EntityType>
-        <EntityType Name="HistorialChangeRecords">
-          <Key>
-            <PropertyRef Name="HistorialChangeRecordId" />
-          </Key>
-          <Property Name="HistorialChangeRecordId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
-        </EntityType>
-        <EntityType Name="ImpDocFoxSoftware">
-          <Key>
-            <PropertyRef Name="FoxSoftwares_FoxSoftwareId" />
-            <PropertyRef Name="ImpDocs_ImpDocId" />
-          </Key>
-          <Property Name="FoxSoftwares_FoxSoftwareId" Type="int" Nullable="false" />
-          <Property Name="ImpDocs_ImpDocId" Type="bigint" Nullable="false" />
-        </EntityType>
-        <EntityType Name="ImpDocFoxWorkStation">
-          <Key>
-            <PropertyRef Name="FoxWorkStations_WorkStationId" />
-            <PropertyRef Name="ImpDocs_ImpDocId" />
-          </Key>
-          <Property Name="FoxWorkStations_WorkStationId" Type="int" Nullable="false" />
-          <Property Name="ImpDocs_ImpDocId" Type="bigint" Nullable="false" />
-        </EntityType>
-        <EntityType Name="ImpDocs">
-          <Key>
-            <PropertyRef Name="ImpDocId" />
-          </Key>
-          <Property Name="ImpDocId" Type="bigint" Nullable="false" />
-          <Property Name="No" Type="nvarchar" MaxLength="25" Nullable="false" />
-          <Property Name="Rev" Type="int" Nullable="false" />
-          <Property Name="Description" Type="nvarchar(max)" Nullable="false" />
-          <Property Name="Unit" Type="smallint" Nullable="false" />
-          <Property Name="LastModifier" Type="nvarchar(max)" />
-          <Property Name="ChangeRequestId" Type="uniqueidentifier" />
-          <Property Name="LastModifiedDate" Type="datetime" />
-          <Property Name="ImpDocTypeId" Type="int" Nullable="false" />
-          <Property Name="Note" Type="nvarchar(max)" />
-          <Property Name="Package" Type="nvarchar(max)" />
-          <Property Name="DocTypeId" Type="int" />
-        </EntityType>
-        <EntityType Name="ImpDocTypes">
-          <Key>
-            <PropertyRef Name="ImpDocTypeId" />
-          </Key>
-          <Property Name="ImpDocTypeId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="DocTypeName" Type="nvarchar(max)" Nullable="false" />
-        </EntityType>
         <EntityType Name="WKAndFoxJoinTables">
           <Key>
             <PropertyRef Name="Id" />
@@ -153,42 +64,6 @@
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="HardwareTypeName" Type="nvarchar" MaxLength="50" Nullable="false" />
         </EntityType>
-        <Association Name="FK_ChangeRequestChangeStatus">
-          <End Role="ChangeStatus" Type="Self.ChangeStatus" Multiplicity="0..1" />
-          <End Role="ChangeRequests" Type="Self.ChangeRequests" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="ChangeStatus">
-              <PropertyRef Name="ChangeStatusId" />
-            </Principal>
-            <Dependent Role="ChangeRequests">
-              <PropertyRef Name="ChangeStatusId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_ChangeRequestImpDoc">
-          <End Role="ChangeRequests" Type="Self.ChangeRequests" Multiplicity="0..1" />
-          <End Role="ImpDocs" Type="Self.ImpDocs" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="ChangeRequests">
-              <PropertyRef Name="ChangeRequestId" />
-            </Principal>
-            <Dependent Role="ImpDocs">
-              <PropertyRef Name="ChangeRequestId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_ChangeRequestTypeChangeRequest">
-          <End Role="ChangeRequestTypes" Type="Self.ChangeRequestTypes" Multiplicity="0..1" />
-          <End Role="ChangeRequests" Type="Self.ChangeRequests" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="ChangeRequestTypes">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="ChangeRequests">
-              <PropertyRef Name="ChangeRequestTypeId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_FoxSoftwareTypeFoxSoftware">
           <End Role="FoxSoftwareTypes" Type="Self.FoxSoftwareTypes" Multiplicity="0..1" />
           <End Role="FoxSoftwares" Type="Self.FoxSoftwares" Multiplicity="*" />
@@ -225,78 +100,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_ImpDocChangeDetail">
-          <End Role="ImpDocs" Type="Self.ImpDocs" Multiplicity="0..1" />
-          <End Role="ChangeDeltas" Type="Self.ChangeDeltas" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="ImpDocs">
-              <PropertyRef Name="ImpDocId" />
-            </Principal>
-            <Dependent Role="ChangeDeltas">
-              <PropertyRef Name="ImpDocId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_ImpDocFoxSoftware_FoxSoftware">
-          <End Role="FoxSoftwares" Type="Self.FoxSoftwares" Multiplicity="1" />
-          <End Role="ImpDocFoxSoftware" Type="Self.ImpDocFoxSoftware" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="FoxSoftwares">
-              <PropertyRef Name="FoxSoftwareId" />
-            </Principal>
-            <Dependent Role="ImpDocFoxSoftware">
-              <PropertyRef Name="FoxSoftwares_FoxSoftwareId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_ImpDocFoxSoftware_ImpDoc">
-          <End Role="ImpDocs" Type="Self.ImpDocs" Multiplicity="1" />
-          <End Role="ImpDocFoxSoftware" Type="Self.ImpDocFoxSoftware" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="ImpDocs">
-              <PropertyRef Name="ImpDocId" />
-            </Principal>
-            <Dependent Role="ImpDocFoxSoftware">
-              <PropertyRef Name="ImpDocs_ImpDocId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_ImpDocFoxWorkStation_FoxWorkStation">
-          <End Role="FoxWorkStations" Type="Self.FoxWorkStations" Multiplicity="1" />
-          <End Role="ImpDocFoxWorkStation" Type="Self.ImpDocFoxWorkStation" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="FoxWorkStations">
-              <PropertyRef Name="WorkStationId" />
-            </Principal>
-            <Dependent Role="ImpDocFoxWorkStation">
-              <PropertyRef Name="FoxWorkStations_WorkStationId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_ImpDocFoxWorkStation_ImpDoc">
-          <End Role="ImpDocs" Type="Self.ImpDocs" Multiplicity="1" />
-          <End Role="ImpDocFoxWorkStation" Type="Self.ImpDocFoxWorkStation" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="ImpDocs">
-              <PropertyRef Name="ImpDocId" />
-            </Principal>
-            <Dependent Role="ImpDocFoxWorkStation">
-              <PropertyRef Name="ImpDocs_ImpDocId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_ImpDocTypeImpDoc">
-          <End Role="ImpDocTypes" Type="Self.ImpDocTypes" Multiplicity="0..1" />
-          <End Role="ImpDocs" Type="Self.ImpDocs" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="ImpDocTypes">
-              <PropertyRef Name="ImpDocTypeId" />
-            </Principal>
-            <Dependent Role="ImpDocs">
-              <PropertyRef Name="DocTypeId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_WorkStationHardwareTypeFoxWorkStation">
           <End Role="WorkStationHardwareTypes" Type="Self.WorkStationHardwareTypes" Multiplicity="0..1" />
           <End Role="FoxWorkStations" Type="Self.FoxWorkStations" Multiplicity="*" />
@@ -310,33 +113,12 @@
           </ReferentialConstraint>
         </Association>
         <EntityContainer Name="LungmenSoftwareDataModelStoreContainer">
-          <EntitySet Name="ChangeDeltas" EntityType="Self.ChangeDeltas" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="ChangeRequestProcessLogs" EntityType="Self.ChangeRequestProcessLogs" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="ChangeRequests" EntityType="Self.ChangeRequests" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="ChangeRequestTypes" EntityType="Self.ChangeRequestTypes" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="ChangeStatus" EntityType="Self.ChangeStatus" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="FoxSoftware_WorkstationType" EntityType="Self.FoxSoftware_WorkstationType" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="FoxSoftwares" EntityType="Self.FoxSoftwares" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="FoxSoftwareTypes" EntityType="Self.FoxSoftwareTypes" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="FoxWorkStations" EntityType="Self.FoxWorkStations" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="HistorialChangeRecords" EntityType="Self.HistorialChangeRecords" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="ImpDocFoxSoftware" EntityType="Self.ImpDocFoxSoftware" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="ImpDocFoxWorkStation" EntityType="Self.ImpDocFoxWorkStation" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="ImpDocs" EntityType="Self.ImpDocs" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="ImpDocTypes" EntityType="Self.ImpDocTypes" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="WKAndFoxJoinTables" EntityType="Self.WKAndFoxJoinTables" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="WorkStationHardwareTypes" EntityType="Self.WorkStationHardwareTypes" Schema="dbo" store:Type="Tables" />
-          <AssociationSet Name="FK_ChangeRequestChangeStatus" Association="Self.FK_ChangeRequestChangeStatus">
-            <End Role="ChangeStatus" EntitySet="ChangeStatus" />
-            <End Role="ChangeRequests" EntitySet="ChangeRequests" />
-          </AssociationSet>
-          <AssociationSet Name="FK_ChangeRequestImpDoc" Association="Self.FK_ChangeRequestImpDoc">
-            <End Role="ChangeRequests" EntitySet="ChangeRequests" />
-            <End Role="ImpDocs" EntitySet="ImpDocs" />
-          </AssociationSet>
-          <AssociationSet Name="FK_ChangeRequestTypeChangeRequest" Association="Self.FK_ChangeRequestTypeChangeRequest">
-            <End Role="ChangeRequestTypes" EntitySet="ChangeRequestTypes" />
-            <End Role="ChangeRequests" EntitySet="ChangeRequests" />
-          </AssociationSet>
           <AssociationSet Name="FK_FoxSoftwareTypeFoxSoftware" Association="Self.FK_FoxSoftwareTypeFoxSoftware">
             <End Role="FoxSoftwareTypes" EntitySet="FoxSoftwareTypes" />
             <End Role="FoxSoftwares" EntitySet="FoxSoftwares" />
@@ -349,30 +131,6 @@
             <End Role="FoxWorkStations" EntitySet="FoxWorkStations" />
             <End Role="WKAndFoxJoinTables" EntitySet="WKAndFoxJoinTables" />
           </AssociationSet>
-          <AssociationSet Name="FK_ImpDocChangeDetail" Association="Self.FK_ImpDocChangeDetail">
-            <End Role="ImpDocs" EntitySet="ImpDocs" />
-            <End Role="ChangeDeltas" EntitySet="ChangeDeltas" />
-          </AssociationSet>
-          <AssociationSet Name="FK_ImpDocFoxSoftware_FoxSoftware" Association="Self.FK_ImpDocFoxSoftware_FoxSoftware">
-            <End Role="FoxSoftwares" EntitySet="FoxSoftwares" />
-            <End Role="ImpDocFoxSoftware" EntitySet="ImpDocFoxSoftware" />
-          </AssociationSet>
-          <AssociationSet Name="FK_ImpDocFoxSoftware_ImpDoc" Association="Self.FK_ImpDocFoxSoftware_ImpDoc">
-            <End Role="ImpDocs" EntitySet="ImpDocs" />
-            <End Role="ImpDocFoxSoftware" EntitySet="ImpDocFoxSoftware" />
-          </AssociationSet>
-          <AssociationSet Name="FK_ImpDocFoxWorkStation_FoxWorkStation" Association="Self.FK_ImpDocFoxWorkStation_FoxWorkStation">
-            <End Role="FoxWorkStations" EntitySet="FoxWorkStations" />
-            <End Role="ImpDocFoxWorkStation" EntitySet="ImpDocFoxWorkStation" />
-          </AssociationSet>
-          <AssociationSet Name="FK_ImpDocFoxWorkStation_ImpDoc" Association="Self.FK_ImpDocFoxWorkStation_ImpDoc">
-            <End Role="ImpDocs" EntitySet="ImpDocs" />
-            <End Role="ImpDocFoxWorkStation" EntitySet="ImpDocFoxWorkStation" />
-          </AssociationSet>
-          <AssociationSet Name="FK_ImpDocTypeImpDoc" Association="Self.FK_ImpDocTypeImpDoc">
-            <End Role="ImpDocTypes" EntitySet="ImpDocTypes" />
-            <End Role="ImpDocs" EntitySet="ImpDocs" />
-          </AssociationSet>
           <AssociationSet Name="FK_WorkStationHardwareTypeFoxWorkStation" Association="Self.FK_WorkStationHardwareTypeFoxWorkStation">
             <End Role="WorkStationHardwareTypes" EntitySet="WorkStationHardwareTypes" />
             <End Role="FoxWorkStations" EntitySet="FoxWorkStations" />
@@ -383,35 +141,12 @@
     <edmx:ConceptualModels>
       <Schema Namespace="LungmenSoftwareDataModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
         <EntityContainer Name="LungmenSoftwareDataEntities" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="ChangeDeltas" EntityType="LungmenSoftwareDataModel.ChangeDelta" />
-          <EntitySet Name="ChangeRequestProcessLogs" EntityType="LungmenSoftwareDataModel.ChangeRequestProcessLog" />
-          <EntitySet Name="ChangeRequests" EntityType="LungmenSoftwareDataModel.ChangeRequest" />
-          <EntitySet Name="ChangeRequestTypes" EntityType="LungmenSoftwareDataModel.ChangeRequestType" />
-          <EntitySet Name="ChangeStatus" EntityType="LungmenSoftwareDataModel.ChangeStatu" />
+          <EntitySet Name="FoxSoftware_WorkstationType" EntityType="LungmenSoftwareDataModel.FoxSoftware_WorkstationType" />
           <EntitySet Name="FoxSoftwares" EntityType="LungmenSoftwareDataModel.FoxSoftware" />
           <EntitySet Name="FoxSoftwareTypes" EntityType="LungmenSoftwareDataModel.FoxSoftwareType" />
           <EntitySet Name="FoxWorkStations" EntityType="LungmenSoftwareDataModel.FoxWorkStation" />
-          <EntitySet Name="HistorialChangeRecords" EntityType="LungmenSoftwareDataModel.HistorialChangeRecord" />
-          <EntitySet Name="ImpDocs" EntityType="LungmenSoftwareDataModel.ImpDoc" />
-          <EntitySet Name="ImpDocTypes" EntityType="LungmenSoftwareDataModel.ImpDocType" />
           <EntitySet Name="WKAndFoxJoinTables" EntityType="LungmenSoftwareDataModel.WKAndFoxJoinTable" />
           <EntitySet Name="WorkStationHardwareTypes" EntityType="LungmenSoftwareDataModel.WorkStationHardwareType" />
-          <AssociationSet Name="FK_ImpDocChangeDetail" Association="LungmenSoftwareDataModel.FK_ImpDocChangeDetail">
-            <End Role="ImpDoc" EntitySet="ImpDocs" />
-            <End Role="ChangeDelta" EntitySet="ChangeDeltas" />
-          </AssociationSet>
-          <AssociationSet Name="FK_ChangeRequestChangeStatus" Association="LungmenSoftwareDataModel.FK_ChangeRequestChangeStatus">
-            <End Role="ChangeStatu" EntitySet="ChangeStatus" />
-            <End Role="ChangeRequest" EntitySet="ChangeRequests" />
-          </AssociationSet>
-          <AssociationSet Name="FK_ChangeRequestImpDoc" Association="LungmenSoftwareDataModel.FK_ChangeRequestImpDoc">
-            <End Role="ChangeRequest" EntitySet="ChangeRequests" />
-            <End Role="ImpDoc" EntitySet="ImpDocs" />
-          </AssociationSet>
-          <AssociationSet Name="FK_ChangeRequestTypeChangeRequest" Association="LungmenSoftwareDataModel.FK_ChangeRequestTypeChangeRequest">
-            <End Role="ChangeRequestType" EntitySet="ChangeRequestTypes" />
-            <End Role="ChangeRequest" EntitySet="ChangeRequests" />
-          </AssociationSet>
           <AssociationSet Name="FK_FoxSoftwareTypeFoxSoftware" Association="LungmenSoftwareDataModel.FK_FoxSoftwareTypeFoxSoftware">
             <End Role="FoxSoftwareType" EntitySet="FoxSoftwareTypes" />
             <End Role="FoxSoftware" EntitySet="FoxSoftwares" />
@@ -428,74 +163,13 @@
             <End Role="WorkStationHardwareType" EntitySet="WorkStationHardwareTypes" />
             <End Role="FoxWorkStation" EntitySet="FoxWorkStations" />
           </AssociationSet>
-          <AssociationSet Name="FK_ImpDocTypeImpDoc" Association="LungmenSoftwareDataModel.FK_ImpDocTypeImpDoc">
-            <End Role="ImpDocType" EntitySet="ImpDocTypes" />
-            <End Role="ImpDoc" EntitySet="ImpDocs" />
-          </AssociationSet>
-          <AssociationSet Name="ImpDocFoxSoftware" Association="LungmenSoftwareDataModel.ImpDocFoxSoftware">
-            <End Role="FoxSoftware" EntitySet="FoxSoftwares" />
-            <End Role="ImpDoc" EntitySet="ImpDocs" />
-          </AssociationSet>
-          <AssociationSet Name="ImpDocFoxWorkStation" Association="LungmenSoftwareDataModel.ImpDocFoxWorkStation">
-            <End Role="FoxWorkStation" EntitySet="FoxWorkStations" />
-            <End Role="ImpDoc" EntitySet="ImpDocs" />
-          </AssociationSet>
         </EntityContainer>
-        <EntityType Name="ChangeDelta">
-          <Key>
-            <PropertyRef Name="ChangeDeltaId" />
-          </Key>
-          <Property Name="ChangeDeltaId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="AttributeChanged" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="OriginalValue" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="DeltaValue" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="ImpDocId" Type="Int64" />
-          <NavigationProperty Name="ImpDoc" Relationship="LungmenSoftwareDataModel.FK_ImpDocChangeDetail" FromRole="ChangeDelta" ToRole="ImpDoc" />
-        </EntityType>
-        <EntityType Name="ChangeRequestProcessLog">
-          <Key>
-            <PropertyRef Name="ChangeLogId" />
-          </Key>
-          <Property Name="ChangeLogId" Type="Guid" Nullable="false" />
-          <Property Name="ChangeRequestId" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="StatusDate" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
-        </EntityType>
-        <EntityType Name="ChangeRequest">
-          <Key>
-            <PropertyRef Name="ChangeRequestId" />
-          </Key>
-          <Property Name="ChangeRequestId" Type="Guid" Nullable="false" />
-          <Property Name="CompletedDate" Type="DateTime" Precision="3" />
-          <Property Name="InitialDate" Type="DateTime" Precision="3" />
-          <Property Name="LastModifiedDate" Type="DateTime" Precision="3" />
-          <Property Name="LastModifier" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="Reviewer" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="Initiator" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="ChangeStatusId" Type="Int32" />
-          <Property Name="RequestNo" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="IsApproved" Type="Boolean" />
-          <Property Name="IsFailed" Type="Boolean" />
-          <Property Name="StatusProcessDate" Type="DateTime" Precision="3" />
-          <Property Name="ChangeRequestTypeId" Type="Int32" />
-          <NavigationProperty Name="ChangeStatu" Relationship="LungmenSoftwareDataModel.FK_ChangeRequestChangeStatus" FromRole="ChangeRequest" ToRole="ChangeStatu" />
-          <NavigationProperty Name="ImpDocs" Relationship="LungmenSoftwareDataModel.FK_ChangeRequestImpDoc" FromRole="ChangeRequest" ToRole="ImpDoc" />
-          <NavigationProperty Name="ChangeRequestType" Relationship="LungmenSoftwareDataModel.FK_ChangeRequestTypeChangeRequest" FromRole="ChangeRequest" ToRole="ChangeRequestType" />
-        </EntityType>
-        <EntityType Name="ChangeRequestType">
+        <EntityType Name="FoxSoftware_WorkstationType">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="RequestTypeName" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="ChangeRequests" Relationship="LungmenSoftwareDataModel.FK_ChangeRequestTypeChangeRequest" FromRole="ChangeRequestType" ToRole="ChangeRequest" />
-        </EntityType>
-        <EntityType Name="ChangeStatu">
-          <Key>
-            <PropertyRef Name="ChangeStatusId" />
-          </Key>
-          <Property Name="ChangeStatusId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Status" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="ChangeRequests" Relationship="LungmenSoftwareDataModel.FK_ChangeRequestChangeStatus" FromRole="ChangeStatu" ToRole="ChangeRequest" />
+          <Property Name="SoftwareTypeName" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="FoxSoftware">
           <Key>
@@ -510,7 +184,6 @@
           <Property Name="FoxSoftwareTypeId" Type="Int32" />
           <NavigationProperty Name="FoxSoftwareType" Relationship="LungmenSoftwareDataModel.FK_FoxSoftwareTypeFoxSoftware" FromRole="FoxSoftware" ToRole="FoxSoftwareType" />
           <NavigationProperty Name="WKAndFoxJoinTables" Relationship="LungmenSoftwareDataModel.FK_FoxSysSoftwareWKAndSysJoinTable" FromRole="FoxSoftware" ToRole="WKAndFoxJoinTable" />
-          <NavigationProperty Name="ImpDocs" Relationship="LungmenSoftwareDataModel.ImpDocFoxSoftware" FromRole="FoxSoftware" ToRole="ImpDoc" />
         </EntityType>
         <EntityType Name="FoxSoftwareType">
           <Key>
@@ -532,43 +205,6 @@
           <Property Name="LastModifiedDate" Type="DateTime" Precision="3" />
           <NavigationProperty Name="WKAndFoxJoinTables" Relationship="LungmenSoftwareDataModel.FK_FoxWorkStationWKAndSysJoinTable" FromRole="FoxWorkStation" ToRole="WKAndFoxJoinTable" />
           <NavigationProperty Name="WorkStationHardwareType" Relationship="LungmenSoftwareDataModel.FK_WorkStationHardwareTypeFoxWorkStation" FromRole="FoxWorkStation" ToRole="WorkStationHardwareType" />
-          <NavigationProperty Name="ImpDocs" Relationship="LungmenSoftwareDataModel.ImpDocFoxWorkStation" FromRole="FoxWorkStation" ToRole="ImpDoc" />
-        </EntityType>
-        <EntityType Name="HistorialChangeRecord">
-          <Key>
-            <PropertyRef Name="HistorialChangeRecordId" />
-          </Key>
-          <Property Name="HistorialChangeRecordId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-        </EntityType>
-        <EntityType Name="ImpDoc">
-          <Key>
-            <PropertyRef Name="ImpDocId" />
-          </Key>
-          <Property Name="ImpDocId" Type="Int64" Nullable="false" />
-          <Property Name="No" Type="String" Nullable="false" MaxLength="25" FixedLength="false" Unicode="true" />
-          <Property Name="Rev" Type="Int32" Nullable="false" />
-          <Property Name="Description" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="Unit" Type="Int16" Nullable="false" />
-          <Property Name="LastModifier" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="ChangeRequestId" Type="Guid" />
-          <Property Name="LastModifiedDate" Type="DateTime" Precision="3" />
-          <Property Name="ImpDocTypeId" Type="Int32" Nullable="false" />
-          <Property Name="Note" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="Package" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="DocTypeId" Type="Int32" />
-          <NavigationProperty Name="ChangeDeltas" Relationship="LungmenSoftwareDataModel.FK_ImpDocChangeDetail" FromRole="ImpDoc" ToRole="ChangeDelta" />
-          <NavigationProperty Name="ChangeRequest" Relationship="LungmenSoftwareDataModel.FK_ChangeRequestImpDoc" FromRole="ImpDoc" ToRole="ChangeRequest" />
-          <NavigationProperty Name="ImpDocType" Relationship="LungmenSoftwareDataModel.FK_ImpDocTypeImpDoc" FromRole="ImpDoc" ToRole="ImpDocType" />
-          <NavigationProperty Name="FoxSoftwares" Relationship="LungmenSoftwareDataModel.ImpDocFoxSoftware" FromRole="ImpDoc" ToRole="FoxSoftware" />
-          <NavigationProperty Name="FoxWorkStations" Relationship="LungmenSoftwareDataModel.ImpDocFoxWorkStation" FromRole="ImpDoc" ToRole="FoxWorkStation" />
-        </EntityType>
-        <EntityType Name="ImpDocType">
-          <Key>
-            <PropertyRef Name="ImpDocTypeId" />
-          </Key>
-          <Property Name="ImpDocTypeId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="DocTypeName" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="ImpDocs" Relationship="LungmenSoftwareDataModel.FK_ImpDocTypeImpDoc" FromRole="ImpDocType" ToRole="ImpDoc" />
         </EntityType>
         <EntityType Name="WKAndFoxJoinTable">
           <Key>
@@ -595,54 +231,6 @@
           <Property Name="HardwareTypeName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="FoxWorkStations" Relationship="LungmenSoftwareDataModel.FK_WorkStationHardwareTypeFoxWorkStation" FromRole="WorkStationHardwareType" ToRole="FoxWorkStation" />
         </EntityType>
-        <Association Name="FK_ImpDocChangeDetail">
-          <End Type="LungmenSoftwareDataModel.ImpDoc" Role="ImpDoc" Multiplicity="0..1" />
-          <End Type="LungmenSoftwareDataModel.ChangeDelta" Role="ChangeDelta" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="ImpDoc">
-              <PropertyRef Name="ImpDocId" />
-            </Principal>
-            <Dependent Role="ChangeDelta">
-              <PropertyRef Name="ImpDocId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_ChangeRequestChangeStatus">
-          <End Type="LungmenSoftwareDataModel.ChangeStatu" Role="ChangeStatu" Multiplicity="0..1" />
-          <End Type="LungmenSoftwareDataModel.ChangeRequest" Role="ChangeRequest" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="ChangeStatu">
-              <PropertyRef Name="ChangeStatusId" />
-            </Principal>
-            <Dependent Role="ChangeRequest">
-              <PropertyRef Name="ChangeStatusId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_ChangeRequestImpDoc">
-          <End Type="LungmenSoftwareDataModel.ChangeRequest" Role="ChangeRequest" Multiplicity="0..1" />
-          <End Type="LungmenSoftwareDataModel.ImpDoc" Role="ImpDoc" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="ChangeRequest">
-              <PropertyRef Name="ChangeRequestId" />
-            </Principal>
-            <Dependent Role="ImpDoc">
-              <PropertyRef Name="ChangeRequestId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_ChangeRequestTypeChangeRequest">
-          <End Type="LungmenSoftwareDataModel.ChangeRequestType" Role="ChangeRequestType" Multiplicity="0..1" />
-          <End Type="LungmenSoftwareDataModel.ChangeRequest" Role="ChangeRequest" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="ChangeRequestType">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="ChangeRequest">
-              <PropertyRef Name="ChangeRequestTypeId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_FoxSoftwareTypeFoxSoftware">
           <End Type="LungmenSoftwareDataModel.FoxSoftwareType" Role="FoxSoftwareType" Multiplicity="0..1" />
           <End Type="LungmenSoftwareDataModel.FoxSoftware" Role="FoxSoftware" Multiplicity="*" />
@@ -691,84 +279,17 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_ImpDocTypeImpDoc">
-          <End Type="LungmenSoftwareDataModel.ImpDocType" Role="ImpDocType" Multiplicity="0..1" />
-          <End Type="LungmenSoftwareDataModel.ImpDoc" Role="ImpDoc" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="ImpDocType">
-              <PropertyRef Name="ImpDocTypeId" />
-            </Principal>
-            <Dependent Role="ImpDoc">
-              <PropertyRef Name="DocTypeId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="ImpDocFoxSoftware">
-          <End Type="LungmenSoftwareDataModel.FoxSoftware" Role="FoxSoftware" Multiplicity="*" />
-          <End Type="LungmenSoftwareDataModel.ImpDoc" Role="ImpDoc" Multiplicity="*" />
-        </Association>
-        <Association Name="ImpDocFoxWorkStation">
-          <End Type="LungmenSoftwareDataModel.FoxWorkStation" Role="FoxWorkStation" Multiplicity="*" />
-          <End Type="LungmenSoftwareDataModel.ImpDoc" Role="ImpDoc" Multiplicity="*" />
-        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
         <EntityContainerMapping StorageEntityContainer="LungmenSoftwareDataModelStoreContainer" CdmEntityContainer="LungmenSoftwareDataEntities">
-          <EntitySetMapping Name="ChangeDeltas">
-            <EntityTypeMapping TypeName="LungmenSoftwareDataModel.ChangeDelta">
-              <MappingFragment StoreEntitySet="ChangeDeltas">
-                <ScalarProperty Name="ImpDocId" ColumnName="ImpDocId" />
-                <ScalarProperty Name="DeltaValue" ColumnName="DeltaValue" />
-                <ScalarProperty Name="OriginalValue" ColumnName="OriginalValue" />
-                <ScalarProperty Name="AttributeChanged" ColumnName="AttributeChanged" />
-                <ScalarProperty Name="ChangeDeltaId" ColumnName="ChangeDeltaId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="ChangeRequestProcessLogs">
-            <EntityTypeMapping TypeName="LungmenSoftwareDataModel.ChangeRequestProcessLog">
-              <MappingFragment StoreEntitySet="ChangeRequestProcessLogs">
-                <ScalarProperty Name="StatusDate" ColumnName="StatusDate" />
-                <ScalarProperty Name="ChangeRequestId" ColumnName="ChangeRequestId" />
-                <ScalarProperty Name="ChangeLogId" ColumnName="ChangeLogId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="ChangeRequests">
-            <EntityTypeMapping TypeName="LungmenSoftwareDataModel.ChangeRequest">
-              <MappingFragment StoreEntitySet="ChangeRequests">
-                <ScalarProperty Name="ChangeRequestTypeId" ColumnName="ChangeRequestTypeId" />
-                <ScalarProperty Name="StatusProcessDate" ColumnName="StatusProcessDate" />
-                <ScalarProperty Name="IsFailed" ColumnName="IsFailed" />
-                <ScalarProperty Name="IsApproved" ColumnName="IsApproved" />
-                <ScalarProperty Name="RequestNo" ColumnName="RequestNo" />
-                <ScalarProperty Name="ChangeStatusId" ColumnName="ChangeStatusId" />
-                <ScalarProperty Name="Initiator" ColumnName="Initiator" />
-                <ScalarProperty Name="Reviewer" ColumnName="Reviewer" />
-                <ScalarProperty Name="LastModifier" ColumnName="LastModifier" />
-                <ScalarProperty Name="LastModifiedDate" ColumnName="LastModifiedDate" />
-                <ScalarProperty Name="InitialDate" ColumnName="InitialDate" />
-                <ScalarProperty Name="CompletedDate" ColumnName="CompletedDate" />
-                <ScalarProperty Name="ChangeRequestId" ColumnName="ChangeRequestId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="ChangeRequestTypes">
-            <EntityTypeMapping TypeName="LungmenSoftwareDataModel.ChangeRequestType">
-              <MappingFragment StoreEntitySet="ChangeRequestTypes">
-                <ScalarProperty Name="RequestTypeName" ColumnName="RequestTypeName" />
+          <EntitySetMapping Name="FoxSoftware_WorkstationType">
+            <EntityTypeMapping TypeName="LungmenSoftwareDataModel.FoxSoftware_WorkstationType">
+              <MappingFragment StoreEntitySet="FoxSoftware_WorkstationType">
+                <ScalarProperty Name="SoftwareTypeName" ColumnName="SoftwareTypeName" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="ChangeStatus">
-            <EntityTypeMapping TypeName="LungmenSoftwareDataModel.ChangeStatu">
-              <MappingFragment StoreEntitySet="ChangeStatus">
-                <ScalarProperty Name="Status" ColumnName="Status" />
-                <ScalarProperty Name="ChangeStatusId" ColumnName="ChangeStatusId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -805,39 +326,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="HistorialChangeRecords">
-            <EntityTypeMapping TypeName="LungmenSoftwareDataModel.HistorialChangeRecord">
-              <MappingFragment StoreEntitySet="HistorialChangeRecords">
-                <ScalarProperty Name="HistorialChangeRecordId" ColumnName="HistorialChangeRecordId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="ImpDocs">
-            <EntityTypeMapping TypeName="LungmenSoftwareDataModel.ImpDoc">
-              <MappingFragment StoreEntitySet="ImpDocs">
-                <ScalarProperty Name="DocTypeId" ColumnName="DocTypeId" />
-                <ScalarProperty Name="Package" ColumnName="Package" />
-                <ScalarProperty Name="Note" ColumnName="Note" />
-                <ScalarProperty Name="ImpDocTypeId" ColumnName="ImpDocTypeId" />
-                <ScalarProperty Name="LastModifiedDate" ColumnName="LastModifiedDate" />
-                <ScalarProperty Name="ChangeRequestId" ColumnName="ChangeRequestId" />
-                <ScalarProperty Name="LastModifier" ColumnName="LastModifier" />
-                <ScalarProperty Name="Unit" ColumnName="Unit" />
-                <ScalarProperty Name="Description" ColumnName="Description" />
-                <ScalarProperty Name="Rev" ColumnName="Rev" />
-                <ScalarProperty Name="No" ColumnName="No" />
-                <ScalarProperty Name="ImpDocId" ColumnName="ImpDocId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="ImpDocTypes">
-            <EntityTypeMapping TypeName="LungmenSoftwareDataModel.ImpDocType">
-              <MappingFragment StoreEntitySet="ImpDocTypes">
-                <ScalarProperty Name="DocTypeName" ColumnName="DocTypeName" />
-                <ScalarProperty Name="ImpDocTypeId" ColumnName="ImpDocTypeId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="WKAndFoxJoinTables">
             <EntityTypeMapping TypeName="LungmenSoftwareDataModel.WKAndFoxJoinTable">
               <MappingFragment StoreEntitySet="WKAndFoxJoinTables">
@@ -862,22 +350,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <AssociationSetMapping Name="ImpDocFoxSoftware" TypeName="LungmenSoftwareDataModel.ImpDocFoxSoftware" StoreEntitySet="ImpDocFoxSoftware">
-            <EndProperty Name="ImpDoc">
-              <ScalarProperty Name="ImpDocId" ColumnName="ImpDocs_ImpDocId" />
-            </EndProperty>
-            <EndProperty Name="FoxSoftware">
-              <ScalarProperty Name="FoxSoftwareId" ColumnName="FoxSoftwares_FoxSoftwareId" />
-            </EndProperty>
-          </AssociationSetMapping>
-          <AssociationSetMapping Name="ImpDocFoxWorkStation" TypeName="LungmenSoftwareDataModel.ImpDocFoxWorkStation" StoreEntitySet="ImpDocFoxWorkStation">
-            <EndProperty Name="ImpDoc">
-              <ScalarProperty Name="ImpDocId" ColumnName="ImpDocs_ImpDocId" />
-            </EndProperty>
-            <EndProperty Name="FoxWorkStation">
-              <ScalarProperty Name="WorkStationId" ColumnName="FoxWorkStations_WorkStationId" />
-            </EndProperty>
-          </AssociationSetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
