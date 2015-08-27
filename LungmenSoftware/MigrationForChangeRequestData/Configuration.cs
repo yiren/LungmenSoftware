@@ -69,7 +69,7 @@ namespace LungmenSoftware.MigrationForChangeRequestData
                 CreatedBy = "Test1",
                 SerialNumber = "20150825E001",
                 CreateDate = DateTime.Parse("2015/08/25"),
-                
+                LastModifiedDate = DateTime.Now
             };
 
             ChangeRequest cr2 = new ChangeRequest()
@@ -78,7 +78,7 @@ namespace LungmenSoftware.MigrationForChangeRequestData
                 CreatedBy = "Test2",
                 SerialNumber = "20150826P002",
                 CreateDate = DateTime.Parse("2015/08/26"),
-                
+                LastModifiedDate = DateTime.Now
             };
 
             ChangeRequest cr3 = new ChangeRequest()
@@ -87,7 +87,7 @@ namespace LungmenSoftware.MigrationForChangeRequestData
                 CreatedBy = "Test3",
                 SerialNumber = "20150827E003",
                 CreateDate = DateTime.Parse("2015/08/27"),
-                
+                LastModifiedDate = DateTime.Now
             };
 
             context.ChangeRequests.AddOrUpdate(cr1);
@@ -121,7 +121,6 @@ namespace LungmenSoftware.MigrationForChangeRequestData
                 ChangeRequestId = cr2Id,
                 ChangeRequest = cr2Entry,
                 InitialDate = DateTime.Today - TimeSpan.FromDays(8),
-                EndDate = DateTime.Parse("2015/08/27")
 
             };
 
