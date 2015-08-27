@@ -11,10 +11,22 @@ namespace LungmenSoftware.Models.CodeFirst.Entities
         //Status Pattern Level 2
         public int ChangeStatusId { get; set; }
 
-        public string StatusName { get; set; }
+        //Status Pattern Level 3
 
-        public ICollection<ChangeRequest> ChangeRequests { get; set; }
+        public int StatusTypeId { get; set; }
 
+        public Guid ChangeRequestId { get; set; }
 
+        public DateTime InitialDate { get; set; }
+
+        public DateTime? ChangeDate { get; set; }
+
+        public DateTime? ReviewDate { get; set; }
+
+        public DateTime? CommentDate { get; set; }
+
+        public DateTime? ApprovedDate { get; set; }
+
+        public DateTime? EndDate { get; set; }
     }
 }

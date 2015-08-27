@@ -77,9 +77,9 @@ namespace LungmenSoftware.Controllers
 
             foreach (var user in users)
             {
-                foreach (var role in user.Roles)
+                foreach (var role in user.Roles) //拿到所有role id
                 {
-                    
+                    string roleName=RoleManager.FindById(role.RoleId).Name;
                 }    
             }
             //var query = from users in UserManager.Users
