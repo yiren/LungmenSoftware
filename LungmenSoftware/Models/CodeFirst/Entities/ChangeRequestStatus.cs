@@ -8,7 +8,6 @@ namespace LungmenSoftware.Models.CodeFirst.Entities
 {
     public class ChangeRequestStatus
     {
-        
         //Status Pattern Level 2
         public int ChangeStatusId { get; set; }
 
@@ -22,10 +21,12 @@ namespace LungmenSoftware.Models.CodeFirst.Entities
 
         public DateTime? ChangeDate { get; set; }
 
+        public DateTime? ReviewDate { get; set; }
+
+        public DateTime? CommentDate { get; set; }
+
+        public DateTime? ApprovedDate { get; set; }
+
         public DateTime? EndDate { get; set; }
-
-        public ChangeRequestStatusType ChangeRequestStatusType { get; set; }
-
-        public ChangeRequest ChangeRequest { get; set; }
     }
 }

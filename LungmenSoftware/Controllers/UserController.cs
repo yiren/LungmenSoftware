@@ -73,7 +73,14 @@ namespace LungmenSoftware.Controllers
             
             var userListForView=new List<UserAttriForList>();
 
-            var users = UserManager.Users.ToList();                        
+            var users = UserManager.Users.ToList();
+            //var userRoles=users.GetUserRoles
+            
+            
+            //var query= from u in users
+            //           join r in roles
+                         
+                           
             
             foreach (var user in users)
             {

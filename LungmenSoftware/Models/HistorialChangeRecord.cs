@@ -12,9 +12,8 @@ namespace LungmenSoftware.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class FoxSoftware_WorkstationType
+    public partial class HistorialChangeRecord
     {
-        public int Id { get; set; }
-        public string SoftwareTypeName { get; set; }
+        public long HistorialChangeRecordId { get; set; }
     }
 }

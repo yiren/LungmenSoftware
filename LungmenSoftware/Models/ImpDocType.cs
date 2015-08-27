@@ -12,23 +12,16 @@ namespace LungmenSoftware.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class FoxWorkStation
+    public partial class ImpDocType
     {
-        public FoxWorkStation()
+        public ImpDocType()
         {
-            this.WKAndFoxJoinTables = new HashSet<WKAndFoxJoinTable>();
             this.ImpDocs = new HashSet<ImpDoc>();
         }
     
-        public int WorkStationId { get; set; }
-        public string WorkStationName { get; set; }
-        public string Owner { get; set; }
-        public Nullable<int> WorkStationHardwareTypeId { get; set; }
-        public Nullable<int> WorkStationSoftwareTypeId { get; set; }
-        public Nullable<System.DateTime> LastModifiedDate { get; set; }
+        public int ImpDocTypeId { get; set; }
+        public string DocTypeName { get; set; }
     
-        public virtual ICollection<WKAndFoxJoinTable> WKAndFoxJoinTables { get; set; }
-        public virtual WorkStationHardwareType WorkStationHardwareType { get; set; }
         public virtual ICollection<ImpDoc> ImpDocs { get; set; }
     }
 }
