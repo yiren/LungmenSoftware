@@ -26,10 +26,10 @@ namespace LungmenSoftware.Models.ViewModel
 
         public DateTime CreateDate { get; set; }
 
-        public DateTime LastModifiedDate { get; set; }
+        public DateTime? LastModifiedDate { get; set; }
 
         //status type class
-        public int StatusTypeId { get; set; }
+        public int StatusId { get;set; }
         public string StatusName { get; set; }
 
         //status class

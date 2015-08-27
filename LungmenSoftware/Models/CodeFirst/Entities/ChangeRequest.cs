@@ -22,7 +22,7 @@ namespace LungmenSoftware.Models.CodeFirst.Entities
 
         public DateTime CreateDate { get; set; }
 
-        public DateTime LastModifiedDate { get; set; }
+        public DateTime? LastModifiedDate { get; set; }
 
         public List<ChangeRequestStatus> ChangeRequestStatuses { get; set; }
 
