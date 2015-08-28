@@ -79,7 +79,8 @@ namespace LungmenSoftware.MigrationForChangeRequestData
                 CreatedBy = "Test1",
                 SerialNumber = "20150825E001",
                 CreateDate = DateTime.Parse("2015/08/25"),
-                LastModifiedDate = DateTime.Now - TimeSpan.FromDays(3)
+                LastModifiedDate = DateTime.Now - TimeSpan.FromDays(3),
+                Description = "MVD Driver Version Update"
             };
 
             ChangeRequest cr2 = new ChangeRequest()
@@ -88,7 +89,8 @@ namespace LungmenSoftware.MigrationForChangeRequestData
                 CreatedBy = "Test2",
                 SerialNumber = "20150826P002",
                 CreateDate = DateTime.Parse("2015/08/26"),
-                LastModifiedDate = DateTime.Now - TimeSpan.FromDays(3)
+                LastModifiedDate = DateTime.Now - TimeSpan.FromDays(3),
+                Description = "FBM 232 CP Image Version Update"
             };
 
             ChangeRequest cr3 = new ChangeRequest()
@@ -97,7 +99,8 @@ namespace LungmenSoftware.MigrationForChangeRequestData
                 CreatedBy = "Test3",
                 SerialNumber = "20150827E003",
                 CreateDate = DateTime.Parse("2015/08/27"),
-                LastModifiedDate = DateTime.Now - TimeSpan.FromDays(3)
+                LastModifiedDate = DateTime.Now - TimeSpan.FromDays(3),
+                Description = "FDSI Version Update"
             };
 
             ChangeRequest cr4 = new ChangeRequest()
@@ -106,7 +109,9 @@ namespace LungmenSoftware.MigrationForChangeRequestData
                 CreatedBy = "Test4",
                 SerialNumber = "20150828P004",
                 CreateDate = DateTime.Parse("2015/08/28"),
-                LastModifiedDate = DateTime.Now - TimeSpan.FromDays(2)
+                LastModifiedDate = DateTime.Now - TimeSpan.FromDays(2),
+                Description = "FoxView Upgrade"
+
             };
 
             context.ChangeRequests.AddOrUpdate(cr1);
@@ -163,7 +168,8 @@ namespace LungmenSoftware.MigrationForChangeRequestData
                 ChangeRequestStatusType = pendingForApprovalEntry,
                 ChangeRequestId = cr3Id,
                 ChangeRequest = cr3Entry,
-                InitialDate = DateTime.Today - TimeSpan.FromDays(3)
+                InitialDate = DateTime.Today - TimeSpan.FromDays(3),
+                EndDate = DateTime.Today - TimeSpan.FromDays(4)
             };
 
             ChangeRequestStatus secondForCR3 = new ChangeRequestStatus()
@@ -181,7 +187,8 @@ namespace LungmenSoftware.MigrationForChangeRequestData
                 ChangeRequestStatusType = cancelEntry,
                 ChangeRequestId = cr4Id,
                 ChangeRequest = cr4Entry,
-                InitialDate = DateTime.Today - TimeSpan.FromDays(5)
+                InitialDate = DateTime.Today - TimeSpan.FromDays(5),
+                EndDate = DateTime.Today - TimeSpan.FromDays(4)
             };
 
             ChangeRequestStatus secondStatusForCR4 = new ChangeRequestStatus()
@@ -190,7 +197,8 @@ namespace LungmenSoftware.MigrationForChangeRequestData
                 ChangeRequestStatusType = cancelEntry,
                 ChangeRequestId = cr4Id,
                 ChangeRequest = cr4Entry,
-                InitialDate = DateTime.Today - TimeSpan.FromDays(4)
+                InitialDate = DateTime.Today - TimeSpan.FromDays(4),
+                EndDate = DateTime.Today-TimeSpan.FromDays(3)
             };
 
             ChangeRequestStatus thirdStatusForCR4 = new ChangeRequestStatus()

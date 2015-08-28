@@ -46,11 +46,24 @@ namespace LungmenSoftware.Controllers
             var crToUpdate = crService.FindChangeRequestById(crEntry.ChangeRequestId);
             if (ModelState.IsValid)
             {
+                crToUpdate.Description = crEntry.Description;
                 crService.AddChangeRequestEntry(crToUpdate);
             }
 
             return RedirectToAction("Index");
         }
 
+
+        public ActionResult CancelChangeRequest(Guid id)
+        {
+            var crEntry= crService.FindChangeRequestById(id);
+            if (crEntry == null)
+            {
+                return HttpNotFound();
+            }
+
+            return View(crEntry);
+
+        }
     }
 }

@@ -20,6 +20,7 @@ namespace LungmenSoftware.Models.Service
                     on cr.ChangeRequestId equals s.ChangeRequestId
                 join t in db.ChangeRequestStatusTypes
                     on s.StatusTypeId equals t.StatusTypeId
+                orderby cr.LastModifiedDate descending 
                 select new ChangeRequestInfo
                 {
                     ChangeRequestId = cr.ChangeRequestId,

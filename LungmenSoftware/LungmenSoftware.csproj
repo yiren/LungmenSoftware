@@ -1338,6 +1338,7 @@
     <Content Include="Views\User\UserDetail.cshtml" />
     <Content Include="Views\ChangeRequest\Index.cshtml" />
     <Content Include="Views\ChangeRequest\AddChangeRequest.cshtml" />
+    <Content Include="Views\ChangeRequest\CancelChangeRequest.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
