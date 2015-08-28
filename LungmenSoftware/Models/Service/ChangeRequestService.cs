@@ -15,7 +15,7 @@ namespace LungmenSoftware.Models.Service
         public List<ChangeRequestInfo> GetChangeRequestList()
         {
             var query = from cr in db.ChangeRequests
-                join s in db.ChangeRequestStatuses
+                join s in db.ChangeRequestStatuses.Where(s=>s.EndDate ==null)
                     on cr.ChangeRequestId equals s.ChangeRequestId
                 join t in db.ChangeRequestStatusTypes
                     on s.StatusTypeId equals t.StatusTypeId

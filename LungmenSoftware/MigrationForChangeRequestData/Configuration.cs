@@ -51,9 +51,15 @@ namespace LungmenSoftware.MigrationForChangeRequestData
             {
                 StatusName = "Completed"
             };
+            ChangeRequestStatusType Cancel = new ChangeRequestStatusType()
+            {
+                StatusName = "Cancelled"
+            };
+
             context.ChangeRequestStatusTypes.AddOrUpdate(PendingForApproval);
             context.ChangeRequestStatusTypes.AddOrUpdate(HasComment);
             context.ChangeRequestStatusTypes.AddOrUpdate(Complete);
+            context.ChangeRequestStatusTypes.AddOrUpdate(Cancel);
             #endregion
 
             var pendingForApprovalEntry = context.Entry(PendingForApproval).Entity;
@@ -62,6 +68,10 @@ namespace LungmenSoftware.MigrationForChangeRequestData
             var hasCommentId = hasCommentIdEntry.StatusTypeId;
             var completeIdEntry = context.Entry(Complete).Entity;
             var completeId = completeIdEntry.StatusTypeId;
+            var cancelEntry = context.Entry(Cancel).Entity;
+            var cancelId = cancelEntry.StatusTypeId;
+
+
             #region ChangeRequest Data
             ChangeRequest cr1=new ChangeRequest()
             {
@@ -69,7 +79,7 @@ namespace LungmenSoftware.MigrationForChangeRequestData
                 CreatedBy = "Test1",
                 SerialNumber = "20150825E001",
                 CreateDate = DateTime.Parse("2015/08/25"),
-                LastModifiedDate = DateTime.Now
+                LastModifiedDate = DateTime.Now - TimeSpan.FromDays(3)
             };
 
             ChangeRequest cr2 = new ChangeRequest()
@@ -78,7 +88,7 @@ namespace LungmenSoftware.MigrationForChangeRequestData
                 CreatedBy = "Test2",
                 SerialNumber = "20150826P002",
                 CreateDate = DateTime.Parse("2015/08/26"),
-                LastModifiedDate = DateTime.Now
+                LastModifiedDate = DateTime.Now - TimeSpan.FromDays(3)
             };
 
             ChangeRequest cr3 = new ChangeRequest()
@@ -87,12 +97,22 @@ namespace LungmenSoftware.MigrationForChangeRequestData
                 CreatedBy = "Test3",
                 SerialNumber = "20150827E003",
                 CreateDate = DateTime.Parse("2015/08/27"),
-                LastModifiedDate = DateTime.Now
+                LastModifiedDate = DateTime.Now - TimeSpan.FromDays(3)
+            };
+
+            ChangeRequest cr4 = new ChangeRequest()
+            {
+                ChangeRequestId = Guid.NewGuid(),
+                CreatedBy = "Test4",
+                SerialNumber = "20150828P004",
+                CreateDate = DateTime.Parse("2015/08/28"),
+                LastModifiedDate = DateTime.Now - TimeSpan.FromDays(2)
             };
 
             context.ChangeRequests.AddOrUpdate(cr1);
             context.ChangeRequests.AddOrUpdate(cr2);
             context.ChangeRequests.AddOrUpdate(cr3);
+            context.ChangeRequests.AddOrUpdate(cr4);
             #endregion
 
             var cr1Entry = context.Entry(cr1).Entity;
@@ -101,6 +121,8 @@ namespace LungmenSoftware.MigrationForChangeRequestData
             var cr2Id = cr2Entry.ChangeRequestId;
             var cr3Entry = context.Entry(cr3).Entity;
             var cr3Id = cr3Entry.ChangeRequestId;
+            var cr4Entry = context.Entry(cr4).Entity;
+            var cr4Id = cr4Entry.ChangeRequestId;
 
 
             #region ChangeRequestStatus Data
@@ -121,7 +143,8 @@ namespace LungmenSoftware.MigrationForChangeRequestData
                 ChangeRequestId = cr2Id,
                 ChangeRequest = cr2Entry,
                 InitialDate = DateTime.Today - TimeSpan.FromDays(8),
-
+                ChangeDate = DateTime.Now - TimeSpan.FromDays(5),
+                EndDate = DateTime.Now- TimeSpan.FromDays(5)
             };
 
             ChangeRequestStatus secondStatusForCR2 =new ChangeRequestStatus()
@@ -134,7 +157,16 @@ namespace LungmenSoftware.MigrationForChangeRequestData
                 
             };
 
-            ChangeRequestStatus statusForCR3 = new ChangeRequestStatus()
+            ChangeRequestStatus firstForCR3 = new ChangeRequestStatus()
+            {
+                StatusTypeId = pendingForApprovalId,
+                ChangeRequestStatusType = pendingForApprovalEntry,
+                ChangeRequestId = cr3Id,
+                ChangeRequest = cr3Entry,
+                InitialDate = DateTime.Today - TimeSpan.FromDays(3)
+            };
+
+            ChangeRequestStatus secondForCR3 = new ChangeRequestStatus()
             {
                 StatusTypeId = completeId,
                 ChangeRequestStatusType = completeIdEntry,
@@ -143,10 +175,41 @@ namespace LungmenSoftware.MigrationForChangeRequestData
                 InitialDate = DateTime.Today - TimeSpan.FromDays(3)
             };
 
+            ChangeRequestStatus fistStatusForCR4 = new ChangeRequestStatus()
+            {
+                StatusTypeId = cancelId,
+                ChangeRequestStatusType = cancelEntry,
+                ChangeRequestId = cr4Id,
+                ChangeRequest = cr4Entry,
+                InitialDate = DateTime.Today - TimeSpan.FromDays(5)
+            };
+
+            ChangeRequestStatus secondStatusForCR4 = new ChangeRequestStatus()
+            {
+                StatusTypeId = cancelId,
+                ChangeRequestStatusType = cancelEntry,
+                ChangeRequestId = cr4Id,
+                ChangeRequest = cr4Entry,
+                InitialDate = DateTime.Today - TimeSpan.FromDays(4)
+            };
+
+            ChangeRequestStatus thirdStatusForCR4 = new ChangeRequestStatus()
+            {
+                StatusTypeId = cancelId,
+                ChangeRequestStatusType = cancelEntry,
+                ChangeRequestId = cr4Id,
+                ChangeRequest = cr4Entry,
+                InitialDate = DateTime.Today - TimeSpan.FromDays(2)
+            };
+
             context.ChangeRequestStatuses.AddOrUpdate(statusForCR1);
             context.ChangeRequestStatuses.AddOrUpdate(firstStatusForCR2);
             context.ChangeRequestStatuses.AddOrUpdate(secondStatusForCR2);
-            context.ChangeRequestStatuses.AddOrUpdate(statusForCR3);
+            context.ChangeRequestStatuses.AddOrUpdate(firstForCR3);
+            context.ChangeRequestStatuses.AddOrUpdate(secondForCR3);
+            context.ChangeRequestStatuses.AddOrUpdate(fistStatusForCR4);
+            context.ChangeRequestStatuses.AddOrUpdate(secondStatusForCR4);
+            context.ChangeRequestStatuses.AddOrUpdate(thirdStatusForCR4);
 
             #endregion
         }
