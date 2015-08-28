@@ -288,6 +288,14 @@
     <Compile Include="MigrationForChangeRequestData\201508280013241_UnknownModelChanges.Designer.cs">
       <DependentUpon>201508280013241_UnknownModelChanges.cs</DependentUpon>
     </Compile>
+    <Compile Include="MigrationForChangeRequestData\201508280143430_AddDescriptionInChangeRequest.cs" />
+    <Compile Include="MigrationForChangeRequestData\201508280143430_AddDescriptionInChangeRequest.Designer.cs">
+      <DependentUpon>201508280143430_AddDescriptionInChangeRequest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="MigrationForChangeRequestData\201508280154466_AddNoteInChangeRequest.cs" />
+    <Compile Include="MigrationForChangeRequestData\201508280154466_AddNoteInChangeRequest.Designer.cs">
+      <DependentUpon>201508280154466_AddNoteInChangeRequest.cs</DependentUpon>
+    </Compile>
     <Compile Include="MigrationForChangeRequestData\Configuration.cs" />
     <Compile Include="Migrations\201508210109128_Initial.cs" />
     <Compile Include="Migrations\201508210109128_Initial.Designer.cs">
@@ -1329,6 +1337,7 @@
     <Content Include="Views\Role\ListOfRoles.cshtml" />
     <Content Include="Views\User\UserDetail.cshtml" />
     <Content Include="Views\ChangeRequest\Index.cshtml" />
+    <Content Include="Views\ChangeRequest\AddChangeRequest.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -1355,6 +1364,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="MigrationForChangeRequestData\201508280013241_UnknownModelChanges.resx">
       <DependentUpon>201508280013241_UnknownModelChanges.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MigrationForChangeRequestData\201508280143430_AddDescriptionInChangeRequest.resx">
+      <DependentUpon>201508280143430_AddDescriptionInChangeRequest.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MigrationForChangeRequestData\201508280154466_AddNoteInChangeRequest.resx">
+      <DependentUpon>201508280154466_AddNoteInChangeRequest.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201508210109128_Initial.resx">
       <DependentUpon>201508210109128_Initial.cs</DependentUpon>

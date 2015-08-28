@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Web;
 using LungmenSoftware.Models.CodeFirst;
@@ -31,7 +32,8 @@ namespace LungmenSoftware.Models.Service
                     EndDate = s.EndDate,
                     InitialDate = s.InitialDate,
                     StatusName = t.StatusName,
-                    CreateDate = cr.CreateDate
+                    CreateDate = cr.CreateDate,
+                    Description = cr.Description
                 };
             return query.ToList();
         } 
@@ -41,6 +43,35 @@ namespace LungmenSoftware.Models.Service
             return db.ChangeRequestStatusTypes.ToList();
         }
 
+        public void AddChangeRequestEntry(ChangeRequest crEntry)
+        {
+            
+            crEntry.ChangeRequestStatuses=new List<ChangeRequestStatus>()
+            {
+                new ChangeRequestStatus()
+                {
+                    InitialDate = DateTime.Today,
+
+                    ChangeRequestId = crEntry.ChangeRequestId,
+                    ChangeRequest = crEntry,
+                    StatusTypeId = 1,
+                    ChangeRequestStatusType = db.ChangeRequestStatusTypes.Find(1)
+                }
+            };
+
+            db.SaveChanges();
+        }
+
+        public ChangeRequest FindChangeRequestById(Guid changeRequestId)
+        {
+            return db.ChangeRequests.Find(changeRequestId);
+        }
+
+        public void SaveChangeRequestTemp(ChangeRequest cr)
+        {
+            db.ChangeRequests.Add(cr);
+            db.SaveChanges();
+        }
     }
 
    

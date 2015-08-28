@@ -40,6 +40,7 @@ namespace LungmenSoftware.Models.CodeFirst
                 Property(c => c.CreatedBy).HasMaxLength(100).IsRequired();
                 Property(c => c.ReviewBy).HasMaxLength(100);
                 Property(c => c.SerialNumber).HasMaxLength(50).IsRequired();
+                //Property(c => c.Description).HasMaxLength(150).IsRequired();
             }   
         }
 
