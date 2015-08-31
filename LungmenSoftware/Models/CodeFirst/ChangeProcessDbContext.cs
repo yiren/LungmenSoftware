@@ -73,6 +73,8 @@ namespace LungmenSoftware.Models.CodeFirst
             HasKey(t => t.StatusTypeId);
             Property(t => t.StatusName).HasMaxLength(50)
                 .IsRequired();
+            HasOptional(t => t.NextStatus).WithMany()
+                .HasForeignKey(t => t.NextStatusId);
         }
     }
 }

@@ -24,6 +24,8 @@ namespace LungmenSoftware.Models.CodeFirst.Entities
 
         public DateTime? EndDate { get; set; }
 
+        public bool IsCurrent { get; set; }
+
         public ChangeRequestStatusType ChangeRequestStatusType { get; set; }
 
         public ChangeRequest ChangeRequest { get; set; }

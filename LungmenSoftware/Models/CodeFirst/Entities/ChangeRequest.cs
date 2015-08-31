@@ -22,7 +22,10 @@ namespace LungmenSoftware.Models.CodeFirst.Entities
         public string ReviewBy { get; set; }
         [ScaffoldColumn(false)]
         public string ApprovedBy { get; set; }
-        
+
+        //Change Request Owner Tied To Status 
+        public string Owner { get; set; }
+
         public DateTime CreateDate { get; set; }
         
         public DateTime LastModifiedDate { get; set; }

@@ -12,6 +12,10 @@ namespace LungmenSoftware.Models.CodeFirst.Entities
 
         public string StatusName { get; set; }
 
+        public int? NextStatusId { get; set; }
+
+        public ChangeRequestStatusType NextStatus { get; set; }
+
         public List<ChangeRequestStatus> ChangeRequestStatuses { get; set; }
     }
 }
