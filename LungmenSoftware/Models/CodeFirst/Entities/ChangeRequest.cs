@@ -12,19 +12,19 @@ namespace LungmenSoftware.Models.CodeFirst.Entities
         //Business Columns
 
         public Guid ChangeRequestId { get; set; }
-        [ScaffoldColumn(false)]
+       
         public string SerialNumber { get; set; }
 
         public string Description { get; set; }
-        [ScaffoldColumn(false)]
+        
         public string CreatedBy { get; set; }
         [ScaffoldColumn(false)]
         public string ReviewBy { get; set; }
         [ScaffoldColumn(false)]
         public string ApprovedBy { get; set; }
-        [ScaffoldColumn(false)]
+        
         public DateTime CreateDate { get; set; }
-        [ScaffoldColumn(false)]
+        
         public DateTime LastModifiedDate { get; set; }
 
         public string Note { get; set; }

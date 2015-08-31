@@ -1,20 +1,52 @@
 ﻿@model LungmenSoftware.Models.CodeFirst.Entities.ChangeRequest
 
 @{
-    ViewBag.Title = "CancelChangeRequest";
+    ViewBag.Title = "取消" + @Model.SerialNumber + " 軟體修改";
 }
 
-<h2>確認取消軟體修改單</h2>
+<h2>取消 @Model.SerialNumber 軟體修改</h2>
 
 <div>
     <hr />
     <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.SerialNumber)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.SerialNumber)
+        </dd>
+
         <dt>
             @Html.DisplayNameFor(model => model.Description)
         </dt>
 
         <dd>
             @Html.DisplayFor(model => model.Description)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CreatedBy)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CreatedBy)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CreateDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CreateDate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.LastModifiedDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.LastModifiedDate)
         </dd>
 
         <dt>
@@ -28,6 +60,15 @@
     </dl>
 </div>
 <p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.ChangeRequestId }) |
-    @Html.ActionLink("Back to List", "Index")
+    @using (Html.BeginForm())
+    {
+        @Html.HiddenFor(model=>model.ChangeRequestId)
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="確認取消變更" class="btn btn-danger" />
+            </div>
+        </div>
+    }
+    |
+    @Html.ActionLink("回到軟體修改清單", "Index")
 </p>

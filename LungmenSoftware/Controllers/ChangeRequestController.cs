@@ -35,6 +35,8 @@ namespace LungmenSoftware.Controllers
             cr.CreateDate=DateTime.Now;
             cr.LastModifiedDate=DateTime.Now;
             cr.SerialNumber = string.Format("{0:yyyyMMdd}", DateTime.Today) +"E"+ new Random().Next(10, 99);
+
+            //這邊以後可能要修掉
             crService.SaveChangeRequestTemp(cr);
             //ViewBag.   
             return View(cr);
@@ -44,6 +46,10 @@ namespace LungmenSoftware.Controllers
         public ActionResult AddChangeRequest(ChangeRequest crEntry)
         {
             var crToUpdate = crService.FindChangeRequestById(crEntry.ChangeRequestId);
+            if (crToUpdate == null)
+            {
+                return HttpNotFound();
+            }
             if (ModelState.IsValid)
             {
                 crToUpdate.Description = crEntry.Description;
@@ -64,6 +70,34 @@ namespace LungmenSoftware.Controllers
 
             return View(crEntry);
 
+        }
+
+
+        [HttpPost]
+        public ActionResult CancelChangeRequest(ChangeRequest cr)
+        {
+            var crEntry = crService.FindChangeRequestById(cr.ChangeRequestId);
+            if (crEntry == null)
+            {
+                return HttpNotFound();
+            }
+            if (ModelState.IsValid)
+            {
+                crService.StatusUpdateForCancellation(crEntry);
+            }
+
+            return RedirectToAction("Index");
+
+        }
+
+        public ActionResult ChangeRequestHistorialData()
+        {
+            ChangeRequestView dataForView=new ChangeRequestView()
+            {
+                ChangeRequests = crService.GetChangeRequestHistory()
+            };
+
+            return View(dataForView);
         }
     }
 }
