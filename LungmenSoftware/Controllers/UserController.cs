@@ -52,13 +52,9 @@ namespace LungmenSoftware.Controllers
         // GET: User
         public ActionResult Index()
         {
-            if (User.Identity.IsAuthenticated && (User.IsInRole("Admin")||User.IsInRole("Reviewer")))
+            if (User.Identity.IsAuthenticated )
             {
                 return RedirectToAction("ListOfUsers");
-            }
-            else if (User.Identity.IsAuthenticated)
-            {
-                return RedirectToAction("UserDetail",new {Id=User.Identity.GetUserId()});
             }
             else
             {
@@ -80,8 +76,6 @@ namespace LungmenSoftware.Controllers
             //var query= from u in users
             //           join r in roles
                          
-                           
-            
             foreach (var user in users)
             {
                 UserAttriForList userForList = new UserAttriForList();
@@ -149,7 +143,7 @@ namespace LungmenSoftware.Controllers
             return UserManager.GetRoles(id).ToList();
         }
 
-        [HttpPost]
+       [HttpPost]
        [ValidateAntiForgeryToken]
         public ActionResult EditUser(//注意傳遞的Model物件是否有包含需驗證欄位
             ApplicationUser userToUpdate, params string[] selectedRole)

@@ -26,6 +26,8 @@ namespace LungmenSoftware.Models.CodeFirst.Entities
         //Change Request Owner Tied To Status 
         public string Owner { get; set; }
 
+        public bool? IsActive { get; set; }
+
         public DateTime CreateDate { get; set; }
         
         public DateTime LastModifiedDate { get; set; }

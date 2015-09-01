@@ -300,6 +300,10 @@
     <Compile Include="MigrationForChangeRequestData\201508310654597_AddNextStatusIsCurrentAndOwner.Designer.cs">
       <DependentUpon>201508310654597_AddNextStatusIsCurrentAndOwner.cs</DependentUpon>
     </Compile>
+    <Compile Include="MigrationForChangeRequestData\201508310858317_AddIsActive.cs" />
+    <Compile Include="MigrationForChangeRequestData\201508310858317_AddIsActive.Designer.cs">
+      <DependentUpon>201508310858317_AddIsActive.cs</DependentUpon>
+    </Compile>
     <Compile Include="MigrationForChangeRequestData\Configuration.cs" />
     <Compile Include="Migrations\201508210109128_Initial.cs" />
     <Compile Include="Migrations\201508210109128_Initial.Designer.cs">
@@ -1344,6 +1348,8 @@
     <Content Include="Views\ChangeRequest\AddChangeRequest.cshtml" />
     <Content Include="Views\ChangeRequest\CancelChangeRequest.cshtml" />
     <Content Include="Views\ChangeRequest\ChangeRequestHistorialData.cshtml" />
+    <Content Include="Views\ChangeRequest\EditChangeRequest.cshtml" />
+    <Content Include="Views\ChangeRequest\ReviewChangeRequest.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -1379,6 +1385,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="MigrationForChangeRequestData\201508310654597_AddNextStatusIsCurrentAndOwner.resx">
       <DependentUpon>201508310654597_AddNextStatusIsCurrentAndOwner.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MigrationForChangeRequestData\201508310858317_AddIsActive.resx">
+      <DependentUpon>201508310858317_AddIsActive.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201508210109128_Initial.resx">
       <DependentUpon>201508210109128_Initial.cs</DependentUpon>

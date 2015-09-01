@@ -27,6 +27,16 @@ namespace LungmenSoftware.Controllers
             return View(dataForView);
         }
 
+        public ActionResult ChangeRequestHistorialData()
+        {
+            ChangeRequestView dataForView = new ChangeRequestView()
+            {
+                ChangeRequests = crService.GetChangeRequestHistory()
+            };
+
+            return View(dataForView);
+        }
+
         public ActionResult AddChangeRequest()
         {
             ChangeRequest cr=new ChangeRequest();
@@ -59,6 +69,19 @@ namespace LungmenSoftware.Controllers
             return RedirectToAction("Index");
         }
 
+        public ActionResult EditChangeRequest(Guid id)
+        {
+            var crEntry = crService.FindChangeRequestById(id);
+            if (crEntry == null)
+            {
+                return HttpNotFound();
+            }
+
+            return View(crEntry);
+        }
+
+
+
 
         public ActionResult CancelChangeRequest(Guid id)
         {
@@ -90,14 +113,26 @@ namespace LungmenSoftware.Controllers
 
         }
 
-        public ActionResult ChangeRequestHistorialData()
+        public ActionResult ReviewChangeRequest(Guid id)
         {
-            ChangeRequestView dataForView=new ChangeRequestView()
+            var crEntry = crService.FindChangeRequestById(id);
+            if (crEntry == null)
             {
-                ChangeRequests = crService.GetChangeRequestHistory()
-            };
+                return HttpNotFound();
+            }
+            return View(crEntry);
+        }
 
-            return View(dataForView);
+        public ActionResult ApproveChangeRequest(Guid id)
+        {
+            var crEntry = crService.FindChangeRequestById(id);
+            if (crEntry == null)
+            {
+                return HttpNotFound();
+            }
+
+            crService.StatusUpdateForApproval(crEntry);
+            return RedirectToAction("Index");
         }
     }
 }

@@ -100,23 +100,20 @@ namespace LungmenSoftware.Models.Service
             db.SaveChanges();
         }
 
-        public void StatusUpdateForCancellation(ChangeRequest crEntry)
+        public void StatusUpdateForCancellation(ChangeRequest cr)
         {
-            
-            var totalStatusRecord = db.ChangeRequestStatuses.Where(s => 
-                s.ChangeRequestId.Equals(crEntry.ChangeRequestId)
-                &&
-                s.EndDate == null);
-            foreach (var record in totalStatusRecord)
-            {
-                record.ChangeDate=DateTime.Today;
-                record.EndDate = DateTime.Today;
-            }
+
+            ChangeRequestStatus oldStatus = db.ChangeRequestStatuses
+                .Where(s => s.ChangeRequestId.Equals(cr.ChangeRequestId)
+                          ).OrderByDescending(s => s.StatusTypeId).FirstOrDefault();
+            oldStatus.EndDate = DateTime.Now;
+
+            cr.IsActive = false;
 
             db.ChangeRequestStatuses.Add(new ChangeRequestStatus()
             {
-                ChangeRequestId = crEntry.ChangeRequestId,
-                ChangeRequest = crEntry,
+                ChangeRequestId = cr.ChangeRequestId,
+                ChangeRequest = cr,
                 ChangeDate = DateTime.Today,
                 StatusTypeId = 4,
                 ChangeRequestStatusType = db.ChangeRequestStatusTypes.Find(4),
@@ -126,11 +123,33 @@ namespace LungmenSoftware.Models.Service
             });
 
             db.SaveChanges();
-
         }
 
 
-        
+        public void StatusUpdateForApproval(ChangeRequest cr)
+        {
+            ChangeRequestStatus oldStatus = db.ChangeRequestStatuses
+                .Where(s => s.ChangeRequestId.Equals(cr.ChangeRequestId)
+                          ).OrderByDescending(s=>s.StatusTypeId).FirstOrDefault();
+            oldStatus.EndDate=DateTime.Now;
+
+            cr.IsActive = false;
+            
+            db.ChangeRequestStatuses.Add(new ChangeRequestStatus()
+            {
+                ChangeRequestId = cr.ChangeRequestId,
+                ChangeRequest = cr,
+                ChangeDate = DateTime.Today,
+                StatusTypeId = 3,
+                ChangeRequestStatusType = db.ChangeRequestStatusTypes.Find(3),
+                EndDate = DateTime.Today,
+                InitialDate = DateTime.Today,
+
+            });
+
+            db.SaveChanges();
+
+        }
     }
 
    
