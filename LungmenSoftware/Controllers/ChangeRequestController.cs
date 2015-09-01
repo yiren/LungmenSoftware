@@ -3,15 +3,45 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using LungmenSoftware.Models;
 using LungmenSoftware.Models.CodeFirst.Entities;
 using LungmenSoftware.Models.Service;
 using LungmenSoftware.Models.ViewModel;
+using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.Owin;
 
 namespace LungmenSoftware.Controllers
 {
     [Authorize]
     public class ChangeRequestController : Controller
     {
+
+        private ApplicationUserManager _userManager;
+        public ApplicationUserManager UserManager
+        {
+            get
+            {
+                return _userManager ?? HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
+            }
+            private set
+            {
+                _userManager = value;
+            }
+        }
+
+        private ApplicationRoleManager _roleManager;
+        public ApplicationRoleManager RoleManager
+        {
+            get
+            {
+                return _roleManager ?? HttpContext.GetOwinContext().Get<ApplicationRoleManager>();
+            }
+            private set
+            {
+                _roleManager = value;
+            }
+        }
+
         private ChangeRequestService crService;
 
         public ChangeRequestController()
@@ -41,13 +71,11 @@ namespace LungmenSoftware.Controllers
         {
             ChangeRequest cr=new ChangeRequest();
             cr.ChangeRequestId = Guid.NewGuid();
-            cr.CreatedBy = User.Identity.Name;
-            cr.CreateDate=DateTime.Now;
-            cr.LastModifiedDate=DateTime.Now;
+           
             cr.SerialNumber = string.Format("{0:yyyyMMdd}", DateTime.Today) +"E"+ new Random().Next(10, 99);
 
             //這邊以後可能要修掉
-            crService.SaveChangeRequestTemp(cr);
+            
             //ViewBag.   
             return View(cr);
         }
@@ -55,15 +83,18 @@ namespace LungmenSoftware.Controllers
         [HttpPost]
         public ActionResult AddChangeRequest(ChangeRequest crEntry)
         {
-            var crToUpdate = crService.FindChangeRequestById(crEntry.ChangeRequestId);
-            if (crToUpdate == null)
-            {
-                return HttpNotFound();
-            }
+            crService.EntityToModifiedState(crEntry);
+            crEntry.CreatedBy = User.Identity.Name;
+            crEntry.CreateDate = DateTime.Now;
+            crEntry.LastModifiedDate = DateTime.Now;
+
+            crEntry.Owner = "test2@taipower.com.tw";//crService.GetReviewer();
+            crEntry.ReviewBy = "test2@taipower.com.tw";
             if (ModelState.IsValid)
             {
-                crToUpdate.Description = crEntry.Description;
-                crService.AddChangeRequestEntry(crToUpdate);
+                
+                crEntry.Description = crEntry.Description;
+                crService.AddChangeRequestEntry(crEntry);
             }
 
             return RedirectToAction("Index");
@@ -71,7 +102,7 @@ namespace LungmenSoftware.Controllers
 
         public ActionResult EditChangeRequest(Guid id)
         {
-            var crEntry = crService.FindChangeRequestById(id);
+            var crEntry = crService.FindByChangeRequestId(id);
             if (crEntry == null)
             {
                 return HttpNotFound();
@@ -80,12 +111,26 @@ namespace LungmenSoftware.Controllers
             return View(crEntry);
         }
 
-
+        [HttpPost]
+        public ActionResult EditChangeRequest(ChangeRequest crEntry)
+        {
+            var crToUpdate = crService.FindByChangeRequestId(crEntry.ChangeRequestId);
+            if (crToUpdate == null)
+            {
+                return HttpNotFound();
+            }
+            if (ModelState.IsValid)
+            {
+                crToUpdate.Owner = crToUpdate.ReviewBy;
+                crService.StatusUpdateForClarification(crToUpdate);
+            }
+            return RedirectToAction("Index");
+        }
 
 
         public ActionResult CancelChangeRequest(Guid id)
         {
-            var crEntry= crService.FindChangeRequestById(id);
+            var crEntry= crService.FindByChangeRequestId(id);
             if (crEntry == null)
             {
                 return HttpNotFound();
@@ -99,7 +144,7 @@ namespace LungmenSoftware.Controllers
         [HttpPost]
         public ActionResult CancelChangeRequest(ChangeRequest cr)
         {
-            var crEntry = crService.FindChangeRequestById(cr.ChangeRequestId);
+            var crEntry = crService.FindByChangeRequestId(cr.ChangeRequestId);
             if (crEntry == null)
             {
                 return HttpNotFound();
@@ -115,23 +160,37 @@ namespace LungmenSoftware.Controllers
 
         public ActionResult ReviewChangeRequest(Guid id)
         {
-            var crEntry = crService.FindChangeRequestById(id);
+            var crEntry = crService.FindByChangeRequestId(id);
             if (crEntry == null)
             {
                 return HttpNotFound();
             }
+
             return View(crEntry);
         }
 
         public ActionResult ApproveChangeRequest(Guid id)
         {
-            var crEntry = crService.FindChangeRequestById(id);
+            var crEntry = crService.FindByChangeRequestId(id);
+            if (crEntry == null)
+            {
+                return HttpNotFound();
+            }
+            
+            crService.StatusUpdateForApproval(crEntry);
+            return RedirectToAction("Index");
+        }
+
+        public ActionResult CommentChangeRequest(Guid id)
+        {
+            var crEntry = crService.FindByChangeRequestId(id);
             if (crEntry == null)
             {
                 return HttpNotFound();
             }
 
-            crService.StatusUpdateForApproval(crEntry);
+            crEntry.Owner = crEntry.CreatedBy;
+            crService.StatusUpdateForComment(crEntry);
             return RedirectToAction("Index");
         }
     }

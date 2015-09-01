@@ -80,6 +80,7 @@ namespace LungmenSoftware.Controllers
             switch (result)
             {
                 case SignInStatus.Success:
+                    //GeneralData.CurrentUser=UserManager.FindByName(model.Email);
                     return RedirectToLocal(returnUrl);
                 case SignInStatus.LockedOut:
                     return View("Lockout");
@@ -140,7 +141,12 @@ namespace LungmenSoftware.Controllers
         [AllowAnonymous]
         public ActionResult Register()
         {
-            return View();
+            RegisterViewModel vm=new RegisterViewModel()
+            {
+                Departments = new SelectList(GeneralData.GetDeparments)
+        };
+            
+            return View(vm);
         }
 
         //

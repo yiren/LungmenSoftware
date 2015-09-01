@@ -267,6 +267,7 @@
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\RoleController.cs" />
     <Compile Include="Controllers\UserController.cs" />
+    <Compile Include="Helper\GeneralData.cs" />
     <Compile Include="Helper\RoleHelper.cs" />
     <Compile Include="MigrationForChangeRequestData\201508270313558_InitialConfiguration.cs" />
     <Compile Include="MigrationForChangeRequestData\201508270313558_InitialConfiguration.Designer.cs">

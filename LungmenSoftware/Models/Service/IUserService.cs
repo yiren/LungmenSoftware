@@ -9,10 +9,7 @@ namespace LungmenSoftware.Service
 {
     interface IUserService
     {
-        List<ApplicationUser> GetApplicationUsers();
-        void DeleteApplicationUser(string userEmail);
-        void UpdateApplicationUser(ApplicationUser user);
-        ApplicationUser FindApplicationUserById(string userId);
+        
 
 
     }

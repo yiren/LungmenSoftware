@@ -82,17 +82,19 @@ namespace LungmenSoftware.MigrationForChangeRequestData
                     SerialNumber = "20150825E001",
                     CreateDate = DateTime.Parse("2015/08/25"),
                     LastModifiedDate = DateTime.Now - TimeSpan.FromDays(3),
-                    Description = "MVD Driver Version Update"
+                    Description = "MVD Driver Version Update",
+                    Owner = "test2@taipower.com.tw"
                 };
 
                 ChangeRequest cr2 = new ChangeRequest()
                 {
                     ChangeRequestId = Guid.NewGuid(),
-                    CreatedBy = "test4@taipower.com.tw",
+                    CreatedBy = "test2@taipower.com.tw",
                     SerialNumber = "20150826P002",
                     CreateDate = DateTime.Parse("2015/08/26"),
                     LastModifiedDate = DateTime.Now - TimeSpan.FromDays(3),
-                    Description = "FBM 232 CP Image Version Update"
+                    Description = "FBM 232 CP Image Version Update",
+                    Owner = "test2@taipower.com.tw"
                 };
 
                 ChangeRequest cr3 = new ChangeRequest()
@@ -102,7 +104,8 @@ namespace LungmenSoftware.MigrationForChangeRequestData
                     SerialNumber = "20150827E003",
                     CreateDate = DateTime.Parse("2015/08/27"),
                     LastModifiedDate = DateTime.Now - TimeSpan.FromDays(3),
-                    Description = "FDSI Version Update"
+                    Description = "FDSI Version Update",
+                    Owner = "test2@taipower.com.tw"
                 };
 
                 ChangeRequest cr4 = new ChangeRequest()
@@ -112,7 +115,8 @@ namespace LungmenSoftware.MigrationForChangeRequestData
                     SerialNumber = "20150828P004",
                     CreateDate = DateTime.Parse("2015/08/28"),
                     LastModifiedDate = DateTime.Now - TimeSpan.FromDays(2),
-                    Description = "FoxView Upgrade"
+                    Description = "FoxView Upgrade",
+                    Owner = "test2@taipower.com.tw"
 
                 };
 

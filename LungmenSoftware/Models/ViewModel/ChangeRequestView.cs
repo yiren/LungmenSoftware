@@ -22,6 +22,8 @@ namespace LungmenSoftware.Models.ViewModel
 
         public string CreatedBy { get; set; }
 
+        public string Owner { get; set; }
+
         public string ReviewBy { get; set; }
 
         public string ApprovedBy { get; set; }

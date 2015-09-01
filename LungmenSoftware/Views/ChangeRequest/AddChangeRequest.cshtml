@@ -11,6 +11,7 @@
 {
     @Html.AntiForgeryToken()
     @Html.HiddenFor(model=>model.ChangeRequestId)
+    @Html.HiddenFor(m=>m.SerialNumber)
     <div class="form-horizontal">
         
         <hr />

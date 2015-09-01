@@ -6,6 +6,7 @@ using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
+using LungmenSoftware.Models;
 
 namespace LungmenSoftware.Models
 {
@@ -57,7 +58,10 @@ namespace LungmenSoftware.Models
     //IdentityUserRole對應AspNetRoleUsers JoinTable
     public class ApplicationUserRole : IdentityUserRole
     {
-           
+        public ApplicationUserRole():base()
+        {
+            
+        }
     }
 
     //IdentityRole對應AspNetRoles
@@ -95,8 +99,8 @@ namespace LungmenSoftware.Models
             return new ApplicationDbContext();
         }
 
-        public System.Data.Entity.DbSet<LungmenSoftware.Models.ApplicationRole> IdentityRoles { get; set; }
-
+        //public DbSet<IdentityRole> IdentityRoles { get; set; }
+        public DbSet<ApplicationUserRole> IdentityUserRoles { get; set; }
         //public System.Data.Entity.DbSet<LungmenSoftware.Models.ApplicationUser> ApplicationUsers { get; set; }
 
         //public System.Data.Entity.DbSet<IdentityPractice.Models.ApplicationUser> ApplicationUsers { get; }

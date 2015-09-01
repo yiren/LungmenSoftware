@@ -6,13 +6,15 @@ using System.Web;
 using LungmenSoftware.Models.CodeFirst;
 using LungmenSoftware.Models.CodeFirst.Entities;
 using LungmenSoftware.Models.ViewModel;
+using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace LungmenSoftware.Models.Service
 {
     public class ChangeRequestService
     {
         private ChangeProcessDbContext db=new ChangeProcessDbContext();
-        
+        private ApplicationDbContext _identityDb=new ApplicationDbContext();
+
         public List<ChangeRequestInfo> GetChangeRequestHistory()
         {
             var query = from cr in db.ChangeRequests
@@ -33,6 +35,7 @@ namespace LungmenSoftware.Models.Service
                             EndDate = s.EndDate,
                             InitialDate = s.InitialDate,
                             StatusName = t.StatusName,
+                            StatusTypeId = t.StatusTypeId,
                             CreateDate = cr.CreateDate,
                             Description = cr.Description
                         };
@@ -60,7 +63,9 @@ namespace LungmenSoftware.Models.Service
                     InitialDate = s.InitialDate,
                     StatusName = t.StatusName,
                     CreateDate = cr.CreateDate,
-                    Description = cr.Description
+                    Description = cr.Description,
+                    Owner = cr.Owner,
+                    StatusTypeId = t.StatusTypeId
                 };
             return query.ToList();
         } 
@@ -78,18 +83,18 @@ namespace LungmenSoftware.Models.Service
                 new ChangeRequestStatus()
                 {
                     InitialDate = DateTime.Today,
-
                     ChangeRequestId = crEntry.ChangeRequestId,
                     ChangeRequest = crEntry,
                     StatusTypeId = 1,
-                    ChangeRequestStatusType = db.ChangeRequestStatusTypes.Find(1)
+                    ChangeRequestStatusType = db.ChangeRequestStatusTypes.Find(1),
+                    IsCurrent = true
                 }
             };
 
             db.SaveChanges();
         }
 
-        public ChangeRequest FindChangeRequestById(Guid changeRequestId)
+        public ChangeRequest FindByChangeRequestId(Guid changeRequestId)
         {
             return db.ChangeRequests.Find(changeRequestId);
         }
@@ -102,11 +107,7 @@ namespace LungmenSoftware.Models.Service
 
         public void StatusUpdateForCancellation(ChangeRequest cr)
         {
-
-            ChangeRequestStatus oldStatus = db.ChangeRequestStatuses
-                .Where(s => s.ChangeRequestId.Equals(cr.ChangeRequestId)
-                          ).OrderByDescending(s => s.StatusTypeId).FirstOrDefault();
-            oldStatus.EndDate = DateTime.Now;
+            UpdatePreviousStatus(cr);
 
             cr.IsActive = false;
 
@@ -125,13 +126,27 @@ namespace LungmenSoftware.Models.Service
             db.SaveChanges();
         }
 
+        private void UpdatePreviousStatus(ChangeRequest cr)
+        {
+            var query = from s in db.ChangeRequestStatuses.Where(s => s.ChangeRequestId.Equals(cr.ChangeRequestId))
+                join t in db.ChangeRequestStatusTypes on s.StatusTypeId equals t.StatusTypeId
+                orderby t.StatusTypeId descending 
+                select s;
+            foreach (var status in query)
+            {
+                if (status.EndDate == null)
+                {
+                    status.EndDate=DateTime.Now;
+                    status.IsCurrent = false;
+                }
+            }
+
+        }
+
 
         public void StatusUpdateForApproval(ChangeRequest cr)
         {
-            ChangeRequestStatus oldStatus = db.ChangeRequestStatuses
-                .Where(s => s.ChangeRequestId.Equals(cr.ChangeRequestId)
-                          ).OrderByDescending(s=>s.StatusTypeId).FirstOrDefault();
-            oldStatus.EndDate=DateTime.Now;
+            UpdatePreviousStatus(cr);
 
             cr.IsActive = false;
             
@@ -143,12 +158,64 @@ namespace LungmenSoftware.Models.Service
                 StatusTypeId = 3,
                 ChangeRequestStatusType = db.ChangeRequestStatusTypes.Find(3),
                 EndDate = DateTime.Today,
-                InitialDate = DateTime.Today
-
+                InitialDate = DateTime.Today,
+                IsCurrent = true
             });
 
             db.SaveChanges();
 
+        }
+
+        public void EntityToModifiedState(ChangeRequest cr)
+        {
+            db.Entry(cr).State=EntityState.Added;
+        }
+
+        public string GetReviewer()
+        {
+            var reviewer = _identityDb.Roles.Single(r => r.Name.Equals("Reviewer"));
+
+            var query = from userRoles in reviewer.Users
+                        join users in _identityDb.Users on userRoles.UserId equals users.Id
+                        select users;
+
+            return query.Last().UserName;
+        }
+
+        public void StatusUpdateForComment(ChangeRequest cr)
+        {
+            UpdatePreviousStatus(cr);
+
+            db.ChangeRequestStatuses.Add(new ChangeRequestStatus()
+            {
+                ChangeRequestId = cr.ChangeRequestId,
+                ChangeRequest = cr,
+                ChangeDate = DateTime.Today,
+                StatusTypeId = 2,
+                ChangeRequestStatusType = db.ChangeRequestStatusTypes.Find(2),
+                InitialDate = DateTime.Today,
+                IsCurrent = true
+            });
+
+            db.SaveChanges();
+        }
+
+        public void StatusUpdateForClarification(ChangeRequest cr)
+        {
+            UpdatePreviousStatus(cr);
+
+            db.ChangeRequestStatuses.Add(new ChangeRequestStatus()
+            {
+                ChangeRequestId = cr.ChangeRequestId,
+                ChangeRequest = cr,
+                ChangeDate = DateTime.Today,
+                StatusTypeId = 1,
+                ChangeRequestStatusType = db.ChangeRequestStatusTypes.Find(1),
+                InitialDate = DateTime.Today,
+                IsCurrent = true
+            });
+
+            db.SaveChanges();
         }
     }
 

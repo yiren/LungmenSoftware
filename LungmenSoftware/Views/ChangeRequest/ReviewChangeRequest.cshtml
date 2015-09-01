@@ -1,11 +1,10 @@
 ﻿@model LungmenSoftware.Models.CodeFirst.Entities.ChangeRequest
 
 @{
-    ViewBag.Title = "ReviewChangeRequest";
+    ViewBag.Title = "審查軟體修改";
 }
 
-<h2>ReviewChangeRequest</h2>
-
+<h2>審查軟體修改-@Model.SerialNumber</h2>
 <div>
     <h4>ChangeRequest</h4>
     <hr />
@@ -71,7 +70,7 @@
 <p>
     <div class="row">
         <div class="col-md-offset-2 col-md-2">
-            @Html.ActionLink("退回修改", "CommentChangeRequest", new { id = Model.ChangeRequestId }, new { @class = "btn btn-cancel" })
+            @Html.ActionLink("退回修改", "CommentChangeRequest", new { id = Model.ChangeRequestId }, new { @class = "btn btn-danger" })
 
             @Html.ActionLink("同意", "ApproveChangeRequest", new { id = Model.ChangeRequestId }, new { @class = "btn btn-primary" })
         </div>

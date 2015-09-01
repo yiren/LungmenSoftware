@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Web.Mvc;
 
 namespace LungmenSoftware.Models
 {
@@ -71,7 +72,7 @@ namespace LungmenSoftware.Models
 
         [Required]
         [Display(Name = "請輸入再次姓名代號")]
-        [Compare("TPCId", ErrorMessage = "請確認姓名代號輸入一致")]
+        [System.ComponentModel.DataAnnotations.Compare("TPCId", ErrorMessage = "請確認姓名代號輸入一致")]
         public string ConfirmTPCId { get; set; }
 
         [Required]
@@ -90,8 +91,10 @@ namespace LungmenSoftware.Models
 
         [DataType(DataType.Password)]
         [Display(Name = "Confirm password")]
-        [Compare("Password", ErrorMessage = "兩次密碼輸入不一致")]
+        [System.ComponentModel.DataAnnotations.Compare("Password", ErrorMessage = "兩次密碼輸入不一致")]
         public string ConfirmPassword { get; set; }
+
+        public IEnumerable<SelectListItem> Departments { get; set; }
     }
 
     public class ResetPasswordViewModel
@@ -109,7 +112,7 @@ namespace LungmenSoftware.Models
 
         [DataType(DataType.Password)]
         [Display(Name = "Confirm password")]
-        [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
+        [System.ComponentModel.DataAnnotations.Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
         public string ConfirmPassword { get; set; }
 
         public string Code { get; set; }
