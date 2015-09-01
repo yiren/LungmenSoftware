@@ -140,7 +140,8 @@ namespace LungmenSoftware.MigrationForChangeRequestData
                     ChangeRequestStatusType = pendingForApprovalEntry,
                     ChangeRequestId = cr1Id,
                     ChangeRequest = cr1Entry,
-                    InitialDate = DateTime.Today - TimeSpan.FromDays(8)
+                    InitialDate = DateTime.Today - TimeSpan.FromDays(8),
+                    IsCurrent = true
                 };
 
                 ChangeRequestStatus firstStatusForCR2 = new ChangeRequestStatus()
@@ -151,7 +152,8 @@ namespace LungmenSoftware.MigrationForChangeRequestData
                     ChangeRequest = cr2Entry,
                     InitialDate = DateTime.Today - TimeSpan.FromDays(8),
                     ChangeDate = DateTime.Now - TimeSpan.FromDays(5),
-                    EndDate = DateTime.Now - TimeSpan.FromDays(5)
+                    EndDate = DateTime.Now - TimeSpan.FromDays(5),
+                    IsCurrent = false
                 };
 
                 ChangeRequestStatus secondStatusForCR2 = new ChangeRequestStatus()
@@ -161,6 +163,7 @@ namespace LungmenSoftware.MigrationForChangeRequestData
                     ChangeRequestId = cr2Id,
                     ChangeRequest = cr2Entry,
                     InitialDate = DateTime.Today - TimeSpan.FromDays(5),
+                    IsCurrent = true
 
                 };
 
@@ -171,7 +174,9 @@ namespace LungmenSoftware.MigrationForChangeRequestData
                     ChangeRequestId = cr3Id,
                     ChangeRequest = cr3Entry,
                     InitialDate = DateTime.Today - TimeSpan.FromDays(3),
-                    EndDate = DateTime.Today - TimeSpan.FromDays(4)
+                    EndDate = DateTime.Today - TimeSpan.FromDays(4),
+                    IsCurrent = false
+
                 };
 
                 ChangeRequestStatus secondForCR3 = new ChangeRequestStatus()
@@ -180,7 +185,8 @@ namespace LungmenSoftware.MigrationForChangeRequestData
                     ChangeRequestStatusType = completeIdEntry,
                     ChangeRequestId = cr3Id,
                     ChangeRequest = cr3Entry,
-                    InitialDate = DateTime.Today - TimeSpan.FromDays(3)
+                    InitialDate = DateTime.Today - TimeSpan.FromDays(3),
+                    IsCurrent = true
                 };
 
                 ChangeRequestStatus fistStatusForCR4 = new ChangeRequestStatus()
@@ -190,7 +196,8 @@ namespace LungmenSoftware.MigrationForChangeRequestData
                     ChangeRequestId = cr4Id,
                     ChangeRequest = cr4Entry,
                     InitialDate = DateTime.Today - TimeSpan.FromDays(5),
-                    EndDate = DateTime.Today - TimeSpan.FromDays(4)
+                    EndDate = DateTime.Today - TimeSpan.FromDays(4),
+                    IsCurrent = false
                 };
 
                 ChangeRequestStatus secondStatusForCR4 = new ChangeRequestStatus()
@@ -200,7 +207,8 @@ namespace LungmenSoftware.MigrationForChangeRequestData
                     ChangeRequestId = cr4Id,
                     ChangeRequest = cr4Entry,
                     InitialDate = DateTime.Today - TimeSpan.FromDays(4),
-                    EndDate = DateTime.Today - TimeSpan.FromDays(3)
+                    EndDate = DateTime.Today - TimeSpan.FromDays(3),
+                    IsCurrent = false
                 };
 
                 ChangeRequestStatus thirdStatusForCR4 = new ChangeRequestStatus()
@@ -209,7 +217,8 @@ namespace LungmenSoftware.MigrationForChangeRequestData
                     ChangeRequestStatusType = cancelEntry,
                     ChangeRequestId = cr4Id,
                     ChangeRequest = cr4Entry,
-                    InitialDate = DateTime.Today - TimeSpan.FromDays(2)
+                    InitialDate = DateTime.Today - TimeSpan.FromDays(2),
+                    IsCurrent = true
                 };
 
                 context.ChangeRequestStatuses.AddOrUpdate(statusForCR1);

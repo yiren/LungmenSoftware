@@ -305,15 +305,11 @@
       <DependentUpon>201508310858317_AddIsActive.cs</DependentUpon>
     </Compile>
     <Compile Include="MigrationForChangeRequestData\Configuration.cs" />
-    <Compile Include="Migrations\201508210109128_Initial.cs" />
-    <Compile Include="Migrations\201508210109128_Initial.Designer.cs">
-      <DependentUpon>201508210109128_Initial.cs</DependentUpon>
+    <Compile Include="MigrationForIdentity\201508210117075_InitialCreate.cs" />
+    <Compile Include="MigrationForIdentity\201508210117075_InitialCreate.Designer.cs">
+      <DependentUpon>201508210117075_InitialCreate.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201508210113075_ChangeMiniLengthForTPCId.cs" />
-    <Compile Include="Migrations\201508210113075_ChangeMiniLengthForTPCId.Designer.cs">
-      <DependentUpon>201508210113075_ChangeMiniLengthForTPCId.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="MigrationForIdentity\Configuration.cs" />
     <Compile Include="Models\CodeFirst\ChangeProcessDbContext.cs" />
     <Compile Include="Models\CodeFirst\Entities\ChangeRequest.cs" />
     <Compile Include="Models\CodeFirst\Entities\ChangeRequestStatus.cs" />
@@ -1389,11 +1385,8 @@
     <EmbeddedResource Include="MigrationForChangeRequestData\201508310858317_AddIsActive.resx">
       <DependentUpon>201508310858317_AddIsActive.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201508210109128_Initial.resx">
-      <DependentUpon>201508210109128_Initial.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201508210113075_ChangeMiniLengthForTPCId.resx">
-      <DependentUpon>201508210113075_ChangeMiniLengthForTPCId.cs</DependentUpon>
+    <EmbeddedResource Include="MigrationForIdentity\201508210117075_InitialCreate.resx">
+      <DependentUpon>201508210117075_InitialCreate.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

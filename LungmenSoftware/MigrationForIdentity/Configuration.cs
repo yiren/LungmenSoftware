@@ -1,18 +1,20 @@
-namespace LungmenSoftware.Migrations
+namespace LungmenSoftware.MigrationForIdentity
 {
     using System;
     using System.Data.Entity;
     using System.Data.Entity.Migrations;
     using System.Linq;
 
-    internal sealed class Configuration : DbMigrationsConfiguration<LungmenSoftware.Models.CodeFirst.ChangeProcessDbContext>
+    internal sealed class Configuration : DbMigrationsConfiguration<LungmenSoftware.Models.ApplicationDbContext>
     {
         public Configuration()
         {
             AutomaticMigrationsEnabled = false;
+            MigrationsDirectory = @"MigrationForIdentity";
+            ContextKey = "LungmenSoftware.Models.ApplicationDbContext";
         }
 
-        protected override void Seed(LungmenSoftware.Models.CodeFirst.ChangeProcessDbContext context)
+        protected override void Seed(LungmenSoftware.Models.ApplicationDbContext context)
         {
             //  This method will be called after migrating to the latest version.
 

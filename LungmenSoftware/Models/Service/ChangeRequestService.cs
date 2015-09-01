@@ -143,7 +143,7 @@ namespace LungmenSoftware.Models.Service
                 StatusTypeId = 3,
                 ChangeRequestStatusType = db.ChangeRequestStatusTypes.Find(3),
                 EndDate = DateTime.Today,
-                InitialDate = DateTime.Today,
+                InitialDate = DateTime.Today
 
             });
 
