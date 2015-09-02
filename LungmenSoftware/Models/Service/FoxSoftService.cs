@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Web;
 using LungmenSoftware.Models.ViewModel;
@@ -43,5 +44,12 @@ namespace LungmenSoftware.Models.Service
             
             return query.ToList();
         }
+
+        public List<FoxSoftware> GetSystemSoftwareList()
+        {
+            var listOfSysSoft = ldb.FoxSoftwares.Where(s => s.FoxSoftwareTypeId == 2).ToList();
+            return listOfSysSoft;
+            //return ldb.FoxSoftwareTypes.ToList();
+        } 
     }
 }

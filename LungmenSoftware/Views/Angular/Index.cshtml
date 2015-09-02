@@ -1,12 +1,46 @@
 ﻿
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Angular Dynamic Form";
 }
 
-<h2>Angluar Index</h2>
+<h2>Angular Dynamic Form</h2>
 
 <div ng-app="simpleApp" ng-controller="MainCtrl as m">
     <p>{{m.message}}</p>
+
+    <button ng-click="m.requestSoftwareList()">取得軟體相關資料</button>
+
+    <form>
+        <label>軟體修改類別:</label>
+        <select>
+            <option>應用軟體</option>
+            <option selected>系統軟體/驅動程式</option>
+        </select>
+
+        <br/>
+        <label>軟體名稱</label>
+        <select ng-options="s.SoftwareName for s in m.softwareList track by s.id" ng-model="m.softwareSelect">
+            <option>FDSI Driver</option>
+            <option>MVD Driver</option>
+        </select>
+
+        <br/>
+        <label>相關工作站</label>
+        <br/>
+        <input type="checkbox" value="0AW01"/>0AW01
+        <br/>
+        <input type="checkbox" value="1AW05"/>1AW05
+        <br/>
+        <input type="checkbox" value="1AW06"/>1AW06
+        <br/>
+        <input type="checkbox" value="1AW07"/>1AW07
+        <br/>
+
+        <label>原建置值</label>
+        <input type="text" />
+        <label>欲變更數值</label>
+        <input type="text" />
+    </form>
 </div>
 
 @section scripts

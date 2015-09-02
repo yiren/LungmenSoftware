@@ -7,6 +7,8 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
+using Newtonsoft.Json;
+
 namespace LungmenSoftware.Models
 {
     using System;
@@ -26,8 +28,10 @@ namespace LungmenSoftware.Models
         public string Procedure { get; set; }
         public Nullable<int> FoxSoftware_WorkstationTypeId { get; set; }
         public Nullable<int> FoxSoftwareTypeId { get; set; }
-    
+        
+        
         public virtual FoxSoftwareType FoxSoftwareType { get; set; }
+        
         public virtual ICollection<WKAndFoxJoinTable> WKAndFoxJoinTables { get; set; }
     }
 }

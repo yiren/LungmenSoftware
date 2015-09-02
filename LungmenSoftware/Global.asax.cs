@@ -22,6 +22,7 @@ namespace LungmenSoftware
             ViewEngines.Engines.Clear();
             ViewEngines.Engines.Add(new RazorViewEngine());
             Database.SetInitializer(new MigrateDatabaseToLatestVersion<ChangeProcessDbContext, Configuration>());
+            //GlobalConfiguration.Configuration.Formatters.XmlFormatter.SupportedMediaTypes.Clear();
         }
     }
 }
