@@ -1,0 +1,19 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Angluar Index</h2>
+
+<div ng-app="simpleApp" ng-controller="MainCtrl as m">
+    <p>{{m.message}}</p>
+</div>
+
+@section scripts
+{
+
+    <script src="~/Scripts/angular-route.min.js"></script>
+    <script src="~/Scripts/angular.min.js"></script>
+    <script src="~/js/angularApp.js"></script>
+}
+
