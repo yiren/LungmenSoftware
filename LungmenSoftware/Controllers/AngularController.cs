@@ -20,8 +20,8 @@ namespace LungmenSoftware.Controllers
         // GET: Angular
         public ActionResult Index()
         {
-
-            return View();
+            
+            return View(wkService.GetAllWorkstations().OrderBy(p=>p.WorkStationName).ToList());
         }
     }
 }

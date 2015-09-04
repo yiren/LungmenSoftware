@@ -7,6 +7,7 @@ using LungmenSoftware.Models;
 using LungmenSoftware.Models.Repositories;
 using LungmenSoftware.Models.Service;
 using LungmenSoftware.Models.ViewModel;
+using Newtonsoft.Json;
 
 namespace LungmenSoftware.Controllers
 {
@@ -66,6 +67,22 @@ namespace LungmenSoftware.Controllers
             }
 
             return RedirectToAction("Index");
+        }
+
+        public ActionResult GetWorkstations()
+        {
+            var wksFromDB=wkService.GetAllWorkstations();
+            JsonSerializerSettings jsSettings = new JsonSerializerSettings()
+            {
+                ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+                Formatting = Formatting.Indented
+            };
+            string json = JsonConvert.SerializeObject(wksFromDB, jsSettings);
+            return new ContentResult()
+            {
+                Content = json,
+                ContentType = "application/json"
+            };
         }
 
         public ActionResult InstalledSoftwaresByWorkStationId(int id)

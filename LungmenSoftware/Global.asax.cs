@@ -6,8 +6,8 @@ using System.Web;
 using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
-using LungmenSoftware.MigrationForChangeRequestData;
 using LungmenSoftware.Models.CodeFirst;
+using WebGrease.Configuration;
 
 namespace LungmenSoftware
 {
@@ -21,8 +21,9 @@ namespace LungmenSoftware
             BundleConfig.RegisterBundles(BundleTable.Bundles);
             ViewEngines.Engines.Clear();
             ViewEngines.Engines.Add(new RazorViewEngine());
-            Database.SetInitializer(new MigrateDatabaseToLatestVersion<ChangeProcessDbContext, Configuration>());
-            //GlobalConfiguration.Configuration.Formatters.XmlFormatter.SupportedMediaTypes.Clear();
+            Database.SetInitializer(
+                new MigrateDatabaseToLatestVersion<ChangeProcessDbContext, LungmenSoftware.MigrationForChangeRequestData.Configuration>());
+            
         }
     }
 }

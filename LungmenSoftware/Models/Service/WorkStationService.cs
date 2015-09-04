@@ -64,6 +64,7 @@ namespace LungmenSoftware.Models.Service
                     on wkJoinTable.FoxWorkStationId equals wk.WorkStationId
                 select new FoxWorkStationInfo()
                 {
+                    WorkstationId= wk.WorkStationId,
                     WorkStationName = wk.WorkStationName,
                     SoftwareName=soft.SoftwareName,
                     Rev=wkJoinTable.Rev,

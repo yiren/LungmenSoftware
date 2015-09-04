@@ -46,7 +46,24 @@ namespace LungmenSoftware.Controllers
             return View(dataForView);
         }
 
-        public ActionResult GetSystemSoftwareList()
+        public ActionResult GetWorkStationsBySoftId(int id)
+        {
+            var softListById = wkService.GetWorkStationsBySoftwareId(id);
+            string json = JsonConvert.SerializeObject(softListById, new JsonSerializerSettings()
+            {
+                ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+                Formatting = Formatting.Indented
+            });
+
+            return new ContentResult()
+            {
+                Content = json,
+                ContentType = "application/json"
+            };
+        }
+
+
+        public ActionResult GetSystemSoftwares()
         {
             var sysSoftList = softService.GetSystemSoftwareList();
 
@@ -58,12 +75,11 @@ namespace LungmenSoftware.Controllers
 
             //string jsonContent = jsonSerializer.Serialize(sysSoftList);
 
-            JsonSerializerSettings jsSettings=new JsonSerializerSettings()
+            string json = JsonConvert.SerializeObject(sysSoftList, new JsonSerializerSettings()
             {
                 ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
                 Formatting = Formatting.Indented
-            };
-            string json = JsonConvert.SerializeObject(sysSoftList, jsSettings);
+            });
 
             return new ContentResult()
             {

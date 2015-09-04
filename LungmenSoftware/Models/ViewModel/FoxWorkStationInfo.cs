@@ -17,5 +17,6 @@ namespace LungmenSoftware.Models.ViewModel
 
         public string Note { get; set; }
 
+        public int WorkstationId { get; set; }
     }
 }

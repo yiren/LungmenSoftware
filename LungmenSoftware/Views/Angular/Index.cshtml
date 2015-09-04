@@ -1,4 +1,5 @@
-﻿
+﻿@model List<LungmenSoftware.Models.FoxWorkStation>
+
 @{
     ViewBag.Title = "Angular Dynamic Form";
 }
@@ -17,30 +18,45 @@
             <option selected>系統軟體/驅動程式</option>
         </select>
 
-        <br/>
-        <label>軟體名稱</label>
-        <select ng-options="s.SoftwareName for s in m.softwareList track by s.id" ng-model="m.softwareSelect">
-            <option>FDSI Driver</option>
-            <option>MVD Driver</option>
+        <br />
+        <label>軟體名稱:</label>
+        <select ng-options="s.SoftwareName for s in m.softwareList track by s.FoxSoftwareId" ng-model="softwareSelect"
+                ng-change="m.getSelectedSoft(softwareSelect)">
+            
         </select>
-
         <br/>
-        <label>相關工作站</label>
-        <br/>
-        <input type="checkbox" value="0AW01"/>0AW01
-        <br/>
-        <input type="checkbox" value="1AW05"/>1AW05
-        <br/>
-        <input type="checkbox" value="1AW06"/>1AW06
-        <br/>
-        <input type="checkbox" value="1AW07"/>1AW07
-        <br/>
+        {{softwareSelect}}
+        <hr/>
+        {{m.wk}}
+        <br />
+        <label>相關工作站:</label>
+        <br />
+        <div class="row">
+            <div class="col-md-5">
+                <span ng-repeat="wk in m.allWorkstations track by wk.WorkStationId">
+                    <input  type="checkbox" id="{{wk.WorkStationId}}" ng-model="wk.isChecked" 
+                           ng-change="m.showChecked(wk)"/>{{wk.WorkStationName}}
+                    <br ng-if="m.isDividedByFive($index)"/>
+                </span>
+            @*
+    @for (int i = 0; i < Model.Count(s => s.WorkStationName.Contains("AW")); i++)
+    {
+        <input type="checkbox" id="@Model[i].WorkStationId" value="@Model[i].WorkStationId"/>@Model[i].WorkStationName
+        if ((i + 1)%5 == 0)
+        {
+            <br/>
+        }
+    }
+            *@
+            </div>
+        </div>
 
         <label>原建置值</label>
         <input type="text" />
         <label>欲變更數值</label>
         <input type="text" />
     </form>
+    @Html.ActionLink("取得工作站清單","GetWorkStationsBySoftId", "FoxSoftwares")
 </div>
 
 @section scripts
