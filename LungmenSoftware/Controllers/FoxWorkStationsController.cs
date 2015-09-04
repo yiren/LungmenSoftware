@@ -95,5 +95,23 @@ namespace LungmenSoftware.Controllers
             };
             return View(dataForView);
         }
+
+        public ActionResult AddNewWorkStation(FoxWorkStation wk)
+        {
+            wkService.AddNewWorkStation(wk);
+
+            JsonSerializerSettings jsSettings = new JsonSerializerSettings()
+            {
+                ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+                Formatting = Formatting.Indented
+            };
+            string json = JsonConvert.SerializeObject(wk, jsSettings);
+            return new ContentResult()
+            {
+                Content = json,
+                ContentType = "application/json"
+            };
+            //return wk !=null;
+        }
     }
 }

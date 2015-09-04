@@ -4,57 +4,69 @@
     ViewBag.Title = "Angular Dynamic Form";
 }
 
-<h2>Angular Dynamic Form</h2>
+<h2>Angular 軟體變更表單</h2>
 
 <div ng-app="simpleApp" ng-controller="MainCtrl as m">
-    <p>{{m.message}}</p>
-
-    <button ng-click="m.requestSoftwareList()">取得軟體相關資料</button>
-
     <form>
-        <label>軟體修改類別:</label>
-        <select>
-            <option>應用軟體</option>
-            <option selected>系統軟體/驅動程式</option>
-        </select>
-
-        <br />
-        <label>軟體名稱:</label>
-        <select ng-options="s.SoftwareName for s in m.softwareList track by s.FoxSoftwareId" ng-model="softwareSelect"
-                ng-change="m.getSelectedSoft(softwareSelect)">
-            
-        </select>
-        <br/>
-        {{softwareSelect}}
-        <hr/>
-        {{m.wk}}
-        <br />
-        <label>相關工作站:</label>
-        <br />
         <div class="row">
             <div class="col-md-5">
+                <p>{{m.message}}</p>
+
+                <button ng-click="m.requestSoftwareList()">取得軟體相關資料</button>
+
+
+                <label>軟體修改類別:</label>
+                <select>
+                    <option>應用軟體</option>
+                    <option selected>系統軟體/驅動程式</option>
+                </select>
+
+                <br />
+                <label>軟體名稱:</label>
+                <select ng-options="s.SoftwareName for s in m.softwareList track by s.FoxSoftwareId" ng-model="softwareSelect"
+                        ng-change="m.getSelectedSoft(softwareSelect)"></select>
+                <br />
+               
+                <hr />
+                
+                <hr/>
+
+                <label>原建置值:</label>
+                <label ng-bind="m.selectedSoftwareRev"></label>
+                <br/>
+                <label>欲變更數值</label>
+                <input type="text" />
+                <hr />
+                <span ng-bind="m.selectedSoftwareRev"></span>
+                <hr />
+                <form name="AddForm" ng-submit="m.addNewWorkStation()">
+                    <label>工作站名稱</label>
+                    <input type="text" ng-model="m.newWorkstation.WorkStationName" required />
+                    <button ng-click="m.addNewWorkStation(m.newWorkStation)">新增(測試)</button>
+                    <input type="submit" value="新增工作站" ng-disabled="addForm.$invalid" />
+                </form>
+            </div>
+            <div class="col-md-5">
+                <label>相關工作站:</label>
+                <br />
                 <span ng-repeat="wk in m.allWorkstations track by wk.WorkStationId">
-                    <input  type="checkbox" id="{{wk.WorkStationId}}" ng-model="wk.isChecked" 
-                           ng-change="m.showChecked(wk)"/>{{wk.WorkStationName}}
-                    <br ng-if="m.isDividedByFive($index)"/>
+                    <input type="checkbox" id="{{wk.WorkStationId}}" ng-model="wk.isChecked"
+                           ng-change="m.showChecked(wk)" />{{wk.WorkStationName}}
+                    <br ng-if="m.isDividedByFive($index)" />
                 </span>
-            @*
-    @for (int i = 0; i < Model.Count(s => s.WorkStationName.Contains("AW")); i++)
-    {
-        <input type="checkbox" id="@Model[i].WorkStationId" value="@Model[i].WorkStationId"/>@Model[i].WorkStationName
-        if ((i + 1)%5 == 0)
-        {
-            <br/>
-        }
-    }
-            *@
+                @*
+                    @for (int i = 0; i < Model.Count(s => s.WorkStationName.Contains("AW")); i++)
+                    {
+                        <input type="checkbox" id="@Model[i].WorkStationId" value="@Model[i].WorkStationId"/>@Model[i].WorkStationName
+                        if ((i + 1)%5 == 0)
+                        {
+                            <br/>
+                        }
+                    }
+                *@
             </div>
         </div>
 
-        <label>原建置值</label>
-        <input type="text" />
-        <label>欲變更數值</label>
-        <input type="text" />
     </form>
     @Html.ActionLink("取得工作站清單","GetWorkStationsBySoftId", "FoxSoftwares")
 </div>

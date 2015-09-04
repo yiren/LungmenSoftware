@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Web;
 using LungmenSoftware.Models.ViewModel;
@@ -75,6 +76,13 @@ namespace LungmenSoftware.Models.Service
         
 
             return query.ToList();
-        } 
+        }
+
+        public void AddNewWorkStation(FoxWorkStation wk)
+        {
+            
+            ldb.FoxWorkStations.Add(wk);
+            ldb.SaveChanges();
+        }
     }
 }
