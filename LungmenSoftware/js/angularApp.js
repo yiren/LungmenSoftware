@@ -47,6 +47,8 @@
                 });
         }
 
+
+        //For Test $http Only
         vm.addNewWorkStation = function (wk) {
             //$log.info(vm.newWorkstation);
             $log.info("Add " + vm.newWorkstation);
@@ -63,15 +65,16 @@
             vm.allWorkstations.isChecked = false;
             
             var tempAllWks = vm.allWorkstations;
-            
+            $log.info(selected);
             $http.get('/foxsoftwares/GetWorkStationsBySoftId/' + selected.FoxSoftwareId)
                 .then(function(response) {
                     //$log.info(rev);
                     var rev = response.data[0].Rev;
-                    $log.info(response.data[0].Rev);
-                    console.log("Inside Rev Info:" + rev);
+                    //$log.info(response.data[0].Rev);
+                    //console.log("Inside Rev Info:" + rev);
+                    
                     vm.selectedSoftwareRev = rev;
-                    console.log("Inside SetRev Info: " + vm.selectedSoftwareRev);
+                    //console.log("Inside SetRev Info: " + vm.selectedSoftwareRev);
                     //$log.info(rev);
                     angular.forEach(response.data, function (value, key) {
 
@@ -99,7 +102,7 @@
             //$log.info(selected);
             //console.log("Outside Rev Info:" + rev);
             
-            console.log("Final Rev Info: "+vm.selectedSoftwareRev);
+            //console.log("Final Rev Info: "+vm.selectedSoftwareRev);
         }
 
         vm.showChecked = function (selected) {
@@ -115,7 +118,19 @@
             }
         }
 
-
+        vm.modifyRev=function(record, rev) {
+            //vm.selectedSoftwareInfo;
+            var softRevInfo = {
+                FoxSoftwareId: record.FoxSoftwareId,
+                Rev:rev
+            };
+            $log.info(softRevInfo);
+            $http.post('/foxsoftwares/UpdateSoftwareRev', softRevInfo)
+                .then(function(response) {
+                    $log.info(response);
+                    vm.selectedSoftwareRev = response.data.Rev;
+                });
+        }
         
 
         }    

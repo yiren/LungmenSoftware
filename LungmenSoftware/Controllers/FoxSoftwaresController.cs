@@ -62,7 +62,6 @@ namespace LungmenSoftware.Controllers
             };
         }
 
-
         public ActionResult GetSystemSoftwares()
         {
             var sysSoftList = softService.GetSystemSoftwareList();
@@ -86,6 +85,43 @@ namespace LungmenSoftware.Controllers
                 Content = json,
                 ContentType = "application/json"
             };
+        }
+
+        public ActionResult UpdateSoftwareRev(SoftwareToUpdate record)
+        {
+            var softFromDb = softService.GetFoxSoftwareById(record.FoxSoftwareId);
+            if (softFromDb == null)
+            {
+                return new ContentResult()
+                {
+                    Content = "The record is not Found.",
+                    ContentType = "application/json"
+                };
+            }
+            bool isUpdate=softService.UpdateSoftwareRev(softFromDb, record.Rev);
+
+            if (isUpdate)
+            {
+                string json = JsonConvert.SerializeObject(record, new JsonSerializerSettings()
+                {
+                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+                    Formatting = Formatting.Indented
+                });
+                return new ContentResult()
+                {
+                    Content = json,
+                    ContentType = "application/json"
+                };
+            }
+            else
+            {
+                return new ContentResult()
+                {
+                    Content="The record is not Updated.",
+                    ContentType = "application/json"
+                };
+            }
+            
         }
     }
 }

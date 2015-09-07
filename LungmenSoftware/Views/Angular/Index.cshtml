@@ -23,8 +23,8 @@
 
                 <br />
                 <label>軟體名稱:</label>
-                <select ng-options="s.SoftwareName for s in m.softwareList track by s.FoxSoftwareId" ng-model="softwareSelect"
-                        ng-change="m.getSelectedSoft(softwareSelect)"></select>
+                <select ng-options="s.SoftwareName for s in m.softwareList track by s.FoxSoftwareId" ng-model="m.softwareSelect"
+                        ng-change="m.getSelectedSoft(m.softwareSelect)"></select>
                 <br />
                
                 <hr />
@@ -32,13 +32,15 @@
                 <hr/>
 
                 <label>原建置值:</label>
-                <label ng-bind="m.selectedSoftwareRev"></label>
+                <label ng-bind="m.selectedSoftwareRev">請選擇軟體</label>
                 <br/>
                 <label>欲變更數值</label>
-                <input type="text" />
+                <input type="text" ng-model="m.newRevValue"/>
+                <br/>
+                <button ng-click="m.modifyRev(m.softwareSelect, m.newRevValue)">更新</button>
+                
                 <hr />
-                <span ng-bind="m.selectedSoftwareRev"></span>
-                <hr />
+                
                 <form name="AddForm" ng-submit="m.addNewWorkStation()">
                     <label>工作站名稱</label>
                     <input type="text" ng-model="m.newWorkstation.WorkStationName" required />
@@ -71,10 +73,9 @@
     @Html.ActionLink("取得工作站清單","GetWorkStationsBySoftId", "FoxSoftwares")
 </div>
 
+
 @section scripts
 {
-
-    <script src="~/Scripts/angular-route.min.js"></script>
     <script src="~/Scripts/angular.min.js"></script>
     <script src="~/js/angularApp.js"></script>
 }

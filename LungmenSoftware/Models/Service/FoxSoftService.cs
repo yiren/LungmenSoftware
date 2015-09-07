@@ -50,6 +50,26 @@ namespace LungmenSoftware.Models.Service
             var listOfSysSoft = ldb.FoxSoftwares.Where(s => s.FoxSoftwareTypeId == 2).ToList();
             return listOfSysSoft;
             //return ldb.FoxSoftwareTypes.ToList();
-        } 
+        }
+
+        public FoxSoftware GetFoxSoftwareById(int id)
+        {
+            return ldb.FoxSoftwares.Find(id);
+        }
+
+
+        public bool UpdateSoftwareRev(FoxSoftware softFromDb, string rev)
+        {
+            var query = ldb.WKAndFoxJoinTables
+                .Where(j => j.FoxSoftwareId == softFromDb.FoxSoftwareId).ToList();
+            foreach (var soft in query)
+            {
+                soft.Rev = rev;
+            }
+
+            var isUpdated=ldb.SaveChanges();
+
+            return isUpdated > 0;
+        }
     }
 }
