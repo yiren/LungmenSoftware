@@ -61,11 +61,11 @@
 
         }
 
-        vm.getSelectedSoft = function (selected) {
+        vm.getSelectedWorkstationList = function (selected) {
             vm.allWorkstations.isChecked = false;
             
             var tempAllWks = vm.allWorkstations;
-            $log.info(selected);
+            
             $http.get('/foxsoftwares/GetWorkStationsBySoftId/' + selected.FoxSoftwareId)
                 .then(function(response) {
                     //$log.info(rev);
@@ -80,6 +80,7 @@
 
                         //$log.info(value);
                         var wkId = value.WorkstationId;
+                        
                         //$log.info(wkId);
                         //$log.info("Is reponse.data an Object? " + angular.isObject(value));
                         var wkObject = angular.fromJson(tempAllWks);
@@ -90,11 +91,13 @@
                             if (wkId === id) {
                                 //$log.info(vm.allWorkstations[key]);
                                 tempAllWks[key].isChecked = true;
+                            } else {
+                                tempAllWks[key].isChecked = false;
                             }
                         });
                     });
                     vm.allWorkstations = tempAllWks;
-
+                    //$log.info(vm.allWorkstations);
                 }, function (errResponse) {
                     $log.error(errResponse);
                     vm.message = 'Unexpected Error While Getting Workstations By SoftId';

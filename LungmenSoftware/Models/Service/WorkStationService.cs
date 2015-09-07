@@ -55,7 +55,7 @@ namespace LungmenSoftware.Models.Service
             return ldb.WorkStationHardwareTypes.ToList();
         }
 
-        public List<FoxWorkStationInfo> GetWorkStationsBySoftwareId(int softId)
+        public List<FoxWorkStationAndSoftwareInfo> GetWorkStationsBySoftwareId(int softId)
         {
             var softwareName = ldb.FoxSoftwares.Find(softId).SoftwareName;
             var query = from soft in ldb.FoxSoftwares.Where(s => s.FoxSoftwareId == softId)
@@ -63,7 +63,7 @@ namespace LungmenSoftware.Models.Service
                     on soft.FoxSoftwareId equals wkJoinTable.FoxSoftwareId
                 join wk in ldb.FoxWorkStations
                     on wkJoinTable.FoxWorkStationId equals wk.WorkStationId
-                select new FoxWorkStationInfo()
+                select new FoxWorkStationAndSoftwareInfo()
                 {
                     WorkstationId= wk.WorkStationId,
                     WorkStationName = wk.WorkStationName,

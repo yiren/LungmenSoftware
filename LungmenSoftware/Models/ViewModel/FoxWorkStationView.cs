@@ -9,7 +9,7 @@ namespace LungmenSoftware.Models.ViewModel
     {
         public string KeywordForSearch { get; set; }
 
-        public List<FoxWorkStationInfo> WorkStationsBySoftwareId { get; set; }
+        public List<FoxWorkStationAndSoftwareInfo> WorkStationsBySoftwareId { get; set; }
        
         public List<FoxWorkStation> WPList { get; set; }
 

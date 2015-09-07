@@ -1,10 +1,10 @@
 ﻿@model List<LungmenSoftware.Models.FoxWorkStation>
 
 @{
-    ViewBag.Title = "Angular Dynamic Form";
+    ViewBag.Title = "AngularJS 系統軟體修改表單";
 }
 
-<h2>Angular 軟體變更表單</h2>
+<h2>AngularJS 系統軟體變更表單</h2>
 
 <div ng-app="simpleApp" ng-controller="MainCtrl as m">
     <form>
@@ -14,19 +14,11 @@
 
                 <button ng-click="m.requestSoftwareList()">取得軟體相關資料</button>
 
-
-                <label>軟體修改類別:</label>
-                <select>
-                    <option>應用軟體</option>
-                    <option selected>系統軟體/驅動程式</option>
-                </select>
-
                 <br />
                 <label>軟體名稱:</label>
                 <select ng-options="s.SoftwareName for s in m.softwareList track by s.FoxSoftwareId" ng-model="m.softwareSelect"
-                        ng-change="m.getSelectedSoft(m.softwareSelect)"></select>
-                <br />
-               
+                        ng-change="m.getSelectedWorkstationList(m.softwareSelect)"></select>
+                
                 <hr />
                 
                 <hr/>
