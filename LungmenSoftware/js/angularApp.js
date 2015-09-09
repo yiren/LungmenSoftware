@@ -62,43 +62,55 @@
         }
 
         vm.getSelectedWorkstationList = function (selected) {
-            vm.allWorkstations.isChecked = false;
-            
+            $log.info("Before Resetting");
+            $log.info(vm.allWorkstations);
+            angular.forEach(vm.allWorkstations, function(value, key) {
+                value.isChecked = false;
+            });
+            $log.info("After Resetting");
+            $log.info(vm.allWorkstations);
             var tempAllWks = vm.allWorkstations;
             
+            //$log.info(tempAllWks);
+
             $http.get('/foxsoftwares/GetWorkStationsBySoftId/' + selected.FoxSoftwareId)
                 .then(function(response) {
                     //$log.info(rev);
                     var rev = response.data[0].Rev;
                     //$log.info(response.data[0].Rev);
                     //console.log("Inside Rev Info:" + rev);
-                    
+                    //$log.info(response.data);
                     vm.selectedSoftwareRev = rev;
                     //console.log("Inside SetRev Info: " + vm.selectedSoftwareRev);
                     //$log.info(rev);
                     angular.forEach(response.data, function (value, key) {
-
+                        
                         //$log.info(value);
                         var wkId = value.WorkstationId;
                         
                         //$log.info(wkId);
                         //$log.info("Is reponse.data an Object? " + angular.isObject(value));
-                        var wkObject = angular.fromJson(tempAllWks);
+                        //var wkObject = angular.fromJson(tempAllWks);
+                        var wkObject = tempAllWks;
                         //$log.info(wkObject);
                         angular.forEach(wkObject, function (value, key) {
                             var id = value.WorkStationId;
-                            //$log.info("One of WKs:" + id);
+                            //$log.info("Loop WKs:" + id);
+                            //$log.info("The Key is " + key);
+                            //$log.info("Original WK:" + wkId);
                             if (wkId === id) {
                                 //$log.info(vm.allWorkstations[key]);
+                                //$log.info(value.WorkStationId + " Before: " + tempAllWks[key].isChecked);
                                 tempAllWks[key].isChecked = true;
-                            } else {
-                                tempAllWks[key].isChecked = false;
+                               // $log.info(value.WorkStationId + " After: " + tempAllWks[key].isChecked);
                             }
                         });
                     });
+                    //$log.info(tempAllWks);
                     vm.allWorkstations = tempAllWks;
-                    $log.info(tempAllWks);
-                    $log.info(response);
+                    tempAllWks = {};
+                    //$log.info(tempAllWks);
+
                     //$log.info(vm.allWorkstations);
                 }, function (errResponse) {
                     $log.error(errResponse);
