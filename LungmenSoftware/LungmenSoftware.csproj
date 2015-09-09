@@ -307,6 +307,10 @@
     <Compile Include="MigrationForChangeRequestData\201508310858317_AddIsActive.Designer.cs">
       <DependentUpon>201508310858317_AddIsActive.cs</DependentUpon>
     </Compile>
+    <Compile Include="MigrationForChangeRequestData\201509090141056_AddChnageDeltaEntity.cs" />
+    <Compile Include="MigrationForChangeRequestData\201509090141056_AddChnageDeltaEntity.Designer.cs">
+      <DependentUpon>201509090141056_AddChnageDeltaEntity.cs</DependentUpon>
+    </Compile>
     <Compile Include="MigrationForChangeRequestData\Configuration.cs" />
     <Compile Include="MigrationForIdentity\201508210117075_InitialCreate.cs" />
     <Compile Include="MigrationForIdentity\201508210117075_InitialCreate.Designer.cs">
@@ -1391,6 +1395,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="MigrationForChangeRequestData\201508310858317_AddIsActive.resx">
       <DependentUpon>201508310858317_AddIsActive.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MigrationForChangeRequestData\201509090141056_AddChnageDeltaEntity.resx">
+      <DependentUpon>201509090141056_AddChnageDeltaEntity.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="MigrationForIdentity\201508210117075_InitialCreate.resx">
       <DependentUpon>201508210117075_InitialCreate.cs</DependentUpon>

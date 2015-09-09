@@ -20,6 +20,7 @@ namespace LungmenSoftware.Models.CodeFirst
         public DbSet<ChangeRequest> ChangeRequests { get; set; }
         public DbSet<ChangeRequestStatusType> ChangeRequestStatusTypes { get; set; }
         public DbSet<ChangeRequestStatus> ChangeRequestStatuses { get; set; }
+        public DbSet<ChangeDelta> ChangeDeltas { get; set; }
 
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
@@ -27,6 +28,7 @@ namespace LungmenSoftware.Models.CodeFirst
             modelBuilder.Configurations.Add(new ChangeRequestConfiguration());
             modelBuilder.Configurations.Add(new ChangeRequestStatusConfiguration());
             modelBuilder.Configurations.Add(new ChangeRequestStatusTypeConfiguration());
+            modelBuilder.Configurations.Add(new ChangeDeltaConfiguration());
         }
 
         public class ChangeRequestConfiguration :
@@ -42,6 +44,18 @@ namespace LungmenSoftware.Models.CodeFirst
                 Property(c => c.SerialNumber).HasMaxLength(50).IsRequired();
                 //Property(c => c.Description).HasMaxLength(150).IsRequired();
             }   
+        }
+
+        public class ChangeDeltaConfiguration
+        : EntityTypeConfiguration<ChangeDelta>
+        {
+            public ChangeDeltaConfiguration()
+            {
+                HasKey(d => d.ChangeDeltaId);
+                HasRequired(d => d.ChangeRequest)
+                    .WithMany(c=>c.ChangeDeltas)
+                    .HasForeignKey(d => d.ChangeRequestId);
+            }
         }
 
         public class ChangeRequestStatusConfiguration :
@@ -64,6 +78,8 @@ namespace LungmenSoftware.Models.CodeFirst
             }
         }
     }
+
+    
 
     public class ChangeRequestStatusTypeConfiguration
         :EntityTypeConfiguration<ChangeRequestStatusType>

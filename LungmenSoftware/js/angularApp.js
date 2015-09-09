@@ -97,6 +97,8 @@
                         });
                     });
                     vm.allWorkstations = tempAllWks;
+                    $log.info(tempAllWks);
+                    $log.info(response);
                     //$log.info(vm.allWorkstations);
                 }, function (errResponse) {
                     $log.error(errResponse);
