@@ -11,43 +11,58 @@
         <div class="row">
             <div class="col-md-5">
                 <p>{{m.message}}</p>
+                @*
+                    <button ng-click="m.requestSoftwareList()">取得軟體相關資料</button>
 
-                <button ng-click="m.requestSoftwareList()">取得軟體相關資料</button>
-
-                <br />
+                    <br />
+                *@
                 <label>軟體名稱:</label>
                 <select ng-options="s.SoftwareName for s in m.softwareList track by s.FoxSoftwareId" ng-model="m.softwareSelect"
                         ng-change="m.getSelectedWorkstationList(m.softwareSelect)"></select>
-                
-                <hr />
-                
-                <hr/>
 
-                <label>原建置值:</label>
-                <label ng-bind="m.selectedSoftwareRev">請選擇軟體</label>
-                <br/>
-                <label>欲變更數值</label>
-                <input type="text" ng-model="m.newRevValue"/>
-                <br/>
-                <button ng-click="m.modifyRev(m.softwareSelect, m.newRevValue)">更新</button>
-                
+               
+                @*
+                    <div>
+                        <label>原建置值:</label>
+                        <label ng-bind="m.selectedSoftwareRev">請選擇軟體</label>
+                        <br />
+                        <label>欲變更數值</label>
+                        <input type="text" ng-model="m.newRevValue" />
+                        <br />
+                        <button ng-click="m.modifyRev(m.softwareSelect, m.newRevValue)">更新</button>
+                    </div>
+                *@
                 <hr />
-                
-                <form name="AddForm" ng-submit="m.addNewWorkStation()">
-                    <label>工作站名稱</label>
-                    <input type="text" ng-model="m.newWorkstation.WorkStationName" required />
-                    <button ng-click="m.addNewWorkStation(m.newWorkStation)">新增(測試)</button>
-                    <input type="submit" value="新增工作站" ng-disabled="addForm.$invalid" />
-                </form>
+                @*
+                    <form name="AddForm" ng-submit="m.addNewWorkStation()">
+                        <label>工作站名稱</label>
+                        <input type="text" ng-model="m.newWorkstation.WorkStationName" required />
+                        <button ng-click="m.addNewWorkStation(m.newWorkStation)">新增(測試)</button>
+                        <input type="submit" value="新增工作站" ng-disabled="addForm.$invalid" />
+                    </form>
+                *@
             </div>
+
+        </div>
+        <div class="row">
             <div class="col-md-5">
-                <label>相關工作站:</label>
-                <br />
-                <span ng-repeat="wk in m.allWorkstations track by wk.WorkStationId">
-                    <input type="checkbox" id="{{wk.WorkStationId}}" ng-model="wk.isChecked"
-                           ng-change="m.showChecked(wk)" />{{wk.WorkStationName}}
-                    <br ng-if="m.isDividedByFive($index)" />
-                </span>
+                <div>
+                    <label>相關工作站:</label>
+                    <br />
+                    <span ng-repeat="wk in m.allWorkstations track by wk.WorkStationId">
+                        <input type="checkbox" id="{{wk.WorkStationId}}" ng-model="wk.isChecked"
+                               ng-change="m.showChecked(wk)" />{{wk.WorkStationName}}
+                        <br ng-if="m.isDividedByFive($index)" />
+                    </span>
+                    <hr />
+                    <label>原建置值:</label>
+                    <label ng-bind="m.selectedSoftwareRev">請選擇軟體</label>
+                    <br />
+                    <label>欲變更數值</label>
+                    <input type="text" ng-model="m.newRevValue" />
+                    <br />
+                    <button ng-click="m.modifyRev(m.softwareSelect, m.newRevValue)">更新</button>
+                </div>
                 @*
                     @for (int i = 0; i < Model.Count(s => s.WorkStationName.Contains("AW")); i++)
                     {
@@ -60,7 +75,6 @@
                 *@
             </div>
         </div>
-
     </form>
     @Html.ActionLink("取得工作站清單","GetWorkStationsBySoftId", "FoxSoftwares")
 </div>

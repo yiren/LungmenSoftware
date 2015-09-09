@@ -18,6 +18,7 @@ namespace LungmenSoftware.Models.ViewModel
     {
         public int FoxSoftwareId { get; set; }
         public string Rev { get; set; }
-        public List<WKAndFoxJoinTable> JoinTableUpdate { get; set; } 
+        public int JoinTableId { get; set; }
+        public List<int> WorkstationIds { get; set; } 
     }
 }

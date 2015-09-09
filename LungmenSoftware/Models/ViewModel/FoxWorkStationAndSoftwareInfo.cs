@@ -7,7 +7,7 @@ namespace LungmenSoftware.Models
 {
     public class FoxWorkStationAndSoftwareInfo
     {
-        public int WorkstationId { get; set; }
+        public int FoxWorkStationId { get; set; }
 
         public int FoxSoftwareId { get; set; }
 

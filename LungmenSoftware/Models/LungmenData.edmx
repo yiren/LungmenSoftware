@@ -45,8 +45,6 @@
           <Property Name="FoxWorkStationId" Type="int" />
           <Property Name="FoxSoftwareId" Type="int" />
           <Property Name="LastModifier" Type="nvarchar(max)" />
-          <Property Name="Software_Library_Identification" Type="nvarchar" MaxLength="50" />
-          <Property Name="Media_Identification" Type="nvarchar" MaxLength="50" />
           <Property Name="Note" Type="nvarchar(max)" />
           <Property Name="IsLocked" Type="bit" />
         </EntityType>
@@ -200,8 +198,6 @@
           <Property Name="FoxWorkStationId" Type="Int32" />
           <Property Name="FoxSoftwareId" Type="Int32" />
           <Property Name="LastModifier" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="Software_Library_Identification" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Media_Identification" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Note" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="IsLocked" Type="Boolean" />
           <NavigationProperty Name="FoxSoftware" Relationship="LungmenSoftwareDataModel.FK_FoxSysSoftwareWKAndSysJoinTable" FromRole="WKAndFoxJoinTable" ToRole="FoxSoftware" />
@@ -307,8 +303,6 @@
               <MappingFragment StoreEntitySet="WKAndFoxJoinTables">
                 <ScalarProperty Name="IsLocked" ColumnName="IsLocked" />
                 <ScalarProperty Name="Note" ColumnName="Note" />
-                <ScalarProperty Name="Media_Identification" ColumnName="Media_Identification" />
-                <ScalarProperty Name="Software_Library_Identification" ColumnName="Software_Library_Identification" />
                 <ScalarProperty Name="LastModifier" ColumnName="LastModifier" />
                 <ScalarProperty Name="FoxSoftwareId" ColumnName="FoxSoftwareId" />
                 <ScalarProperty Name="FoxWorkStationId" ColumnName="FoxWorkStationId" />

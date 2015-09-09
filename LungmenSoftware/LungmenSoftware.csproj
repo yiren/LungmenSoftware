@@ -355,6 +355,7 @@
     <Compile Include="Models\Metadata\FoxAppSoftware.cs" />
     <Compile Include="Models\Metadata\FoxSoftwareMetadata.cs" />
     <Compile Include="Models\Metadata\FoxWorkStation.cs" />
+    <Compile Include="Models\Metadata\WKAndFoxJoinTableMetaData.cs" />
     <Compile Include="Models\Metadata\WorkStationHardwareType.cs" />
     <Compile Include="Models\Service\ChangeRequestService.cs" />
     <Compile Include="Models\Service\IUserService.cs" />

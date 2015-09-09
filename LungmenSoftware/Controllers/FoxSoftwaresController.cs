@@ -46,10 +46,12 @@ namespace LungmenSoftware.Controllers
             return View(dataForView);
         }
 
+        
+        //For AngularJS Form
         public ActionResult GetWorkStationsBySoftId(int id)
         {
-            var softListById = wkService.GetWorkStationsBySoftwareId(id);
-            string json = JsonConvert.SerializeObject(softListById, new JsonSerializerSettings()
+            var wkListById = wkService.AjaxRequestForWorkstationsBySoftId(id);
+            string json = JsonConvert.SerializeObject(wkListById, new JsonSerializerSettings()
             {
                 ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
                 Formatting = Formatting.Indented
@@ -62,6 +64,7 @@ namespace LungmenSoftware.Controllers
             };
         }
 
+        //For AngularJS Form
         public ActionResult GetSystemSoftwares()
         {
             var sysSoftList = softService.GetSystemSoftwareList();
@@ -87,6 +90,7 @@ namespace LungmenSoftware.Controllers
             };
         }
 
+        //For AngularJS Form
         public ActionResult UpdateSoftwareRev(SoftwareToUpdate record)
         {
             var softFromDb = softService.GetFoxSoftwareById(record.FoxSoftwareId);

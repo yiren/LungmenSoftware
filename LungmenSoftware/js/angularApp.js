@@ -62,31 +62,54 @@
         }
 
         vm.getSelectedWorkstationList = function (selected) {
-            $log.info("Before Resetting");
-            $log.info(vm.allWorkstations);
+            //$log.info("Before Resetting");
+            //$log.info(vm.allWorkstations);
             angular.forEach(vm.allWorkstations, function(value, key) {
                 value.isChecked = false;
             });
-            $log.info("After Resetting");
-            $log.info(vm.allWorkstations);
+            //$log.info("After Resetting");
+            //$log.info(vm.allWorkstations);
             var tempAllWks = vm.allWorkstations;
             
             //$log.info(tempAllWks);
 
             $http.get('/foxsoftwares/GetWorkStationsBySoftId/' + selected.FoxSoftwareId)
                 .then(function(response) {
-                    //$log.info(rev);
+                    
                     var rev = response.data[0].Rev;
+                    //$log.info(rev);
+                    var tempRev='';
+                    /*
+                    var revs = [rev];
+                    //$log.info(revs.indexOf("x"));
+                    
+                    angular.forEach(response.data, function(value, key) {
+                        var responseRev = value.Rev;
+                        //$log.info(responseRev);
+                        if (revs.indexOf(responseRev) === -1) {
+                            revs.push(responseRev);
+                        }
+                    });
+                    
+                    $log.info(revs);
+                    */
+
                     //$log.info(response.data[0].Rev);
                     //console.log("Inside Rev Info:" + rev);
-                    //$log.info(response.data);
-                    vm.selectedSoftwareRev = rev;
+                    $log.info(response.data);
+
+                    //vm.selectedSoftwareRev = rev;
+
                     //console.log("Inside SetRev Info: " + vm.selectedSoftwareRev);
                     //$log.info(rev);
+
                     angular.forEach(response.data, function (value, key) {
                         
                         //$log.info(value);
-                        var wkId = value.WorkstationId;
+
+                        //response.data 是 WKAndFoxJoinTable物件
+
+                        var wkId = value.FoxWorkStationId;
                         
                         //$log.info(wkId);
                         //$log.info("Is reponse.data an Object? " + angular.isObject(value));
@@ -94,6 +117,7 @@
                         var wkObject = tempAllWks;
                         //$log.info(wkObject);
                         angular.forEach(wkObject, function (value, key) {
+                            //$log.info(value);
                             var id = value.WorkStationId;
                             //$log.info("Loop WKs:" + id);
                             //$log.info("The Key is " + key);
@@ -108,7 +132,7 @@
                     });
                     //$log.info(tempAllWks);
                     vm.allWorkstations = tempAllWks;
-                    tempAllWks = {};
+                    
                     //$log.info(tempAllWks);
 
                     //$log.info(vm.allWorkstations);
@@ -148,7 +172,5 @@
                     vm.selectedSoftwareRev = response.data.Rev;
                 });
         }
-        
-
         }    
 } )();

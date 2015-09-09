@@ -57,15 +57,15 @@ namespace LungmenSoftware.Models.Service
 
         public List<FoxWorkStationAndSoftwareInfo> GetWorkStationsBySoftwareId(int softId)
         {
-            var softwareName = ldb.FoxSoftwares.Find(softId).SoftwareName;
             var query = from soft in ldb.FoxSoftwares.Where(s => s.FoxSoftwareId == softId)
                 join wkJoinTable in ldb.WKAndFoxJoinTables 
                     on soft.FoxSoftwareId equals wkJoinTable.FoxSoftwareId
                 join wk in ldb.FoxWorkStations
                     on wkJoinTable.FoxWorkStationId equals wk.WorkStationId
+                        //where soft.FoxSoftwareId==1 && soft.FoxSoftwareTypeId==1
                 select new FoxWorkStationAndSoftwareInfo()
                 {
-                    WorkstationId= wk.WorkStationId,
+                    FoxWorkStationId= wk.WorkStationId,
                     WorkStationName = wk.WorkStationName,
                     SoftwareName=soft.SoftwareName,
                     Rev=wkJoinTable.Rev,
@@ -83,6 +83,21 @@ namespace LungmenSoftware.Models.Service
             
             ldb.FoxWorkStations.Add(wk);
             ldb.SaveChanges();
+        }
+
+
+        //For AngularJS
+        public List<WKAndFoxJoinTable> AjaxRequestForWorkstationsBySoftId(int id)
+        {
+            var query = from soft in ldb.FoxSoftwares.Where(s => s.FoxSoftwareId == id)
+                        join wkJoinTable in ldb.WKAndFoxJoinTables
+                            on soft.FoxSoftwareId equals wkJoinTable.FoxSoftwareId
+                        //where soft.FoxSoftwareId==1 && soft.FoxSoftwareTypeId==1
+                        select wkJoinTable;
+
+
+
+            return query.ToList();
         }
     }
 }

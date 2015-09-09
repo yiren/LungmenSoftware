@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Web;
 using LungmenSoftware.Models.ViewModel;
@@ -34,8 +35,8 @@ namespace LungmenSoftware.Models.Service
                 select new FoxSoftwareInfo()
                 {
                     SoftwareName=soft.SoftwareName, Rev=wkandsoft.Rev, Procedure=soft.Procedure,
-                    Software_Library_Identification=wkandsoft.Media_Identification,
-                    Media_Identification=wkandsoft.Media_Identification,
+                    Software_Library_Identification=soft.Media_Identification,
+                    Media_Identification=soft.Media_Identification,
                     IsLocked = wkandsoft.IsLocked,
                     SoftwareId=soft.FoxSoftwareId,
                     Note=wkandsoft.Note,
@@ -57,6 +58,18 @@ namespace LungmenSoftware.Models.Service
             return ldb.FoxSoftwares.Find(id);
         }
 
+        public void UpdateInstalledSoftwareFromWorkstation(int softwareId, WKAndFoxJoinTable newJoinTable)
+        {
+            var softs = ldb.FoxSoftwares.ToList();
+
+            var softToUpdate = softs.Single(s => s.FoxSoftwareId.Equals(softwareId));
+
+            var query = from s in softs
+                join j in ldb.WKAndFoxJoinTables on s.FoxSoftwareId equals j.FoxSoftwareId
+                select j;
+
+            
+        }
 
         public bool UpdateSoftwareRev(FoxSoftware softFromDb, string rev)
         {
