@@ -71,15 +71,15 @@
             //$log.info(vm.allWorkstations);
             var tempAllWks = vm.allWorkstations;
             
-            //$log.info(tempAllWks);
+            $log.info(tempAllWks);
 
             $http.get('/foxsoftwares/GetWorkStationsBySoftId/' + selected.FoxSoftwareId)
                 .then(function(response) {
-                    
-                    var rev = response.data[0].Rev;
+                    /* Legacy Code
+                    //var rev = response.data[0].Rev;
                     //$log.info(rev);
-                    var tempRev='';
-                    /*
+                    //var tempRev='';
+                    
                     var revs = [rev];
                     //$log.info(revs.indexOf("x"));
                     
@@ -92,25 +92,62 @@
                     });
                     
                     $log.info(revs);
-                    */
+                    
 
                     //$log.info(response.data[0].Rev);
                     //console.log("Inside Rev Info:" + rev);
-                    $log.info(response.data);
+                    */
+                    vm.revStations = [];
+                    vm.data = response.data;
+                    var data=vm.data;
+                    console.log(vm.data);
+                    for (var c = 0; c < data.length; c++) {
+                        vm.revStations.push(vm.allWorkstations);
+                    }
+                    $log.info(vm.revStations);
+                    for (var i = 0; i < data.length; i++) {
+                        //$log.info(data[i].JoinTableData);
+                        for (var j = 1; j < data[i].JoinTableData.length; j++) {
+                            //$log.info(data[i].Rev);
+                            //$log.info(data[i].JoinTableData[j].FoxWorkStationId);
+                            var wkId = data[i].JoinTableData[j].FoxWorkStationId;
+                            //$log.info(wkId);
+                            var wkObject = tempAllWks;
+                            //$log.info(wkObject);
+                            angular.forEach(wkObject, function(value, key) {
+                                //$log.info(value);
+                                var id = value.WorkStationId;
+                                //$log.info("Loop WKs:" + id);
+                                //$log.info("The Key is " + key);
+                                //$log.info("Original WK:" + wkId);
+                                if (wkId === id) {
+                                    //$log.info(vm.allWorkstations[key]);
+                                    //$log.info(value.WorkStationId + " Before: " + tempAllWks[key].isChecked);
+                                    tempAllWks[key].isChecked = true;
+                                    //$log.info(value.WorkStationId + " After: " + tempAllWks[key].isChecked);
+                                }
+                            });
+
+                        }
+                    }
 
                     //vm.selectedSoftwareRev = rev;
 
                     //console.log("Inside SetRev Info: " + vm.selectedSoftwareRev);
                     //$log.info(rev);
 
+                    vm.revCategory = response.data;
+                    /*Legacy Code
                     angular.forEach(response.data, function (value, key) {
                         
                         //$log.info(value);
 
                         //response.data 是 WKAndFoxJoinTable物件
 
-                        var wkId = value.FoxWorkStationId;
+                        //var wkId = value.FoxWorkStationId;
                         
+                        
+
                         //$log.info(wkId);
                         //$log.info("Is reponse.data an Object? " + angular.isObject(value));
                         //var wkObject = angular.fromJson(tempAllWks);
@@ -131,6 +168,7 @@
                         });
                     });
                     //$log.info(tempAllWks);
+                    
                     vm.allWorkstations = tempAllWks;
                     
                     //$log.info(tempAllWks);
@@ -140,10 +178,14 @@
                     $log.error(errResponse);
                     vm.message = 'Unexpected Error While Getting Workstations By SoftId';
                 });
-            //$log.info(selected);
-            //console.log("Outside Rev Info:" + rev);
-            
-            //console.log("Final Rev Info: "+vm.selectedSoftwareRev);
+                */
+                    //$log.info(selected);
+                    //console.log("Outside Rev Info:" + rev);
+
+                    //console.log("Final Rev Info: "+vm.selectedSoftwareRev);
+                    vm.allWorkstations = tempAllWks;
+
+                });
         }
 
         vm.showChecked = function (selected) {

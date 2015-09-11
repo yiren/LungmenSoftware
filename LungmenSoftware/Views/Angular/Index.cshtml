@@ -20,7 +20,16 @@
                 <select ng-options="s.SoftwareName for s in m.softwareList track by s.FoxSoftwareId" ng-model="m.softwareSelect"
                         ng-change="m.getSelectedWorkstationList(m.softwareSelect)"></select>
 
-               
+                <hr/>
+                <label>原建置值:</label>
+                <label ng-bind="m.selectedSoftwareRev">請選擇軟體</label>
+                <br />
+                <label>欲變更數值</label>
+                <input type="text" ng-model="m.newRevValue" />
+                <br />
+                <button ng-click="m.modifyRev(m.softwareSelect, m.newRevValue)">更新</button>
+
+
                 @*
                     <div>
                         <label>原建置值:</label>
@@ -42,29 +51,48 @@
                     </form>
                 *@
             </div>
-
-        </div>
-        <div class="row">
             <div class="col-md-5">
-                <div>
-                    <label>相關工作站:</label>
+
+                <div ng-repeat="d in m.data">
+                    <h4>目前建置版本:{{d.Rev}}</h4>
                     <br />
-                    <span ng-repeat="wk in m.allWorkstations track by wk.WorkStationId">
+                    <h4>此版本相關工作站</h4>
+                    <span ng-repeat="wk in vm.revStations[$index] track by wk.WorkStationId">
                         <input type="checkbox" id="{{wk.WorkStationId}}" ng-model="wk.isChecked"
                                ng-change="m.showChecked(wk)" />{{wk.WorkStationName}}
                         <br ng-if="m.isDividedByFive($index)" />
                     </span>
+                    @*
+    <span ng-repeat="wk in m.allWorkstations track by wk.WorkStationId">
+        <input type="checkbox" id="{{wk.WorkStationId}}" ng-model="wk.isChecked"
+               ng-change="m.showChecked(wk)" />{{wk.WorkStationName}}
+        <br ng-if="m.isDividedByFive($index)" />
+    </span>
+                    *@
+
                     <hr />
-                    <label>原建置值:</label>
-                    <label ng-bind="m.selectedSoftwareRev">請選擇軟體</label>
-                    <br />
-                    <label>欲變更數值</label>
-                    <input type="text" ng-model="m.newRevValue" />
-                    <br />
-                    <button ng-click="m.modifyRev(m.softwareSelect, m.newRevValue)">更新</button>
                 </div>
+            </div>
+
+        </div>
+        <div class="row">
+            <div class="col-md-5">
                 @*
-                    @for (int i = 0; i < Model.Count(s => s.WorkStationName.Contains("AW")); i++)
+                    <div>
+                        <label>相關工作站:</label>
+                        <br />
+                        <span ng-repeat="wk in m.allWorkstations track by wk.WorkStationId">
+                            <input type="checkbox" id="{{wk.WorkStationId}}" ng-model="wk.isChecked"
+                                   ng-change="m.showChecked(wk)" />{{wk.WorkStationName}}
+                            <br ng-if="m.isDividedByFive($index)" />
+                        </span>
+                        <hr />
+                *@
+                
+           
+                @*
+                </div>
+                @for (int i = 0; i < Model.Count(s => s.WorkStationName.Contains("AW")); i++)
                     {
                         <input type="checkbox" id="@Model[i].WorkStationId" value="@Model[i].WorkStationId"/>@Model[i].WorkStationName
                         if ((i + 1)%5 == 0)
@@ -73,8 +101,8 @@
                         }
                     }
                 *@
-            </div>
         </div>
+</div>
     </form>
     @Html.ActionLink("取得工作站清單","GetWorkStationsBySoftId", "FoxSoftwares")
 </div>

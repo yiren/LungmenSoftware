@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Text;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Script.Serialization;
@@ -9,6 +11,7 @@ using LungmenSoftware.Models;
 using LungmenSoftware.Models.Service;
 using LungmenSoftware.Models.ViewModel;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 namespace LungmenSoftware.Controllers
 {
@@ -46,16 +49,96 @@ namespace LungmenSoftware.Controllers
             return View(dataForView);
         }
 
-        
+        public class AngularData
+        {
+            public string Rev { get; set; }
+            public List<WKAndFoxJoinTable> JoinTableData { get; set; }
+
+            //使用StringBuilder組字串
+            //public String ToJSon()
+            //{
+            //    StringBuilder sb = new StringBuilder();
+            //    JsonWriter jw = new JsonTextWriter(new StringWriter(sb));
+
+            //    jw.Formatting=Formatting.Indented;
+            //    ;
+            //    jw.WriteStartObject();
+            //    jw.WritePropertyName("rev");
+            //    jw.WriteValue(Rev);
+            //    jw.WritePropertyName("JoinTableData");
+            //    jw.WriteStartArray();
+
+            //    foreach (WKAndFoxJoinTable jt in JoinTableData)
+            //    {
+            //        jw.WriteStartObject();
+            //        jw.WritePropertyName("FoxWorkStationId");
+            //        jw.WriteValue(jt.FoxWorkStationId);
+            //        jw.WriteEndObject();
+            //    }
+
+            //    jw.WriteEndArray();
+            //    jw.WriteEndObject();
+
+            //    return sb.ToString();
+            //}
+
+            //使用JObject
+            public JObject ConvertToJObject()
+            {
+                JObject obj=new JObject();
+                List<JProperty> children=new List<JProperty>();
+                obj.Add(new JProperty("Rev", Rev));
+
+                foreach (var item in JoinTableData)
+                {
+                   children.Add(new JProperty("FoxWorkStationId", item.FoxWorkStationId));      
+                }
+                obj.Add(new JProperty("Workstations", children));
+
+                return obj;
+            }
+
+        }
+
         //For AngularJS Form
         public ActionResult GetWorkStationsBySoftId(int id)
         {
             var wkListById = wkService.AjaxRequestForWorkstationsBySoftId(id);
-            string json = JsonConvert.SerializeObject(wkListById, new JsonSerializerSettings()
+            List<AngularData> dataToJson=new List<AngularData>();
+            List<WKAndFoxJoinTable> jts=new List<WKAndFoxJoinTable>();
+            //StringBuilder json=new StringBuilder();
+            JObject obj=new JObject();
+            JObject children = new JObject();
+            foreach (var perRev in wkListById)
+            {
+                jts.AddRange(perRev);
+                //obj.Add("Rev", perRev.Key);
+                //foreach (var item in jts)
+                //{
+                //    children.Add(new JProperty("FoxWorkStationId", item.FoxWorkStationId));
+                //}
+                //obj.Add(new JProperty("FoxWorkstations", jts));
+                AngularData record = new AngularData()
+                {
+                    Rev = perRev.Key,
+                    JoinTableData = jts
+                };
+
+                dataToJson.Add(record);
+            }
+            string json2 = JsonConvert.SerializeObject(obj, new JsonSerializerSettings()
+            {
+                Formatting = Formatting.Indented
+            });
+
+            //Use SerializeObject Method
+            string json = JsonConvert.SerializeObject(dataToJson, new JsonSerializerSettings()
             {
                 ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
                 Formatting = Formatting.Indented
             });
+
+
 
             return new ContentResult()
             {

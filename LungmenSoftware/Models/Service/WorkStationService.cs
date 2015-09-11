@@ -87,17 +87,38 @@ namespace LungmenSoftware.Models.Service
 
 
         //For AngularJS
-        public List<WKAndFoxJoinTable> AjaxRequestForWorkstationsBySoftId(int id)
+        public List<IGrouping<string,WKAndFoxJoinTable>> AjaxRequestForWorkstationsBySoftId(int id)
         {
             var query = from soft in ldb.FoxSoftwares.Where(s => s.FoxSoftwareId == id)
                         join wkJoinTable in ldb.WKAndFoxJoinTables
                             on soft.FoxSoftwareId equals wkJoinTable.FoxSoftwareId
+                        join wk in ldb.FoxWorkStations 
+                            on wkJoinTable.FoxWorkStationId equals wk.WorkStationId
                         //where soft.FoxSoftwareId==1 && soft.FoxSoftwareTypeId==1
-                        select wkJoinTable;
+                        select new SoftAndWks()
+                        {
+                            Rev = wkJoinTable.Rev,
+                            FoxSoftwareId = soft.FoxSoftwareId,
+                            FoxWorkStationId = wkJoinTable.FoxWorkStationId,
+                            WorkStationName = wk.WorkStationName
+                        };
 
+            IEnumerable<IGrouping<string, WKAndFoxJoinTable>> query2 = 
+                from s in ldb.FoxSoftwares.Where(s => s.FoxSoftwareId == id)
+                         join j in ldb.WKAndFoxJoinTables on s.FoxSoftwareId equals j.FoxSoftwareId
+                        group j by j.Rev into grouping
+                        orderby grouping.Key descending
+                        select grouping;
 
-
-            return query.ToList();
+            return query2.ToList();
         }
+    }
+
+    public class SoftAndWks
+    {
+        public int? FoxWorkStationId { get; set; }
+        public int FoxSoftwareId { get; set; }
+        public string WorkStationName { get; set; }
+        public string Rev { get; set; }
     }
 }
