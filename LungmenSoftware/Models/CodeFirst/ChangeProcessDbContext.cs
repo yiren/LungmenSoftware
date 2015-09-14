@@ -78,9 +78,6 @@ namespace LungmenSoftware.Models.CodeFirst
                     .WithMany(c => c.ChangeRequestStatuses)
                     .HasForeignKey(s => s.ChangeRequestId);
 
-                HasRequired(s => s.ChangeRequestStatusType)
-                    .WithMany(c => c.ChangeRequestStatuses)
-                    .HasForeignKey(s => s.StatusTypeId);
             }
         }
 

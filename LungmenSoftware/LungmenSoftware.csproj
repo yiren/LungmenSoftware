@@ -315,6 +315,10 @@
     <Compile Include="MigrationForChangeRequestData\201509140506475_AddRevInfo.Designer.cs">
       <DependentUpon>201509140506475_AddRevInfo.cs</DependentUpon>
     </Compile>
+    <Compile Include="MigrationForChangeRequestData\201509140908439_RemoveChangeStatusesCollectionInChangeStatusType.cs" />
+    <Compile Include="MigrationForChangeRequestData\201509140908439_RemoveChangeStatusesCollectionInChangeStatusType.Designer.cs">
+      <DependentUpon>201509140908439_RemoveChangeStatusesCollectionInChangeStatusType.cs</DependentUpon>
+    </Compile>
     <Compile Include="MigrationForChangeRequestData\Configuration.cs" />
     <Compile Include="MigrationForIdentity\201508210117075_InitialCreate.cs" />
     <Compile Include="MigrationForIdentity\201508210117075_InitialCreate.Designer.cs">
@@ -1407,6 +1411,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="MigrationForChangeRequestData\201509140506475_AddRevInfo.resx">
       <DependentUpon>201509140506475_AddRevInfo.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MigrationForChangeRequestData\201509140908439_RemoveChangeStatusesCollectionInChangeStatusType.resx">
+      <DependentUpon>201509140908439_RemoveChangeStatusesCollectionInChangeStatusType.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="MigrationForIdentity\201508210117075_InitialCreate.resx">
       <DependentUpon>201508210117075_InitialCreate.cs</DependentUpon>

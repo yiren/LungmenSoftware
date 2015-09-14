@@ -94,23 +94,49 @@ namespace LungmenSoftware.Models.Service
             db.SaveChanges();
         }
 
-        public ChangeRequest InitNewChangeRequestRecord(ChangeRequest crEntry)
+
+        //For AngularJS
+        public ChangeRequest InitNewChangeRequestRecord(string createdBy)
         {
-            crEntry.ChangeRequestStatuses = new List<ChangeRequestStatus>()
+            ChangeRequest cr = new ChangeRequest();
+            cr.ChangeRequestId = Guid.NewGuid();
+            cr.CreatedBy = createdBy;
+            cr.CreateDate = DateTime.Today;
+            cr.LastModifiedDate = DateTime.Today;
+            cr.SerialNumber = GetSerialNumber();
+            cr.ChangeRequestStatuses = new List<ChangeRequestStatus>()
             {
                 new ChangeRequestStatus()
                 {
                     InitialDate = DateTime.Today,
-                    ChangeRequestId = crEntry.ChangeRequestId,
-                    ChangeRequest = crEntry,
+                    ChangeRequestId = cr.ChangeRequestId,
+                    ChangeRequest = cr,
                     StatusTypeId = 1,
-                    ChangeRequestStatusType = db.ChangeRequestStatusTypes.Find(1),
+                    //ChangeRequestStatusType = db.ChangeRequestStatusTypes.Find(1),
                     IsCurrent = true
                 }
             };
-            return crEntry;
+            return cr;
         }
 
+        //For AngularJS
+        public bool AddChangeRequestRecord(ChangeRequest crEntry)
+        {
+            foreach (var item in crEntry.ChangeDeltas)
+            {
+                item.ChangeDeltaId = Guid.NewGuid();
+            }
+            db.ChangeRequests.Add(crEntry);
+            if (db.SaveChanges() != -1)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+
+        }
 
         public ChangeRequest FindByChangeRequestId(Guid changeRequestId)
         {
@@ -247,19 +273,7 @@ namespace LungmenSoftware.Models.Service
             return String.Format("{0:yyyyMMdd}", DateTime.Today) + "E" + new Random().Next(1000, 9999);
         }
 
-        public bool AddChangeRequestRecord(ChangeRequest crEntry)
-        {
-            db.ChangeRequests.Add(crEntry);
-            if (db.SaveChanges() != -1)
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
-
-        }
+        
     }
 
    

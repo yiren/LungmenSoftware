@@ -86,7 +86,7 @@ namespace LungmenSoftware.Controllers
 
             return View();
         }
-
+        //For AngularJS
         [HttpPost]
         public ContentResult AddNewChangeRequestRecord(ChangeRequest crEntry)
         {
@@ -110,14 +110,9 @@ namespace LungmenSoftware.Controllers
         //For AngularJS
         public ContentResult InitChangeRequest()
         {
-            ChangeRequest cr=new ChangeRequest();
-            cr.ChangeRequestId=Guid.NewGuid();
-            cr.CreatedBy = User.Identity.Name;
-            cr.CreateDate = DateTime.Today;
-            cr.LastModifiedDate = DateTime.Today;
-            cr.SerialNumber = crService.GetSerialNumber();
+            
 
-            ChangeRequest crToJson= crService.InitNewChangeRequestRecord(cr);
+            ChangeRequest crToJson= crService.InitNewChangeRequestRecord(User.Identity.Name);
             string json = JsonConvert.SerializeObject(crToJson, new JsonSerializerSettings()
             {
                 ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
