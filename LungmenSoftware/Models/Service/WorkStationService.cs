@@ -140,7 +140,7 @@ namespace LungmenSoftware.Models.Service
 
         }
         //For AngularJS
-        public List<AngularData> AjaxRequestForWorkstationsBySoftId(int id)
+        public List<ChangeDelta> AjaxRequestForWorkstationsBySoftId(int id)
         {
             var query = from soft in ldb.FoxSoftwares.Where(s => s.FoxSoftwareId == id)
                 join wkJoinTable in ldb.WKAndFoxJoinTables
@@ -162,26 +162,27 @@ namespace LungmenSoftware.Models.Service
             var query2 = query.GroupBy(g => g.Rev).ToList();
                 
 
-            List<AngularData> dataToJson = new List<AngularData>();
+            List<ChangeDelta> dataToJson = new List<ChangeDelta>();
             
             //StringBuilder json=new StringBuilder();
             //JObject obj=new JObject();
             //JObject children = new JObject();
             foreach (var perRev in query2)
             {
-                List<RevInfo> jts = new List<RevInfo>();
-                jts.AddRange(perRev);
+                List<RevInfo> revInfos = new List<RevInfo>();
+                revInfos.AddRange(perRev);
                 //obj.Add("Rev", perRev.Key);
                 //foreach (var item in jts)
                 //{
                 //    children.Add(new JProperty("FoxWorkStationId", item.FoxWorkStationId));
                 //}
                 //obj.Add(new JProperty("FoxWorkstations", jts));
-                AngularData record = new AngularData()
+                ChangeDelta record = new ChangeDelta()
                 {
-                    Rev = perRev.Key,
-                    JoinTableData = jts
+                    OriginalValue = perRev.Key,
+                    RevInfos = revInfos
                 };
+                
 
                 dataToJson.Add(record);
                 

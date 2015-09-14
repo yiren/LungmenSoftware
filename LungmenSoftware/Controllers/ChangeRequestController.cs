@@ -9,6 +9,7 @@ using LungmenSoftware.Models.Service;
 using LungmenSoftware.Models.ViewModel;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
+using Newtonsoft.Json;
 
 namespace LungmenSoftware.Controllers
 {
@@ -72,12 +73,62 @@ namespace LungmenSoftware.Controllers
             ChangeRequest cr=new ChangeRequest();
             cr.ChangeRequestId = Guid.NewGuid();
            
-            cr.SerialNumber = string.Format("{0:yyyyMMdd}", DateTime.Today) +"E"+ new Random().Next(10, 99);
+            cr.SerialNumber = string.Format("{0:yyyyMMdd}", DateTime.Today) +"E"+ new Random().Next(1000, 9999);
 
             //這邊以後可能要修掉
             
             //ViewBag.   
             return View(cr);
+        }
+
+        public ActionResult AngularForm()
+        {
+
+            return View();
+        }
+
+        [HttpPost]
+        public ContentResult AddNewChangeRequestRecord(ChangeRequest crEntry)
+        {
+
+            crEntry.ReviewBy = crService.GetReviewer();
+            crEntry.Owner = crEntry.ReviewBy;
+            crEntry.IsActive = true;
+            bool isSuccess=crService.AddChangeRequestRecord(crEntry);
+            string json = JsonConvert.SerializeObject(isSuccess, new JsonSerializerSettings()
+            {
+                ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+                Formatting = Formatting.Indented
+            });
+
+            return new ContentResult()
+            {
+                Content = json,
+                ContentType = "application/json"
+            };
+        }
+        //For AngularJS
+        public ContentResult InitChangeRequest()
+        {
+            ChangeRequest cr=new ChangeRequest();
+            cr.ChangeRequestId=Guid.NewGuid();
+            cr.CreatedBy = User.Identity.Name;
+            cr.CreateDate = DateTime.Today;
+            cr.LastModifiedDate = DateTime.Today;
+            cr.SerialNumber = crService.GetSerialNumber();
+
+            ChangeRequest crToJson= crService.InitNewChangeRequestRecord(cr);
+            string json = JsonConvert.SerializeObject(crToJson, new JsonSerializerSettings()
+            {
+                ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+                Formatting = Formatting.Indented
+            });
+
+            return new ContentResult()
+            {
+                Content = json,
+                ContentType = "application/json"
+            };
         }
 
         [HttpPost]

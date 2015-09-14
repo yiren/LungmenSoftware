@@ -1,6 +1,4 @@
-﻿@model List<LungmenSoftware.Models.FoxWorkStation>
-
-@{
+﻿@{
     ViewBag.Title = "系統軟體修改表單";
 }
 
@@ -16,15 +14,17 @@
 
                     <br />
                 *@
-                <label>軟體修改編號</label>
-
-                <label>軟體修改簡述</label>
-
+                <label>軟體修改編號:</label>
+                <label ng-bind="m.changeRequestData.SerialNumber"></label>
+                <br/>
+                <label>軟體修改簡述:</label>
+                <input type="text" ng-model="m.changeRequestData.Description"/>
+                <br/>
                 <label>軟體名稱:</label>
                 <select ng-options="s.SoftwareName for s in m.softwareList track by s.FoxSoftwareId" ng-model="m.softwareSelect"
                         ng-change="m.getSelectedWorkstationList(m.softwareSelect)"></select>
 
-                <hr/>
+                <hr />
                 <label>修改清單</label>
                 <div>
                     <table class="table table-bordered table-striped">
@@ -43,9 +43,9 @@
                         </tr>
                     </table>
                 </div>
-                <hr/>
+                <hr />
                 <button class="btn btn-default" ng-click="m.clearModList()">清空修改清單</button>
-               <a href="@Url.Action()" class="btn btn-primary" ng-click="m.postModList()">送出</a>                
+                <a href="@Url.Action("Index")" class="btn btn-primary" ng-click="m.postModList()">送出</a>
                 @*
                     <form name="AddForm" ng-submit="m.addNewWorkStation()">
                         <label>工作站名稱</label>
@@ -58,21 +58,21 @@
             <div class="col-md-5">
                 <div ng-repeat="d in m.data">
                     <label>目前建置版本:{{d.OriginalValue}}</label>
-                    <br/>
+                    <br />
                     <label>欲變更修改版本:</label>
                     <input type="text" ng-model="d.newValue" />
-                    <input type="button" ng-click="m.addToModList(d.OriginalValue,d.newValue, d.RevInfos)" value="加入修改"/>
-                    <br/>
-                    <h4>影響工作站</h4>                    
+                    <input type="button" ng-click="m.addToModList(d.OriginalValue,d.newValue, d.RevInfos)" value="加入修改" />
+                    <br />
+                    <h4>影響工作站</h4>
                     @*
-    <button class="btn btn-default" ng-click="m.getWorkstationsByRev(d)">顯示</button>
+                        <button class="btn btn-default" ng-click="m.getWorkstationsByRev(d)">顯示</button>
                     *@
                     <span ng-repeat="wk in d.RevInfos">
                         <input type="checkbox" id="{{wk.WorkStationId}}" ng-model="wk.isChecked"
                                ng-click="m.removeWKFromChange(d.RevInfos, wk)" />{{wk.WorkStationName}}
                         <br ng-if="m.isDividedByFive($index)" />
                     </span>
-                  
+
                     <hr />
                 </div>
             </div>
@@ -91,23 +91,23 @@
                         </span>
                         <hr />
                 *@
-                
-           
+
+
                 @*
-                </div>
-                @for (int i = 0; i < Model.Count(s => s.WorkStationName.Contains("AW")); i++)
-                    {
-                        <input type="checkbox" id="@Model[i].WorkStationId" value="@Model[i].WorkStationId"/>@Model[i].WorkStationName
-                        if ((i + 1)%5 == 0)
+                    </div>
+                    @for (int i = 0; i < Model.Count(s => s.WorkStationName.Contains("AW")); i++)
                         {
-                            <br/>
+                            <input type="checkbox" id="@Model[i].WorkStationId" value="@Model[i].WorkStationId"/>@Model[i].WorkStationName
+                            if ((i + 1)%5 == 0)
+                            {
+                                <br/>
+                            }
                         }
-                    }
                 *@
+            </div>
         </div>
-</div>
     </form>
-    @Html.ActionLink("送出","Index", "ChangeRequest")
+    @Html.ActionLink("送出", "Index", "ChangeRequest")
 </div>
 @*
     <div>

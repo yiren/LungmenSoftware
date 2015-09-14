@@ -192,14 +192,10 @@ namespace LungmenSoftware.Controllers
         }
 
         //For AngularJS Form
-        public ActionResult UpdateSoftwareRev(List<AngularData> data)
+        public ActionResult UpdateSoftwareRev(List<ChangeDelta> data)
         {
 
-            foreach (var item in data)
-            {
-                var d = item.JoinTableData;
-                
-            }
+            
 
             bool isUpdate = true;//softService.UpdateSoftwareRev(data);
 

@@ -4,24 +4,34 @@
         
      );
 
-    function UpdateWorkStationList($http, vm) {
-        $http.get('/foxworkstations/getworkstations')
-            .success(function (data) {
-                vm.allWorkstations = data;
-                //$log.info("All Workstations " + data);
-                var processData = [];
-
-
-            })
-            .error(function () {
-                vm.message = 'Unexpected Error While Getting All Workstations';
-            });
-    }
+    
 
     function MainCtrl($http, $log, $scope) {
         var vm = this;
         vm.message = 'Before Getting Data';
         //vm.newWorkstation = {};
+
+        function UpdateWorkStationList(vm) {
+            $http.get('/foxworkstations/getworkstations')
+                .success(function (data) {
+                    vm.allWorkstations = data;
+                    //$log.info("All Workstations " + data);
+                    var processData = [];
+
+
+                })
+                .error(function () {
+                    vm.message = 'Unexpected Error While Getting All Workstations';
+                });
+        }
+
+        $http.get('/changerequest/InitChangeRequest').then(function (response) {
+            $log.info(response.data);
+
+            vm.changeRequestData = response.data;
+        }, function(errResponse) {
+            
+        });
 
         UpdateWorkStationList($http, vm);
         vm.modList = [];
@@ -62,16 +72,19 @@
                 });
 
         }
+        //Legacy Code
+        //vm.getWorkstationsByRev= function (rev) {
+        //    $log.info(rev);
+        //    $http.post('/foxsoftwares/GetWorkstationsByRev', rev)
+        //        .then(function(response) {
+        //            $log.info(response);
+        //            vm.revStations = response.data;
+        //        }, function(errResponse) {
+        //            $log.info(errResponse);
+        //        });
+        //}
 
-        vm.getWorkstationsByRev= function (rev) {
-            $log.info(rev);
-            $http.post('/foxsoftwares/GetWorkstationsByRev', rev)
-                .then(function(response) {
-                    vm.revStations = response.data;
-                }, function(errResponse) {
-                    
-                });
-        }
+
         function RefreshWorkstationList(selected) {
             $http.get('/foxsoftwares/GetRevListBySoftId/' + selected.FoxSoftwareId)
                .then(function (response) {
@@ -99,8 +112,9 @@
                    */
                    //vm.revStations = [];
                    vm.data = response.data;
+                    $log.info(vm.data);
                    angular.forEach(vm.data, function (value, key) {
-                       angular.forEach(value.JoinTableData, function (value, key) {
+                       angular.forEach(value.RevInfos, function (value, key) {
                            value.isChecked = true;
                        });
 
@@ -120,6 +134,7 @@
             //$log.info(vm.allWorkstations);
             var tempAllWks = vm.allWorkstations;
             vm.selected = selected;
+            $log.info(selected);
             //$log.info(tempAllWks);
             RefreshWorkstationList(selected);
             /* Legacy Code
@@ -211,33 +226,60 @@
             $log.info(selected);
         }
 
-        vm.addToModList=function(oldRev, newRev, joinTable) {
+        vm.addToModList=function(originalValue, newValue, revInfos) {
+            var revInfoForUpdate=[];
+
+            angular.forEach(revInfos, function(value, key) {
+                if (value.isChecked === true) {
+                    revInfoForUpdate.push(value);
+                }
+            });
+
+            $log.info(revInfoForUpdate);
             var modItem = {
-                Rev: oldRev,
-                NewRev: newRev,
-                JoinTableData:joinTable
+                OriginalValue: originalValue,
+                NewValue: newValue,
+                RevInfos:revInfoForUpdate
             };
             vm.modList.push(modItem);
             $log.info(vm.modList);
         }
         
-        vm.removeWKFromChange=function(joinTableData, index) {
-            var temp = joinTableData;
-            temp.splice(index, 1);
+        vm.removeWKFromChange = function (revInfos, index) {
+            //$log.info(index);
+            //$log.info(revInfos[index].isChecked);
+            if (revInfos[index].isChecked === false) {
+                revInfos[index].isChecked = false;
+            } else {
+                revInfos[index].isChecked = true;
+            }
+            
+            
         }
 
         vm.clearModList=function() {
             vm.modList = [];
-            RefreshWorkstationList(selected);
+            RefreshWorkstationList(vm.selected);
         }
 
-        vm.postModList=function() {
-            $http.post('/foxsoftwares/UpdateSoftwareRev', vm.modList)
+        vm.deleteMod = function (item) {
+            var idx = vm.modList.indexOf(item);
+            $log.info(idx);
+            vm.modList.slice(idx, 1);
+            $log.info(vm.modList);
+        }
+
+        vm.postModList = function () {
+            vm.changeRequestData.ChangeDeltas = vm.modList;
+            //$log.info(vm.changeRequestData);
+           
+            $http.post('/changerequest/addnewChangerequestrecord', vm.changeRequestData)
                 .then(function(response) {
                     $log.info(response.data);
                 }, function(errResponse) {
                     
                 });
+            
         }
 
         vm.isDividedByFive=function(index) {

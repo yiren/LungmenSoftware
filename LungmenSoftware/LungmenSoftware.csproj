@@ -1362,6 +1362,7 @@
     <Content Include="Views\ChangeRequest\EditChangeRequest.cshtml" />
     <Content Include="Views\ChangeRequest\ReviewChangeRequest.cshtml" />
     <Content Include="Views\Angular\Index.cshtml" />
+    <Content Include="Views\ChangeRequest\AngularForm.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

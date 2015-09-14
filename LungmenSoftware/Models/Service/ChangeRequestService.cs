@@ -94,6 +94,24 @@ namespace LungmenSoftware.Models.Service
             db.SaveChanges();
         }
 
+        public ChangeRequest InitNewChangeRequestRecord(ChangeRequest crEntry)
+        {
+            crEntry.ChangeRequestStatuses = new List<ChangeRequestStatus>()
+            {
+                new ChangeRequestStatus()
+                {
+                    InitialDate = DateTime.Today,
+                    ChangeRequestId = crEntry.ChangeRequestId,
+                    ChangeRequest = crEntry,
+                    StatusTypeId = 1,
+                    ChangeRequestStatusType = db.ChangeRequestStatusTypes.Find(1),
+                    IsCurrent = true
+                }
+            };
+            return crEntry;
+        }
+
+
         public ChangeRequest FindByChangeRequestId(Guid changeRequestId)
         {
             return db.ChangeRequests.Find(changeRequestId);
@@ -105,26 +123,10 @@ namespace LungmenSoftware.Models.Service
             db.SaveChanges();
         }
 
-        public void StatusUpdateForCancellation(ChangeRequest cr)
-        {
-            UpdatePreviousStatus(cr);
 
-            cr.IsActive = false;
+        
 
-            db.ChangeRequestStatuses.Add(new ChangeRequestStatus()
-            {
-                ChangeRequestId = cr.ChangeRequestId,
-                ChangeRequest = cr,
-                ChangeDate = DateTime.Today,
-                StatusTypeId = 4,
-                ChangeRequestStatusType = db.ChangeRequestStatusTypes.Find(4),
-                EndDate = DateTime.Today,
-                InitialDate = DateTime.Today,
 
-            });
-
-            db.SaveChanges();
-        }
 
         private void UpdatePreviousStatus(ChangeRequest cr)
         {
@@ -143,29 +145,6 @@ namespace LungmenSoftware.Models.Service
 
         }
 
-
-        public void StatusUpdateForApproval(ChangeRequest cr)
-        {
-            UpdatePreviousStatus(cr);
-
-            cr.IsActive = false;
-            
-            db.ChangeRequestStatuses.Add(new ChangeRequestStatus()
-            {
-                ChangeRequestId = cr.ChangeRequestId,
-                ChangeRequest = cr,
-                ChangeDate = DateTime.Today,
-                StatusTypeId = 3,
-                ChangeRequestStatusType = db.ChangeRequestStatusTypes.Find(3),
-                EndDate = DateTime.Today,
-                InitialDate = DateTime.Today,
-                IsCurrent = true
-            });
-
-            db.SaveChanges();
-
-        }
-
         public void EntityToModifiedState(ChangeRequest cr)
         {
             db.Entry(cr).State=EntityState.Added;
@@ -173,13 +152,15 @@ namespace LungmenSoftware.Models.Service
 
         public string GetReviewer()
         {
-            var reviewer = _identityDb.Roles.Single(r => r.Name.Equals("Reviewer"));
+            //var reviewer = _identityDb.Roles.Single(r => r.Name.Equals("Reviewer"));
 
-            var query = from userRoles in reviewer.Users
-                        join users in _identityDb.Users on userRoles.UserId equals users.Id
-                        select users;
+            //var query = from userRoles in reviewer.Users
+            //            join users in _identityDb.Users on userRoles.UserId equals users.Id
+            //            select users;
 
-            return query.Last().UserName;
+            //return query.Last().UserName;
+
+            return "test2@taipower.com.tw";
         }
 
         public void StatusUpdateForComment(ChangeRequest cr)
@@ -216,6 +197,68 @@ namespace LungmenSoftware.Models.Service
             });
 
             db.SaveChanges();
+        }
+
+        public void StatusUpdateForApproval(ChangeRequest cr)
+        {
+            UpdatePreviousStatus(cr);
+
+            cr.IsActive = false;
+
+            db.ChangeRequestStatuses.Add(new ChangeRequestStatus()
+            {
+                ChangeRequestId = cr.ChangeRequestId,
+                ChangeRequest = cr,
+                ChangeDate = DateTime.Today,
+                StatusTypeId = 3,
+                ChangeRequestStatusType = db.ChangeRequestStatusTypes.Find(3),
+                EndDate = DateTime.Today,
+                InitialDate = DateTime.Today,
+                IsCurrent = true
+            });
+
+            db.SaveChanges();
+
+        }
+        public void StatusUpdateForCancellation(ChangeRequest cr)
+        {
+            UpdatePreviousStatus(cr);
+
+            cr.IsActive = false;
+
+            db.ChangeRequestStatuses.Add(new ChangeRequestStatus()
+            {
+                ChangeRequestId = cr.ChangeRequestId,
+                ChangeRequest = cr,
+                ChangeDate = DateTime.Today,
+                StatusTypeId = 4,
+                ChangeRequestStatusType = db.ChangeRequestStatusTypes.Find(4),
+                EndDate = DateTime.Today,
+                InitialDate = DateTime.Today,
+
+            });
+
+            db.SaveChanges();
+        }
+
+
+        public string GetSerialNumber()
+        {
+            return String.Format("{0:yyyyMMdd}", DateTime.Today) + "E" + new Random().Next(1000, 9999);
+        }
+
+        public bool AddChangeRequestRecord(ChangeRequest crEntry)
+        {
+            db.ChangeRequests.Add(crEntry);
+            if (db.SaveChanges() != -1)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+
         }
     }
 
