@@ -21,8 +21,10 @@
     function MainCtrl($http, $log, $scope) {
         var vm = this;
         vm.message = 'Before Getting Data';
-        vm.newWorkstation = {};
+        //vm.newWorkstation = {};
+
         UpdateWorkStationList($http, vm);
+        vm.modList = [];
         $http.get('/foxsoftwares/getsystemsoftwares')
                .success(function (data) {
                    vm.message = 'Data Retrieves Successfully';
@@ -61,6 +63,16 @@
 
         }
 
+        vm.getWorkstationsByRev= function (rev) {
+            $log.info(rev);
+            $http.post('/foxsoftwares/GetWorkstationsByRev', rev)
+                .then(function(response) {
+                    vm.revStations = response.data;
+                }, function(errResponse) {
+                    
+                });
+        }
+
         vm.getSelectedWorkstationList = function (selected) {
             //$log.info("Before Resetting");
             //$log.info(vm.allWorkstations);
@@ -71,9 +83,9 @@
             //$log.info(vm.allWorkstations);
             var tempAllWks = vm.allWorkstations;
             
-            $log.info(tempAllWks);
+            //$log.info(tempAllWks);
 
-            $http.get('/foxsoftwares/GetWorkStationsBySoftId/' + selected.FoxSoftwareId)
+            $http.get('/foxsoftwares/GetRevListBySoftId/' + selected.FoxSoftwareId)
                 .then(function(response) {
                     /* Legacy Code
                     //var rev = response.data[0].Rev;
@@ -97,14 +109,18 @@
                     //$log.info(response.data[0].Rev);
                     //console.log("Inside Rev Info:" + rev);
                     */
-                    vm.revStations = [];
+                    //vm.revStations = [];
                     vm.data = response.data;
-                    var data=vm.data;
-                    console.log(vm.data);
-                    for (var c = 0; c < data.length; c++) {
-                        vm.revStations.push(vm.allWorkstations);
-                    }
-                    $log.info(vm.revStations);
+                    var data = vm.data;
+                    angular.forEach(vm.data, function (value, key) {
+                        angular.forEach(value.JoinTableData, function(value, key) {
+                            value.isChecked = true;
+                        } );
+
+                        
+                    });
+                    console.log(response);
+                    /* Legacy Code*/
                     for (var i = 0; i < data.length; i++) {
                         //$log.info(data[i].JoinTableData);
                         for (var j = 1; j < data[i].JoinTableData.length; j++) {
@@ -136,7 +152,6 @@
                     //console.log("Inside SetRev Info: " + vm.selectedSoftwareRev);
                     //$log.info(rev);
 
-                    vm.revCategory = response.data;
                     /*Legacy Code
                     angular.forEach(response.data, function (value, key) {
                         
@@ -191,6 +206,20 @@
         vm.showChecked = function (selected) {
 
             $log.info(selected);
+        }
+
+        vm.addToModList=function(oldRev, newRev, joinTable) {
+            var modItem = {
+                OldRev: oldRev,
+                NewRev: newRev,
+                JoinTableData:joinTable
+            };
+            vm.modList.push(modItem);
+            $log.info(vm.modList);
+        }
+        
+        vm.postModList=function() {
+            $http.post()
         }
 
         vm.isDividedByFive=function(index) {

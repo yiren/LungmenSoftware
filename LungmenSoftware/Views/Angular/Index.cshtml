@@ -21,27 +21,25 @@
                         ng-change="m.getSelectedWorkstationList(m.softwareSelect)"></select>
 
                 <hr/>
-                <label>原建置值:</label>
-                <label ng-bind="m.selectedSoftwareRev">請選擇軟體</label>
-                <br />
-                <label>欲變更數值</label>
-                <input type="text" ng-model="m.newRevValue" />
-                <br />
-                <button ng-click="m.modifyRev(m.softwareSelect, m.newRevValue)">更新</button>
+                <label>修改清單</label>
+                <div>
+                    <table class="table table-bordered table-striped">
+                        <tr>
+                            <th>Item</th>
+                            <th>原建置版本</th>
+                            <th>欲建置版本</th>
+                        </tr>
 
-
-                @*
-                    <div>
-                        <label>原建置值:</label>
-                        <label ng-bind="m.selectedSoftwareRev">請選擇軟體</label>
-                        <br />
-                        <label>欲變更數值</label>
-                        <input type="text" ng-model="m.newRevValue" />
-                        <br />
-                        <button ng-click="m.modifyRev(m.softwareSelect, m.newRevValue)">更新</button>
-                    </div>
-                *@
+                        <tr ng-repeat="item in m.modList">
+                            <td>{{$index+1}}</td>
+                            <td>{{item.OldRev}}</td>
+                            <td>{{item.NewRev}}</td>
+                        </tr>
+                    </table>
+                </div>
                 <hr />
+               <button class="btn btn-primary" ng-click="m.postModList()">送出</button>
+                
                 @*
                     <form name="AddForm" ng-submit="m.addNewWorkStation()">
                         <label>工作站名稱</label>
@@ -52,23 +50,27 @@
                 *@
             </div>
             <div class="col-md-5">
-
                 <div ng-repeat="d in m.data">
-                    <h4>目前建置版本:{{d.Rev}}</h4>
-                    <br />
-                    <h4>此版本相關工作站</h4>
-                    <span ng-repeat="wk in vm.revStations[$index] track by wk.WorkStationId">
+                    <label>目前建置版本:{{d.Rev}}</label>
+                    <br/>
+                    <label>欲變更修改版本:</label>
+                    <input type="text" ng-model="d.newRev" />
+                    <input type="button" ng-click="m.addToModList(d.Rev,d.newRev, d.JoinTableData)" value="加入修改"/>
+                    <br/>
+                    <h4>影響工作站</h4>
+
+                    
+                    
+                    @*
+    <button class="btn btn-default" ng-click="m.getWorkstationsByRev(d)">顯示</button>
+                    *@
+                    <span ng-repeat="wk in d.JoinTableData">
                         <input type="checkbox" id="{{wk.WorkStationId}}" ng-model="wk.isChecked"
                                ng-change="m.showChecked(wk)" />{{wk.WorkStationName}}
                         <br ng-if="m.isDividedByFive($index)" />
                     </span>
-                    @*
-    <span ng-repeat="wk in m.allWorkstations track by wk.WorkStationId">
-        <input type="checkbox" id="{{wk.WorkStationId}}" ng-model="wk.isChecked"
-               ng-change="m.showChecked(wk)" />{{wk.WorkStationName}}
-        <br ng-if="m.isDividedByFive($index)" />
-    </span>
-                    *@
+                    
+                    
 
                     <hr />
                 </div>
@@ -106,7 +108,17 @@
     </form>
     @Html.ActionLink("取得工作站清單","GetWorkStationsBySoftId", "FoxSoftwares")
 </div>
-
+@*
+    <div>
+        <label>原建置值:</label>
+        <label ng-bind="m.selectedSoftwareRev">請選擇軟體</label>
+        <br />
+        <label>欲變更數值</label>
+        <input type="text" ng-model="m.newRevValue" />
+        <br />
+        <button ng-click="m.modifyRev(m.softwareSelect, m.newRevValue)">更新</button>
+    </div>
+*@
 
 @section scripts
 {

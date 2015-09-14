@@ -8,6 +8,7 @@ using System.Web.Mvc;
 using System.Web.Script.Serialization;
 using LungmenSoftware.Helper;
 using LungmenSoftware.Models;
+using LungmenSoftware.Models.CodeFirst.Entities;
 using LungmenSoftware.Models.Service;
 using LungmenSoftware.Models.ViewModel;
 using Newtonsoft.Json;
@@ -101,44 +102,61 @@ namespace LungmenSoftware.Controllers
         }
 
         //For AngularJS Form
-        public ActionResult GetWorkStationsBySoftId(int id)
+        public ActionResult GetRevListBySoftId(int id)
         {
             var wkListById = wkService.AjaxRequestForWorkstationsBySoftId(id);
             List<AngularData> dataToJson=new List<AngularData>();
             List<WKAndFoxJoinTable> jts=new List<WKAndFoxJoinTable>();
             //StringBuilder json=new StringBuilder();
-            JObject obj=new JObject();
-            JObject children = new JObject();
-            foreach (var perRev in wkListById)
-            {
-                jts.AddRange(perRev);
-                //obj.Add("Rev", perRev.Key);
-                //foreach (var item in jts)
-                //{
-                //    children.Add(new JProperty("FoxWorkStationId", item.FoxWorkStationId));
-                //}
-                //obj.Add(new JProperty("FoxWorkstations", jts));
-                AngularData record = new AngularData()
-                {
-                    Rev = perRev.Key,
-                    JoinTableData = jts
-                };
+            //JObject obj=new JObject();
+            //JObject children = new JObject();
+            //foreach (var perRev in wkListById)
+            //{
+            //    jts.AddRange(perRev);
+            //    //obj.Add("Rev", perRev.Key);
+            //    //foreach (var item in jts)
+            //    //{
+            //    //    children.Add(new JProperty("FoxWorkStationId", item.FoxWorkStationId));
+            //    //}
+            //    //obj.Add(new JProperty("FoxWorkstations", jts));
+            //    AngularData record = new AngularData()
+            //    {
+            //        Rev = perRev.Key,
+            //        JoinTableData = jts
+            //    };
 
-                dataToJson.Add(record);
-            }
-            string json2 = JsonConvert.SerializeObject(obj, new JsonSerializerSettings()
-            {
-                Formatting = Formatting.Indented
-            });
+            //    dataToJson.Add(record);
+            //}
+            //string json2 = JsonConvert.SerializeObject(obj, new JsonSerializerSettings()
+            //{
+            //    Formatting = Formatting.Indented
+            //});
 
             //Use SerializeObject Method
-            string json = JsonConvert.SerializeObject(dataToJson, new JsonSerializerSettings()
+            string json = JsonConvert.SerializeObject(wkListById, new JsonSerializerSettings()
             {
                 ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
                 Formatting = Formatting.Indented
             });
 
+            return new ContentResult()
+            {
+                Content = json,
+                ContentType = "application/json"
+            };
+        }
 
+
+        //For AngualrJS
+        public ActionResult GetWorkstationsByRev(string rev)
+        {
+            List<FoxWorkStation> wkList = wkService.GetWorkstationsByRev(rev);
+            
+            string json = JsonConvert.SerializeObject(wkList, new JsonSerializerSettings()
+            {
+                ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+                Formatting = Formatting.Indented
+            });
 
             return new ContentResult()
             {
@@ -174,7 +192,7 @@ namespace LungmenSoftware.Controllers
         }
 
         //For AngularJS Form
-        public ActionResult UpdateSoftwareRev(SoftwareToUpdate record)
+        public ActionResult UpdateSoftwareRev(List<ChangeDelta> data)
         {
             var softFromDb = softService.GetFoxSoftwareById(record.FoxSoftwareId);
             if (softFromDb == null)
