@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Web;
+using LungmenSoftware.Models.CodeFirst.Entities;
 using LungmenSoftware.Models.ViewModel;
 using Newtonsoft.Json.Linq;
 
@@ -56,7 +57,7 @@ namespace LungmenSoftware.Models.Service
             return ldb.WorkStationHardwareTypes.ToList();
         }
 
-        public List<FoxWorkStationAndSoftwareInfo> GetWorkStationsBySoftwareId(int softId)
+        public List<RevInfo> GetWorkStationsBySoftwareId(int softId)
         {
             var query = from soft in ldb.FoxSoftwares.Where(s => s.FoxSoftwareId == softId)
                 join wkJoinTable in ldb.WKAndFoxJoinTables 
@@ -64,7 +65,7 @@ namespace LungmenSoftware.Models.Service
                 join wk in ldb.FoxWorkStations
                     on wkJoinTable.FoxWorkStationId equals wk.WorkStationId
                         //where soft.FoxSoftwareId==1 && soft.FoxSoftwareTypeId==1
-                select new FoxWorkStationAndSoftwareInfo()
+                select new RevInfo()
                 {
                     FoxWorkStationId= wk.WorkStationId,
                     WorkStationName = wk.WorkStationName,
@@ -90,7 +91,8 @@ namespace LungmenSoftware.Models.Service
         public class AngularData
         {
             public string Rev { get; set; }
-            public List<FoxWorkStationAndSoftwareInfo> JoinTableData { get; set; }
+            public string NewRev { get; set; }
+            public List<RevInfo> JoinTableData { get; set; }
 
             //使用StringBuilder組字串
             //public String ToJSon()
@@ -146,8 +148,9 @@ namespace LungmenSoftware.Models.Service
                 join wk in ldb.FoxWorkStations
                     on wkJoinTable.FoxWorkStationId equals wk.WorkStationId
                         //where soft.FoxSoftwareId==1 && soft.FoxSoftwareTypeId==1
-                       select new FoxWorkStationAndSoftwareInfo()
+                       select new RevInfo()
                         {
+                            JoinTableId = wkJoinTable.Id,
                             FoxWorkStationId = wk.WorkStationId,
                             WorkStationName = wk.WorkStationName,
                             SoftwareName = soft.SoftwareName,
@@ -166,7 +169,7 @@ namespace LungmenSoftware.Models.Service
             //JObject children = new JObject();
             foreach (var perRev in query2)
             {
-                List<FoxWorkStationAndSoftwareInfo> jts = new List<FoxWorkStationAndSoftwareInfo>();
+                List<RevInfo> jts = new List<RevInfo>();
                 jts.AddRange(perRev);
                 //obj.Add("Rev", perRev.Key);
                 //foreach (var item in jts)

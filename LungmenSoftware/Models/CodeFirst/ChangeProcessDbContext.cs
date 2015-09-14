@@ -21,6 +21,7 @@ namespace LungmenSoftware.Models.CodeFirst
         public DbSet<ChangeRequestStatusType> ChangeRequestStatusTypes { get; set; }
         public DbSet<ChangeRequestStatus> ChangeRequestStatuses { get; set; }
         public DbSet<ChangeDelta> ChangeDeltas { get; set; }
+        public DbSet<RevInfo> RevInfos { get; set; }
 
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
@@ -29,8 +30,13 @@ namespace LungmenSoftware.Models.CodeFirst
             modelBuilder.Configurations.Add(new ChangeRequestStatusConfiguration());
             modelBuilder.Configurations.Add(new ChangeRequestStatusTypeConfiguration());
             modelBuilder.Configurations.Add(new ChangeDeltaConfiguration());
+            modelBuilder.Configurations.Add(new RevInfoConfiguration());
         }
 
+        
+
+        
+    }
         public class ChangeRequestConfiguration :
             EntityTypeConfiguration<ChangeRequest>
         {
@@ -77,20 +83,30 @@ namespace LungmenSoftware.Models.CodeFirst
                     .HasForeignKey(s => s.StatusTypeId);
             }
         }
-    }
 
-    
-
-    public class ChangeRequestStatusTypeConfiguration
-        :EntityTypeConfiguration<ChangeRequestStatusType>
-    {
-        public ChangeRequestStatusTypeConfiguration()
+        public class ChangeRequestStatusTypeConfiguration
+       : EntityTypeConfiguration<ChangeRequestStatusType>
         {
-            HasKey(t => t.StatusTypeId);
-            Property(t => t.StatusName).HasMaxLength(50)
-                .IsRequired();
-            HasOptional(t => t.NextStatus).WithMany()
-                .HasForeignKey(t => t.NextStatusId);
+            public ChangeRequestStatusTypeConfiguration()
+            {
+                HasKey(t => t.StatusTypeId);
+                Property(t => t.StatusName).HasMaxLength(50)
+                    .IsRequired();
+                HasOptional(t => t.NextStatus).WithMany()
+                    .HasForeignKey(t => t.NextStatusId);
+            }
         }
-    }
+
+        public class RevInfoConfiguration:
+            EntityTypeConfiguration<RevInfo>
+        {
+            public RevInfoConfiguration()
+            {
+                HasKey(i => i.RevInfoId);
+                HasRequired(i => i.ChangeDelta)
+                    .WithMany(d => d.RevInfos)
+                    .HasForeignKey(i => i.ChangeDeltaId);
+                
+            }
+        }
 }

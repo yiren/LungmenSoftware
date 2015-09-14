@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using LungmenSoftware.Models.CodeFirst.Entities;
 
 namespace LungmenSoftware.Models.ViewModel
 {
@@ -9,7 +10,7 @@ namespace LungmenSoftware.Models.ViewModel
     {
         public string KeywordForSearch { get; set; }
 
-        public List<FoxWorkStationAndSoftwareInfo> WorkStationsBySoftwareId { get; set; }
+        public List<RevInfo> WorkStationsBySoftwareId { get; set; }
        
         public List<FoxWorkStation> WPList { get; set; }
 

@@ -3,13 +3,17 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-namespace LungmenSoftware.Models
+namespace LungmenSoftware.Models.CodeFirst.Entities
 {
-    public class FoxWorkStationAndSoftwareInfo
+    public class RevInfo
     {
-        public int FoxWorkStationId { get; set; }
+        public int RevInfoId { get; set; }
 
-        public int FoxSoftwareId { get; set; }
+        public long? JoinTableId { get; set; }
+
+        public int? FoxWorkStationId { get; set; }
+
+        public int? FoxSoftwareId { get; set; }
 
         public string WorkStationName { get; set; }
 
@@ -25,6 +29,9 @@ namespace LungmenSoftware.Models
 
         public string Note { get; set; }
 
+        public ChangeDelta ChangeDelta { get; set; }
+
+        public Guid ChangeDeltaId { get; set; }
         
     }
 }

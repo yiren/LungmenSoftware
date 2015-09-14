@@ -4,6 +4,7 @@ using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Web;
+using LungmenSoftware.Models.CodeFirst.Entities;
 using LungmenSoftware.Models.ViewModel;
 
 namespace LungmenSoftware.Models.Service
@@ -71,18 +72,10 @@ namespace LungmenSoftware.Models.Service
             
         }
 
-        public bool UpdateSoftwareRev(FoxSoftware softFromDb, string rev)
+
+        public bool UpdateSoftwareRev(List<ChangeDelta> data)
         {
-            var query = ldb.WKAndFoxJoinTables
-                .Where(j => j.FoxSoftwareId == softFromDb.FoxSoftwareId).ToList();
-            foreach (var soft in query)
-            {
-                soft.Rev = rev;
-            }
-
-            var isUpdated=ldb.SaveChanges();
-
-            return isUpdated > 0;
+            throw new NotImplementedException();
         }
     }
 }

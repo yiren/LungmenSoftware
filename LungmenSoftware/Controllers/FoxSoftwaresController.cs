@@ -192,22 +192,20 @@ namespace LungmenSoftware.Controllers
         }
 
         //For AngularJS Form
-        public ActionResult UpdateSoftwareRev(List<ChangeDelta> data)
+        public ActionResult UpdateSoftwareRev(List<AngularData> data)
         {
-            var softFromDb = softService.GetFoxSoftwareById(record.FoxSoftwareId);
-            if (softFromDb == null)
+
+            foreach (var item in data)
             {
-                return new ContentResult()
-                {
-                    Content = "The record is not Found.",
-                    ContentType = "application/json"
-                };
+                var d = item.JoinTableData;
+                
             }
-            bool isUpdate=softService.UpdateSoftwareRev(softFromDb, record.Rev);
+
+            bool isUpdate = true;//softService.UpdateSoftwareRev(data);
 
             if (isUpdate)
             {
-                string json = JsonConvert.SerializeObject(record, new JsonSerializerSettings()
+                string json = JsonConvert.SerializeObject(data, new JsonSerializerSettings()
                 {
                     ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
                     Formatting = Formatting.Indented
@@ -226,7 +224,16 @@ namespace LungmenSoftware.Controllers
                     ContentType = "application/json"
                 };
             }
-            
+            //Legacy Code
+            //var softFromDb = softService.GetFoxSoftwareById(record.FoxSoftwareId);
+            //if (softFromDb == null)
+            //{
+            //    return new ContentResult()
+            //    {
+            //        Content = "The record is not Found.",
+            //        ContentType = "application/json"
+            //    };
+            //}
         }
     }
 }

@@ -32,12 +32,13 @@
 
                         <tr ng-repeat="item in m.modList">
                             <td>{{$index+1}}</td>
-                            <td>{{item.OldRev}}</td>
+                            <td>{{item.Rev}}</td>
                             <td>{{item.NewRev}}</td>
                         </tr>
                     </table>
                 </div>
-                <hr />
+                <hr/>
+                <button class="btn btn-default" ng-click="m.clearModList()">清空修改清單</button>
                <button class="btn btn-primary" ng-click="m.postModList()">送出</button>
                 
                 @*
@@ -66,7 +67,7 @@
                     *@
                     <span ng-repeat="wk in d.JoinTableData">
                         <input type="checkbox" id="{{wk.WorkStationId}}" ng-model="wk.isChecked"
-                               ng-change="m.showChecked(wk)" />{{wk.WorkStationName}}
+                               ng-change="m.removeWKFromChange(d.JoinTableData, $index)" />{{wk.WorkStationName}}
                         <br ng-if="m.isDividedByFive($index)" />
                     </span>
                     
