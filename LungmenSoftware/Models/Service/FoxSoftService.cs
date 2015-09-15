@@ -39,7 +39,7 @@ namespace LungmenSoftware.Models.Service
                     Software_Library_Identification=soft.Media_Identification,
                     Media_Identification=soft.Media_Identification,
                     IsLocked = wkandsoft.IsLocked,
-                    SoftwareId=soft.FoxSoftwareId,
+                    FoxSoftwareId=soft.FoxSoftwareId,
                     Note=wkandsoft.Note,
                     SoftwareTypeId=soft.FoxSoftwareTypeId
                 } ;
@@ -76,6 +76,12 @@ namespace LungmenSoftware.Models.Service
         public bool UpdateSoftwareRev(List<ChangeDelta> data)
         {
             throw new NotImplementedException();
+        }
+
+
+        public WKAndFoxJoinTable GetJoinTableDataById(long joinTableId)
+        {
+            return ldb.WKAndFoxJoinTables.Find(joinTableId);
         }
     }
 }

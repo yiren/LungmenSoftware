@@ -43,6 +43,57 @@ namespace LungmenSoftware.Models.Service
             return query.ToList();
         }
 
+        public List<ChangeRequestInfo> GetChangeRequestHistoryByJoinTable(WKAndFoxJoinTable record)
+        {
+            var query = from r in db.RevInfos.Where(r => r.JoinTableId == record.Id)
+                join d in db.ChangeDeltas
+                    on r.ChangeDeltaId equals d.ChangeDeltaId
+                join cr in db.ChangeRequests.Where(c => c.IsActive == false)
+                    on d.ChangeRequestId equals cr.ChangeRequestId
+                join s in db.ChangeRequestStatuses.Where(s => s.StatusTypeId == 3)
+                    on cr.ChangeRequestId equals s.ChangeRequestId
+                select new ChangeRequestInfo()
+                {
+                    ChangeRequestId = cr.ChangeRequestId,
+                    ApprovedBy = cr.ApprovedBy,
+                    CreatedBy = cr.CreatedBy,
+                    ReviewBy = cr.ReviewBy,
+                    SerialNumber = cr.SerialNumber,
+                    EndDate = s.EndDate,
+                    InitialDate = s.InitialDate,
+                    CreateDate = cr.CreateDate,
+                    Description = cr.Description,
+                    OriginalValue = d.OriginalValue,
+                    NewValue = d.NewValue
+                };
+            return query.ToList();
+        }
+
+        //Failed.....
+        public List<ChangeRequestInfo> GetChangeRequestHistoryBySoftId(int foxSoftwareId)
+        {
+            var query=from d in db.ChangeDeltas.Where(d=>d.FoxSoftwareId==foxSoftwareId)
+                join cr in db.ChangeRequests.Where(c=>c.IsActive==false) 
+                    on d.ChangeRequestId equals cr.ChangeRequestId
+                join s in db.ChangeRequestStatuses.Where(s=>s.StatusTypeId==3) 
+                    on cr.ChangeRequestId equals s.ChangeRequestId
+                      select new ChangeRequestInfo
+                      {
+                          ChangeRequestId = cr.ChangeRequestId,
+                          ApprovedBy = cr.ApprovedBy,
+                          CreatedBy = cr.CreatedBy,
+                          ReviewBy = cr.ReviewBy,
+                          SerialNumber = cr.SerialNumber,
+                          EndDate = s.EndDate,
+                          InitialDate = s.InitialDate,
+                          CreateDate = cr.CreateDate,
+                          Description = cr.Description
+
+                      };
+
+            return query.ToList();
+        }
+
         public List<ChangeRequestInfo> GetChangeRequestList()
         {
             var query = from cr in db.ChangeRequests
@@ -154,10 +205,6 @@ namespace LungmenSoftware.Models.Service
         }
 
 
-        
-
-
-
         private void UpdatePreviousStatus(ChangeRequest cr)
         {
             var query = from s in db.ChangeRequestStatuses.Where(s => s.ChangeRequestId.Equals(cr.ChangeRequestId))
@@ -168,7 +215,7 @@ namespace LungmenSoftware.Models.Service
             {
                 if (status.EndDate == null)
                 {
-                    status.EndDate=DateTime.Now;
+                    status.EndDate=DateTime.Today;
                     status.IsCurrent = false;
                 }
             }
@@ -229,12 +276,12 @@ namespace LungmenSoftware.Models.Service
             db.SaveChanges();
         }
 
-        public void StatusUpdateForApproval(ChangeRequest cr)
+        public void StatusUpdateForApproval(ChangeRequest cr, string approver)
         {
             UpdatePreviousStatus(cr);
 
             cr.IsActive = false;
-
+            cr.ApprovedBy = approver;
             db.ChangeRequestStatuses.Add(new ChangeRequestStatus()
             {
                 ChangeRequestId = cr.ChangeRequestId,
@@ -301,7 +348,7 @@ namespace LungmenSoftware.Models.Service
                     foreach (var item in delta.RevInfos)
                     {
                         var jointable = ldb.WKAndFoxJoinTables.Find(item.JoinTableId);
-                        jointable.Rev = item.Rev;
+                        jointable.Rev = delta.NewValue;
                     }
                 }
 
@@ -316,6 +363,9 @@ namespace LungmenSoftware.Models.Service
             }
 
         }
+
+
+        
     }
 
    

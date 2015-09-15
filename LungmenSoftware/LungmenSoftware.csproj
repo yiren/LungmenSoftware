@@ -1395,6 +1395,7 @@
     <Content Include="Views\ChangeRequest\ReviewChangeRequest.cshtml" />
     <Content Include="Views\Angular\Index.cshtml" />
     <Content Include="Views\ChangeRequest\AngularForm.cshtml" />
+    <Content Include="Views\FoxSoftwares\ChangeRequestHistory.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

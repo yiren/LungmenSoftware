@@ -20,11 +20,13 @@ namespace LungmenSoftware.Controllers
     {
         private FoxSoftService softService;
         private WorkStationService wkService;
+        private ChangeRequestService crService;
 
         public FoxSoftwaresController()
         {
             this.softService=new FoxSoftService();
             this.wkService=new WorkStationService();
+            this.crService=new ChangeRequestService();
         }
         // GET: FoxSoftwares
         public ActionResult Index()
@@ -39,15 +41,28 @@ namespace LungmenSoftware.Controllers
             return View(dataForView);
         }
 
+        
+
         public ActionResult InstalledInWorkstations(int id)
         {
             FoxWorkStationView dataForView=new FoxWorkStationView()
             {
                 WorkStationsBySoftwareId = wkService.GetWorkStationsBySoftwareId(id)
             };
-
-
             return View(dataForView);
+        }
+
+        public ActionResult ChangeRequestHistory(long k)
+        {
+            
+            WKAndFoxJoinTable record = softService.GetJoinTableDataById(k);
+            if (record == null)
+            {
+                return HttpNotFound();
+            }
+            List<ChangeRequestInfo> data = crService.GetChangeRequestHistoryByJoinTable(record);
+
+            return View(data);
         }
 
         public class AngularData
@@ -105,8 +120,8 @@ namespace LungmenSoftware.Controllers
         public ActionResult GetRevListBySoftId(int id)
         {
             var wkListById = wkService.AjaxRequestForWorkstationsBySoftId(id);
-            List<AngularData> dataToJson=new List<AngularData>();
-            List<WKAndFoxJoinTable> jts=new List<WKAndFoxJoinTable>();
+            //List<AngularData> dataToJson=new List<AngularData>();
+            //List<WKAndFoxJoinTable> jts=new List<WKAndFoxJoinTable>();
             //StringBuilder json=new StringBuilder();
             //JObject obj=new JObject();
             //JObject children = new JObject();
@@ -146,24 +161,24 @@ namespace LungmenSoftware.Controllers
             };
         }
 
-
-        //For AngualrJS
-        public ActionResult GetWorkstationsByRev(string rev)
-        {
-            List<FoxWorkStation> wkList = wkService.GetWorkstationsByRev(rev);
+        //Legacy Code
+        ////For AngualrJS
+        //public ActionResult GetWorkstationsByRev(string rev)
+        //{
+        //    List<FoxWorkStation> wkList = wkService.GetWorkstationsByRev(rev);
             
-            string json = JsonConvert.SerializeObject(wkList, new JsonSerializerSettings()
-            {
-                ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
-                Formatting = Formatting.Indented
-            });
+        //    string json = JsonConvert.SerializeObject(wkList, new JsonSerializerSettings()
+        //    {
+        //        ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+        //        Formatting = Formatting.Indented
+        //    });
 
-            return new ContentResult()
-            {
-                Content = json,
-                ContentType = "application/json"
-            };
-        }
+        //    return new ContentResult()
+        //    {
+        //        Content = json,
+        //        ContentType = "application/json"
+        //    };
+        //}
 
         //For AngularJS Form
         public ActionResult GetSystemSoftwares()
@@ -194,9 +209,6 @@ namespace LungmenSoftware.Controllers
         //For AngularJS Form
         public ActionResult UpdateSoftwareRev(List<ChangeDelta> data)
         {
-
-            
-
             bool isUpdate = true;//softService.UpdateSoftwareRev(data);
 
             if (isUpdate)
@@ -231,5 +243,8 @@ namespace LungmenSoftware.Controllers
             //    };
             //}
         }
+
+
+        
     }
 }

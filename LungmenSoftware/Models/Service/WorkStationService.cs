@@ -57,7 +57,7 @@ namespace LungmenSoftware.Models.Service
             return ldb.WorkStationHardwareTypes.ToList();
         }
 
-        public List<RevInfo> GetWorkStationsBySoftwareId(int softId)
+        public List<FoxSoftwareInfo> GetWorkStationsBySoftwareId(int softId)
         {
             var query = from soft in ldb.FoxSoftwares.Where(s => s.FoxSoftwareId == softId)
                 join wkJoinTable in ldb.WKAndFoxJoinTables 
@@ -65,14 +65,16 @@ namespace LungmenSoftware.Models.Service
                 join wk in ldb.FoxWorkStations
                     on wkJoinTable.FoxWorkStationId equals wk.WorkStationId
                         //where soft.FoxSoftwareId==1 && soft.FoxSoftwareTypeId==1
-                select new RevInfo()
+                select new FoxSoftwareInfo()
                 {
                     FoxWorkStationId= wk.WorkStationId,
-                    WorkStationName = wk.WorkStationName,
+                    WorkstationName = wk.WorkStationName,
                     SoftwareName=soft.SoftwareName,
+                    FoxSoftwareId = soft.FoxSoftwareId,
                     Rev=wkJoinTable.Rev,
                     Procedure=soft.Procedure,
-                    Note=wkJoinTable.Note
+                    Note=wkJoinTable.Note,
+                    JoinTableId = wkJoinTable.Id
                 };
             
         

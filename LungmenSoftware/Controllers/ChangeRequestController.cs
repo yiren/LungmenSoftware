@@ -231,6 +231,7 @@ namespace LungmenSoftware.Controllers
         public ActionResult ApproveChangeRequest(Guid id)
         {
             var crEntry = crService.FindByChangeRequestId(id);
+            string approver = User.Identity.Name;
             if (crEntry == null)
             {
                 return HttpNotFound();
@@ -238,7 +239,7 @@ namespace LungmenSoftware.Controllers
             bool isUpdated=crService.UpdateRevPerChangeRequest(crEntry);
             if (isUpdated)
             {
-                crService.StatusUpdateForApproval(crEntry);
+                crService.StatusUpdateForApproval(crEntry, approver);
             }
             
             

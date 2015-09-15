@@ -43,5 +43,10 @@ namespace LungmenSoftware.Models.ViewModel
 
         public DateTime? EndDate { get; set; }
 
+        public string OriginalValue { get; set; }
+
+        public string NewValue { get; set; }
+
+
     }
 }
