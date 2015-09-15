@@ -58,6 +58,7 @@ namespace LungmenSoftware.Models.CodeFirst
             public ChangeDeltaConfiguration()
             {
                 HasKey(d => d.ChangeDeltaId);
+                //Property(d => d.ChangeDeltaId).HasDatabaseGeneratedOption(DatabaseGeneratedOption.Identity);
                 HasRequired(d => d.ChangeRequest)
                     .WithMany(c=>c.ChangeDeltas)
                     .HasForeignKey(d => d.ChangeRequestId);
@@ -70,10 +71,10 @@ namespace LungmenSoftware.Models.CodeFirst
             public ChangeRequestStatusConfiguration()
             {
                 HasKey(s => s.ChangeStatusId);
+                //Property(s => s.ChangeRequestId).HasDatabaseGeneratedOption(DatabaseGeneratedOption.Identity);
                 Property(s => s.InitialDate).IsRequired();
                 Property(s => s.ChangeDate);
                 Property(s => s.StatusTypeId).IsRequired();
-                Property(s => s.ChangeRequestId).IsRequired();
                 HasRequired(s => s.ChangeRequest)
                     .WithMany(c => c.ChangeRequestStatuses)
                     .HasForeignKey(s => s.ChangeRequestId);

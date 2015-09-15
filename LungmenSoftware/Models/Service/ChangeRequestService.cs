@@ -143,6 +143,7 @@ namespace LungmenSoftware.Models.Service
 
         public ChangeRequest FindByChangeRequestId(Guid changeRequestId)
         {
+           
             return db.ChangeRequests.Find(changeRequestId);
         }
 
@@ -277,9 +278,43 @@ namespace LungmenSoftware.Models.Service
         }
 
 
-        public void UpdateRevPerChangeRequest(ChangeRequest crEntry)
+        public bool UpdateRevPerChangeRequest(ChangeRequest crEntry)
         {
-            
+            if (crEntry.IsActive==false)
+            {
+                return false;
+            }
+            var deltas =
+                db.ChangeDeltas.Include(d => d.RevInfos)
+                .Where(d => d.ChangeRequestId.Equals(crEntry.ChangeRequestId));
+
+
+
+            foreach (var delta in deltas)
+            {
+                var currentSoftData=from s in ldb.FoxSoftwares.Where(s=>s.FoxSoftwareId==delta.FoxSoftwareId)
+                        join j in ldb.WKAndFoxJoinTables on s.FoxSoftwareId equals j.FoxSoftwareId
+                                    where j.Rev.Equals(delta.OriginalValue)
+                                    select j;
+
+                if(delta.RevInfos.Count == currentSoftData.Count()) { 
+                    foreach (var item in delta.RevInfos)
+                    {
+                        var jointable = ldb.WKAndFoxJoinTables.Find(item.JoinTableId);
+                        jointable.Rev = item.Rev;
+                    }
+                }
+
+            }
+            if (ldb.SaveChanges() != -1)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+
         }
     }
 

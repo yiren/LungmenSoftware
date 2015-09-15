@@ -94,8 +94,10 @@ namespace LungmenSoftware.Controllers
             crEntry.ReviewBy = crService.GetReviewer();
             crEntry.Owner = crEntry.ReviewBy;
             crEntry.IsActive = true;
+
             bool isSuccess=crService.AddChangeRequestRecord(crEntry);
-            string json = JsonConvert.SerializeObject(isSuccess, new JsonSerializerSettings()
+
+            string json = JsonConvert.SerializeObject(crEntry, new JsonSerializerSettings()
             {
                 ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
                 Formatting = Formatting.Indented
@@ -110,8 +112,6 @@ namespace LungmenSoftware.Controllers
         //For AngularJS
         public ContentResult InitChangeRequest()
         {
-            
-
             ChangeRequest crToJson= crService.InitNewChangeRequestRecord(User.Identity.Name);
             string json = JsonConvert.SerializeObject(crToJson, new JsonSerializerSettings()
             {
@@ -235,8 +235,12 @@ namespace LungmenSoftware.Controllers
             {
                 return HttpNotFound();
             }
-            crService.UpdateRevPerChangeRequest(crEntry);
-            crService.StatusUpdateForApproval(crEntry);
+            bool isUpdated=crService.UpdateRevPerChangeRequest(crEntry);
+            if (isUpdated)
+            {
+                crService.StatusUpdateForApproval(crEntry);
+            }
+            
             
             return RedirectToAction("Index");
         }
