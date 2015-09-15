@@ -46,14 +46,12 @@
                 <hr />
                 <button class="btn btn-default" ng-click="m.clearModList()">清空修改清單</button>
                 <a href="#" class="btn btn-primary" ng-click="m.postModList()">送出</a>
-                @*
-                    <form name="AddForm" ng-submit="m.addNewWorkStation()">
-                        <label>工作站名稱</label>
-                        <input type="text" ng-model="m.newWorkstation.WorkStationName" required />
-                        <button ng-click="m.addNewWorkStation(m.newWorkStation)">新增(測試)</button>
-                        <input type="submit" value="新增工作站" ng-disabled="addForm.$invalid" />
-                    </form>
-                *@
+                <hr/>
+                   
+                <label>工作站名稱</label>
+                <input type="text" ng-model="m.newWorkstation.WorkStationName" required />
+                <button ng-click="m.addNewWorkStation(m.newWorkStation)">新增(測試$http服務)</button>
+                          
             </div>
             <div class="col-md-5">
                 <div ng-repeat="d in m.data">

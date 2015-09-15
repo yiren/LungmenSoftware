@@ -215,18 +215,6 @@ namespace LungmenSoftware.Controllers
             return View(crEntry);
         }
 
-        public ActionResult ApproveChangeRequest(Guid id)
-        {
-            var crEntry = crService.FindByChangeRequestId(id);
-            if (crEntry == null)
-            {
-                return HttpNotFound();
-            }
-            
-            crService.StatusUpdateForApproval(crEntry);
-            return RedirectToAction("Index");
-        }
-
         public ActionResult CommentChangeRequest(Guid id)
         {
             var crEntry = crService.FindByChangeRequestId(id);
@@ -237,6 +225,19 @@ namespace LungmenSoftware.Controllers
 
             crEntry.Owner = crEntry.CreatedBy;
             crService.StatusUpdateForComment(crEntry);
+            return RedirectToAction("Index");
+        }
+
+        public ActionResult ApproveChangeRequest(Guid id)
+        {
+            var crEntry = crService.FindByChangeRequestId(id);
+            if (crEntry == null)
+            {
+                return HttpNotFound();
+            }
+            crService.UpdateRevPerChangeRequest(crEntry);
+            crService.StatusUpdateForApproval(crEntry);
+            
             return RedirectToAction("Index");
         }
     }

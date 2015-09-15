@@ -215,7 +215,7 @@
             //console.log("Outside Rev Info:" + rev);
 
             //console.log("Final Rev Info: "+vm.selectedSoftwareRev);
-            vm.allWorkstations = tempAllWks;
+            //vm.allWorkstations = tempAllWks;
 
         }
 
@@ -234,15 +234,16 @@
                     revInfoForUpdate.push(value);
                 }
             });
-
-            $log.info(revInfoForUpdate);
+            //$log.info(vm.selected);
+            //$log.info(revInfoForUpdate);
             var modItem = {
+                FoxSoftwareId: vm.selected.FoxSoftwareId,
                 OriginalValue: originalValue,
                 NewValue: newValue,
                 RevInfos:revInfoForUpdate
             };
             vm.modList.push(modItem);
-            $log.info(vm.modList);
+            //$log.info(vm.modList);
         }
         
         vm.removeWKFromChange = function (revInfos, index) {
@@ -272,12 +273,12 @@
         vm.postModList = function () {
             vm.changeRequestData.ChangeDeltas = vm.modList;
             //$log.info(vm.changeRequestData);
-           
-            $http.post('/changerequest/addnewChangerequestrecord', vm.changeRequestData)
+            $log.info(vm.changeRequestData);
+            $http.post('/changerequest/AddNewChangeRequestRecord', vm.changeRequestData)
                 .then(function(response) {
                     $log.info(response.data);
                 }, function(errResponse) {
-                    
+                    $log.info(errResponse);
                 });
             
         }

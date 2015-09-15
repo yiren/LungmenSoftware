@@ -96,9 +96,11 @@ namespace LungmenSoftware.Controllers
             return View(dataForView);
         }
 
+        //for AngularJS Only
+        [HttpPost]
         public ActionResult AddNewWorkStation(FoxWorkStation wk)
         {
-            wkService.AddNewWorkStation(wk);
+            //wkService.AddNewWorkStation(wk);
 
             JsonSerializerSettings jsSettings = new JsonSerializerSettings()
             {

@@ -13,6 +13,7 @@ namespace LungmenSoftware.Models.Service
     public class ChangeRequestService
     {
         private ChangeProcessDbContext db=new ChangeProcessDbContext();
+        private LungmenSoftwareDataEntities ldb=new LungmenSoftwareDataEntities();
         private ApplicationDbContext _identityDb=new ApplicationDbContext();
 
         public List<ChangeRequestInfo> GetChangeRequestHistory()
@@ -124,6 +125,8 @@ namespace LungmenSoftware.Models.Service
         {
             foreach (var item in crEntry.ChangeDeltas)
             {
+                item.ChangeRequest = crEntry;
+                item.ChangeRequestId = crEntry.ChangeRequestId;
                 item.ChangeDeltaId = Guid.NewGuid();
             }
             db.ChangeRequests.Add(crEntry);
@@ -273,7 +276,11 @@ namespace LungmenSoftware.Models.Service
             return String.Format("{0:yyyyMMdd}", DateTime.Today) + "E" + new Random().Next(1000, 9999);
         }
 
-        
+
+        public void UpdateRevPerChangeRequest(ChangeRequest crEntry)
+        {
+            
+        }
     }
 
    
