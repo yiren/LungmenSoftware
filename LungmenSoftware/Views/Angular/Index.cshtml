@@ -45,7 +45,7 @@
                 </div>
                 <hr/>
                 <button class="btn btn-default" ng-click="m.clearModList()">清空修改清單</button>
-               <a href="@Url.Action()" class="btn btn-primary" ng-click="m.postModList()">送出</a>                
+               <a href="#" class="btn btn-primary" ng-click="m.postModList()">送出</a>                
                 @*
                     <form name="AddForm" ng-submit="m.addNewWorkStation()">
                         <label>工作站名稱</label>
@@ -68,8 +68,8 @@
     <button class="btn btn-default" ng-click="m.getWorkstationsByRev(d)">顯示</button>
                     *@
                     <span ng-repeat="wk in d.RevInfos">
-                        <input type="checkbox" id="{{wk.WorkStationId}}" ng-model="wk.isChecked"
-                               ng-click="m.removeWKFromChange(d.RevInfos, wk)" />{{wk.WorkStationName}}
+                        <input type="checkbox" id="{{wk.WorkStationId}}" 
+                               ng-model="wk.isChecked"/>{{wk.WorkStationName}}
                         <br ng-if="m.isDividedByFive($index)" />
                     </span>
                   

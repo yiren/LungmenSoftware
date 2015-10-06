@@ -69,17 +69,22 @@ namespace LungmenSoftware.Controllers
             
             var userListForView=new List<UserAttriForList>();
 
+
+            //取得所有註冊使用者
             var users = UserManager.Users.ToList();
             //var userRoles=users.GetUserRoles
             
             
             //var query= from u in users
             //           join r in roles
-                         
+                  
+            //用Foreach將user相關資訊以及對應role相關資訊填入ViewModel       
             foreach (var user in users)
             {
                 UserAttriForList userForList = new UserAttriForList();
+                //取得每個使用者對應之roles
                 var roles = UserManager.GetRoles(user.Id);
+                //
                 foreach (var role in roles)
                 {
                     
@@ -213,6 +218,7 @@ namespace LungmenSoftware.Controllers
             return RedirectToAction("ListOfUsers");
         }
 
+        [HttpPost]
         public ActionResult DeleteUser(string id)
         {
             if (id == null)

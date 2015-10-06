@@ -1,0 +1,29 @@
+﻿
+@{
+    ViewBag.Title = "AngularForm";
+}
+
+<h2>AngularForm</h2>
+<div ng-app="formApp" ng-controller="formController as ctrl" name="myform">
+    <h4 ng-bind="ctrl.message"></h4>
+    <form ng-submit="ctrl.submit()">
+        <input type="text" ng-model="ctrl.username"/>
+        <input type="password" ng-model="ctrl.password"/>
+        <input type="submit" value="Submit" ng-disabled="myform.$invaild"/>
+    </form>
+</div>
+
+@section scripts
+{
+    <script src="~/Scripts/angular.min.js"></script>
+    <script>
+        angular.module('formApp', [])
+            .controller('formController', [function() {
+                var vm = this;
+                vm.message = "Waiting User Input";
+                vm.submit=function() {
+                    vm.message = "Form Submitted....";
+                }
+            }])
+    </script>
+}

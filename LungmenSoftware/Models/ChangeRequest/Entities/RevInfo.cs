@@ -5,6 +5,7 @@ using System.Web;
 
 namespace LungmenSoftware.Models.CodeFirst.Entities
 {
+    //與該版本相關的軟體與工作站資訊
     public class RevInfo
     {
         public int RevInfoId { get; set; }

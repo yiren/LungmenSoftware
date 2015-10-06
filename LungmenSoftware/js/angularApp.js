@@ -112,7 +112,7 @@
                    */
                    //vm.revStations = [];
                    vm.data = response.data;
-                    $log.info(vm.data);
+                    
                    angular.forEach(vm.data, function (value, key) {
                        angular.forEach(value.RevInfos, function (value, key) {
                            value.isChecked = true;
@@ -120,7 +120,7 @@
 
 
                    });
-                   
+                   $log.info(vm.data);
 
                });
         }
@@ -220,12 +220,12 @@
         }
 
         
-
+        /*
         vm.showChecked = function (selected) {
 
             $log.info(selected);
         }
-
+        */
         vm.addToModList=function(originalValue, newValue, revInfos) {
             var revInfoForUpdate=[];
 
@@ -243,20 +243,19 @@
                 RevInfos:revInfoForUpdate
             };
             vm.modList.push(modItem);
-            //$log.info(vm.modList);
+            $log.info(vm.modList);
         }
-        
+        /*
         vm.removeWKFromChange = function (revInfos, index) {
-            //$log.info(index);
-            //$log.info(revInfos[index].isChecked);
+            $log.info(index);
+            //$log.info(revInfos);
             if (revInfos[index].isChecked === false) {
                 revInfos[index].isChecked = false;
             } else {
                 revInfos[index].isChecked = true;
-            }
-            
-            
+            }  
         }
+        */
 
         vm.clearModList=function() {
             vm.modList = [];
@@ -283,8 +282,9 @@
             
         }
 
-        vm.isDividedByFive=function(index) {
+        vm.isDividedByFive = function (index) {
             if ((index + 1) % 5 == 0) {
+                //$log.info(index);
                 return true;
             } else {
                 return false;

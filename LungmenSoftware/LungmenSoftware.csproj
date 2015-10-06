@@ -328,11 +328,11 @@
       <DependentUpon>201508210117075_InitialCreate.cs</DependentUpon>
     </Compile>
     <Compile Include="MigrationForIdentity\Configuration.cs" />
-    <Compile Include="Models\CodeFirst\ChangeProcessDbContext.cs" />
-    <Compile Include="Models\CodeFirst\Entities\ChangeDelta.cs" />
-    <Compile Include="Models\CodeFirst\Entities\ChangeRequest.cs" />
-    <Compile Include="Models\CodeFirst\Entities\ChangeRequestStatus.cs" />
-    <Compile Include="Models\CodeFirst\Entities\ChangeRequestStatusType.cs" />
+    <Compile Include="Models\ChangeRequest\ChangeProcessDbContext.cs" />
+    <Compile Include="Models\ChangeRequest\Entities\ChangeDelta.cs" />
+    <Compile Include="Models\ChangeRequest\Entities\ChangeRequest.cs" />
+    <Compile Include="Models\ChangeRequest\Entities\ChangeRequestStatus.cs" />
+    <Compile Include="Models\ChangeRequest\Entities\ChangeRequestStatusType.cs" />
     <Compile Include="Models\FoxSoftware.cs">
       <DependentUpon>LungmenData.tt</DependentUpon>
     </Compile>
@@ -345,6 +345,10 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\HOS\FDDR.cs" />
+    <Compile Include="Models\HOS\FddrToFdi.cs" />
+    <Compile Include="Models\HOS\FDI.cs" />
+    <Compile Include="Models\HOS\HOSDbContext.cs" />
     <Compile Include="Models\LungmenData.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -380,7 +384,7 @@
     <Compile Include="Models\ViewModel\UserView.cs" />
     <Compile Include="Models\ViewModel\FoxSoftView.cs" />
     <Compile Include="Models\ViewModel\FoxSoftwareInfo.cs" />
-    <Compile Include="Models\CodeFirst\Entities\RevInfo.cs" />
+    <Compile Include="Models\ChangeRequest\Entities\RevInfo.cs" />
     <Compile Include="Models\ViewModel\FoxWorkStationView.cs" />
     <Compile Include="Models\ViewModel\WorkStationSearchViewModel.cs" />
     <Compile Include="Models\ViewModel\WorkStationsSearchViewModel.cs" />
@@ -1396,6 +1400,7 @@
     <Content Include="Views\Angular\Index.cshtml" />
     <Content Include="Views\ChangeRequest\AngularForm.cshtml" />
     <Content Include="Views\FoxSoftwares\ChangeRequestHistory.cshtml" />
+    <Content Include="Views\Angular\FormTest.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
