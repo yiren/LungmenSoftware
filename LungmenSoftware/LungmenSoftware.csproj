@@ -1401,6 +1401,8 @@
     <Content Include="Views\ChangeRequest\AngularForm.cshtml" />
     <Content Include="Views\FoxSoftwares\ChangeRequestHistory.cshtml" />
     <Content Include="Views\Angular\FormTest.cshtml" />
+    <Content Include="Views\Account\EmailNotConfirmMessage.cshtml" />
+    <Content Include="Views\Account\EmailLinkPage.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

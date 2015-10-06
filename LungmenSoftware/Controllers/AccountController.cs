@@ -73,7 +73,7 @@ namespace LungmenSoftware.Controllers
             {
                 return View(model);
             }
-
+            
             var user = await UserManager.FindByNameAsync(model.Email);
             if (user != null)
             {
@@ -81,7 +81,9 @@ namespace LungmenSoftware.Controllers
                 {
                     ViewBag.errorMessage 
                         = "您尚未完成Email驗證，請至您的註冊信箱收信(即使用者代號+@taipower.com.tw)並點選啟用帳號連結";
-                }if(!awit)
+                    
+                    return View("EmailNotConfirmMessage");
+                }
             }
 
 
@@ -196,10 +198,9 @@ namespace LungmenSoftware.Controllers
                     // Uncomment to debug locally 
                     ViewBag.ConfirmLink = callbackUrl;
 
-                    ViewBag.Message = "Check your email and confirm your account, you must be confirmed "
-                                    + "before you can log in.";
+                    ViewBag.Message = "已寄出帳號啟用連結至您的信箱，帳號必須啟用後才能登入";
 
-                    return View("ConfirmPage");
+                    return View("EmailLinkPage");
 
 
                     //return RedirectToAction("Index", "Home");

@@ -1,0 +1,16 @@
+﻿
+@{
+    ViewBag.Title = "您尚未完成Email驗證";
+}
+
+<h2>您尚未完成Email驗證</h2>
+@{
+    if (String.IsNullOrEmpty(ViewBag.errorMessage))
+    {
+        <h4 class="text-danger">請洽系統管理員</h4>
+    }
+    else
+    {
+        <h4>@ViewBag.errorMessage</h4>
+    }
+}

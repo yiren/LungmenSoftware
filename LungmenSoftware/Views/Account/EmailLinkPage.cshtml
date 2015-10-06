@@ -1,0 +1,14 @@
+﻿
+@{
+    ViewBag.Title = "帳號"+User.Identity.Name+"啟用連結";
+}
+
+<h2>註冊成功</h2>
+<h4>@ViewBag.Message</h4>
+<br/>
+
+<p>
+    啟用連結: <a href="@ViewBag.ConfirmLink">@ViewBag.ConfirmLink</a> 
+</p>
+
+
