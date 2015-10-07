@@ -59,7 +59,7 @@ namespace LungmenSoftware
             // Configure validation logic for passwords
             manager.PasswordValidator = new PasswordValidator
             {
-                RequiredLength = 4,
+                RequiredLength = 6,
                 RequireNonLetterOrDigit = false,
                 RequireDigit = false,
                 RequireLowercase = false,
@@ -95,9 +95,9 @@ namespace LungmenSoftware
     }
 
     public class ApplicationRoleManager : 
-        RoleManager<IdentityRole>
+        RoleManager<ApplicationRole>
     {
-        public ApplicationRoleManager(IRoleStore<IdentityRole, string> roleStore)
+        public ApplicationRoleManager(IRoleStore<ApplicationRole, string> roleStore)
             :base(roleStore)
         {
             
@@ -106,7 +106,7 @@ namespace LungmenSoftware
         public static ApplicationRoleManager
             Create(IdentityFactoryOptions<ApplicationRoleManager> options, IOwinContext context)
         {
-            return new ApplicationRoleManager(new RoleStore<IdentityRole>(context.Get<ApplicationDbContext>()));
+            return new ApplicationRoleManager(new RoleStore<ApplicationRole>(context.Get<ApplicationDbContext>()));
         }
     }
 

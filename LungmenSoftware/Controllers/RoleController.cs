@@ -67,11 +67,18 @@ namespace LungmenSoftware.Controllers
         }
 
         [HttpPost]
-        public ActionResult CreateRole(IdentityRole roleToInsert)
+        public ActionResult CreateRole(ApplicationRole newRole)
         {
+            
             if (ModelState.IsValid)
             {
-                var role= new IdentityRole(roleToInsert.Name);
+                var role= new ApplicationRole()
+                {
+                    Description = newRole.Description,
+                    Name = newRole.Name,
+                    ChtAlias = newRole.ChtAlias
+                };
+                
                 RoleManager.Create(role);
             }
             return RedirectToAction("ListOfRoles");

@@ -68,7 +68,11 @@ namespace LungmenSoftware.Models
     public class ApplicationRole : IdentityRole
     {
         [StringLength(100)]
-        public string Description { get; set; }
+        public virtual string Description { get; set; }
+
+        [StringLength(50)]
+        public virtual string ChtAlias { get; set; }
+
         public ApplicationRole()
             :base()
         {
@@ -100,9 +104,9 @@ namespace LungmenSoftware.Models
         }
 
         //public DbSet<IdentityRole> IdentityRoles { get; set; }
-        public DbSet<ApplicationUserRole> IdentityUserRoles { get; set; }
+        public DbSet<ApplicationUserRole> ApplicationUserRoles { get; set; }
         //public System.Data.Entity.DbSet<LungmenSoftware.Models.ApplicationUser> ApplicationUsers { get; set; }
-
+        public DbSet<ApplicationRole> ApplicationRoles { get; set; } 
         //public System.Data.Entity.DbSet<IdentityPractice.Models.ApplicationUser> ApplicationUsers { get; }
     }
 }

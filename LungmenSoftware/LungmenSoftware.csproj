@@ -49,7 +49,7 @@
       <HintPath>..\packages\Antlr.3.5.0.2\lib\Antlr3.Runtime.dll</HintPath>
     </Reference>
     <Reference Include="AspNet.ScriptManager.jQuery, Version=2.1.2.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\AspNet.ScriptManager.jQuery.2.1.4\lib\net45\AspNet.ScriptManager.jQuery.dll</HintPath>
+      <HintPath>..\packages\AspNet.ScriptManager.jQuery.1.11.3\lib\net45\AspNet.ScriptManager.jQuery.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="ClearScript, Version=5.4.2.1, Culture=neutral, PublicKeyToken=935d0c957da47c73, processorArchitecture=MSIL">
@@ -327,6 +327,10 @@
     <Compile Include="MigrationForIdentity\201508210117075_InitialCreate.Designer.cs">
       <DependentUpon>201508210117075_InitialCreate.cs</DependentUpon>
     </Compile>
+    <Compile Include="MigrationForIdentity\201510070520382_AddChtAliasColumn.cs" />
+    <Compile Include="MigrationForIdentity\201510070520382_AddChtAliasColumn.Designer.cs">
+      <DependentUpon>201510070520382_AddChtAliasColumn.cs</DependentUpon>
+    </Compile>
     <Compile Include="MigrationForIdentity\Configuration.cs" />
     <Compile Include="Models\ChangeRequest\ChangeProcessDbContext.cs" />
     <Compile Include="Models\ChangeRequest\Entities\ChangeDelta.cs" />
@@ -551,7 +555,6 @@
     <Content Include="font\roboto\Roboto-Thin.ttf" />
     <Content Include="font\roboto\Roboto-Thin.woff" />
     <Content Include="font\roboto\Roboto-Thin.woff2" />
-    <None Include="Scripts\jquery-2.1.4.intellisense.js" />
     <Content Include="Scripts\i18n\angular-locale_aa-dj.js" />
     <Content Include="Scripts\i18n\angular-locale_aa-er.js" />
     <Content Include="Scripts\i18n\angular-locale_aa-et.js" />
@@ -1296,10 +1299,10 @@
     <Content Include="Scripts\i18n\angular-locale_zh.js" />
     <Content Include="Scripts\i18n\angular-locale_zu-za.js" />
     <Content Include="Scripts\i18n\angular-locale_zu.js" />
-    <Content Include="Scripts\jquery-2.1.4.js" />
-    <Content Include="Scripts\jquery-2.1.4.min.js" />
-    <Content Include="Scripts\jquery-2.1.4.min.map" />
-    <None Include="Scripts\jquery.validate-vsdoc.js" />
+    <None Include="Scripts\jquery-1.11.3.intellisense.js" />
+    <Content Include="Scripts\jquery-1.11.3.js" />
+    <Content Include="Scripts\jquery-1.11.3.min.js" />
+    <Content Include="Scripts\jquery-1.11.3.min.map" />
     <Content Include="Scripts\jquery-ui-1.11.4.js" />
     <Content Include="Scripts\jquery-ui-1.11.4.min.js" />
     <Content Include="Scripts\jquery.easing.1.3.js" />
@@ -1307,6 +1310,7 @@
     <Content Include="Scripts\jquery.signalR-2.2.0.min.js" />
     <Content Include="Scripts\jquery.unobtrusive-ajax.js" />
     <Content Include="Scripts\jquery.unobtrusive-ajax.min.js" />
+    <None Include="Scripts\jquery.validate-vsdoc.js" />
     <Content Include="Scripts\jquery.validate.js" />
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
@@ -1453,6 +1457,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="MigrationForIdentity\201508210117075_InitialCreate.resx">
       <DependentUpon>201508210117075_InitialCreate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MigrationForIdentity\201510070520382_AddChtAliasColumn.resx">
+      <DependentUpon>201510070520382_AddChtAliasColumn.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

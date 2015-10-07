@@ -16,11 +16,11 @@ namespace LungmenSoftware.Helper
                 string userId,
                 string roleName)
         {
-            var roleManager=new RoleManager<IdentityRole>(
-                new RoleStore<IdentityRole>(new ApplicationDbContext()));
+            var roleManager=new RoleManager<ApplicationRole>(
+                new RoleStore<ApplicationRole>(new ApplicationDbContext()));
             if (roleManager.RoleExists(roleName)==false)
             {
-                roleManager.Create(new IdentityRole(roleName));
+                roleManager.Create(new ApplicationRole(roleName));
             }
             applicationUserManager.AddToRole(userId, roleName);
         }
