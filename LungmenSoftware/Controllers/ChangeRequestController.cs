@@ -153,21 +153,29 @@ namespace LungmenSoftware.Controllers
             {
                 return HttpNotFound();
             }
+            ChangeRequestViewModelForModification vm=new ChangeRequestViewModelForModification()
+            {
+                ChangeRequest = crEntry,
+                ChangeDeltas = crEntry.ChangeDeltas
+            };
 
-            return View(crEntry);
+
+            return View(vm);
         }
 
         [HttpPost]
-        public ActionResult EditChangeRequest(ChangeRequest crEntry)
+        public ActionResult EditChangeRequest(ChangeRequestViewModelForModification crEntry)
         {
-            var crToUpdate = crService.FindByChangeRequestId(crEntry.ChangeRequestId);
+            var crToUpdate = crService.FindByChangeRequestId(crEntry.ChangeRequest.ChangeRequestId);
             if (crToUpdate == null)
             {
                 return HttpNotFound();
             }
             if (ModelState.IsValid)
             {
+                crToUpdate.Description = crEntry.ChangeRequest.Description;
                 crToUpdate.Owner = crToUpdate.ReviewBy;
+                crToUpdate.ChangeDeltas = crEntry.ChangeDeltas;
                 crService.StatusUpdateForClarification(crToUpdate);
             }
             return RedirectToAction("Index");

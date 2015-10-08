@@ -11,6 +11,12 @@ namespace LungmenSoftware.Models.ViewModel
         public List<ChangeRequestInfo> ChangeRequests { get; set; }
     }
 
+    public class ChangeRequestViewModelForModification
+    {
+        public ChangeRequest ChangeRequest { get; set; }
+        public List<ChangeDelta> ChangeDeltas { get; set; }
+    }
+
     public class ChangeRequestInfo
     {
         //change request class
@@ -45,8 +51,7 @@ namespace LungmenSoftware.Models.ViewModel
 
         public string OriginalValue { get; set; }
 
-        public string NewValue { get; set; }
-
+        public string NewValue { get; set; } 
 
     }
 }
