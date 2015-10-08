@@ -73,7 +73,7 @@ namespace LungmenSoftware.Controllers
             ChangeRequest cr=new ChangeRequest();
             cr.ChangeRequestId = Guid.NewGuid();
            
-            cr.SerialNumber = string.Format("{0:yyyyMMdd}", DateTime.Today) +"E"+ new Random().Next(1000, 9999);
+            cr.SerialNumber = string.Format("{0:yyyyMMdd}", DateTime.Today) +"E0"+ new Random().Next(100, 999);
 
             //這邊以後可能要修掉
             
@@ -148,7 +148,7 @@ namespace LungmenSoftware.Controllers
 
         public ActionResult EditChangeRequest(Guid id)
         {
-            var crEntry = crService.FindByChangeRequestId(id);
+            var crEntry = crService.FindDetailCRByChangeRequestId(id);
             if (crEntry == null)
             {
                 return HttpNotFound();
@@ -206,7 +206,7 @@ namespace LungmenSoftware.Controllers
 
         public ActionResult ReviewChangeRequest(Guid id)
         {
-            var crEntry = crService.FindByChangeRequestId(id);
+            var crEntry = crService.FindDetailCRByChangeRequestId(id);
             if (crEntry == null)
             {
                 return HttpNotFound();

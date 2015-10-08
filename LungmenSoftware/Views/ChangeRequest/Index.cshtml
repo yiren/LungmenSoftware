@@ -6,11 +6,11 @@
 
 <h2>軟體修改清單</h2>
 
-@Html.ActionLink("新增軟體修改", "AddChangeRequest", null, new {@class="btn btn-primary"})
+@Html.ActionLink("新增軟體修改", "AngularForm", null, new {@class="btn btn-primary"})
 @Html.ActionLink("歷史紀錄", "ChangeRequestHistorialData", null, new {@class="btn btn-max"})
 <br/>
 
-<table class="table">
+<table class="table table-bordered table-condensed">
     <tr>
         <th>
             @Html.DisplayNameFor(model => model.ChangeRequests[0].SerialNumber)

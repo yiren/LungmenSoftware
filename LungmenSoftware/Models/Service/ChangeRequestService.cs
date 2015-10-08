@@ -365,7 +365,24 @@ namespace LungmenSoftware.Models.Service
         }
 
 
-        
+        public ChangeRequest FindDetailCRByChangeRequestId(Guid id)
+        {
+            //var query = from cr in db.ChangeRequests
+            //    join s in db.ChangeRequestStatuses
+            //        on cr.ChangeRequestId equals s.ChangeRequestId
+            //    join t in db.ChangeRequestStatusTypes.Where(t=>t.StatusTypeId==1)
+            //        on s.StatusTypeId equals t.StatusTypeId
+            //    select new ChangeRequestInfo()
+            //    {
+
+            //    };
+
+            var query = db.ChangeRequests
+                .Include(c=>c.ChangeDeltas.Select(d=>d.RevInfos))
+                .ToList();
+            var result = query.FirstOrDefault(c => c.ChangeRequestId.Equals(id));
+            return result;
+        }
     }
 
    
