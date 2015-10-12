@@ -33,9 +33,12 @@ namespace LungmenSoftware.Models.CodeFirst.Entities
         public DateTime LastModifiedDate { get; set; }
 
         public string Note { get; set; }
+
         public List<ChangeRequestStatus> ChangeRequestStatuses { get; set; }
 
         public List<ChangeDelta> ChangeDeltas { get; set; }
+
+        public List<ChangeRequestMessage> ChangeRequestMessages { get; set; }
 
         //Status Pattern Level 1
         //public DateTime CreateDate { get; set; }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using LungmenSoftware.Helper;
 using LungmenSoftware.Models;
 using LungmenSoftware.Models.CodeFirst.Entities;
 using LungmenSoftware.Models.Service;
@@ -96,7 +97,6 @@ namespace LungmenSoftware.Controllers
             crEntry.IsActive = true;
 
             bool isSuccess=crService.AddChangeRequestRecord(crEntry);
-
             string json = JsonConvert.SerializeObject(crEntry, new JsonSerializerSettings()
             {
                 ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
@@ -156,7 +156,8 @@ namespace LungmenSoftware.Controllers
             ChangeRequestViewModelForModification vm=new ChangeRequestViewModelForModification()
             {
                 ChangeRequest = crEntry,
-                ChangeDeltas = crEntry.ChangeDeltas
+                ChangeDeltas = crEntry.ChangeDeltas,
+                ChangeRequestMessages = crEntry.ChangeRequestMessages
             };
 
 
@@ -175,7 +176,9 @@ namespace LungmenSoftware.Controllers
             {
                 crToUpdate.Description = crEntry.ChangeRequest.Description;
                 crToUpdate.Owner = crToUpdate.ReviewBy;
-                crToUpdate.ChangeDeltas = crEntry.ChangeDeltas;
+                
+                //crToUpdate.ChangeDeltas = crEntry.ChangeDeltas;
+                crService.UpdateChangeDeltas(crEntry.ChangeRequest.ChangeRequestId, crEntry.ChangeDeltas);
                 crService.StatusUpdateForClarification(crToUpdate);
             }
             return RedirectToAction("Index");
@@ -220,38 +223,78 @@ namespace LungmenSoftware.Controllers
                 return HttpNotFound();
             }
 
-            return View(crEntry);
+            ChangeRequestViewModelForModification vm=new ChangeRequestViewModelForModification()
+            {
+                ChangeRequest = crEntry,
+                ChangeDeltas = crEntry.ChangeDeltas,
+                ChangeRequestMessages = crEntry.ChangeRequestMessages,
+            };
+
+            return View(vm);
         }
 
-        public ActionResult CommentChangeRequest(Guid id)
+        [HttpPost]
+        public ActionResult ReviewChangeRequest(ChangeRequestViewModelForModification vm, 
+                                    params string[] reviewOptions)
         {
-            var crEntry = crService.FindByChangeRequestId(id);
+            var crEntry = crService.FindDetailCRByChangeRequestId(vm.ChangeRequest.ChangeRequestId);
+
             if (crEntry == null)
             {
                 return HttpNotFound();
             }
+            
+            var option = reviewOptions[0];
+            if (option.Equals(GeneralData.GetReviewOptions[1]))
+            {
+                string approver = User.Identity.Name;
+                ChangeRequestMessage crm=new ChangeRequestMessage()
+                {
+                    CreateBy = User.Identity.Name,
+                    ChangeRequestId = vm.ChangeRequest.ChangeRequestId,
+                    ChangeRequest = crEntry,
+                    CreateTime = DateTime.Now,
+                    Message = vm.ChangeRequestMessage.Message
+                };
+                crService.AddChangeRequestMessage(crm);
+                bool isUpdated = crService.UpdateRevPerChangeRequest(crEntry);
+                if (isUpdated)
+                {
+                    crService.StatusUpdateForApproval(crEntry, approver);
+                }
 
-            crEntry.Owner = crEntry.CreatedBy;
-            crService.StatusUpdateForComment(crEntry);
-            return RedirectToAction("Index");
+
+                return RedirectToAction("Index");
+            }
+            if (option.Equals(GeneralData.GetReviewOptions[2]))
+            {
+                ChangeRequestMessage crm = new ChangeRequestMessage()
+                {
+                    CreateBy = User.Identity.Name,
+                    ChangeRequestId = vm.ChangeRequest.ChangeRequestId,
+                    ChangeRequest = crEntry,
+                    CreateTime = DateTime.Now,
+                    Message = vm.ChangeRequestMessage.Message
+                };
+                crService.AddChangeRequestMessage(crm);
+                crEntry.Owner = crEntry.CreatedBy;
+                crService.StatusUpdateForComment(crEntry);
+
+                return RedirectToAction("Index");
+            }
+
+            return HttpNotFound();
         }
 
-        public ActionResult ApproveChangeRequest(Guid id)
+
+        public void CommentChangeRequest(ChangeRequest crEntry)
         {
-            var crEntry = crService.FindByChangeRequestId(id);
-            string approver = User.Identity.Name;
-            if (crEntry == null)
-            {
-                return HttpNotFound();
-            }
-            bool isUpdated=crService.UpdateRevPerChangeRequest(crEntry);
-            if (isUpdated)
-            {
-                crService.StatusUpdateForApproval(crEntry, approver);
-            }
+           
+        }
+
+        public void ApproveChangeRequest(ChangeRequest crEntry)
+        {
             
-            
-            return RedirectToAction("Index");
         }
     }
 }

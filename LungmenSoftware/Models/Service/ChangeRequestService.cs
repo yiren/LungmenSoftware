@@ -180,6 +180,16 @@ namespace LungmenSoftware.Models.Service
                 item.ChangeRequestId = crEntry.ChangeRequestId;
                 item.ChangeDeltaId = Guid.NewGuid();
             }
+            db.ChangeRequestMessages.Add(new ChangeRequestMessage()
+            {
+                ChangeRequest = crEntry,
+                ChangeRequestId = crEntry.ChangeRequestId,
+                CreateBy = crEntry.CreatedBy,
+                CreateTime = DateTime.Now,
+                Message = "軟體變更需求送審"
+            });
+
+
             db.ChangeRequests.Add(crEntry);
             if (db.SaveChanges() != -1)
             {
@@ -379,9 +389,43 @@ namespace LungmenSoftware.Models.Service
 
             var query = db.ChangeRequests
                 .Include(c=>c.ChangeDeltas.Select(d=>d.RevInfos))
+                .Include(c=>c.ChangeRequestMessages)
                 .ToList();
             var result = query.FirstOrDefault(c => c.ChangeRequestId.Equals(id));
             return result;
+        }
+
+        public void UpdateChangeDeltas(Guid changeRequestId, List<ChangeDelta> changeDeltas)
+        {
+            var deltas = db.ChangeDeltas.Where(d => d.ChangeRequestId.Equals(changeRequestId))
+                .Include(d=>d.RevInfos).ToList();
+                //join d in db.ChangeDeltas
+                //    on c.ChangeRequestId equals d.ChangeRequestId
+                //join r in db.RevInfos
+                //    on d.ChangeDeltaId equals r.ChangeDeltaId
+                //select d;
+
+           
+
+            if (deltas.Count() != changeDeltas.Count())
+            {
+                throw new Exception("The Count of ChangeDeltas Has Errors");
+            }
+
+            
+
+            for (int i=0;i<deltas.Count();i++)
+            {
+                deltas[i].NewValue = changeDeltas[i].NewValue;
+            }
+
+
+        }
+
+        public void AddChangeRequestMessage(ChangeRequestMessage crm)
+        {
+            db.ChangeRequestMessages.Add(crm);
+            db.SaveChanges();
         }
     }
 

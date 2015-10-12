@@ -15,6 +15,10 @@ namespace LungmenSoftware.Models.ViewModel
     {
         public ChangeRequest ChangeRequest { get; set; }
         public List<ChangeDelta> ChangeDeltas { get; set; }
+
+        public ChangeRequestMessage ChangeRequestMessage { get; set; }
+        public List<ChangeRequestMessage> ChangeRequestMessages { get; set; }
+
     }
 
     public class ChangeRequestInfo
