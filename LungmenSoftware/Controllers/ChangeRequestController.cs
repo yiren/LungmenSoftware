@@ -174,7 +174,18 @@ namespace LungmenSoftware.Controllers
             }
             if (ModelState.IsValid)
             {
+                ChangeRequestMessage crm = new ChangeRequestMessage()
+                {
+                    CreateBy = User.Identity.Name,
+                    ChangeRequestId = crEntry.ChangeRequest.ChangeRequestId,
+                    ChangeRequest = crToUpdate,
+                    CreateTime = DateTime.Now,
+                    Message = crEntry.ChangeRequestMessage.Message
+                };
+                crService.AddChangeRequestMessage(crm);
+
                 crToUpdate.Description = crEntry.ChangeRequest.Description;
+                crToUpdate.Note = crEntry.ChangeRequest.Note;
                 crToUpdate.Owner = crToUpdate.ReviewBy;
                 
                 //crToUpdate.ChangeDeltas = crEntry.ChangeDeltas;
@@ -263,7 +274,6 @@ namespace LungmenSoftware.Controllers
                     crService.StatusUpdateForApproval(crEntry, approver);
                 }
 
-
                 return RedirectToAction("Index");
             }
             if (option.Equals(GeneralData.GetReviewOptions[2]))
@@ -283,7 +293,16 @@ namespace LungmenSoftware.Controllers
                 return RedirectToAction("Index");
             }
 
-            return HttpNotFound();
+            ChangeRequestViewModelForModification oldData = new ChangeRequestViewModelForModification()
+            {
+                ChangeDeltas = crEntry.ChangeDeltas,
+                ChangeRequest = crEntry,
+                ChangeRequestMessages = crEntry.ChangeRequestMessages
+            };
+
+            ViewBag.Error = "沒有選取審查選項";
+            return View(oldData);
+           
         }
 
 
