@@ -28,5 +28,21 @@ namespace LungmenSoftware.Controllers
         {
             return View();
         }
+
+        public PartialViewResult Home()
+        {
+            return PartialView();
+        }
+
+        public PartialViewResult Second()
+        {
+            return PartialView();
+        }
+
+        public PartialViewResult Third()
+        {
+            return PartialView();
+        }
+
     }
 }

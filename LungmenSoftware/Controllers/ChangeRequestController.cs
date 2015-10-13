@@ -306,14 +306,14 @@ namespace LungmenSoftware.Controllers
         }
 
 
-        public void CommentChangeRequest(ChangeRequest crEntry)
-        {
+        //public void CommentChangeRequest(ChangeRequest crEntry)
+        //{
            
-        }
+        //}
 
-        public void ApproveChangeRequest(ChangeRequest crEntry)
-        {
+        //public void ApproveChangeRequest(ChangeRequest crEntry)
+        //{
             
-        }
+        //}
     }
 }

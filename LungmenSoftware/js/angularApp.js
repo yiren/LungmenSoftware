@@ -1,8 +1,8 @@
 ﻿(function() {
-    angular.module('simpleApp', [])
-    .controller('MainCtrl', ['$http','$log', '$scope', MainCtrl]
-        
-     );
+    angular.module('simpleApp', ['ngRoute'])
+    .controller('MainCtrl', ['$http', '$log', '$scope', MainCtrl])
+    
+    ;
 
     
 

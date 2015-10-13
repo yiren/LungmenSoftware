@@ -23,7 +23,7 @@
     <IISExpressUseClassicPipelineMode />
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
     <RestorePackages>true</RestorePackages>
-    <TypeScriptToolsVersion>1.0</TypeScriptToolsVersion>
+    <TypeScriptToolsVersion>1.6</TypeScriptToolsVersion>
     <UseGlobalApplicationHostFile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -1425,6 +1425,9 @@
     <Content Include="Views\Account\EmailNotConfirmMessage.cshtml" />
     <Content Include="Views\Account\EmailLinkPage.cshtml" />
     <Content Include="Views\ChangeRequest\_ChangeDeltasForModification.cshtml" />
+    <Content Include="Views\Angular\Home.cshtml" />
+    <Content Include="Views\Angular\Second.cshtml" />
+    <Content Include="Views\Angular\Third.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

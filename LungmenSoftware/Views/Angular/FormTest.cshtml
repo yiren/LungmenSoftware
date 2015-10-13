@@ -3,27 +3,64 @@
     ViewBag.Title = "AngularForm";
 }
 
-<h2>AngularForm</h2>
-<div ng-app="formApp" ng-controller="formController as ctrl" name="myform">
-    <h4 ng-bind="ctrl.message"></h4>
-    <form ng-submit="ctrl.submit()">
-        <input type="text" ng-model="ctrl.username"/>
-        <input type="password" ng-model="ctrl.password"/>
-        <input type="submit" value="Submit" ng-disabled="myform.$invaild"/>
-    </form>
+
+<div ng-app="myApp">
+    <div ng-controller="formCtrl as ctrl">
+        <h2>AngularForm</h2>
+        <h4 ng-bind="ctrl.message"></h4>
+        <form ng-submit="ctrl.submit()" name="myform">
+            <input type="text" ng-model="ctrl.username" />
+            <input type="password" ng-model="ctrl.password" />
+            <input type="submit" value="Submit" ng-disabled="myform.$invaild" />
+        </form>    
+    </div>
+
+    <div ng-controller="routeCtrl as route">
+        <ul>
+            <li><a href="#/">Home</a></li>
+            <li><a href="#/second">Second</a></li>
+            <li><a href="#/third">Third</a></li>
+        </ul>
+        <div ng-view></div>
+    </div>
 </div>
 
 @section scripts
 {
     <script src="~/Scripts/angular.min.js"></script>
+    <script src="~/Scripts/angular-route.min.js"></script>
     <script>
-        angular.module('formApp', [])
-            .controller('formController', [function() {
-                var vm = this;
-                vm.message = "Waiting User Input";
-                vm.submit=function() {
-                    vm.message = "Form Submitted....";
+        angular.module('myApp', ['ngRoute'])
+            .controller('formCtrl', [
+                function() {
+                    var vm = this;
+                    vm.message = "Waiting User Input";
+                    vm.submit = function() {
+                        vm.message = "Form Submitted....";
+                    }
                 }
+            ])
+            .config(['$routeProvider', function ($routeProvider) {
+                $routeProvider.when('/', {
+                    templateUrl: "/angular/home",
+                    controller:"routeCtrl as route"
+                    
+                    })
+                    .when('/second', {
+                        templateUrl: "/angular/second",
+                        controller:"routeCtrl as route"
+                    })
+                    .when('/third', {
+                        templateUrl: "/angular/third",
+                        controller: "routeCtrl as route"
+                    })
+                    .otherwise({ redirectTo: '/' });
             }])
+           .controller('routeCtrl', [function() {
+               var vm = this;
+               vm.message="Hello!Angular Routing....."
+                }])
+           
+        ;
     </script>
 }
