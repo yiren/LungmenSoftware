@@ -29,8 +29,9 @@
 {
     <script src="~/Scripts/angular.min.js"></script>
     <script src="~/Scripts/angular-route.min.js"></script>
+    <script src="~/Scripts/ui-grid.min.js"></script>
     <script>
-        angular.module('myApp', ['ngRoute'])
+        angular.module('myApp', ['ngRoute', 'ui.grid', 'ui.grid.resizeColumns'])
             .controller('formCtrl', [
                 function() {
                     var vm = this;
@@ -60,7 +61,24 @@
                var vm = this;
                vm.message="Hello!Angular Routing....."
                 }])
-           
+           .controller('gridCtrl', ['$http',function ($http) {
+               var vm = this;
+               vm.message = "Waiting For Data From Server";
+
+               vm.gridOptions = {};
+
+
+
+               $http.get('/foxsoftwares/GetJsonSoftwareList')
+                  .success(function (data) {
+                      vm.message = 'Data Retrieves Successfully';
+                      vm.gridOptions.data = data;
+                      //$log.info(data);
+                  })
+                  .error(function () {
+                      vm.message = 'Unexpected Error When Getting All Softwares';
+                  });
+           }])
         ;
     </script>
 }

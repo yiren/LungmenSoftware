@@ -17,3 +17,8 @@ select,
 textarea {
     max-width: 280px;
 }
+
+.grid {
+    width: 1000px;
+    height: 1500px;
+}

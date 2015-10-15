@@ -166,7 +166,7 @@ namespace LungmenSoftware.Controllers
         //public ActionResult GetWorkstationsByRev(string rev)
         //{
         //    List<FoxWorkStation> wkList = wkService.GetWorkstationsByRev(rev);
-            
+
         //    string json = JsonConvert.SerializeObject(wkList, new JsonSerializerSettings()
         //    {
         //        ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
@@ -181,6 +181,8 @@ namespace LungmenSoftware.Controllers
         //}
 
         //For AngularJS Form
+
+        //For AngualrJS
         public ActionResult GetSystemSoftwares()
         {
             var sysSoftList = softService.GetSystemSoftwareList();
@@ -244,7 +246,31 @@ namespace LungmenSoftware.Controllers
             //}
         }
 
+        //For Angular Grid UI Test
+        public ActionResult GetJsonSoftwareList()
+        {
+            var sysSoftList = softService.GetFoxSoftwaresByTypeId(2);
 
-        
+            //JavaScriptSerializer jsonSerializer=new JavaScriptSerializer();
+            //jsonSerializer.RegisterConverters(new List<EFToJSONConverter>()
+            //{
+            //    new EFToJSONConverter()
+            //});
+
+            //string jsonContent = jsonSerializer.Serialize(sysSoftList);
+
+            string json = JsonConvert.SerializeObject(sysSoftList, new JsonSerializerSettings()
+            {
+                ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+                Formatting = Formatting.Indented
+            });
+
+            return new ContentResult()
+            {
+                Content = json,
+                ContentType = "application/json"
+            };
+        }
+
     }
 }
