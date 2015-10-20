@@ -315,5 +315,33 @@ namespace LungmenSoftware.Controllers
         //{
             
         //}
+        public ActionResult SearchChangeRequest()
+        {
+            List<ChangeRequestStatusType> statuses = crService.GetChangeRequestStatusTypess();
+            ChangeRequestSearchViewModel vm=new ChangeRequestSearchViewModel()
+            {
+                Status = statuses.Select(s=> new SelectListItem()
+                {
+                    Text = s.StatusName,
+                    Value = s.StatusTypeId.ToString()
+                })
+            };
+
+            return View(vm);
+        }
+
+        [HttpPost]
+        public ActionResult SearchChangeRequest(ChangeRequestSearchViewModel vm)
+        {
+
+            List<ChangeRequestInfo> results= crService.SearchChangeRequestsByForm(vm);
+
+            return View(vm);
+        }
+
+        public ActionResult HistorialRecords()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

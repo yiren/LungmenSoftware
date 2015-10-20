@@ -427,6 +427,62 @@ namespace LungmenSoftware.Models.Service
             db.ChangeRequestMessages.Add(crm);
             db.SaveChanges();
         }
+
+        public List<ChangeRequestInfo> SearchChangeRequestsByForm(ChangeRequestSearchViewModel vm)
+        {
+            if (String.IsNullOrEmpty(vm.CreateStartDate))
+            {
+
+            }
+            else
+            {
+                DateTime sd = Convert.ToDateTime(vm.CreateStartDate);
+            }
+            
+            if (String.IsNullOrEmpty(vm.CreateEndDate))
+            {
+                
+            }
+            else
+            {
+                DateTime ed = Convert.ToDateTime(vm.CreateEndDate);
+            }
+            
+            var query = from cr in db.ChangeRequests
+                        join s in db.ChangeRequestStatuses
+                            on cr.ChangeRequestId equals s.ChangeRequestId
+                        join t in db.ChangeRequestStatusTypes
+                            on s.StatusTypeId equals t.StatusTypeId
+                        join d in db.ChangeDeltas
+                            on cr.ChangeRequestId equals d.ChangeRequestId
+                        join i in db.RevInfos
+                            on d.ChangeDeltaId equals i.ChangeDeltaId
+                        where (String.IsNullOrEmpty(vm.SerialNumber) || cr.SerialNumber.Contains(vm.SerialNumber)) &&
+                              (String.IsNullOrEmpty(vm.CreatedBy) || cr.CreatedBy.Contains(vm.CreatedBy)) &&
+                              s.StatusTypeId == vm.StatusTypeId &&
+                              cr.IsActive.Equals(vm.IsActive) &&
+                              (String.IsNullOrEmpty(vm.SoftwareName) || i.SoftwareName.Equals(vm.SoftwareName)) 
+                              //&&
+                        //      ((String.IsNullOrEmpty(vm.CreateStartDate)|| cr.CreateDate>= Convert.ToDateTime(vm.CreateStartDate)) &&
+                        //      (String.IsNullOrEmpty(vm.CreateEndDate)|| cr.CreateDate<=Convert.ToDateTime(vm.CreateEndDate)))
+                        orderby cr.LastModifiedDate descending
+                        select new ChangeRequestInfo
+                        {
+                            ChangeRequestId = cr.ChangeRequestId,
+                            ApprovedBy = cr.ApprovedBy,
+                            CreatedBy = cr.CreatedBy,
+                            LastModifiedDate = cr.LastModifiedDate,
+                            ReviewBy = cr.ReviewBy,
+                            SerialNumber = cr.SerialNumber,
+                            InitialDate = s.InitialDate,
+                            StatusName = t.StatusName,
+                            CreateDate = cr.CreateDate,
+                            Description = cr.Description,
+                            Owner = cr.Owner,
+                            StatusTypeId = t.StatusTypeId
+                        };
+            return query.ToList();
+        }
     }
 
    

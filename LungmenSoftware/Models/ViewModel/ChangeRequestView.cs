@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Web;
+using System.Web.Mvc;
 using LungmenSoftware.Models.CodeFirst.Entities;
 
 namespace LungmenSoftware.Models.ViewModel
@@ -9,6 +11,34 @@ namespace LungmenSoftware.Models.ViewModel
     public class ChangeRequestView
     {
         public List<ChangeRequestInfo> ChangeRequests { get; set; }
+    }
+
+    public class ChangeRequestSearchViewModel
+    {
+        //ChangeRequest Part
+        [DisplayName("軟體變更表單編號")]
+        public string SerialNumber { get; set; }
+        [DisplayName("表單建立人")]
+        public string CreatedBy { get; set; }
+        [DisplayName("表單建立日期")]
+        
+        public string CreateStartDate { get; set; }
+        public string CreateEndDate { get; set; }
+
+        //public string Owner { get; set; }
+
+        //Status
+        [DisplayName("修改軟體名稱")]
+        public string SoftwareName { get; set; }
+        //public string WorkStationName { get; set; }
+        [DisplayName("表單狀態")]
+        public int StatusTypeId { get; set; }
+
+        [DisplayName("是否結案")]
+        public bool IsActive { get; set; }
+
+        public IEnumerable<SelectListItem> Status { get; set; }
+
     }
 
     public class ChangeRequestViewModelForModification

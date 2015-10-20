@@ -1,7 +1,7 @@
 ﻿@model LungmenSoftware.Models.ViewModel.FoxSoftView
 
 @{
-    ViewBag.Title = "InstalledSoftware";
+    ViewBag.Title = "已安裝軟體";
 }
 
 
@@ -33,7 +33,7 @@
                 {
                     <tr>
                         <td>
-                            @Html.HiddenFor(modelItem => item.SoftwareId)
+                            @Html.HiddenFor(modelItem => item.FoxSoftwareId)
                             @Html.DisplayFor(modelItem => item.SoftwareName)
                         </td>
                         <td>
@@ -53,7 +53,7 @@
                             }
                         </td>
                         <td>
-                            @Html.ActionLink("詳細資料", "SoftwareDetail", new {id = item.SoftwareId})
+                            @Html.ActionLink("詳細資料", "SoftwareDetail", new {id = item.FoxSoftwareId})
 
                         </td>
                     </tr>
@@ -98,7 +98,7 @@
                 {
                     <tr>
                         <td>
-                            @Html.HiddenFor(modelItem => item.SoftwareId)
+                            @Html.HiddenFor(modelItem => item.FoxSoftwareId)
                             @Html.DisplayFor(modelItem => item.SoftwareName)
                         </td>
                         <td>
@@ -118,7 +118,7 @@
                             }
                         </td>
                         <td>
-                            @Html.ActionLink("詳細資料", "SoftwareDetail", new { id = item.SoftwareId })
+                            @Html.ActionLink("詳細資料", "SoftwareDetail", new { id = item.FoxSoftwareId })
                         </td>
                     </tr>
                 }

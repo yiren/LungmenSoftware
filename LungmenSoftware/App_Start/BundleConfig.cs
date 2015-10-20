@@ -9,7 +9,9 @@ namespace LungmenSoftware
         public static void RegisterBundles(BundleCollection bundles)
         {
             bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
-                        "~/Scripts/jquery-{version}.js"));
+                        "~/Scripts/jquery-{version}.js",
+                        "~/Scripts/jquery-ui-1.11.4.min.js"
+                        ));
 
             bundles.Add(new ScriptBundle("~/bundles/jqueryval").Include(
                         "~/Scripts/jquery.validate*"));
@@ -25,6 +27,9 @@ namespace LungmenSoftware
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.min.css",
+                      "~/Content/themes/cupertino/jquery-ui.cupertino.css",
+                      "~/Content/themes/base/datepicker.css",
+                      "~/Content/themes/base/core.css",
                       "~/Content/site.css", "~/Content/ui-grid.min.css")
                       );
         }
