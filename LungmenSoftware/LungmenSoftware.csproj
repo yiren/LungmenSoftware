@@ -398,6 +398,7 @@
     <Compile Include="Models\Service\IUserService.cs" />
     <Compile Include="Models\Service\UserService.cs" />
     <Compile Include="Models\ViewModel\ChangeRequestView.cs" />
+    <Compile Include="Models\ViewModel\CheckBoxListModel.cs" />
     <Compile Include="Models\ViewModel\RoleView.cs" />
     <Compile Include="Models\Service\FoxSoftService.cs" />
     <Compile Include="Models\Service\IFoxAppSoftwareService.cs" />

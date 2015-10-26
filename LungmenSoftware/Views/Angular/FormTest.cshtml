@@ -29,7 +29,10 @@
 {
     <script src="~/Scripts/angular.min.js"></script>
     <script src="~/Scripts/angular-route.min.js"></script>
+    <script src="~/Scripts/angular-animate.min.js"></script>
     <script src="~/Scripts/ui-grid.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/1.18.0/TweenMax.min.js"></script>
+
     <script>
         angular.module('myApp', ['ngRoute', 'ui.grid', 'ui.grid.resizeColumns'])
             .controller('formCtrl', [
@@ -79,6 +82,16 @@
                       vm.message = 'Unexpected Error When Getting All Softwares';
                   });
            }])
+            .animation('.pageChange', function() {
+                    return {
+                        addClass: function(element, className, done) {
+                            
+                        },
+                        removeClass: function (element, className, done) {
+                            
+                        }
+                    }
+                })
         ;
     </script>
 }

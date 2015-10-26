@@ -44,6 +44,7 @@ namespace LungmenSoftware.MigrationForChangeRequestData
                 {
                     StatusName = "Waiting For Approval"
                 };
+
                 ChangeRequestStatusType HasComment = new ChangeRequestStatusType()
                 {
                     StatusName = "Review Comment-Clarification Required"
@@ -53,6 +54,7 @@ namespace LungmenSoftware.MigrationForChangeRequestData
                 {
                     StatusName = "Completed"
                 };
+
                 ChangeRequestStatusType Cancel = new ChangeRequestStatusType()
                 {
                     StatusName = "Cancelled"
@@ -83,7 +85,8 @@ namespace LungmenSoftware.MigrationForChangeRequestData
                     CreateDate = DateTime.Parse("2015/08/25"),
                     LastModifiedDate = DateTime.Now - TimeSpan.FromDays(3),
                     Description = "MVD Driver Version Update",
-                    Owner = "test2@taipower.com.tw"
+                    Owner = "test2@taipower.com.tw",
+                    IsActive = true
                 };
 
                 ChangeRequest cr2 = new ChangeRequest()
@@ -94,7 +97,8 @@ namespace LungmenSoftware.MigrationForChangeRequestData
                     CreateDate = DateTime.Parse("2015/08/26"),
                     LastModifiedDate = DateTime.Now - TimeSpan.FromDays(3),
                     Description = "FBM 232 CP Image Version Update",
-                    Owner = "test2@taipower.com.tw"
+                    Owner = "test2@taipower.com.tw",
+                    IsActive = true
                 };
 
                 ChangeRequest cr3 = new ChangeRequest()
@@ -105,7 +109,8 @@ namespace LungmenSoftware.MigrationForChangeRequestData
                     CreateDate = DateTime.Parse("2015/08/27"),
                     LastModifiedDate = DateTime.Now - TimeSpan.FromDays(3),
                     Description = "FDSI Version Update",
-                    Owner = "test2@taipower.com.tw"
+                    Owner = "test2@taipower.com.tw",
+                    IsActive = false
                 };
 
                 ChangeRequest cr4 = new ChangeRequest()
@@ -116,7 +121,8 @@ namespace LungmenSoftware.MigrationForChangeRequestData
                     CreateDate = DateTime.Parse("2015/08/28"),
                     LastModifiedDate = DateTime.Now - TimeSpan.FromDays(2),
                     Description = "FoxView Upgrade",
-                    Owner = "test2@taipower.com.tw"
+                    Owner = "test2@taipower.com.tw",
+                    IsActive = false
 
                 };
 

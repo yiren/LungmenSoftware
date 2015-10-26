@@ -7,73 +7,113 @@
 <h2>@ViewBag.Title</h2>
 
 
-@using (Html.BeginForm()) 
+@using (Html.BeginForm("SearchChangeRequest","ChangeRequest",FormMethod.Post))
 {
     @Html.AntiForgeryToken()
-    
+
     <div class="form-horizontal">
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         <div class="form-group">
-            @Html.LabelFor(model => model.SerialNumber, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.SerialNumber, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.SerialNumber, "", new { @class = "text-danger" })
+            @Html.LabelFor(model => model.SerialNumber, htmlAttributes: new {@class = "control-label col-md-1"})
+            <div class="col-md-3">
+                @Html.EditorFor(model => model.SerialNumber, new {htmlAttributes = new {@class = "form-control"}})
             </div>
-        </div>
 
-        <div class="form-group">
             @Html.LabelFor(model => model.CreatedBy, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.CreatedBy, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.CreatedBy, "", new { @class = "text-danger" })
+            <div class="col-md-3">
+                @Html.EditorFor(model => model.CreatedBy, new {htmlAttributes = new {@class = "form-control"}})
             </div>
+
         </div>
 
         <div class="form-group">
+            @Html.LabelFor(model => model.Description, htmlAttributes: new { @class = "control-label col-md-1" })
+            <div class="col-md-3">
+                @Html.EditorFor(model => model.Description, new { htmlAttributes = new { @class = "form-control" } })
+            </div>
+
             @Html.LabelFor(model => model.CreateStartDate, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
+            <div class="col-md-5">
                 @Html.EditorFor(model => model.CreateStartDate, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.CreateStartDate, "", new { @class = "text-danger" })
                 至
                 @Html.EditorFor(model => model.CreateEndDate, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.CreateEndDate, "", new { @class = "text-danger" })
             </div>
         </div>
 
+
         <div class="form-group">
-            @Html.LabelFor(model => model.SoftwareName, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.Label("案件狀態", htmlAttributes: new {@class = "control-label col-md-1"})
             <div class="col-md-10">
-                @Html.EditorFor(model => model.SoftwareName, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.SoftwareName, "", new { @class = "text-danger" })
+                @for (int i = 0; i < Model.Status.Count; i++)
+                {
+                    @Html.HiddenFor(model => model.Status[i].Value)
+                    <div class="checkbox-inline">
+                        @Html.CheckBoxFor(model => model.Status[i].IsChecked)
+                        @Html.DisplayFor(model => model.Status[i].DisplayName)
+                    </div>
+                }
             </div>
         </div>
-
+           @*
+    <div class="form-group">
+        @Html.LabelFor(model => model.IncludingCompleted, htmlAttributes: new { @class = "control-label col-md-1" })
+        <div class="col-md-10">
+            <div class="checkbox">
+                @Html.EditorFor(model => model.IncludingCompleted)
+            </div>
+        </div>
+    </div>
+        *@
         <div class="form-group">
-            @Html.LabelFor(model => model.StatusTypeId, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.DropDownListFor(model => model.StatusTypeId, Model.Status, htmlAttributes: new { @class = "form-control" } )
-                @Html.ValidationMessageFor(model => model.StatusTypeId, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.IsActive, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                <div class="checkbox">
-                    @Html.EditorFor(model => model.IsActive)
-                    @Html.ValidationMessageFor(model => model.IsActive, "", new { @class = "text-danger" })
-                </div>
-            </div>
-        </div>
-
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
                 <input type="submit" value="搜尋" class="btn btn-default" />
             </div>
         </div>
     </div>
 }
+
+@if (Model.SearchResult != null)
+{
+    <table class="table table-bordered table-striped table-hover">
+        <tr>
+            <th>@Html.DisplayNameFor(m => m.SearchResult[0].SerialNumber)</th>
+            <th>@Html.DisplayNameFor(m => m.SearchResult[0].Description)</th>
+            <th>@Html.DisplayNameFor(m => m.SearchResult[0].StatusName)</th>
+            <th>@Html.DisplayNameFor(m => m.SearchResult[0].CreatedBy)</th>
+            <th>@Html.DisplayNameFor(m => m.SearchResult[0].CreateDate)</th>
+            <th>@Html.DisplayNameFor(m => m.SearchResult[0].Owner)</th>
+            
+            <th>詳細資料</th>
+        </tr>
+        
+            @if (Model.SearchResult.Count != 0)
+            {
+                foreach (var item in Model.SearchResult)
+                {
+                    <tr>
+                        <td>@Html.DisplayFor(m => item.SerialNumber)</td>
+                        <td>@Html.DisplayFor(m => item.Description)</td>
+                        <td>@Html.DisplayFor(m => item.StatusName)</td>
+                        <td>@Html.DisplayFor(m => item.CreatedBy)</td>
+                        <td>@Html.DisplayFor(m => item.CreateDate)</td>
+                        <td>@Html.DisplayFor(m => item.Owner)</td>
+                        
+                        <td></td>
+                    </tr>
+                }
+            }
+            else
+            {
+                <tr>
+                    <td>未有符合搜尋條件之結果</td>
+                </tr>
+            }
+        
+    </table>
+}
+
+
 
 <div>
     @Html.ActionLink("回到清單", "Index")
@@ -83,7 +123,7 @@
     @Scripts.Render("~/bundles/jqueryval")
     <script>
         $("#CreateStartDate").datepicker({
-            dateFormat:"yy/mm/dd"
+            dateFormat: "yy/mm/dd"
         });
         $("#CreateEndDate").datepicker({
             dateFormat: "yy/mm/dd"

@@ -317,17 +317,22 @@ namespace LungmenSoftware.Controllers
         //}
         public ActionResult SearchChangeRequest()
         {
-            List<ChangeRequestStatusType> statuses = crService.GetChangeRequestStatusTypess();
+            var statuses = GetStatusCheckBoxList();
+
             ChangeRequestSearchViewModel vm=new ChangeRequestSearchViewModel()
             {
-                Status = statuses.Select(s=> new SelectListItem()
-                {
-                    Text = s.StatusName,
-                    Value = s.StatusTypeId.ToString()
-                })
+                Status = statuses
+                
             };
 
             return View(vm);
+        }
+
+        private List<CheckBoxListModel> GetStatusCheckBoxList()
+        {
+
+            List<CheckBoxListModel> result = crService.GetChangeRequestStatusTypessForCheckBox();
+            return result;
         }
 
         [HttpPost]
@@ -336,8 +341,17 @@ namespace LungmenSoftware.Controllers
 
             List<ChangeRequestInfo> results= crService.SearchChangeRequestsByForm(vm);
 
-            return View(vm);
+            ChangeRequestSearchViewModel dataForView = new ChangeRequestSearchViewModel()
+            {
+                Status = GetStatusCheckBoxList(),
+                SearchResult = results
+            };
+
+            return View(dataForView);
         }
+
+
+        
 
         public ActionResult HistorialRecords()
         {

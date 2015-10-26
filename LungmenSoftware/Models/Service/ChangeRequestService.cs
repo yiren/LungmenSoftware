@@ -96,7 +96,7 @@ namespace LungmenSoftware.Models.Service
 
         public List<ChangeRequestInfo> GetChangeRequestList()
         {
-            var query = from cr in db.ChangeRequests
+            var query = from cr in db.ChangeRequests.Where(r=>r.IsActive==true)
                 join s in db.ChangeRequestStatuses.Where(s=>s.EndDate ==null)
                     on cr.ChangeRequestId equals s.ChangeRequestId
                 join t in db.ChangeRequestStatusTypes
@@ -289,7 +289,7 @@ namespace LungmenSoftware.Models.Service
         public void StatusUpdateForApproval(ChangeRequest cr, string approver)
         {
             UpdatePreviousStatus(cr);
-
+            cr.Owner = "已核可";
             cr.IsActive = false;
             cr.ApprovedBy = approver;
             db.ChangeRequestStatuses.Add(new ChangeRequestStatus()
@@ -312,7 +312,7 @@ namespace LungmenSoftware.Models.Service
             UpdatePreviousStatus(cr);
 
             cr.IsActive = false;
-
+            cr.Owner = "已取消";
             db.ChangeRequestStatuses.Add(new ChangeRequestStatus()
             {
                 ChangeRequestId = cr.ChangeRequestId,
@@ -331,7 +331,7 @@ namespace LungmenSoftware.Models.Service
 
         public string GetSerialNumber()
         {
-            return String.Format("{0:yyyyMMdd}", DateTime.Today) + "E" + new Random().Next(1000, 9999);
+            return String.Format("{0:yyyyMMdd}", DateTime.Today) + "E0" + new Random().Next(000, 999);
         }
 
 
@@ -405,20 +405,15 @@ namespace LungmenSoftware.Models.Service
                 //    on d.ChangeDeltaId equals r.ChangeDeltaId
                 //select d;
 
-           
-
             if (deltas.Count() != changeDeltas.Count())
             {
                 throw new Exception("The Count of ChangeDeltas Has Errors");
             }
 
-            
-
             for (int i=0;i<deltas.Count();i++)
             {
                 deltas[i].NewValue = changeDeltas[i].NewValue;
             }
-
 
         }
 
@@ -430,58 +425,125 @@ namespace LungmenSoftware.Models.Service
 
         public List<ChangeRequestInfo> SearchChangeRequestsByForm(ChangeRequestSearchViewModel vm)
         {
-            if (String.IsNullOrEmpty(vm.CreateStartDate))
-            {
+           
 
-            }
-            else
+            var preChangeRequests =db.ChangeRequests.Where(c => 
+                    (String.IsNullOrEmpty(vm.SerialNumber) || c.SerialNumber.Contains(vm.SerialNumber)));
+            preChangeRequests = preChangeRequests.Where(c=> 
+                    (String.IsNullOrEmpty(vm.CreatedBy) || c.CreatedBy.Contains(vm.CreatedBy)));
+
+            preChangeRequests = preChangeRequests.Where(c =>
+                    (String.IsNullOrEmpty(vm.Description) || c.Description.Contains(vm.Description)));
+            //preChangeRequests = vm.IncludingCompleted == true
+            //    ? preChangeRequests
+            //    : preChangeRequests.Where(c => c.IsActive == true);
+
+            if (!String.IsNullOrEmpty(vm.CreateStartDate))
             {
                 DateTime sd = Convert.ToDateTime(vm.CreateStartDate);
+                preChangeRequests = preChangeRequests.Where(c=>c.CreateDate >= sd);
             }
-            
-            if (String.IsNullOrEmpty(vm.CreateEndDate))
-            {
-                
-            }
-            else
+
+            if (!String.IsNullOrEmpty(vm.CreateEndDate))
             {
                 DateTime ed = Convert.ToDateTime(vm.CreateEndDate);
+                preChangeRequests = preChangeRequests.Where(c =>c.CreateDate <= ed);
             }
-            
-            var query = from cr in db.ChangeRequests
-                        join s in db.ChangeRequestStatuses
-                            on cr.ChangeRequestId equals s.ChangeRequestId
-                        join t in db.ChangeRequestStatusTypes
-                            on s.StatusTypeId equals t.StatusTypeId
-                        join d in db.ChangeDeltas
-                            on cr.ChangeRequestId equals d.ChangeRequestId
-                        join i in db.RevInfos
-                            on d.ChangeDeltaId equals i.ChangeDeltaId
-                        where (String.IsNullOrEmpty(vm.SerialNumber) || cr.SerialNumber.Contains(vm.SerialNumber)) &&
-                              (String.IsNullOrEmpty(vm.CreatedBy) || cr.CreatedBy.Contains(vm.CreatedBy)) &&
-                              s.StatusTypeId == vm.StatusTypeId &&
-                              cr.IsActive.Equals(vm.IsActive) &&
-                              (String.IsNullOrEmpty(vm.SoftwareName) || i.SoftwareName.Equals(vm.SoftwareName)) 
-                              //&&
-                        //      ((String.IsNullOrEmpty(vm.CreateStartDate)|| cr.CreateDate>= Convert.ToDateTime(vm.CreateStartDate)) &&
-                        //      (String.IsNullOrEmpty(vm.CreateEndDate)|| cr.CreateDate<=Convert.ToDateTime(vm.CreateEndDate)))
-                        orderby cr.LastModifiedDate descending
-                        select new ChangeRequestInfo
+
+            //||
+            //(String.IsNullOrEmpty(vm.CreateStartDate) || c.CreateDate >= Convert.ToDateTime(vm.CreateStartDate)) &&
+            //(String.IsNullOrEmpty(vm.CreateEndDate)|| c.CreateDate<=Convert.ToDateTime(vm.CreateEndDate))
+            //);
+            IQueryable<ChangeRequestStatus> preChangeRequestStatuses=db.ChangeRequestStatuses.Where(s => s.IsCurrent==true);
+            IQueryable<ChangeRequestStatusType> preChangeRequestStatusTypes = db.ChangeRequestStatusTypes;
+            IQueryable<ChangeRequestStatus> tempQuery = null;
+            if (vm.Status.Any(s => s.IsChecked==true))
+            {
+                 foreach (var item in vm.Status)
+                {
+                    if (item.IsChecked)
+                    {
+                        if (tempQuery == null)
                         {
-                            ChangeRequestId = cr.ChangeRequestId,
-                            ApprovedBy = cr.ApprovedBy,
-                            CreatedBy = cr.CreatedBy,
-                            LastModifiedDate = cr.LastModifiedDate,
-                            ReviewBy = cr.ReviewBy,
-                            SerialNumber = cr.SerialNumber,
-                            InitialDate = s.InitialDate,
-                            StatusName = t.StatusName,
-                            CreateDate = cr.CreateDate,
-                            Description = cr.Description,
-                            Owner = cr.Owner,
-                            StatusTypeId = t.StatusTypeId
-                        };
+                            tempQuery = preChangeRequestStatuses.Where(s => s.StatusTypeId == item.Value);
+                        }
+                        else { 
+                        tempQuery = tempQuery
+                            .Concat(preChangeRequestStatuses.Where(s => s.StatusTypeId == item.Value));
+                        }
+                    }
+                }
+                preChangeRequestStatuses = tempQuery;
+            }
+
+            
+
+
+            var query= from cr in preChangeRequests
+                join s in preChangeRequestStatuses on cr.ChangeRequestId equals s.ChangeRequestId
+                join t in preChangeRequestStatusTypes on s.StatusTypeId equals t.StatusTypeId
+                       select new ChangeRequestInfo
+                       {
+                           ChangeRequestId = cr.ChangeRequestId,
+                           ApprovedBy = cr.ApprovedBy,
+                           CreatedBy = cr.CreatedBy,
+                           ReviewBy = cr.ReviewBy,
+                           SerialNumber = cr.SerialNumber,
+                           StatusName = t.StatusName,
+                           CreateDate = cr.CreateDate,
+                           Description = cr.Description,
+                           Owner = cr.Owner,
+                           StatusTypeId = s.StatusTypeId,
+                           EndDate = s.EndDate
+                       };
+
+
+            //var query = from cr in db.ChangeRequests
+            //            join s in db.ChangeRequestStatuses
+            //                on cr.ChangeRequestId equals s.ChangeRequestId
+            //            join t in db.ChangeRequestStatusTypes
+            //                on s.StatusTypeId equals t.StatusTypeId
+            //            join d in db.ChangeDeltas
+            //                on cr.ChangeRequestId equals d.ChangeRequestId
+            //            join i in db.RevInfos
+            //                on d.ChangeDeltaId equals i.ChangeDeltaId
+            //            where (String.IsNullOrEmpty(vm.SerialNumber) || cr.SerialNumber.Contains(vm.SerialNumber)) &&
+            //                  (String.IsNullOrEmpty(vm.CreatedBy) || cr.CreatedBy.Contains(vm.CreatedBy)) &&
+            //                  s.StatusTypeId == vm.StatusTypeId &&
+            //                  cr.IsActive.Equals(vm.IsActive) &&
+            //                  (String.IsNullOrEmpty(vm.SoftwareName) || i.SoftwareName.Equals(vm.SoftwareName)) 
+            //&&
+            //      ((String.IsNullOrEmpty(vm.CreateStartDate)|| cr.CreateDate>= Convert.ToDateTime(vm.CreateStartDate)) &&
+            //      (String.IsNullOrEmpty(vm.CreateEndDate)|| cr.CreateDate<=Convert.ToDateTime(vm.CreateEndDate)))
+            //orderby cr.LastModifiedDate descending
+            //select new ChangeRequestInfo
+            //{
+            //    ChangeRequestId = cr.ChangeRequestId,
+            //    ApprovedBy = cr.ApprovedBy,
+            //    CreatedBy = cr.CreatedBy,
+            //    LastModifiedDate = cr.LastModifiedDate,
+            //    ReviewBy = cr.ReviewBy,
+            //    SerialNumber = cr.SerialNumber,
+            //    InitialDate = s.InitialDate,
+            //    StatusName = t.StatusName,
+            //    CreateDate = cr.CreateDate,
+            //    Description = cr.Description,
+            //    Owner = cr.Owner,
+            //    StatusTypeId = t.StatusTypeId
+            //};
             return query.ToList();
+        }
+
+        public List<CheckBoxListModel> GetChangeRequestStatusTypessForCheckBox()
+        {
+            var checkboxList= db.ChangeRequestStatusTypes.Select(t => new CheckBoxListModel()
+            {
+                DisplayName = t.StatusName,
+                Value = t.StatusTypeId,
+                IsChecked = false
+            }).ToList();
+
+            return checkboxList;
         }
     }
 

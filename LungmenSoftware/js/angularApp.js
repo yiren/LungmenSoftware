@@ -1,10 +1,13 @@
 ﻿(function() {
     angular.module('simpleApp', ['ngRoute'])
     .controller('MainCtrl', ['$http', '$log', '$scope', MainCtrl])
-    
+    //.factory('WorkStationList', ['$http', WorkStationListFactory])
     ;
 
-    
+    function WorkStationListFactory($http) {
+        
+    }
+
 
     function MainCtrl($http, $log, $scope) {
         var vm = this;
@@ -290,7 +293,9 @@
                 return false;
             }
         }
+        
 
+        //Legacy Code
         vm.modifyRev=function(record, rev) {
             //vm.selectedSoftwareInfo;
             var softRevInfo = {
