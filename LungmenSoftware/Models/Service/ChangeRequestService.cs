@@ -386,12 +386,13 @@ namespace LungmenSoftware.Models.Service
 
             //    };
 
-            var query = db.ChangeRequests
+            var query = db.ChangeRequests.Where(c=>c.ChangeRequestId.Equals(id))
                 .Include(c=>c.ChangeDeltas.Select(d=>d.RevInfos))
                 .Include(c=>c.ChangeRequestMessages)
-                .ToList();
-            var result = query.FirstOrDefault(c => c.ChangeRequestId.Equals(id));
-            return result;
+                .Include(c=>c.ChangeRequestStatuses.Select(s=>s.ChangeRequestStatusType))
+                .FirstOrDefault();
+            
+            return query;
         }
 
         public void UpdateChangeDeltas(Guid changeRequestId, List<ChangeDelta> changeDeltas)

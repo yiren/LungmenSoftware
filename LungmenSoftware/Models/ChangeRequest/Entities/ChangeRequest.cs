@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Security.AccessControl;
@@ -12,26 +13,37 @@ namespace LungmenSoftware.Models.CodeFirst.Entities
         //Business Columns
 
         public Guid ChangeRequestId { get; set; }
-       
+
+        [DisplayName("表單編號")]
         public string SerialNumber { get; set; }
 
+        [DisplayName("軟體變更敘述")]
         public string Description { get; set; }
-        
+
+        [DisplayName("申請人")]
         public string CreatedBy { get; set; }
+
         [ScaffoldColumn(false)]
+        [DisplayName("審查")]
         public string ReviewBy { get; set; }
         [ScaffoldColumn(false)]
+        [DisplayName("核可")]
         public string ApprovedBy { get; set; }
 
         //Change Request Owner Tied To Status 
+        [DisplayName("表單位置")]
         public string Owner { get; set; }
 
+        [DisplayName("是否已結案")]
         public bool? IsActive { get; set; }
 
+        [DisplayName("建立日期")]
         public DateTime CreateDate { get; set; }
-        
+
+        [DisplayName("最後修改日期")]
         public DateTime LastModifiedDate { get; set; }
 
+        [DisplayName("備註")]
         public string Note { get; set; }
 
         public List<ChangeRequestStatus> ChangeRequestStatuses { get; set; }

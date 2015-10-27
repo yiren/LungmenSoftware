@@ -146,6 +146,23 @@ namespace LungmenSoftware.Controllers
             return RedirectToAction("Index");
         }
 
+        public ActionResult ChangeRequestDetail(Guid id)
+        {
+            var crEntry = crService.FindDetailCRByChangeRequestId(id);
+            if (crEntry == null)
+            {
+                return HttpNotFound();
+            }
+            ChangeRequestViewModelForDetail dataForView=new ChangeRequestViewModelForDetail()
+            {
+                ChangeRequest = crEntry,
+                ChangeDeltas = crEntry.ChangeDeltas,
+                ChangeRequestMessages = crEntry.ChangeRequestMessages,
+                ChangeRequestStatuses = crEntry.ChangeRequestStatuses
+            };
+            return View(dataForView);
+        }
+
         public ActionResult EditChangeRequest(Guid id)
         {
             var crEntry = crService.FindDetailCRByChangeRequestId(id);
@@ -153,7 +170,7 @@ namespace LungmenSoftware.Controllers
             {
                 return HttpNotFound();
             }
-            ChangeRequestViewModelForModification vm=new ChangeRequestViewModelForModification()
+            ChangeRequestViewModelForModification dataForView=new ChangeRequestViewModelForModification()
             {
                 ChangeRequest = crEntry,
                 ChangeDeltas = crEntry.ChangeDeltas,
@@ -161,7 +178,7 @@ namespace LungmenSoftware.Controllers
             };
 
 
-            return View(vm);
+            return View(dataForView);
         }
 
         [HttpPost]
@@ -350,12 +367,7 @@ namespace LungmenSoftware.Controllers
             return View(dataForView);
         }
 
-
         
-
-        public ActionResult HistorialRecords()
-        {
-            throw new NotImplementedException();
-        }
+        
     }
 }

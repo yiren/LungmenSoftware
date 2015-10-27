@@ -33,8 +33,6 @@ namespace LungmenSoftware.Models.ViewModel
         [DisplayName("表單狀態")]
         public int StatusTypeId { get; set; }
 
-       
-
         public List<CheckBoxListModel> Status { get; set; }
 
         public List<ChangeRequestInfo> SearchResult { get; set; }
@@ -50,6 +48,14 @@ namespace LungmenSoftware.Models.ViewModel
 
     }
 
+    public class ChangeRequestViewModelForDetail
+    {
+        public ChangeRequest ChangeRequest { get; set; }
+        public List<ChangeRequestStatus> ChangeRequestStatuses { get; set; }  
+        public List<ChangeDelta> ChangeDeltas { get; set; }
+        public List<ChangeRequestMessage> ChangeRequestMessages { get; set; }
+    }
+
     public class ChangeRequestInfo
     {
         //change request class
@@ -57,18 +63,25 @@ namespace LungmenSoftware.Models.ViewModel
 
         [DisplayName("表單編號")]
         public string SerialNumber { get; set; }
+
         [DisplayName("軟體變更敘述")]
         public string Description { get; set; }
+
         [DisplayName("負責人")]
         public string CreatedBy { get; set; }
+
         [DisplayName("表單位置")]
         public string Owner { get; set; }
+
         [DisplayName("審查")]
         public string ReviewBy { get; set; }
+
         [DisplayName("核准")]
         public string ApprovedBy { get; set; }
+
         [DisplayName("建立日期")]
         public DateTime CreateDate { get; set; }
+
         [DisplayName("最後修改日期")]
         public DateTime? LastModifiedDate { get; set; }
 
@@ -78,6 +91,7 @@ namespace LungmenSoftware.Models.ViewModel
         public string StatusName { get; set; }
 
         //status class
+        [DisplayName("建立日期")]
         public DateTime InitialDate { get; set; }
 
         public DateTime? ChangeDate { get; set; }
@@ -86,8 +100,9 @@ namespace LungmenSoftware.Models.ViewModel
 
         [DisplayName("原建置值")]
         public string OriginalValue { get; set; }
-        [DisplayName("變更值")]
-        public string NewValue { get; set; } 
 
+        [DisplayName("變更值")]
+        public string NewValue { get; set; }
+       
     }
 }

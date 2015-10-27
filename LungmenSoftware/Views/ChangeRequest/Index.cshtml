@@ -33,7 +33,7 @@
 @foreach (var item in Model.ChangeRequests) {
     <tr>
         <td>
-            @item.SerialNumber
+            @Html.ActionLink(item.SerialNumber, "ChangeRequestDetail", new {id=item.ChangeRequestId})
         </td>
         <td>
             @item.Description

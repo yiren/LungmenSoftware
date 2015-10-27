@@ -389,6 +389,7 @@
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
+    <Compile Include="Models\Metadata\ChangeRequestMetadata.cs" />
     <Compile Include="Models\Metadata\FoxAppSoftware.cs" />
     <Compile Include="Models\Metadata\FoxSoftwareMetadata.cs" />
     <Compile Include="Models\Metadata\FoxWorkStation.cs" />
@@ -1455,6 +1456,7 @@
     <Content Include="Views\Angular\Third.cshtml" />
     <Content Include="Scripts\version.json" />
     <Content Include="Views\ChangeRequest\SearchChangeRequest.cshtml" />
+    <Content Include="Views\ChangeRequest\ChangeRequestDetail.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

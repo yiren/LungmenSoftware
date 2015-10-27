@@ -18,9 +18,9 @@
                 <dt>
                     @Html.DisplayNameFor(model => model.ChangeRequest.ChangeRequestStatuses[0].ChangeRequestStatusType.StatusName)
                 </dt>
-
+                    @Html.DisplayFor(model => model.ChangeRequest.ChangeRequestStatuses.First().ChangeRequestStatusType.StatusName)
                 <dd>
-                    Waiting For Approval
+                    
                 </dd>
 
                 <dt>
