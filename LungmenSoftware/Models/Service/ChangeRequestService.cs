@@ -18,8 +18,8 @@ namespace LungmenSoftware.Models.Service
 
         public List<ChangeRequestInfo> GetChangeRequestHistory()
         {
-            var query = from cr in db.ChangeRequests
-                        join s in db.ChangeRequestStatuses
+            var query = from cr in db.ChangeRequests.Where(c=>c.IsActive==false)
+                        join s in db.ChangeRequestStatuses.Where(s=>s.IsCurrent==true)
                             on cr.ChangeRequestId equals s.ChangeRequestId
                         join t in db.ChangeRequestStatusTypes
                             on s.StatusTypeId equals t.StatusTypeId
@@ -343,9 +343,7 @@ namespace LungmenSoftware.Models.Service
             }
             var deltas =
                 db.ChangeDeltas.Include(d => d.RevInfos)
-                .Where(d => d.ChangeRequestId.Equals(crEntry.ChangeRequestId));
-
-
+                .Where(d => d.ChangeRequestId.Equals(crEntry.ChangeRequestId)).ToList();
 
             foreach (var delta in deltas)
             {
@@ -363,6 +361,7 @@ namespace LungmenSoftware.Models.Service
                 }
 
             }
+
             if (ldb.SaveChanges() != -1)
             {
                 return true;

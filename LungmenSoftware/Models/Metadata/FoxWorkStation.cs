@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Web;
 using System.ComponentModel.DataAnnotations;
@@ -18,6 +19,7 @@ namespace LungmenSoftware.Models
             [JsonIgnore]
             public virtual ICollection<WKAndFoxJoinTable> WKAndFoxJoinTables { get; set; }
             [JsonIgnore]
+            [DisplayName("工作站類型")]
             public virtual WorkStationHardwareType WorkStationHardwareType { get; set; }
 
         }

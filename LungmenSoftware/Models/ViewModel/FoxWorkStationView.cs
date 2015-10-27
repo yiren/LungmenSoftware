@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.Web.Mvc;
 using LungmenSoftware.Models.CodeFirst.Entities;
 
 namespace LungmenSoftware.Models.ViewModel
@@ -17,5 +18,11 @@ namespace LungmenSoftware.Models.ViewModel
         public List<FoxWorkStation> AWList { get; set; }
 
         public List<FoxWorkStation> OtherList { get; set; }
+    }
+
+    public class WorkStationViewModelForEdit
+    {
+        public FoxWorkStation FoxWorkStation { get; set; }
+        public IEnumerable<SelectListItem> Types { get; set; } 
     }
 }

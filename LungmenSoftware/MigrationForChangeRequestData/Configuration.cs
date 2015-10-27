@@ -82,8 +82,8 @@ namespace LungmenSoftware.MigrationForChangeRequestData
                     ChangeRequestId = Guid.NewGuid(),
                     CreatedBy = "test1@taipower.com.tw",
                     SerialNumber = "20150825E001",
-                    CreateDate = DateTime.Parse("2015/08/25"),
-                    LastModifiedDate = DateTime.Now - TimeSpan.FromDays(3),
+                    CreateDate = DateTime.Parse("2015/06/25"),
+                    LastModifiedDate = DateTime.Now - TimeSpan.FromDays(20),
                     Description = "MVD Driver Version Update",
                     Owner = "test2@taipower.com.tw",
                     IsActive = true
@@ -94,8 +94,8 @@ namespace LungmenSoftware.MigrationForChangeRequestData
                     ChangeRequestId = Guid.NewGuid(),
                     CreatedBy = "test2@taipower.com.tw",
                     SerialNumber = "20150826P002",
-                    CreateDate = DateTime.Parse("2015/08/26"),
-                    LastModifiedDate = DateTime.Now - TimeSpan.FromDays(3),
+                    CreateDate = DateTime.Parse("2015/07/22"),
+                    LastModifiedDate = DateTime.Now - TimeSpan.FromDays(18),
                     Description = "FBM 232 CP Image Version Update",
                     Owner = "test2@taipower.com.tw",
                     IsActive = true
@@ -106,8 +106,8 @@ namespace LungmenSoftware.MigrationForChangeRequestData
                     ChangeRequestId = Guid.NewGuid(),
                     CreatedBy = "test1@taipower.com.tw",
                     SerialNumber = "20150827E003",
-                    CreateDate = DateTime.Parse("2015/08/27"),
-                    LastModifiedDate = DateTime.Now - TimeSpan.FromDays(3),
+                    CreateDate = DateTime.Parse("2015/08/30"),
+                    LastModifiedDate = DateTime.Now - TimeSpan.FromDays(15),
                     Description = "FDSI Version Update",
                     Owner = "test2@taipower.com.tw",
                     IsActive = false
@@ -118,8 +118,8 @@ namespace LungmenSoftware.MigrationForChangeRequestData
                     ChangeRequestId = Guid.NewGuid(),
                     CreatedBy = "test4@taipower.com.tw",
                     SerialNumber = "20150828P004",
-                    CreateDate = DateTime.Parse("2015/08/28"),
-                    LastModifiedDate = DateTime.Now - TimeSpan.FromDays(2),
+                    CreateDate = DateTime.Parse("2015/09/05"),
+                    LastModifiedDate = DateTime.Now - TimeSpan.FromDays(14),
                     Description = "FoxView Upgrade",
                     Owner = "test2@taipower.com.tw",
                     IsActive = false
@@ -150,7 +150,7 @@ namespace LungmenSoftware.MigrationForChangeRequestData
                     ChangeRequestStatusType = pendingForApprovalEntry,
                     ChangeRequestId = cr1Id,
                     ChangeRequest = cr1Entry,
-                    InitialDate = DateTime.Today - TimeSpan.FromDays(8),
+                    InitialDate = DateTime.Today - TimeSpan.FromDays(11),
                     IsCurrent = true
                 };
 
@@ -160,9 +160,9 @@ namespace LungmenSoftware.MigrationForChangeRequestData
                     ChangeRequestStatusType = PendingForApproval,
                     ChangeRequestId = cr2Id,
                     ChangeRequest = cr2Entry,
-                    InitialDate = DateTime.Today - TimeSpan.FromDays(8),
-                    ChangeDate = DateTime.Now - TimeSpan.FromDays(5),
-                    EndDate = DateTime.Now - TimeSpan.FromDays(5),
+                    InitialDate = DateTime.Today - TimeSpan.FromDays(13),
+                    ChangeDate = DateTime.Now - TimeSpan.FromDays(10),
+                    EndDate = DateTime.Now - TimeSpan.FromDays(8),
                     IsCurrent = false
                 };
 
@@ -172,7 +172,8 @@ namespace LungmenSoftware.MigrationForChangeRequestData
                     ChangeRequestStatusType = hasCommentIdEntry,
                     ChangeRequestId = cr2Id,
                     ChangeRequest = cr2Entry,
-                    InitialDate = DateTime.Today - TimeSpan.FromDays(5),
+                    InitialDate = DateTime.Today - TimeSpan.FromDays(8),
+                    EndDate = DateTime.Today-TimeSpan.FromDays(7),
                     IsCurrent = true
 
                 };
@@ -183,8 +184,8 @@ namespace LungmenSoftware.MigrationForChangeRequestData
                     ChangeRequestStatusType = pendingForApprovalEntry,
                     ChangeRequestId = cr3Id,
                     ChangeRequest = cr3Entry,
-                    InitialDate = DateTime.Today - TimeSpan.FromDays(3),
-                    EndDate = DateTime.Today - TimeSpan.FromDays(4),
+                    InitialDate = DateTime.Today - TimeSpan.FromDays(6),
+                    EndDate = DateTime.Today - TimeSpan.FromDays(5),
                     IsCurrent = false
 
                 };
@@ -196,6 +197,7 @@ namespace LungmenSoftware.MigrationForChangeRequestData
                     ChangeRequestId = cr3Id,
                     ChangeRequest = cr3Entry,
                     InitialDate = DateTime.Today - TimeSpan.FromDays(3),
+                    EndDate = DateTime.Today-TimeSpan.FromDays(1),
                     IsCurrent = true
                 };
 
@@ -228,6 +230,7 @@ namespace LungmenSoftware.MigrationForChangeRequestData
                     ChangeRequestId = cr4Id,
                     ChangeRequest = cr4Entry,
                     InitialDate = DateTime.Today - TimeSpan.FromDays(2),
+                    EndDate = DateTime.Today-TimeSpan.FromDays(1),
                     IsCurrent = true
                 };
 
