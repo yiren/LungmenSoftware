@@ -1,7 +1,7 @@
 ﻿@model LungmenSoftware.Models.ViewModel.ChangeRequestViewModelForDetail
 
 @{
-    ViewBag.Title = Model.ChangeRequest.SerialNumber+"詳細資訊";
+    ViewBag.Title = Model.ChangeRequest.SerialNumber + "詳細資訊";
 }
 
 <h2>@ViewBag.Title</h2>
@@ -10,59 +10,103 @@
 <div class="panel panel-default">
     <div class="panel-heading">基本資訊</div>
     <div class="panel-body">
-        <dl class="dl-horizontal">
-            <dt>
-                @Html.DisplayNameFor(model => model.ChangeRequest.ChangeRequestStatuses[0].ChangeRequestStatusType.StatusName)
-            </dt>
+        <div class="col-md-5">
+            <dl class="dl-horizontal">
+                <dt>
+                    @Html.DisplayNameFor(model => model.ChangeRequest.ChangeRequestStatuses[0].ChangeRequestStatusType.StatusName)
+                </dt>
 
-            <dd>
-                @Html.DisplayFor(model=>model.ChangeRequestStatuses.Last().ChangeRequestStatusType.StatusName)
-            </dd>
+                <dd>
+                    @Html.DisplayFor(model => model.ChangeRequestStatuses.Last().ChangeRequestStatusType.StatusName)
+                </dd>
 
-            <dt>
-                @Html.DisplayNameFor(model => model.ChangeRequest.Description)
-            </dt>
+                <dt>
+                    @Html.DisplayNameFor(model => model.ChangeRequest.Description)
+                </dt>
 
-            <dd>
-                @Html.DisplayFor(model => model.ChangeRequest.Description)
-            </dd>
+                <dd>
+                    @Html.DisplayFor(model => model.ChangeRequest.Description)
+                </dd>
 
-            <dt>
-                @Html.DisplayNameFor(model => model.ChangeRequest.CreatedBy)
-            </dt>
+                <dt>
+                    @Html.DisplayNameFor(model => model.ChangeRequest.CreatedBy)
+                </dt>
 
-            <dd>
-                @Html.DisplayFor(model => model.ChangeRequest.CreatedBy)
-            </dd>
+                <dd>
+                    @Html.DisplayFor(model => model.ChangeRequest.CreatedBy)
+                </dd>
 
-            <dt>
-                @Html.DisplayNameFor(model => model.ChangeRequest.CreateDate)
-            </dt>
+                <dt>
+                    @Html.DisplayNameFor(model => model.ChangeRequest.CreateDate)
+                </dt>
 
-            <dd>
-                @Html.DisplayFor(model => model.ChangeRequest.CreateDate)
-            </dd>
+                <dd>
+                    @Html.DisplayFor(model => model.ChangeRequest.CreateDate)
+                </dd>
 
-            <dt>
-                @Html.DisplayNameFor(model => model.ChangeRequest.LastModifiedDate)
-            </dt>
+                <dt>
+                    @Html.DisplayNameFor(model => model.ChangeRequest.LastModifiedDate)
+                </dt>
 
-            <dd>
-                @Html.DisplayFor(model => model.ChangeRequest.LastModifiedDate)
-            </dd>
+                <dd>
+                    @Html.DisplayFor(model => model.ChangeRequest.LastModifiedDate)
+                </dd>
 
-            <dt>
-                @Html.DisplayNameFor(model => model.ChangeRequest.Note)
-            </dt>
+                <dt>
+                    @Html.DisplayNameFor(model => model.ChangeRequest.IsActive)
+                </dt>
 
-            <dd>
-                @Html.DisplayFor(model => model.ChangeRequest.Note)
-            </dd>
+                <dd>
+                    @if (Model.ChangeRequest.IsActive == null)
+                    {
+                        
+                    }else if (Model.ChangeRequest.IsActive == true)
+                    {
+                    <text>進行中</text>
+                    }else if (Model.ChangeRequest.IsActive == false)
+                    {
+                    <text>已完成</text>
+                    }
+                    else
+                    {
+                    <text></text>
+                    }
 
-        </dl>
+                </dd>
+            </dl>
+        </div>
+        <div class="col-md-5">
+            <dl class="dl-horizontal">
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.ChangeRequest.Owner)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.ChangeRequest.Owner)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.ChangeRequest.ReviewBy)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.ChangeRequest.ReviewBy)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.ChangeRequest.ApprovedBy)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.ChangeRequest.ApprovedBy)
+                </dd>
+
+            </dl>
+        </div>
     </div>
 </div>
-<hr/>
+<hr />
 <div class="panel panel-default">
     <div class="panel-heading">審查意見</div>
     <div class="panel-body">
@@ -72,7 +116,7 @@
                 <th>回應人員</th>
                 <th>日期</th>
             </tr>
-            @if (Model.ChangeRequestMessages!=null)
+            @if (Model.ChangeRequestMessages != null)
             {
                 foreach (var item in Model.ChangeRequestMessages)
                 {
@@ -103,12 +147,12 @@
                 <th>狀態起始日期</th>
                 <th>狀態結束日期</th>
             </tr>
-            @if (Model.ChangeRequestStatuses!=null)
+            @if (Model.ChangeRequestStatuses != null)
             {
                 foreach (var item in Model.ChangeRequestStatuses)
                 {
                     <tr>
-                        <td>@Html.DisplayFor(m=>item.ChangeRequestStatusType.StatusName)</td>
+                        <td>@Html.DisplayFor(m => item.ChangeRequestStatusType.StatusName)</td>
                         <td>@Html.DisplayFor(m => item.InitialDate)</td>
                         <td>@Html.DisplayFor(m => item.EndDate)</td>
                     </tr>
@@ -120,7 +164,7 @@
                     <td>資料可能有誤，請洽系統管理員。</td>
                 </tr>
             }
-            
+
 
         </table>
     </div>

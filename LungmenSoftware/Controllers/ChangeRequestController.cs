@@ -367,7 +367,18 @@ namespace LungmenSoftware.Controllers
             return View(dataForView);
         }
 
-        
-        
+
+        //For AngularJS Form
+        public PartialViewResult GetAngularForm()
+        {
+
+            return PartialView("_GetAngularForm");
+        }
+
+        //For AngularJS Form
+        public PartialViewResult ConfirmFormData()
+        {
+            return PartialView("_ConfirmFormData");
+        }
     }
 }

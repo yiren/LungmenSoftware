@@ -1,15 +1,61 @@
 ﻿(function() {
     angular.module('simpleApp', ['ngRoute'])
-    .controller('MainCtrl', ['$http', '$log', '$scope', MainCtrl])
-    //.factory('WorkStationList', ['$http', WorkStationListFactory])
+    .controller('MainCtrl', ['$http', '$log', '$scope', 'dataService', MainCtrl])
+    .controller('ConfirmCtrl',['$log','dataService', ConfirmCtrl])
+    .factory('dataService', ['$http', '$log', dataService])
+    .config(['$routeProvider', function ($routeProvider) {
+        $routeProvider.when('/', {
+            templateUrl: "/changerequest/getangularform",
+            controller: "MainCtrl",
+            controllerAs:"m"
+
+            })
+            .when('/confirm', {
+                templateUrl: "/changerequest/confirmformdata",
+                controller: "ConfirmCtrl",
+                controllerAs: "c",
+                resolve: dataService.postData
+            })
+            
+            .otherwise({ redirectTo: '/' });
+    }])
     ;
 
-    function WorkStationListFactory($http) {
+    function dataService($http,$log) {
+        var postPromise;
         
+        function getPostPromise() {
+            return postPromise;
+        }
+
+        function postDataToServer(data) {
+            $log.info("Invoke Function In dataService");
+            postPromise = $http.post('/changerequest/AddNewChangeRequestRecord', data);
+            $log.info(postPromise);
+            return postPromise;
+        }
+
+        return {
+            postData: postDataToServer,
+            getPostPromise:getPostPromise
+        };
     }
 
+    function ConfirmCtrl($log,dataService) {
+        var vm = this;
+        $log.info("From Confirm Controller------");
+        
+        dataService.getPostPromise().then(function(response) {
+            vm.data = response.data;
+        });
+        //dataService.postData.then(function(response) {
+        //    vm.data = response.data;
+        //}, function(errResponse) {
+        //    vm.data = errResponse;
+        //});
+    }
 
-    function MainCtrl($http, $log, $scope) {
+    function MainCtrl($http, $log, $scope, dataService) {
         var vm = this;
         vm.message = 'Before Getting Data';
         //vm.newWorkstation = {};
@@ -275,15 +321,17 @@
         vm.postModList = function () {
             vm.changeRequestData.ChangeDeltas = vm.modList;
             //$log.info(vm.changeRequestData);
-            $log.info(vm.changeRequestData);
-            $http.post('/changerequest/AddNewChangeRequestRecord', vm.changeRequestData)
-                .then(function(response) {
-                    $log.info(response.data);
-                }, function(errResponse) {
-                    $log.info(errResponse);
-                });
-            
+            dataService.postData(vm.changeRequestData);
+            //$http.post('/changerequest/AddNewChangeRequestRecord', vm.changeRequestData)
+            //    .then(function(response) {
+            //        $log.info(response.data);
+            //        $scope.NewRecord = response.data;
+            //    }, function(errResponse) {
+            //        $log.info(errResponse);
+            //    });            
         }
+
+
 
         vm.isDividedByFive = function (index) {
             if ((index + 1) % 5 == 0) {
@@ -302,12 +350,13 @@
                 FoxSoftwareId: record.FoxSoftwareId,
                 Rev:rev
             };
-            $log.info(softRevInfo);
-            $http.post('/foxsoftwares/UpdateSoftwareRev', softRevInfo)
-                .then(function(response) {
-                    $log.info(response);
-                    vm.selectedSoftwareRev = response.data.Rev;
-                });
+            //$log.info(softRevInfo);
+            $scope.posted=dataService.postData(softRevInfo);
+            //$http.post('/foxsoftwares/UpdateSoftwareRev', softRevInfo)
+            //    .then(function(response) {
+            //        $log.info(response);
+            //        vm.selectedSoftwareRev = response.data.Rev;
+            //    });
         }
     }
 

@@ -60,27 +60,34 @@
                     })
                     .otherwise({ redirectTo: '/' });
             }])
-           .controller('routeCtrl', [function() {
-               var vm = this;
-               vm.message="Hello!Angular Routing....."
+           .factory('dataService', ['$http', function($http) {
+                    
+                    function getSoftwareList() {
+                        return $http.get('/foxsoftwares/GetJsonSoftwareList');
+                    }
+
+                    return {
+                        getSoftwareList: getSoftwareList
+                    };
                 }])
-           .controller('gridCtrl', ['$http',function ($http) {
+           .controller('routeCtrl', ['dataService',function() {
+               var vm = this;
+               vm.message = "Hello!Angular Routing.....";
+               
+                }])
+           .controller('gridCtrl', ['dataService','$http','$log',function (dataService,$http, $log) {
                var vm = this;
                vm.message = "Waiting For Data From Server";
-
+               vm.data = {};
                vm.gridOptions = {};
-
-
-
-               $http.get('/foxsoftwares/GetJsonSoftwareList')
-                  .success(function (data) {
-                      vm.message = 'Data Retrieves Successfully';
-                      vm.gridOptions.data = data;
-                      //$log.info(data);
-                  })
-                  .error(function () {
-                      vm.message = 'Unexpected Error When Getting All Softwares';
-                  });
+               $log.info(dataService.getSoftwareList());
+               $log.info(dataService.getSoftwareList);
+               dataService.getSoftwareList().then(function(response) {
+                   vm.gridOptions.data = response.data;
+               }, function(errResponse) {
+                   log.info(errResponse);
+               });
+                 
            }])
             .animation('.pageChange', function() {
                     return {
