@@ -7,6 +7,7 @@
 <h2>@ViewBag.Title</h2>
 
 
+
 <div class="panel panel-default">
     <div class="panel-heading">基本資訊</div>
     <div class="panel-body">
@@ -106,7 +107,47 @@
         </div>
     </div>
 </div>
-<hr />
+<hr/>
+<div class="panel panel-default">
+    <div class="panel-heading">軟體變更資訊</div>
+    <div class="panel-body">
+        <table class="table table-condensed table-striped table-bordered">
+            <tr>
+                <th>軟體名稱</th>
+                <th>原建置值</th>
+                <th>欲變更值</th>
+                <th>影響工作站</th>
+            </tr>
+            @if (Model.ChangeDeltas != null)
+            {
+                foreach (var item in Model.ChangeDeltas)
+                {
+                    <tr>
+                        <td>@item.RevInfos[0].SoftwareName</td>
+                        <td>@item.OriginalValue</td>
+                        <td>@item.NewValue</td>
+                        <td>
+                            <ul>
+                                @foreach (var wk in item.RevInfos)
+                                {
+                                    <li>@wk.WorkStationName</li>
+                                }
+                            </ul>
+                        </td>
+                    </tr>
+                }
+            }
+            else
+            {
+                <tr>
+                    <td>資料可能有誤，請洽系統管理員。</td>
+                </tr>
+            }
+
+        </table>
+    </div>
+</div>
+<hr/>
 <div class="panel panel-default">
     <div class="panel-heading">審查意見</div>
     <div class="panel-body">

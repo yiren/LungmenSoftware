@@ -7,12 +7,14 @@
     <div class="panel-body">
         <label>表單編號:<span ng-bind="c.data.SerialNumber"></span></label>
         <br/>
-        <label>表單編號:<span ng-bind="c.data.SerialNumber"></span></label>
-        <br />
         <label>申請人:<span ng-bind="c.data.CreateBy"></span></label>
         <br />
         <label>申請時間:<span ng-bind="c.data.CreateDate"></span></label>
+        <br />
+        <label>變更說明:</label>
+        <p ng-bind="c.data.Note"></p>
         <hr/>
+
         <table class="table table-condensed table-bordered table-striped">
             <tr>
                 <th>軟體名稱</th>
