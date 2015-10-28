@@ -43,11 +43,17 @@
 
     function ConfirmCtrl($log,dataService) {
         var vm = this;
+        vm.message = "等候伺服器回應";
         $log.info("From Confirm Controller------");
         
-        dataService.getPostPromise().then(function(response) {
+        dataService.getPostPromise().then(function (response) {
+            $log.info(response.data);
+            vm.message = "新增案件成功";
             vm.data = response.data;
         });
+
+
+
         //dataService.postData.then(function(response) {
         //    vm.data = response.data;
         //}, function(errResponse) {

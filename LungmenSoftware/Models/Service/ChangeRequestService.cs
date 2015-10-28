@@ -172,7 +172,7 @@ namespace LungmenSoftware.Models.Service
         }
 
         //For AngularJS
-        public bool AddChangeRequestRecord(ChangeRequest crEntry)
+        public ChangeRequest AddChangeRequestRecord(ChangeRequest crEntry)
         {
             foreach (var item in crEntry.ChangeDeltas)
             {
@@ -193,11 +193,13 @@ namespace LungmenSoftware.Models.Service
             db.ChangeRequests.Add(crEntry);
             if (db.SaveChanges() != -1)
             {
-                return true;
+                return db.ChangeRequests
+                    .Include(c=>c.ChangeDeltas.Select(d=>d.RevInfos))
+                    .First(c => c.ChangeRequestId.Equals(crEntry.ChangeRequestId));
             }
             else
             {
-                return false;
+                return null;
             }
 
         }

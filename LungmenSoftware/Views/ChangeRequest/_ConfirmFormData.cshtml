@@ -1,1 +1,40 @@
-﻿{{c.data}}
+﻿<div class="alert alert-success"><h3 ng-bind="c.message"></h3></div>
+
+<div class="alert alert-info"><h4>案件已送<span ng-bind="c.data.ReviewBy"></span>審查</h4></div>
+
+<div class="panel panel-default">
+    <div class="panel-heading">表單內容</div>
+    <div class="panel-body">
+        <label>表單編號:<span ng-bind="c.data.SerialNumber"></span></label>
+        <br/>
+        <label>表單編號:<span ng-bind="c.data.SerialNumber"></span></label>
+        <br />
+        <label>申請人:<span ng-bind="c.data.CreateBy"></span></label>
+        <br />
+        <label>申請時間:<span ng-bind="c.data.CreateDate"></span></label>
+        <hr/>
+        <table class="table table-condensed table-bordered table-striped">
+            <tr>
+                <th>軟體名稱</th>
+                <th>原建置版本</th>
+                <th>欲變更版本</th>
+                <th>影響工作站</th>
+            </tr>
+            <tr ng-repeat="d in c.data.ChangeDeltas">
+                <td>{{d.RevInfos[0].SoftwareName}}</td>
+                <td>{{d.OriginalValue}}</td>
+                <td>{{d.NewValue}}</td>
+                <td>
+                    <ul>
+                        <li ng-repeat="wk in d.RevInfos">{{wk.WorkStationName}}</li>
+                    </ul>
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>
+<p>
+    @Html.ActionLink("返回軟體修改清單", "Index")    
+</p>
+
+

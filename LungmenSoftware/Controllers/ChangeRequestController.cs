@@ -96,8 +96,8 @@ namespace LungmenSoftware.Controllers
             crEntry.Owner = crEntry.ReviewBy;
             crEntry.IsActive = true;
 
-            bool isSuccess=crService.AddChangeRequestRecord(crEntry);
-            string json = JsonConvert.SerializeObject(crEntry, new JsonSerializerSettings()
+            var newRecord=crService.AddChangeRequestRecord(crEntry);
+            string json = JsonConvert.SerializeObject(newRecord, new JsonSerializerSettings()
             {
                 ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
                 Formatting = Formatting.Indented

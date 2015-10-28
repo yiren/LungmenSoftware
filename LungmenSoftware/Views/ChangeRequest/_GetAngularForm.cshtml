@@ -1,56 +1,72 @@
-﻿<form>
+﻿<h2>系統軟體變更表單</h2>
+<form>
     <div class="row">
         <div class="col-md-5">
-            <p>測試用訊息({{m.message}})</p>
             @*
-                <button ng-click="m.requestSoftwareList()">取得軟體相關資料</button>
+            <p>測試用訊息({{m.message}})</p>
 
-                <br />
+            <button ng-click="m.requestSoftwareList()">取得軟體相關資料</button>
+
+            <br />
             *@
 
-            <label>1. 填寫基本軟體變更資料</label>
+            <label><span class="lable label-warning">Step 1</span> 選擇欲變更軟體</label>
+
+
             <br />
-            <label>軟體修改編號:</label>
-            <label ng-bind="m.changeRequestData.SerialNumber"></label>
-            <br />
-            <label>軟體修改簡述:</label>
-            <input type="text" ng-model="m.changeRequestData.Description" />
-            <br />
-            <label>軟體名稱:</label>
+            <label class="control-label">軟體名稱:</label>
             <select ng-options="s.SoftwareName for s in m.softwareList track by s.FoxSoftwareId" ng-model="m.softwareSelect"
-                    ng-change="m.getSelectedWorkstationList(m.softwareSelect)"></select>
+                    ng-change="m.getSelectedWorkstationList(m.softwareSelect)"
+                    class="form-control"></select>
 
             <hr />
-            <label>3. 確認修改清單</label>
+            <label><span class="lable label-warning">Step 3</span> 填寫資料及確認修改清單</label>
+            <br />
+            <label class="control-label">軟體修改簡述:</label>
+            <input type="text" ng-model="m.changeRequestData.Description" class="form-control" />
+            <br />
+            <label class="control-label">表單編號: (系統自動產生)</label>
+            <br />
+            <label class="control-label">變更說明:</label>
+            <textarea class="form-control" rows="3" ng-model="m.changeRequestData.Note"></textarea>
+
             <div>
-                <table class="table table-bordered table-striped">
+                <table class="table table-bordered table-striped table-condensed">
                     <tr>
-                        <th>Item</th>
+                        <th>軟體名稱</th>
                         <th>原建置版本</th>
                         <th>欲變更版本</th>
+                        <th>影響工作站</th>
                     </tr>
 
                     <tr ng-repeat="item in m.modList">
-                        <td>{{$index+1}}</td>
+                        <td>{{item.RevInfos[0].SoftwareName}}</td>
                         <td>{{item.OriginalValue}}</td>
                         <td>{{item.NewValue}}</td>
+                        <td>
+                            <ul class="unstyled-list" ng-repeat="wk in item.RevInfos">
+                                <li ng-bind="wk.WorkStationName"></li>
+                            </ul>
+                        </td>
                     </tr>
                 </table>
             </div>
-            <hr />
-            <button class="btn btn-default" ng-click="m.clearModList()">清空修改清單</button>
-            <a href="#/confirm" class="btn btn-primary" ng-click="m.postModList()">送出</a>
+            <div>
+                <button class="btn btn-default" ng-click="m.clearModList()">清空修改清單</button>
+                <a href="#/confirm" class="btn btn-primary" ng-click="m.postModList()">送出</a>
+            </div>
+        
             <hr />
 
 
             @*
-    <label>(測試AngularJS語法用)工作站名稱</label>
-    <input type="text" ng-model="m.newWorkstation.WorkStationName" required />
-    <button ng-click="m.addNewWorkStation(m.newWorkStation)">新增(測試$http服務)</button>
+                <label>(測試AngularJS語法用)工作站名稱</label>
+                <input type="text" ng-model="m.newWorkstation.WorkStationName" required />
+                <button ng-click="m.addNewWorkStation(m.newWorkStation)">新增(測試$http服務)</button>
             *@
         </div>
         <div class="col-md-5">
-            <label>2.填寫變更軟體版本及選擇相關工作站(請先選擇欲修改之軟體名稱)</label>
+            <label><span class="lable label-warning">Step 2</span> 填寫變更軟體版本及選擇相關工作站(請先選擇欲修改之軟體名稱)</label>
             <div ng-repeat="d in m.data">
                 <label>目前建置版本:{{d.OriginalValue}}</label>
                 <br />
