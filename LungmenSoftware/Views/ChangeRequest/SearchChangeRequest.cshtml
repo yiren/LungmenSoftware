@@ -92,7 +92,7 @@
                 foreach (var item in Model.SearchResult)
                 {
                     <tr>
-                        <td>@Html.DisplayFor(m => item.SerialNumber)</td>
+                        <td>@Html.ActionLink(item.SerialNumber, "ChangeRequestDetail", new {id=item.ChangeRequestId})</td>
                         <td>@Html.DisplayFor(m => item.Description)</td>
                         <td>@Html.DisplayFor(m => item.StatusName)</td>
                         <td>@Html.DisplayFor(m => item.CreatedBy)</td>

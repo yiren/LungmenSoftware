@@ -241,15 +241,19 @@ namespace LungmenSoftware.Models.Service
 
         public string GetReviewer()
         {
-            //var reviewer = _identityDb.Roles.Single(r => r.Name.Equals("Reviewer"));
+            var reviewers = (from r in _identityDb.Roles.Where(r => r.Name.Equals("Reviewer"))
+                join jt in _identityDb.ApplicationUserRoles
+                    on r.Id equals jt.RoleId
+                join u in _identityDb.Users
+                    on jt.UserId equals u.Id
+                select u).ToList();
 
-            //var query = from userRoles in reviewer.Users
-            //            join users in _identityDb.Users on userRoles.UserId equals users.Id
-            //            select users;
+            Random seed=new Random();
 
+            var reviewer=reviewers[seed.Next(0, reviewers.Count)];
             //return query.Last().UserName;
 
-            return "test2@taipower.com.tw";
+            return reviewer.Id;
         }
 
         public void StatusUpdateForComment(ChangeRequest cr)

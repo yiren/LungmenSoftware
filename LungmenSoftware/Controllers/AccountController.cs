@@ -83,7 +83,7 @@ namespace LungmenSoftware.Controllers
                     //重新送出啟用連結
                     string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
                     var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
-                    //await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
+                    await UserManager.SendEmailAsync(user.Id, "請啟用龍門構型管理系統帳號", "點選<a href=\"" + callbackUrl + "\">連結，以啟用帳號。</a>");
 
                     ViewBag.ConfirmLink = callbackUrl;
                     ViewBag.errorMessage 
@@ -193,14 +193,14 @@ namespace LungmenSoftware.Controllers
                 if (result.Succeeded)
                 {
                     //await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
-                    UserManager.AddToUserRole(user.Id, "Reviewer");
+                    UserManager.AddToUserRole(user.Id, "User");
                     
                     
                     // For more information on how to enable account confirmation and password reset please visit http://go.microsoft.com/fwlink/?LinkID=320771
                     // Send an email with this link
                     string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
                     var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
-                    //await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
+                    await UserManager.SendEmailAsync(user.Id, "請啟用龍門構型管理系統帳號", "點選<a href=\"" + callbackUrl + "\">連結，以啟用帳號。</a>");
 
                     // Uncomment to debug locally 
                     ViewBag.ConfirmLink = callbackUrl;

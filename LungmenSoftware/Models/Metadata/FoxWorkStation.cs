@@ -16,12 +16,19 @@ namespace LungmenSoftware.Models
             [Required]
             [Display(Name = "工作站名稱")]
             public string WorkStationName { get; set; }
+
             [JsonIgnore]
             public virtual ICollection<WKAndFoxJoinTable> WKAndFoxJoinTables { get; set; }
+
             [JsonIgnore]
             [DisplayName("工作站類型")]
             public virtual WorkStationHardwareType WorkStationHardwareType { get; set; }
 
+            [DisplayName("工作站分類")]
+            public Nullable<int> WorkStationHardwareTypeId { get; set; }
+
+            [DisplayName("負責人")]
+            public string Owner { get; set; }
         }
     }
 }

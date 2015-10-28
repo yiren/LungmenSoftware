@@ -49,7 +49,15 @@
             {
                 <tr>
                     <td>
-                        @Html.ActionLink(item.WorkStationName, "EditWorkStation", new { id = item.WorkStationId })
+                        @if (User.IsInRole("Reviewer") || User.IsInRole("Admin"))
+                        {
+                            @Html.ActionLink(item.WorkStationName, "EditWorkStation", new {id = item.WorkStationId})
+                        }
+                        else
+                        {
+                            @Html.DisplayFor(modelItem => item.WorkStationName)
+                        }
+
                     </td>
                     <td>
                         @Html.DisplayFor(modelItem => item.WorkStationHardwareType.HardwareTypeName)

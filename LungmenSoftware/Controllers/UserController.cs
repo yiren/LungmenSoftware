@@ -218,14 +218,20 @@ namespace LungmenSoftware.Controllers
             return RedirectToAction("ListOfUsers");
         }
 
-        [HttpPost]
         public ActionResult DeleteUser(string id)
         {
-            if (id == null)
+            var user = UserManager.FindById(id);
+            return View(user);
+        }
+
+        [HttpPost]
+        public ActionResult DeleteUser(ApplicationUser user)
+        {
+            if (user == null)
             {
                 return HttpNotFound();
             }
-            var userToDelete = UserManager.FindById(id);
+            var userToDelete = UserManager.FindById(user.Id);
             UserManager.Delete(userToDelete);
             return RedirectToAction("ListOfUsers");
         }
