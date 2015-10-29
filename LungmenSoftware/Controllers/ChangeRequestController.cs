@@ -87,6 +87,15 @@ namespace LungmenSoftware.Controllers
 
             return View();
         }
+
+        private string GetReviewer()
+        {
+            //var role = RoleManager.FindByName("Reviewer");
+            //var reviewers= from u in UserManager.Users.Roles
+            //                join r in 
+
+            return "test2@taipower.com.tw";
+        }
         //For AngularJS
         [HttpPost]
         public ContentResult AddNewChangeRequestRecord(ChangeRequest crEntry)
@@ -379,6 +388,27 @@ namespace LungmenSoftware.Controllers
         public PartialViewResult ConfirmFormData()
         {
             return PartialView("_ConfirmFormData");
+        }
+
+        public ActionResult DeleteChangeRequest(Guid id)
+        {
+            var cr = crService.FindByChangeRequestId(id);
+            if (cr == null)
+            {
+                return HttpNotFound();
+            }
+            return View(cr);
+        }
+        [HttpPost]
+        public ActionResult DeleteChangeRequest(ChangeRequest cr)
+        {
+            var r = crService.FindByChangeRequestId(cr.ChangeRequestId);
+            if (r == null)
+            {
+                return HttpNotFound();
+            }
+            crService.DeleteChangeRequest(r);
+            return RedirectToAction("Index");
         }
     }
 }

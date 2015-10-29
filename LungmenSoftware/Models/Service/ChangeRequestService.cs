@@ -134,7 +134,7 @@ namespace LungmenSoftware.Models.Service
             {
                 new ChangeRequestStatus()
                 {
-                    InitialDate = DateTime.Today,
+                    InitialDate = DateTime.Now,
                     ChangeRequestId = crEntry.ChangeRequestId,
                     ChangeRequest = crEntry,
                     StatusTypeId = 1,
@@ -153,14 +153,14 @@ namespace LungmenSoftware.Models.Service
             ChangeRequest cr = new ChangeRequest();
             cr.ChangeRequestId = Guid.NewGuid();
             cr.CreatedBy = createdBy;
-            cr.CreateDate = DateTime.Today;
-            cr.LastModifiedDate = DateTime.Today;
+            cr.CreateDate = DateTime.Now;
+            cr.LastModifiedDate = DateTime.Now;
             cr.SerialNumber = GetSerialNumber();
             cr.ChangeRequestStatuses = new List<ChangeRequestStatus>()
             {
                 new ChangeRequestStatus()
                 {
-                    InitialDate = DateTime.Today,
+                    InitialDate = DateTime.Now,
                     ChangeRequestId = cr.ChangeRequestId,
                     ChangeRequest = cr,
                     StatusTypeId = 1,
@@ -227,7 +227,7 @@ namespace LungmenSoftware.Models.Service
             {
                 if (status.EndDate == null)
                 {
-                    status.EndDate=DateTime.Today;
+                    status.EndDate=DateTime.Now;
                     status.IsCurrent = false;
                 }
             }
@@ -250,10 +250,10 @@ namespace LungmenSoftware.Models.Service
 
             Random seed=new Random();
 
-            var reviewer=reviewers[seed.Next(0, reviewers.Count)];
+            var reviewer=reviewers[seed.Next(0, reviewers.Count)].UserName;
             //return query.Last().UserName;
 
-            return reviewer.Id;
+            return reviewer;
         }
 
         public void StatusUpdateForComment(ChangeRequest cr)
@@ -264,10 +264,10 @@ namespace LungmenSoftware.Models.Service
             {
                 ChangeRequestId = cr.ChangeRequestId,
                 ChangeRequest = cr,
-                ChangeDate = DateTime.Today,
+                ChangeDate = DateTime.Now,
                 StatusTypeId = 2,
                 ChangeRequestStatusType = db.ChangeRequestStatusTypes.Find(2),
-                InitialDate = DateTime.Today,
+                InitialDate = DateTime.Now,
                 IsCurrent = true
             });
 
@@ -282,10 +282,10 @@ namespace LungmenSoftware.Models.Service
             {
                 ChangeRequestId = cr.ChangeRequestId,
                 ChangeRequest = cr,
-                ChangeDate = DateTime.Today,
+                ChangeDate = DateTime.Now,
                 StatusTypeId = 1,
                 ChangeRequestStatusType = db.ChangeRequestStatusTypes.Find(1),
-                InitialDate = DateTime.Today,
+                InitialDate = DateTime.Now,
                 IsCurrent = true
             });
 
@@ -302,11 +302,11 @@ namespace LungmenSoftware.Models.Service
             {
                 ChangeRequestId = cr.ChangeRequestId,
                 ChangeRequest = cr,
-                ChangeDate = DateTime.Today,
+                ChangeDate = DateTime.Now,
                 StatusTypeId = 3,
                 ChangeRequestStatusType = db.ChangeRequestStatusTypes.Find(3),
-                EndDate = DateTime.Today,
-                InitialDate = DateTime.Today,
+                EndDate = DateTime.Now,
+                InitialDate = DateTime.Now,
                 IsCurrent = true
             });
 
@@ -323,11 +323,11 @@ namespace LungmenSoftware.Models.Service
             {
                 ChangeRequestId = cr.ChangeRequestId,
                 ChangeRequest = cr,
-                ChangeDate = DateTime.Today,
+                ChangeDate = DateTime.Now,
                 StatusTypeId = 4,
                 ChangeRequestStatusType = db.ChangeRequestStatusTypes.Find(4),
-                EndDate = DateTime.Today,
-                InitialDate = DateTime.Today,
+                EndDate = DateTime.Now,
+                InitialDate = DateTime.Now,
 
             });
 
@@ -550,6 +550,12 @@ namespace LungmenSoftware.Models.Service
             }).ToList();
 
             return checkboxList;
+        }
+
+        public void DeleteChangeRequest(ChangeRequest r)
+        {
+            db.ChangeRequests.Remove(r);
+            db.SaveChanges();
         }
     }
 

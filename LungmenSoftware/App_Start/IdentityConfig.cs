@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
+using System.Net;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using System.Web;
@@ -19,9 +20,11 @@ namespace LungmenSoftware
         public Task SendAsync(IdentityMessage message)
         {
             // Plug in your email service here to send an email.
-            using (var mySmtp = new System.Net.Mail.SmtpClient("127.0.0.1", 25))
+            using (var mySmtp = new System.Net.Mail.SmtpClient("smtp.taipower.com.tw"))
             {
-                mySmtp.Send("Localhost", message.Destination,
+                mySmtp.Credentials=new NetworkCredential(
+                    "u162154", "2KSMZSEQ");
+                mySmtp.Send("u162154@taipower.com.tw", message.Destination,
                     message.Subject,
                     message.Body);
             }

@@ -61,7 +61,10 @@
                 @Html.ActionLink("核准", "ReviewChangeRequest",
                     new { id = item.ChangeRequestId }, new { @class = "btn btn-primary" })
             }
-
+            @if (User.IsInRole("AccountAdmin"))
+            {
+                @Html.ActionLink("刪除軟體變更", "DeleteChangeRequest", new {id=item.ChangeRequestId})
+            }
         </td>
 
 

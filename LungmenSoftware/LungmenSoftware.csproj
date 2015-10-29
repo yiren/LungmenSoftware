@@ -1460,6 +1460,7 @@
     <Content Include="Views\ChangeRequest\_GetAngularForm.cshtml" />
     <Content Include="Views\ChangeRequest\_ConfirmFormData.cshtml" />
     <Content Include="Views\User\DeleteUser.cshtml" />
+    <Content Include="Views\ChangeRequest\DeleteChangeRequest.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

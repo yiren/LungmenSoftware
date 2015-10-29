@@ -104,11 +104,11 @@ namespace LungmenSoftware.Models
         }
 
         //public DbSet<IdentityRole> IdentityRoles { get; set; }
-        public DbSet<ApplicationUserRole> ApplicationUserRoles { get; set; }
+        public DbSet<IdentityUserRole> ApplicationUserRoles { get; set; }
         //public System.Data.Entity.DbSet<LungmenSoftware.Models.ApplicationUser> ApplicationUsers { get; set; }
         public DbSet<ApplicationRole> ApplicationRoles { get; set; }
 
-        public System.Data.Entity.DbSet<LungmenSoftware.Models.ApplicationUser> ApplicationUsers { get; set; }
+        //public System.Data.Entity.DbSet<LungmenSoftware.Models.ApplicationUser> ApplicationUsers { get; set; }
         //public System.Data.Entity.DbSet<IdentityPractice.Models.ApplicationUser> ApplicationUsers { get; }
     }
 }
