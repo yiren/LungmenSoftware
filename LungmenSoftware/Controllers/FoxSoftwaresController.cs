@@ -28,6 +28,7 @@ namespace LungmenSoftware.Controllers
             this.wkService=new WorkStationService();
             this.crService=new ChangeRequestService();
         }
+
         // GET: FoxSoftwares
         public ActionResult Index()
         {
@@ -49,6 +50,7 @@ namespace LungmenSoftware.Controllers
             {
                 WorkStationsBySoftwareId = wkService.GetWorkStationsBySoftwareId(id)
             };
+
             return View(dataForView);
         }
 

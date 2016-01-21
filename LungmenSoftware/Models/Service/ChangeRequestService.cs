@@ -353,18 +353,19 @@ namespace LungmenSoftware.Models.Service
 
             foreach (var delta in deltas)
             {
+                
                 var currentSoftData=from s in ldb.FoxSoftwares.Where(s=>s.FoxSoftwareId==delta.FoxSoftwareId)
                         join j in ldb.WKAndFoxJoinTables on s.FoxSoftwareId equals j.FoxSoftwareId
                                     where j.Rev.Equals(delta.OriginalValue)
                                     select j;
 
-                if(delta.RevInfos.Count == currentSoftData.Count()) { 
-                    foreach (var item in delta.RevInfos)
-                    {
-                        var jointable = ldb.WKAndFoxJoinTables.Find(item.JoinTableId);
-                        jointable.Rev = delta.NewValue;
-                    }
+
+                foreach (var item in delta.RevInfos)
+                {
+                    var jointable = ldb.WKAndFoxJoinTables.Find(item.JoinTableId);
+                    jointable.Rev = delta.NewValue;
                 }
+            
 
             }
 

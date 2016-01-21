@@ -21,7 +21,7 @@
 
             <hr />
             <label><span class="lable label-warning">Step 3</span> 填寫資料及確認修改清單</label>
-            <br/>
+            <br />
 
             <div>
                 <table class="table table-bordered table-striped table-condensed">
@@ -32,7 +32,7 @@
                         <th>影響工作站</th>
                     </tr>
 
-                    <tr ng-repeat="item in m.modList">
+                    <tr ng-repeat="item in m.modList" class="addNewRevItem">
                         <td>{{item.RevInfos[0].SoftwareName}}</td>
                         <td>{{item.OriginalValue}}</td>
                         <td>{{item.NewValue}}</td>
@@ -43,20 +43,22 @@
                         </td>
                     </tr>
                 </table>
+                <button class="btn btn-default" ng-click="m.clearModList()">清空修改清單</button>
             </div>
 
-            <label class="control-label">表單編號: (系統自動產生)</label>
-            <br />
-            <label class="control-label">軟體修改簡述:</label>
-            <input type="text" ng-model="m.changeRequestData.Description" class="form-control" />
-            <br />
-
-            <label class="control-label">變更說明:</label>
-            <textarea class="form-control" rows="3" ng-model="m.changeRequestData.Note"></textarea>
-
-            
             <div>
-                <button class="btn btn-default" ng-click="m.clearModList()">清空修改清單</button>
+                <label class="control-label">表單編號: (系統自動產生)</label>
+                <br />
+                <label class="control-label">軟體修改簡述:</label>
+                <input type="text" ng-model="m.changeRequestData.Description" class="form-control" />
+                <br />
+
+                <label class="control-label">變更說明:</label>
+                <textarea class="form-control" rows="3" ng-model="m.changeRequestData.Note"></textarea>
+            </div>
+
+            <div>
+                <br />
                 <a href="#/confirm" class="btn btn-primary" ng-click="m.postModList()">送出</a>
             </div>
 
@@ -71,7 +73,7 @@
         </div>
         <div class="col-md-5">
             <label><span class="lable label-warning">Step 2</span> 填寫變更軟體版本及選擇相關工作站(請先選擇欲修改之軟體名稱)</label>
-            <div ng-repeat="d in m.data">
+            <div class="revDataAnimate" ng-repeat="d in m.data">
                 <label>目前建置版本:{{d.OriginalValue}}</label>
                 <br />
                 <label>欲變更修改版本:</label>

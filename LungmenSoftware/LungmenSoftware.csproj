@@ -211,10 +211,6 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Microsoft.AspNet.Mvc.5.2.3\lib\net45\System.Web.Mvc.dll</HintPath>
     </Reference>
-    <Reference Include="System.Web.Optimization.React, Version=1.5.0.0, Culture=neutral, PublicKeyToken=9aed67b161f7db78, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Web.Optimization.React.1.5.2\lib\net40\System.Web.Optimization.React.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="System.Web.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Microsoft.AspNet.Razor.3.2.3\lib\net45\System.Web.Razor.dll</HintPath>
@@ -438,10 +434,6 @@
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
-    <Content Include="Content\metro-icons.css" />
-    <Content Include="Content\metro-icons.min.css" />
-    <Content Include="Content\metro.css" />
-    <Content Include="Content\metro.min.css" />
     <Content Include="Content\PagedList.css" />
     <Content Include="Content\themes\base\accordion.css" />
     <Content Include="Content\themes\base\all.css" />
@@ -499,7 +491,6 @@
     <Content Include="css\materialize.min.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
-    <Content Include="fonts\metro.svg" />
     <Content Include="font\material-design-icons\LICENSE.txt" />
     <Content Include="font\material-design-icons\Material-Design-Icons.svg" />
     <Content Include="Global.asax" />
@@ -525,11 +516,6 @@
       <DependentUpon>LungmenData.edmx</DependentUpon>
       <LastGenOutput>LungmenData.cs</LastGenOutput>
     </Content>
-    <Content Include="readme.txt" />
-    <Content Include="fonts\selection.json" />
-    <Content Include="fonts\metro.woff" />
-    <Content Include="fonts\metro.ttf" />
-    <Content Include="fonts\metro.eot" />
     <Content Include="Scripts\angular-animate.js" />
     <Content Include="Scripts\angular-animate.min.js" />
     <Content Include="Scripts\angular-aria.js" />
@@ -1357,8 +1343,6 @@
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
-    <Content Include="Scripts\metro.js" />
-    <Content Include="Scripts\metro.min.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
     <Content Include="Scripts\react\JSXTransformer-0.13.1.js" />
     <Content Include="Scripts\react\react-0.13.1.js" />
@@ -1534,7 +1518,7 @@
     <VisualStudio>
       <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
         <WebProjectProperties>
-          <UseIIS>True</UseIIS>
+          <UseIIS>False</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>52460</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>

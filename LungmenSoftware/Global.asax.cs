@@ -10,6 +10,7 @@ using LungmenSoftware.Helper;
 using LungmenSoftware.Models.CodeFirst;
 using Microsoft.Ajax.Utilities;
 using WebGrease.Configuration;
+using System.Web.Http;
 
 namespace LungmenSoftware
 {
@@ -18,6 +19,7 @@ namespace LungmenSoftware
         protected void Application_Start()
         {
             AreaRegistration.RegisterAllAreas();
+            GlobalConfiguration.Configure(WebApiConfig.Register);
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);

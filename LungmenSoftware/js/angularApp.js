@@ -1,5 +1,5 @@
 ﻿(function() {
-    angular.module('simpleApp', ['ngRoute'])
+    angular.module('simpleApp', ['ngRoute', 'ngAnimate'])
     .controller('MainCtrl', ['$http', '$log', '$scope', 'dataService', MainCtrl])
     .controller('ConfirmCtrl',['$log','dataService', ConfirmCtrl])
     .factory('dataService', ['$http', '$log', dataService])
@@ -89,7 +89,9 @@
         });
 
         UpdateWorkStationList($http, vm);
+
         vm.modList = [];
+
         $http.get('/foxsoftwares/getsystemsoftwares')
                .success(function (data) {
                    vm.message = 'Data Retrieves Successfully';
@@ -115,29 +117,7 @@
         }
 
 
-        //For Test $http Only
-        vm.addNewWorkStation = function (wk) {
-            //$log.info(vm.newWorkstation);
-            $log.info("Add " + vm.newWorkstation);
-            $http.post('/foxworkstations/addnewworkstation', vm.newWorkstation)
-                .then(function(response) {
-                    console.log(response);
-                    UpdateWorkStationList($http,vm);
-                    vm.message = 'Add New Workstation Successfully';
-                });
-
-        }
-        //Legacy Code
-        //vm.getWorkstationsByRev= function (rev) {
-        //    $log.info(rev);
-        //    $http.post('/foxsoftwares/GetWorkstationsByRev', rev)
-        //        .then(function(response) {
-        //            $log.info(response);
-        //            vm.revStations = response.data;
-        //        }, function(errResponse) {
-        //            $log.info(errResponse);
-        //        });
-        //}
+       
 
 
         function RefreshWorkstationList(selected) {
@@ -172,8 +152,6 @@
                        angular.forEach(value.RevInfos, function (value, key) {
                            value.isChecked = true;
                        });
-
-
                    });
                    $log.info(vm.data);
 
@@ -349,6 +327,30 @@
         }
         
 
+
+        //For Test $http Only
+        vm.addNewWorkStation = function (wk) {
+            //$log.info(vm.newWorkstation);
+            $log.info("Add " + vm.newWorkstation);
+            $http.post('/foxworkstations/addnewworkstation', vm.newWorkstation)
+                .then(function (response) {
+                    console.log(response);
+                    UpdateWorkStationList($http, vm);
+                    vm.message = 'Add New Workstation Successfully';
+                });
+
+        }
+        //Legacy Code
+        //vm.getWorkstationsByRev= function (rev) {
+        //    $log.info(rev);
+        //    $http.post('/foxsoftwares/GetWorkstationsByRev', rev)
+        //        .then(function(response) {
+        //            $log.info(response);
+        //            vm.revStations = response.data;
+        //        }, function(errResponse) {
+        //            $log.info(errResponse);
+        //        });
+        //}
         //Legacy Code
         vm.modifyRev=function(record, rev) {
             //vm.selectedSoftwareInfo;

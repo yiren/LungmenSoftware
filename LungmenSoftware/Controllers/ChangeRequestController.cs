@@ -252,6 +252,7 @@ namespace LungmenSoftware.Controllers
 
         }
 
+        [Authorize(Roles = "Reviewer")]
         public ActionResult ReviewChangeRequest(Guid id)
         {
             var crEntry = crService.FindDetailCRByChangeRequestId(id);
@@ -271,6 +272,7 @@ namespace LungmenSoftware.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "Reviewer")]
         public ActionResult ReviewChangeRequest(ChangeRequestViewModelForModification vm, 
                                     params string[] reviewOptions)
         {
