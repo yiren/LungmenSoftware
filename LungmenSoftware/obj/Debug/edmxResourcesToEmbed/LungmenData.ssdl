@@ -1,0 +1,248 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="LungmenSoftwareDataModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="FoxAppSoftwares">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="Rev" Type="float" />
+    <Property Name="Procedure" Type="nvarchar" MaxLength="50" />
+    <Property Name="Note" Type="nvarchar(max)" />
+  </EntityType>
+  <EntityType Name="FoxSysSoftwares">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="Procedure" Type="nvarchar" MaxLength="50" />
+    <Property Name="Software_Library_Identification" Type="nvarchar" MaxLength="50" />
+    <Property Name="Media_Identification" Type="nvarchar" MaxLength="50" />
+    <Property Name="Rev" Type="nvarchar" MaxLength="50" />
+    <Property Name="FoxWorkStationId" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="FoxSysSoftwareTypes">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <EntityType Name="FoxWorkStationFoxSoftware">
+    <Key>
+      <PropertyRef Name="FoxWorkStation_Id" />
+      <PropertyRef Name="FoxSoftware_Id" />
+    </Key>
+    <Property Name="FoxWorkStation_Id" Type="int" Nullable="false" />
+    <Property Name="FoxSoftware_Id" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="FoxWorkStations">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" MaxLength="20" Nullable="false" />
+    <Property Name="WorkStationTypeId" Type="int" />
+    <Property Name="FoxSysSoftwareTypeId" Type="int" />
+  </EntityType>
+  <EntityType Name="ImpDocFoxWorkStation">
+    <Key>
+      <PropertyRef Name="ImpDocs_Id" />
+      <PropertyRef Name="FoxWorkStations_Id" />
+    </Key>
+    <Property Name="ImpDocs_Id" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="FoxWorkStations_Id" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="ImpDocs">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="No" Type="nvarchar" MaxLength="25" Nullable="false" />
+    <Property Name="Rev" Type="int" Nullable="false" />
+    <Property Name="CompletedDate" Type="datetime" />
+    <Property Name="Description" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="ImpDocTypeId" Type="int" />
+    <Property Name="Unit" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="ImpDocStatusCodeId" Type="int" Nullable="false" />
+    <Property Name="InitialDate" Type="datetime" Nullable="false" />
+  </EntityType>
+  <EntityType Name="ImpDocStatusCodes">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" Nullable="false" />
+    <Property Name="Status" Type="nvarchar(max)" Nullable="false" />
+  </EntityType>
+  <EntityType Name="ImpDocTypes">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
+  </EntityType>
+  <EntityType Name="WorkStationTypes">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <Association Name="FK_FoxWorkStationFoxSoftware_FoxSoftware">
+    <End Role="FoxAppSoftwares" Type="Self.FoxAppSoftwares" Multiplicity="1" />
+    <End Role="FoxWorkStationFoxSoftware" Type="Self.FoxWorkStationFoxSoftware" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="FoxAppSoftwares">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="FoxWorkStationFoxSoftware">
+        <PropertyRef Name="FoxSoftware_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_FoxWorkStationFoxSoftware_FoxWorkStation">
+    <End Role="FoxWorkStations" Type="Self.FoxWorkStations" Multiplicity="1" />
+    <End Role="FoxWorkStationFoxSoftware" Type="Self.FoxWorkStationFoxSoftware" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="FoxWorkStations">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="FoxWorkStationFoxSoftware">
+        <PropertyRef Name="FoxWorkStation_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_FoxWorkStationFoxSysSoftware">
+    <End Role="FoxWorkStations" Type="Self.FoxWorkStations" Multiplicity="1" />
+    <End Role="FoxSysSoftwares" Type="Self.FoxSysSoftwares" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="FoxWorkStations">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="FoxSysSoftwares">
+        <PropertyRef Name="FoxWorkStationId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_FoxWorkStationFoxSysSoftwareType">
+    <End Role="FoxSysSoftwareTypes" Type="Self.FoxSysSoftwareTypes" Multiplicity="0..1" />
+    <End Role="FoxWorkStations" Type="Self.FoxWorkStations" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="FoxSysSoftwareTypes">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="FoxWorkStations">
+        <PropertyRef Name="FoxSysSoftwareTypeId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ImpDocFoxWorkStation_FoxWorkStation">
+    <End Role="FoxWorkStations" Type="Self.FoxWorkStations" Multiplicity="1" />
+    <End Role="ImpDocFoxWorkStation" Type="Self.ImpDocFoxWorkStation" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="FoxWorkStations">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="ImpDocFoxWorkStation">
+        <PropertyRef Name="FoxWorkStations_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ImpDocFoxWorkStation_ImpDoc">
+    <End Role="ImpDocs" Type="Self.ImpDocs" Multiplicity="1" />
+    <End Role="ImpDocFoxWorkStation" Type="Self.ImpDocFoxWorkStation" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ImpDocs">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="ImpDocFoxWorkStation">
+        <PropertyRef Name="ImpDocs_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ImpDocStatusCodeImpDoc">
+    <End Role="ImpDocStatusCodes" Type="Self.ImpDocStatusCodes" Multiplicity="1" />
+    <End Role="ImpDocs" Type="Self.ImpDocs" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ImpDocStatusCodes">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="ImpDocs">
+        <PropertyRef Name="ImpDocStatusCodeId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ImpDocTypeImpDoc">
+    <End Role="ImpDocTypes" Type="Self.ImpDocTypes" Multiplicity="0..1" />
+    <End Role="ImpDocs" Type="Self.ImpDocs" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ImpDocTypes">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="ImpDocs">
+        <PropertyRef Name="ImpDocTypeId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_WorkStationTypeFoxWorkStation">
+    <End Role="WorkStationTypes" Type="Self.WorkStationTypes" Multiplicity="0..1" />
+    <End Role="FoxWorkStations" Type="Self.FoxWorkStations" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="WorkStationTypes">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="FoxWorkStations">
+        <PropertyRef Name="WorkStationTypeId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="LungmenSoftwareDataModelStoreContainer">
+    <EntitySet Name="FoxAppSoftwares" EntityType="Self.FoxAppSoftwares" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="FoxSysSoftwares" EntityType="Self.FoxSysSoftwares" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="FoxSysSoftwareTypes" EntityType="Self.FoxSysSoftwareTypes" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="FoxWorkStationFoxSoftware" EntityType="Self.FoxWorkStationFoxSoftware" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="FoxWorkStations" EntityType="Self.FoxWorkStations" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ImpDocFoxWorkStation" EntityType="Self.ImpDocFoxWorkStation" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ImpDocs" EntityType="Self.ImpDocs" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ImpDocStatusCodes" EntityType="Self.ImpDocStatusCodes" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ImpDocTypes" EntityType="Self.ImpDocTypes" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="WorkStationTypes" EntityType="Self.WorkStationTypes" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK_FoxWorkStationFoxSoftware_FoxSoftware" Association="Self.FK_FoxWorkStationFoxSoftware_FoxSoftware">
+      <End Role="FoxAppSoftwares" EntitySet="FoxAppSoftwares" />
+      <End Role="FoxWorkStationFoxSoftware" EntitySet="FoxWorkStationFoxSoftware" />
+    </AssociationSet>
+    <AssociationSet Name="FK_FoxWorkStationFoxSoftware_FoxWorkStation" Association="Self.FK_FoxWorkStationFoxSoftware_FoxWorkStation">
+      <End Role="FoxWorkStations" EntitySet="FoxWorkStations" />
+      <End Role="FoxWorkStationFoxSoftware" EntitySet="FoxWorkStationFoxSoftware" />
+    </AssociationSet>
+    <AssociationSet Name="FK_FoxWorkStationFoxSysSoftware" Association="Self.FK_FoxWorkStationFoxSysSoftware">
+      <End Role="FoxWorkStations" EntitySet="FoxWorkStations" />
+      <End Role="FoxSysSoftwares" EntitySet="FoxSysSoftwares" />
+    </AssociationSet>
+    <AssociationSet Name="FK_FoxWorkStationFoxSysSoftwareType" Association="Self.FK_FoxWorkStationFoxSysSoftwareType">
+      <End Role="FoxSysSoftwareTypes" EntitySet="FoxSysSoftwareTypes" />
+      <End Role="FoxWorkStations" EntitySet="FoxWorkStations" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ImpDocFoxWorkStation_FoxWorkStation" Association="Self.FK_ImpDocFoxWorkStation_FoxWorkStation">
+      <End Role="FoxWorkStations" EntitySet="FoxWorkStations" />
+      <End Role="ImpDocFoxWorkStation" EntitySet="ImpDocFoxWorkStation" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ImpDocFoxWorkStation_ImpDoc" Association="Self.FK_ImpDocFoxWorkStation_ImpDoc">
+      <End Role="ImpDocs" EntitySet="ImpDocs" />
+      <End Role="ImpDocFoxWorkStation" EntitySet="ImpDocFoxWorkStation" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ImpDocStatusCodeImpDoc" Association="Self.FK_ImpDocStatusCodeImpDoc">
+      <End Role="ImpDocStatusCodes" EntitySet="ImpDocStatusCodes" />
+      <End Role="ImpDocs" EntitySet="ImpDocs" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ImpDocTypeImpDoc" Association="Self.FK_ImpDocTypeImpDoc">
+      <End Role="ImpDocTypes" EntitySet="ImpDocTypes" />
+      <End Role="ImpDocs" EntitySet="ImpDocs" />
+    </AssociationSet>
+    <AssociationSet Name="FK_WorkStationTypeFoxWorkStation" Association="Self.FK_WorkStationTypeFoxWorkStation">
+      <End Role="WorkStationTypes" EntitySet="WorkStationTypes" />
+      <End Role="FoxWorkStations" EntitySet="FoxWorkStations" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

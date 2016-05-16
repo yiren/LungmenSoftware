@@ -1,0 +1,102 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="LungmenSoftwareDataModelStoreContainer" CdmEntityContainer="LungmenSoftwareDataEntities">
+    <EntitySetMapping Name="FoxAppSoftwares">
+      <EntityTypeMapping TypeName="LungmenSoftwareDataModel.FoxAppSoftware">
+        <MappingFragment StoreEntitySet="FoxAppSoftwares">
+          <ScalarProperty Name="Note" ColumnName="Note" />
+          <ScalarProperty Name="Procedure" ColumnName="Procedure" />
+          <ScalarProperty Name="Rev" ColumnName="Rev" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="FoxSysSoftwares">
+      <EntityTypeMapping TypeName="LungmenSoftwareDataModel.FoxSysSoftware">
+        <MappingFragment StoreEntitySet="FoxSysSoftwares">
+          <ScalarProperty Name="FoxWorkStationId" ColumnName="FoxWorkStationId" />
+          <ScalarProperty Name="Rev" ColumnName="Rev" />
+          <ScalarProperty Name="Media_Identification" ColumnName="Media_Identification" />
+          <ScalarProperty Name="Software_Library_Identification" ColumnName="Software_Library_Identification" />
+          <ScalarProperty Name="Procedure" ColumnName="Procedure" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="FoxSysSoftwareTypes">
+      <EntityTypeMapping TypeName="LungmenSoftwareDataModel.FoxSysSoftwareType">
+        <MappingFragment StoreEntitySet="FoxSysSoftwareTypes">
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="FoxWorkStations">
+      <EntityTypeMapping TypeName="LungmenSoftwareDataModel.FoxWorkStation">
+        <MappingFragment StoreEntitySet="FoxWorkStations">
+          <ScalarProperty Name="FoxSysSoftwareTypeId" ColumnName="FoxSysSoftwareTypeId" />
+          <ScalarProperty Name="WorkStationTypeId" ColumnName="WorkStationTypeId" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ImpDocs">
+      <EntityTypeMapping TypeName="LungmenSoftwareDataModel.ImpDoc">
+        <MappingFragment StoreEntitySet="ImpDocs">
+          <ScalarProperty Name="InitialDate" ColumnName="InitialDate" />
+          <ScalarProperty Name="ImpDocStatusCodeId" ColumnName="ImpDocStatusCodeId" />
+          <ScalarProperty Name="Unit" ColumnName="Unit" />
+          <ScalarProperty Name="ImpDocTypeId" ColumnName="ImpDocTypeId" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="CompletedDate" ColumnName="CompletedDate" />
+          <ScalarProperty Name="Rev" ColumnName="Rev" />
+          <ScalarProperty Name="No" ColumnName="No" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ImpDocStatusCodes">
+      <EntityTypeMapping TypeName="LungmenSoftwareDataModel.ImpDocStatusCode">
+        <MappingFragment StoreEntitySet="ImpDocStatusCodes">
+          <ScalarProperty Name="Status" ColumnName="Status" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ImpDocTypes">
+      <EntityTypeMapping TypeName="LungmenSoftwareDataModel.ImpDocType">
+        <MappingFragment StoreEntitySet="ImpDocTypes">
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="WorkStationTypes">
+      <EntityTypeMapping TypeName="LungmenSoftwareDataModel.WorkStationType">
+        <MappingFragment StoreEntitySet="WorkStationTypes">
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <AssociationSetMapping Name="FoxWorkStationFoxSoftware" TypeName="LungmenSoftwareDataModel.FoxWorkStationFoxSoftware" StoreEntitySet="FoxWorkStationFoxSoftware">
+      <EndProperty Name="FoxWorkStation">
+        <ScalarProperty Name="Id" ColumnName="FoxWorkStation_Id" />
+      </EndProperty>
+      <EndProperty Name="FoxAppSoftware">
+        <ScalarProperty Name="Id" ColumnName="FoxSoftware_Id" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="ImpDocFoxWorkStation" TypeName="LungmenSoftwareDataModel.ImpDocFoxWorkStation" StoreEntitySet="ImpDocFoxWorkStation">
+      <EndProperty Name="ImpDoc">
+        <ScalarProperty Name="Id" ColumnName="ImpDocs_Id" />
+      </EndProperty>
+      <EndProperty Name="FoxWorkStation">
+        <ScalarProperty Name="Id" ColumnName="FoxWorkStations_Id" />
+      </EndProperty>
+    </AssociationSetMapping>
+  </EntityContainerMapping>
+</Mapping>

@@ -1,0 +1,85 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="LungmenDataModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityContainer Name="LungmenDataEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="FoxSoftwareSet" EntityType="LungmenDataModel.FoxSoftwareSet" />
+    <EntitySet Name="FoxWorkStationSet" EntityType="LungmenDataModel.FoxWorkStationSet" />
+    <EntitySet Name="ImpDocSet" EntityType="LungmenDataModel.ImpDocSet" />
+    <EntitySet Name="sysdiagrams" EntityType="LungmenDataModel.sysdiagrams" />
+    <EntitySet Name="WorkStationTypeSet" EntityType="LungmenDataModel.WorkStationTypeSet" />
+    <AssociationSet Name="FK_WorkStationTypeFoxWorkStation" Association="LungmenDataModel.FK_WorkStationTypeFoxWorkStation">
+      <End Role="WorkStationTypeSet" EntitySet="WorkStationTypeSet" />
+      <End Role="FoxWorkStationSet" EntitySet="FoxWorkStationSet" />
+    </AssociationSet>
+    <AssociationSet Name="FoxWorkStationFoxSoftware" Association="LungmenDataModel.FoxWorkStationFoxSoftware">
+      <End Role="FoxSoftwareSet" EntitySet="FoxSoftwareSet" />
+      <End Role="FoxWorkStationSet" EntitySet="FoxWorkStationSet" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="FoxSoftwareSet">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Rev" Type="Double" />
+    <Property Name="Procedure" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Note" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="FoxWorkStationSet" Relationship="LungmenDataModel.FoxWorkStationFoxSoftware" FromRole="FoxSoftwareSet" ToRole="FoxWorkStationSet" />
+  </EntityType>
+  <EntityType Name="FoxWorkStationSet">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="WorkStationTypeId" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="WorkStationTypeSet" Relationship="LungmenDataModel.FK_WorkStationTypeFoxWorkStation" FromRole="FoxWorkStationSet" ToRole="WorkStationTypeSet" />
+    <NavigationProperty Name="FoxSoftwareSet" Relationship="LungmenDataModel.FoxWorkStationFoxSoftware" FromRole="FoxWorkStationSet" ToRole="FoxSoftwareSet" />
+  </EntityType>
+  <EntityType Name="ImpDocSet">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="DocType" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="No" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Rev" Type="Int32" Nullable="false" />
+    <Property Name="ImpDate" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="IssuedDate" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Description" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <EntityType Name="sysdiagrams">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+    <Property Name="principal_id" Type="Int32" Nullable="false" />
+    <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="version" Type="Int32" />
+    <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+  </EntityType>
+  <EntityType Name="WorkStationTypeSet">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="FoxWorkStationSet" Relationship="LungmenDataModel.FK_WorkStationTypeFoxWorkStation" FromRole="WorkStationTypeSet" ToRole="FoxWorkStationSet" />
+  </EntityType>
+  <Association Name="FK_WorkStationTypeFoxWorkStation">
+    <End Type="LungmenDataModel.WorkStationTypeSet" Role="WorkStationTypeSet" Multiplicity="1" />
+    <End Type="LungmenDataModel.FoxWorkStationSet" Role="FoxWorkStationSet" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="WorkStationTypeSet">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="FoxWorkStationSet">
+        <PropertyRef Name="WorkStationTypeId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FoxWorkStationFoxSoftware">
+    <End Type="LungmenDataModel.FoxSoftwareSet" Role="FoxSoftwareSet" Multiplicity="*" />
+    <End Type="LungmenDataModel.FoxWorkStationSet" Role="FoxWorkStationSet" Multiplicity="*" />
+  </Association>
+</Schema>

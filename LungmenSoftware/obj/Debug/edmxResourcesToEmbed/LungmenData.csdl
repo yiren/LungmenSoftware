@@ -1,0 +1,196 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="LungmenSoftwareDataModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityContainer Name="LungmenSoftwareDataEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="FoxAppSoftwares" EntityType="LungmenSoftwareDataModel.FoxAppSoftware" />
+    <EntitySet Name="FoxSysSoftwares" EntityType="LungmenSoftwareDataModel.FoxSysSoftware" />
+    <EntitySet Name="FoxSysSoftwareTypes" EntityType="LungmenSoftwareDataModel.FoxSysSoftwareType" />
+    <EntitySet Name="FoxWorkStations" EntityType="LungmenSoftwareDataModel.FoxWorkStation" />
+    <EntitySet Name="ImpDocs" EntityType="LungmenSoftwareDataModel.ImpDoc" />
+    <EntitySet Name="ImpDocStatusCodes" EntityType="LungmenSoftwareDataModel.ImpDocStatusCode" />
+    <EntitySet Name="ImpDocTypes" EntityType="LungmenSoftwareDataModel.ImpDocType" />
+    <EntitySet Name="WorkStationTypes" EntityType="LungmenSoftwareDataModel.WorkStationType" />
+    <AssociationSet Name="FK_FoxWorkStationFoxSysSoftware" Association="LungmenSoftwareDataModel.FK_FoxWorkStationFoxSysSoftware">
+      <End Role="FoxWorkStation" EntitySet="FoxWorkStations" />
+      <End Role="FoxSysSoftware" EntitySet="FoxSysSoftwares" />
+    </AssociationSet>
+    <AssociationSet Name="FK_FoxWorkStationFoxSysSoftwareType" Association="LungmenSoftwareDataModel.FK_FoxWorkStationFoxSysSoftwareType">
+      <End Role="FoxSysSoftwareType" EntitySet="FoxSysSoftwareTypes" />
+      <End Role="FoxWorkStation" EntitySet="FoxWorkStations" />
+    </AssociationSet>
+    <AssociationSet Name="FK_WorkStationTypeFoxWorkStation" Association="LungmenSoftwareDataModel.FK_WorkStationTypeFoxWorkStation">
+      <End Role="WorkStationType" EntitySet="WorkStationTypes" />
+      <End Role="FoxWorkStation" EntitySet="FoxWorkStations" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ImpDocStatusCodeImpDoc" Association="LungmenSoftwareDataModel.FK_ImpDocStatusCodeImpDoc">
+      <End Role="ImpDocStatusCode" EntitySet="ImpDocStatusCodes" />
+      <End Role="ImpDoc" EntitySet="ImpDocs" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ImpDocTypeImpDoc" Association="LungmenSoftwareDataModel.FK_ImpDocTypeImpDoc">
+      <End Role="ImpDocType" EntitySet="ImpDocTypes" />
+      <End Role="ImpDoc" EntitySet="ImpDocs" />
+    </AssociationSet>
+    <AssociationSet Name="FoxWorkStationFoxSoftware" Association="LungmenSoftwareDataModel.FoxWorkStationFoxSoftware">
+      <End Role="FoxAppSoftware" EntitySet="FoxAppSoftwares" />
+      <End Role="FoxWorkStation" EntitySet="FoxWorkStations" />
+    </AssociationSet>
+    <AssociationSet Name="ImpDocFoxWorkStation" Association="LungmenSoftwareDataModel.ImpDocFoxWorkStation">
+      <End Role="FoxWorkStation" EntitySet="FoxWorkStations" />
+      <End Role="ImpDoc" EntitySet="ImpDocs" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="FoxAppSoftware">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Rev" Type="Double" />
+    <Property Name="Procedure" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Note" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="FoxWorkStations" Relationship="LungmenSoftwareDataModel.FoxWorkStationFoxSoftware" FromRole="FoxAppSoftware" ToRole="FoxWorkStation" />
+  </EntityType>
+  <EntityType Name="FoxSysSoftware">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Procedure" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Software_Library_Identification" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Media_Identification" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Rev" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="FoxWorkStationId" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="FoxWorkStation" Relationship="LungmenSoftwareDataModel.FK_FoxWorkStationFoxSysSoftware" FromRole="FoxSysSoftware" ToRole="FoxWorkStation" />
+  </EntityType>
+  <EntityType Name="FoxSysSoftwareType">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="FoxWorkStations" Relationship="LungmenSoftwareDataModel.FK_FoxWorkStationFoxSysSoftwareType" FromRole="FoxSysSoftwareType" ToRole="FoxWorkStation" />
+  </EntityType>
+  <EntityType Name="FoxWorkStation">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="WorkStationTypeId" Type="Int32" />
+    <Property Name="FoxSysSoftwareTypeId" Type="Int32" />
+    <NavigationProperty Name="FoxSysSoftwares" Relationship="LungmenSoftwareDataModel.FK_FoxWorkStationFoxSysSoftware" FromRole="FoxWorkStation" ToRole="FoxSysSoftware" />
+    <NavigationProperty Name="FoxSysSoftwareType" Relationship="LungmenSoftwareDataModel.FK_FoxWorkStationFoxSysSoftwareType" FromRole="FoxWorkStation" ToRole="FoxSysSoftwareType" />
+    <NavigationProperty Name="WorkStationType" Relationship="LungmenSoftwareDataModel.FK_WorkStationTypeFoxWorkStation" FromRole="FoxWorkStation" ToRole="WorkStationType" />
+    <NavigationProperty Name="FoxAppSoftwares" Relationship="LungmenSoftwareDataModel.FoxWorkStationFoxSoftware" FromRole="FoxWorkStation" ToRole="FoxAppSoftware" />
+    <NavigationProperty Name="ImpDocs" Relationship="LungmenSoftwareDataModel.ImpDocFoxWorkStation" FromRole="FoxWorkStation" ToRole="ImpDoc" />
+  </EntityType>
+  <EntityType Name="ImpDoc">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Guid" Nullable="false" />
+    <Property Name="No" Type="String" Nullable="false" MaxLength="25" FixedLength="false" Unicode="true" />
+    <Property Name="Rev" Type="Int32" Nullable="false" />
+    <Property Name="CompletedDate" Type="DateTime" Precision="3" />
+    <Property Name="Description" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="ImpDocTypeId" Type="Int32" />
+    <Property Name="Unit" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="ImpDocStatusCodeId" Type="Int32" Nullable="false" />
+    <Property Name="InitialDate" Type="DateTime" Nullable="false" Precision="3" />
+    <NavigationProperty Name="ImpDocStatusCode" Relationship="LungmenSoftwareDataModel.FK_ImpDocStatusCodeImpDoc" FromRole="ImpDoc" ToRole="ImpDocStatusCode" />
+    <NavigationProperty Name="ImpDocType" Relationship="LungmenSoftwareDataModel.FK_ImpDocTypeImpDoc" FromRole="ImpDoc" ToRole="ImpDocType" />
+    <NavigationProperty Name="FoxWorkStations" Relationship="LungmenSoftwareDataModel.ImpDocFoxWorkStation" FromRole="ImpDoc" ToRole="FoxWorkStation" />
+  </EntityType>
+  <EntityType Name="ImpDocStatusCode">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" />
+    <Property Name="Status" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="ImpDocs" Relationship="LungmenSoftwareDataModel.FK_ImpDocStatusCodeImpDoc" FromRole="ImpDocStatusCode" ToRole="ImpDoc" />
+  </EntityType>
+  <EntityType Name="ImpDocType">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="ImpDocs" Relationship="LungmenSoftwareDataModel.FK_ImpDocTypeImpDoc" FromRole="ImpDocType" ToRole="ImpDoc" />
+  </EntityType>
+  <EntityType Name="WorkStationType">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="FoxWorkStations" Relationship="LungmenSoftwareDataModel.FK_WorkStationTypeFoxWorkStation" FromRole="WorkStationType" ToRole="FoxWorkStation" />
+  </EntityType>
+  <Association Name="FK_FoxWorkStationFoxSysSoftware">
+    <End Type="LungmenSoftwareDataModel.FoxWorkStation" Role="FoxWorkStation" Multiplicity="1" />
+    <End Type="LungmenSoftwareDataModel.FoxSysSoftware" Role="FoxSysSoftware" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="FoxWorkStation">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="FoxSysSoftware">
+        <PropertyRef Name="FoxWorkStationId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_FoxWorkStationFoxSysSoftwareType">
+    <End Type="LungmenSoftwareDataModel.FoxSysSoftwareType" Role="FoxSysSoftwareType" Multiplicity="0..1" />
+    <End Type="LungmenSoftwareDataModel.FoxWorkStation" Role="FoxWorkStation" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="FoxSysSoftwareType">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="FoxWorkStation">
+        <PropertyRef Name="FoxSysSoftwareTypeId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_WorkStationTypeFoxWorkStation">
+    <End Type="LungmenSoftwareDataModel.WorkStationType" Role="WorkStationType" Multiplicity="0..1" />
+    <End Type="LungmenSoftwareDataModel.FoxWorkStation" Role="FoxWorkStation" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="WorkStationType">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="FoxWorkStation">
+        <PropertyRef Name="WorkStationTypeId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ImpDocStatusCodeImpDoc">
+    <End Type="LungmenSoftwareDataModel.ImpDocStatusCode" Role="ImpDocStatusCode" Multiplicity="1" />
+    <End Type="LungmenSoftwareDataModel.ImpDoc" Role="ImpDoc" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ImpDocStatusCode">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="ImpDoc">
+        <PropertyRef Name="ImpDocStatusCodeId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ImpDocTypeImpDoc">
+    <End Type="LungmenSoftwareDataModel.ImpDocType" Role="ImpDocType" Multiplicity="0..1" />
+    <End Type="LungmenSoftwareDataModel.ImpDoc" Role="ImpDoc" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ImpDocType">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="ImpDoc">
+        <PropertyRef Name="ImpDocTypeId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FoxWorkStationFoxSoftware">
+    <End Type="LungmenSoftwareDataModel.FoxAppSoftware" Role="FoxAppSoftware" Multiplicity="*" />
+    <End Type="LungmenSoftwareDataModel.FoxWorkStation" Role="FoxWorkStation" Multiplicity="*" />
+  </Association>
+  <Association Name="ImpDocFoxWorkStation">
+    <End Type="LungmenSoftwareDataModel.FoxWorkStation" Role="FoxWorkStation" Multiplicity="*" />
+    <End Type="LungmenSoftwareDataModel.ImpDoc" Role="ImpDoc" Multiplicity="*" />
+  </Association>
+</Schema>
