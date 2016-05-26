@@ -41,7 +41,8 @@ namespace LungmenSoftware.Models.Service
                     IsLocked = wkandsoft.IsLocked,
                     FoxSoftwareId=soft.FoxSoftwareId,
                     Note=wkandsoft.Note,
-                    SoftwareTypeId=soft.FoxSoftwareTypeId
+                    SoftwareTypeId=soft.FoxSoftwareTypeId,
+                    JoinTableId = wkandsoft.Id
                 } ;
             
             return query.ToList();
@@ -68,16 +69,13 @@ namespace LungmenSoftware.Models.Service
             var query = from s in softs
                 join j in ldb.WKAndFoxJoinTables on s.FoxSoftwareId equals j.FoxSoftwareId
                 select j;
-
-            
+           
         }
-
 
         public bool UpdateSoftwareRev(List<ChangeDelta> data)
         {
             throw new NotImplementedException();
         }
-
 
         public WKAndFoxJoinTable GetJoinTableDataById(long joinTableId)
         {

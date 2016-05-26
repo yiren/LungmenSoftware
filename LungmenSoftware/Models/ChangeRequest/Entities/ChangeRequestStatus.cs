@@ -17,7 +17,7 @@ namespace LungmenSoftware.Models.CodeFirst.Entities
         public int StatusTypeId { get; set; }
 
         public Guid ChangeRequestId { get; set; }
-
+        
         public DateTime InitialDate { get; set; }
 
         public DateTime? ChangeDate { get; set; }

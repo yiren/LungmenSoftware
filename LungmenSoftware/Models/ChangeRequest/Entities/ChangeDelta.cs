@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Web;
 
@@ -10,7 +11,9 @@ namespace LungmenSoftware.Models.CodeFirst.Entities
         public Guid ChangeDeltaId { get; set; }
 
         public int FoxSoftwareId { get; set; }
+        [DisplayName("原建置值")]
         public string OriginalValue { get; set; }
+        [DisplayName("欲修改值")]
         public string NewValue { get; set; }
         public List<RevInfo> RevInfos { get; set; }
 

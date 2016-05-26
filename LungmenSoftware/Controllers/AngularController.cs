@@ -23,5 +23,28 @@ namespace LungmenSoftware.Controllers
             
             return View(wkService.GetAllWorkstations().OrderBy(p=>p.WorkStationName).ToList());
         }
+
+        public ActionResult FormTest()
+        {
+            return View();
+        }
+
+
+
+        public PartialViewResult Home()
+        {
+            return PartialView();
+        }
+
+        public PartialViewResult Second()
+        {
+            return PartialView();
+        }
+
+        public PartialViewResult Third()
+        {
+            return PartialView();
+        }
+
     }
 }

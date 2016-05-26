@@ -23,7 +23,7 @@
     <IISExpressUseClassicPipelineMode />
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
     <RestorePackages>true</RestorePackages>
-    <TypeScriptToolsVersion>1.0</TypeScriptToolsVersion>
+    <TypeScriptToolsVersion>1.6</TypeScriptToolsVersion>
     <UseGlobalApplicationHostFile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -49,7 +49,7 @@
       <HintPath>..\packages\Antlr.3.5.0.2\lib\Antlr3.Runtime.dll</HintPath>
     </Reference>
     <Reference Include="AspNet.ScriptManager.jQuery, Version=2.1.2.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\AspNet.ScriptManager.jQuery.2.1.4\lib\net45\AspNet.ScriptManager.jQuery.dll</HintPath>
+      <HintPath>..\packages\AspNet.ScriptManager.jQuery.1.11.3\lib\net45\AspNet.ScriptManager.jQuery.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="ClearScript, Version=5.4.2.1, Culture=neutral, PublicKeyToken=935d0c957da47c73, processorArchitecture=MSIL">
@@ -141,8 +141,9 @@
     <Reference Include="MvcCheckBoxList">
       <HintPath>..\packages\MvcCheckBoxList.1.4.4.5\lib\net45\MvcCheckBoxList.dll</HintPath>
     </Reference>
-    <Reference Include="MySql.Data">
-      <HintPath>..\packages\MySql.Data.6.9.6\lib\net45\MySql.Data.dll</HintPath>
+    <Reference Include="MySql.Data, Version=6.9.7.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
+      <HintPath>..\packages\MySql.Data.6.9.7\lib\net45\MySql.Data.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="MySql.Data.Entity">
       <HintPath>..\packages\MySQL.NET.6.6.4\lib\net40\MySql.Data.Entity.dll</HintPath>
@@ -182,6 +183,10 @@
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Net.Http.Formatting, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Client.5.2.3\lib\net45\System.Net.Http.Formatting.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Security" />
     <Reference Include="System.Web.DynamicData" />
@@ -193,6 +198,14 @@
     <Reference Include="System.Web.Helpers, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.Helpers.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Http, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Core.5.2.3\lib\net45\System.Web.Http.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.Http.WebHost, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.WebHost.5.2.3\lib\net45\System.Web.Http.WebHost.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="System.Web.Mvc, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -322,17 +335,26 @@
     <Compile Include="MigrationForChangeRequestData\201509140908439_RemoveChangeStatusesCollectionInChangeStatusType.Designer.cs">
       <DependentUpon>201509140908439_RemoveChangeStatusesCollectionInChangeStatusType.cs</DependentUpon>
     </Compile>
+    <Compile Include="MigrationForChangeRequestData\201510120505576_AddChangeRequestMessage.cs" />
+    <Compile Include="MigrationForChangeRequestData\201510120505576_AddChangeRequestMessage.Designer.cs">
+      <DependentUpon>201510120505576_AddChangeRequestMessage.cs</DependentUpon>
+    </Compile>
     <Compile Include="MigrationForChangeRequestData\Configuration.cs" />
     <Compile Include="MigrationForIdentity\201508210117075_InitialCreate.cs" />
     <Compile Include="MigrationForIdentity\201508210117075_InitialCreate.Designer.cs">
       <DependentUpon>201508210117075_InitialCreate.cs</DependentUpon>
     </Compile>
+    <Compile Include="MigrationForIdentity\201510070520382_AddChtAliasColumn.cs" />
+    <Compile Include="MigrationForIdentity\201510070520382_AddChtAliasColumn.Designer.cs">
+      <DependentUpon>201510070520382_AddChtAliasColumn.cs</DependentUpon>
+    </Compile>
     <Compile Include="MigrationForIdentity\Configuration.cs" />
-    <Compile Include="Models\CodeFirst\ChangeProcessDbContext.cs" />
-    <Compile Include="Models\CodeFirst\Entities\ChangeDelta.cs" />
-    <Compile Include="Models\CodeFirst\Entities\ChangeRequest.cs" />
-    <Compile Include="Models\CodeFirst\Entities\ChangeRequestStatus.cs" />
-    <Compile Include="Models\CodeFirst\Entities\ChangeRequestStatusType.cs" />
+    <Compile Include="Models\ChangeRequest\ChangeProcessDbContext.cs" />
+    <Compile Include="Models\ChangeRequest\Entities\ChangeDelta.cs" />
+    <Compile Include="Models\ChangeRequest\Entities\ChangeRequest.cs" />
+    <Compile Include="Models\ChangeRequest\Entities\ChangeRequestMessage.cs" />
+    <Compile Include="Models\ChangeRequest\Entities\ChangeRequestStatus.cs" />
+    <Compile Include="Models\ChangeRequest\Entities\ChangeRequestStatusType.cs" />
     <Compile Include="Models\FoxSoftware.cs">
       <DependentUpon>LungmenData.tt</DependentUpon>
     </Compile>
@@ -345,6 +367,10 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\HOS\FDDR.cs" />
+    <Compile Include="Models\HOS\FddrToFdi.cs" />
+    <Compile Include="Models\HOS\FDI.cs" />
+    <Compile Include="Models\HOS\HOSDbContext.cs" />
     <Compile Include="Models\LungmenData.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -363,6 +389,7 @@
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
+    <Compile Include="Models\Metadata\ChangeRequestMetadata.cs" />
     <Compile Include="Models\Metadata\FoxAppSoftware.cs" />
     <Compile Include="Models\Metadata\FoxSoftwareMetadata.cs" />
     <Compile Include="Models\Metadata\FoxWorkStation.cs" />
@@ -372,6 +399,7 @@
     <Compile Include="Models\Service\IUserService.cs" />
     <Compile Include="Models\Service\UserService.cs" />
     <Compile Include="Models\ViewModel\ChangeRequestView.cs" />
+    <Compile Include="Models\ViewModel\CheckBoxListModel.cs" />
     <Compile Include="Models\ViewModel\RoleView.cs" />
     <Compile Include="Models\Service\FoxSoftService.cs" />
     <Compile Include="Models\Service\IFoxAppSoftwareService.cs" />
@@ -380,7 +408,7 @@
     <Compile Include="Models\ViewModel\UserView.cs" />
     <Compile Include="Models\ViewModel\FoxSoftView.cs" />
     <Compile Include="Models\ViewModel\FoxSoftwareInfo.cs" />
-    <Compile Include="Models\CodeFirst\Entities\RevInfo.cs" />
+    <Compile Include="Models\ChangeRequest\Entities\RevInfo.cs" />
     <Compile Include="Models\ViewModel\FoxWorkStationView.cs" />
     <Compile Include="Models\ViewModel\WorkStationSearchViewModel.cs" />
     <Compile Include="Models\ViewModel\WorkStationsSearchViewModel.cs" />
@@ -448,6 +476,25 @@
     <Content Include="Content\themes\base\tabs.css" />
     <Content Include="Content\themes\base\theme.css" />
     <Content Include="Content\themes\base\tooltip.css" />
+    <Content Include="Content\themes\cupertino\images\ui-bg_diagonals-thick_90_eeeeee_40x40.png" />
+    <Content Include="Content\themes\cupertino\images\ui-bg_flat_15_cd0a0a_40x100.png" />
+    <Content Include="Content\themes\cupertino\images\ui-bg_glass_100_e4f1fb_1x400.png" />
+    <Content Include="Content\themes\cupertino\images\ui-bg_glass_50_3baae3_1x400.png" />
+    <Content Include="Content\themes\cupertino\images\ui-bg_glass_80_d7ebf9_1x400.png" />
+    <Content Include="Content\themes\cupertino\images\ui-bg_highlight-hard_100_f2f5f7_1x100.png" />
+    <Content Include="Content\themes\cupertino\images\ui-bg_highlight-hard_70_000000_1x100.png" />
+    <Content Include="Content\themes\cupertino\images\ui-bg_highlight-soft_100_deedf7_1x100.png" />
+    <Content Include="Content\themes\cupertino\images\ui-bg_highlight-soft_25_ffef8f_1x100.png" />
+    <Content Include="Content\themes\cupertino\images\ui-icons_2694e8_256x240.png" />
+    <Content Include="Content\themes\cupertino\images\ui-icons_2e83ff_256x240.png" />
+    <Content Include="Content\themes\cupertino\images\ui-icons_3d80b3_256x240.png" />
+    <Content Include="Content\themes\cupertino\images\ui-icons_72a7cf_256x240.png" />
+    <Content Include="Content\themes\cupertino\images\ui-icons_ffffff_256x240.png" />
+    <Content Include="Content\themes\cupertino\jquery-ui.cupertino.css" />
+    <Content Include="Content\themes\cupertino\jquery-ui.cupertino.min.css" />
+    <Content Include="Content\ui-grid.css" />
+    <Content Include="Content\ui-grid.min.css" />
+    <Content Include="Content\ui-grid.svg" />
     <Content Include="css\materialize.css" />
     <Content Include="css\materialize.min.css" />
     <Content Include="favicon.ico" />
@@ -479,6 +526,10 @@
       <LastGenOutput>LungmenData.cs</LastGenOutput>
     </Content>
     <Content Include="readme.txt" />
+    <Content Include="fonts\selection.json" />
+    <Content Include="fonts\metro.woff" />
+    <Content Include="fonts\metro.ttf" />
+    <Content Include="fonts\metro.eot" />
     <Content Include="Scripts\angular-animate.js" />
     <Content Include="Scripts\angular-animate.min.js" />
     <Content Include="Scripts\angular-aria.js" />
@@ -504,24 +555,8 @@
     <Content Include="Scripts\angular-touch.min.js" />
     <Content Include="Scripts\angular.js" />
     <Content Include="Scripts\angular.min.js" />
-    <Content Include="fonts\selection.json" />
-    <Content Include="fonts\metro.woff" />
-    <Content Include="fonts\metro.ttf" />
-    <Content Include="fonts\metro.eot" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
-    <Content Include="Scripts\errors.json" />
-    <Content Include="Scripts\angular.min.js.map" />
-    <Content Include="Scripts\angular-touch.min.js.map" />
-    <Content Include="Scripts\angular-sanitize.min.js.map" />
-    <Content Include="Scripts\angular-route.min.js.map" />
-    <Content Include="Scripts\angular-resource.min.js.map" />
-    <Content Include="Scripts\angular-messages.min.js.map" />
-    <Content Include="Scripts\angular-message-format.min.js.map" />
-    <Content Include="Scripts\angular-loader.min.js.map" />
-    <Content Include="Scripts\angular-cookies.min.js.map" />
-    <Content Include="Scripts\angular-aria.min.js.map" />
-    <Content Include="Scripts\angular-animate.min.js.map" />
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
     <Content Include="fonts\glyphicons-halflings-regular.ttf" />
@@ -547,7 +582,22 @@
     <Content Include="font\roboto\Roboto-Thin.ttf" />
     <Content Include="font\roboto\Roboto-Thin.woff" />
     <Content Include="font\roboto\Roboto-Thin.woff2" />
-    <None Include="Scripts\jquery-2.1.4.intellisense.js" />
+    <Content Include="Scripts\errors.json" />
+    <Content Include="Scripts\angular.min.js.map" />
+    <Content Include="Scripts\angular-touch.min.js.map" />
+    <Content Include="Scripts\angular-sanitize.min.js.map" />
+    <Content Include="Scripts\angular-route.min.js.map" />
+    <Content Include="Scripts\angular-resource.min.js.map" />
+    <Content Include="Scripts\angular-messages.min.js.map" />
+    <Content Include="Scripts\angular-message-format.min.js.map" />
+    <Content Include="Scripts\angular-loader.min.js.map" />
+    <Content Include="Scripts\angular-cookies.min.js.map" />
+    <Content Include="Scripts\angular-aria.min.js.map" />
+    <Content Include="Scripts\angular-animate.min.js.map" />
+    <Content Include="Content\ui-grid.woff" />
+    <Content Include="Content\ui-grid.ttf" />
+    <Content Include="Content\ui-grid.eot" />
+    <None Include="Scripts\jquery-1.11.3.intellisense.js" />
     <Content Include="Scripts\i18n\angular-locale_aa-dj.js" />
     <Content Include="Scripts\i18n\angular-locale_aa-er.js" />
     <Content Include="Scripts\i18n\angular-locale_aa-et.js" />
@@ -1292,10 +1342,9 @@
     <Content Include="Scripts\i18n\angular-locale_zh.js" />
     <Content Include="Scripts\i18n\angular-locale_zu-za.js" />
     <Content Include="Scripts\i18n\angular-locale_zu.js" />
-    <Content Include="Scripts\jquery-2.1.4.js" />
-    <Content Include="Scripts\jquery-2.1.4.min.js" />
-    <Content Include="Scripts\jquery-2.1.4.min.map" />
-    <None Include="Scripts\jquery.validate-vsdoc.js" />
+    <Content Include="Scripts\jquery-1.11.3.js" />
+    <Content Include="Scripts\jquery-1.11.3.min.js" />
+    <Content Include="Scripts\jquery-1.11.3.min.map" />
     <Content Include="Scripts\jquery-ui-1.11.4.js" />
     <Content Include="Scripts\jquery-ui-1.11.4.min.js" />
     <Content Include="Scripts\jquery.easing.1.3.js" />
@@ -1303,6 +1352,7 @@
     <Content Include="Scripts\jquery.signalR-2.2.0.min.js" />
     <Content Include="Scripts\jquery.unobtrusive-ajax.js" />
     <Content Include="Scripts\jquery.unobtrusive-ajax.min.js" />
+    <None Include="Scripts\jquery.validate-vsdoc.js" />
     <Content Include="Scripts\jquery.validate.js" />
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
@@ -1319,6 +1369,8 @@
     <Content Include="Scripts\respond.matchmedia.addListener.js" />
     <Content Include="Scripts\respond.matchmedia.addListener.min.js" />
     <Content Include="Scripts\respond.min.js" />
+    <Content Include="Scripts\ui-grid.js" />
+    <Content Include="Scripts\ui-grid.min.js" />
     <Content Include="Scripts\_references.js" />
     <Content Include="Views\FoxAppSoftwares\FoxAppDetails.cshtml">
       <SubType>Code</SubType>
@@ -1380,7 +1432,6 @@
     <Content Include="Views\FoxWorkStations\InstalledSoftwaresByWorkStationId.cshtml" />
     <Content Include="Views\FoxSoftwares\Index.cshtml" />
     <Content Include="Views\FoxSoftwares\InstalledInWorkstations.cshtml" />
-    <Content Include="Scripts\version.json" />
     <Content Include="Views\User\EditUser.cshtml" />
     <Content Include="Views\User\ListOfUsers.cshtml" />
     <Content Include="Views\Role\CreateRole.cshtml" />
@@ -1396,6 +1447,20 @@
     <Content Include="Views\Angular\Index.cshtml" />
     <Content Include="Views\ChangeRequest\AngularForm.cshtml" />
     <Content Include="Views\FoxSoftwares\ChangeRequestHistory.cshtml" />
+    <Content Include="Views\Angular\FormTest.cshtml" />
+    <Content Include="Views\Account\EmailNotConfirmMessage.cshtml" />
+    <Content Include="Views\Account\EmailLinkPage.cshtml" />
+    <Content Include="Views\ChangeRequest\_ChangeDeltasForModification.cshtml" />
+    <Content Include="Views\Angular\Home.cshtml" />
+    <Content Include="Views\Angular\Second.cshtml" />
+    <Content Include="Views\Angular\Third.cshtml" />
+    <Content Include="Scripts\version.json" />
+    <Content Include="Views\ChangeRequest\SearchChangeRequest.cshtml" />
+    <Content Include="Views\ChangeRequest\ChangeRequestDetail.cshtml" />
+    <Content Include="Views\ChangeRequest\_GetAngularForm.cshtml" />
+    <Content Include="Views\ChangeRequest\_ConfirmFormData.cshtml" />
+    <Content Include="Views\User\DeleteUser.cshtml" />
+    <Content Include="Views\ChangeRequest\DeleteChangeRequest.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -1444,8 +1509,14 @@
     <EmbeddedResource Include="MigrationForChangeRequestData\201509140908439_RemoveChangeStatusesCollectionInChangeStatusType.resx">
       <DependentUpon>201509140908439_RemoveChangeStatusesCollectionInChangeStatusType.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="MigrationForChangeRequestData\201510120505576_AddChangeRequestMessage.resx">
+      <DependentUpon>201510120505576_AddChangeRequestMessage.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="MigrationForIdentity\201508210117075_InitialCreate.resx">
       <DependentUpon>201508210117075_InitialCreate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MigrationForIdentity\201510070520382_AddChtAliasColumn.resx">
+      <DependentUpon>201510070520382_AddChtAliasColumn.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

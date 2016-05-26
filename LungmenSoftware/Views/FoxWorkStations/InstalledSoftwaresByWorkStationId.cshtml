@@ -1,7 +1,7 @@
 ﻿@model LungmenSoftware.Models.ViewModel.FoxSoftView
 
 @{
-    ViewBag.Title = "InstalledSoftware";
+    ViewBag.Title = "已安裝軟體";
 }
 
 
@@ -21,9 +21,11 @@
                 <th>
                     @Html.DisplayNameFor(model => model.APList[0].Note)
                 </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.APList[0].IsLocked)
-                </th>
+                @*
+    <th>
+        @Html.DisplayNameFor(model => model.APList[0].IsLocked)
+    </th>
+                *@
                 <th></th>
             </tr>
 
@@ -33,7 +35,7 @@
                 {
                     <tr>
                         <td>
-                            @Html.HiddenFor(modelItem => item.SoftwareId)
+                            @Html.HiddenFor(modelItem => item.FoxSoftwareId)
                             @Html.DisplayFor(modelItem => item.SoftwareName)
                         </td>
                         <td>
@@ -42,19 +44,20 @@
                         <td>
                             @Html.DisplayFor(modelItem => item.Note)
                         </td>
+                        @*
+    <td>
+        @if (item.IsLocked == false)
+        {
+            <span>否</span>
+        }
+        else
+        {
+            <span>是</span>
+        }
+    </td>
+                        *@
                         <td>
-                            @if (item.IsLocked == false)
-                            {
-                                <span>否</span>
-                            }
-                            else
-                            {
-                                <span>是</span>
-                            }
-                        </td>
-                        <td>
-                            @Html.ActionLink("詳細資料", "SoftwareDetail", new {id = item.SoftwareId})
-
+                            <a href="/foxsoftwares/changerequesthistory?k=@item.JoinTableId">軟體修改歷史紀錄</a>
                         </td>
                     </tr>
                 }
@@ -87,9 +90,11 @@
                 <th>
                     @Html.DisplayNameFor(model => model.OSList[0].Note)
                 </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.OSList[0].IsLocked)
-                </th>
+                @*
+    <th>
+        @Html.DisplayNameFor(model => model.OSList[0].IsLocked)
+    </th>
+                *@
                 <th></th>
             </tr>
             @if (!Model.OSList.Count.Equals(0))
@@ -98,7 +103,7 @@
                 {
                     <tr>
                         <td>
-                            @Html.HiddenFor(modelItem => item.SoftwareId)
+                            @Html.HiddenFor(modelItem => item.FoxSoftwareId)
                             @Html.DisplayFor(modelItem => item.SoftwareName)
                         </td>
                         <td>
@@ -107,18 +112,20 @@
                         <td>
                             @Html.DisplayFor(modelItem => item.Note)
                         </td>
+                    @*
+    <td>
+        @if (item.IsLocked == false)
+        {
+            <span>否</span>
+        }
+        else
+        {
+            <span>是</span>
+        }
+    </td>
+                    *@
                         <td>
-                            @if (item.IsLocked == false)
-                            {
-                                <span>否</span>
-                            }
-                            else
-                            {
-                                <span>是</span>
-                            }
-                        </td>
-                        <td>
-                            @Html.ActionLink("詳細資料", "SoftwareDetail", new { id = item.SoftwareId })
+                            <a href="/foxsoftwares/changerequesthistory?k=@item.JoinTableId">軟體修改歷史紀錄</a>
                         </td>
                     </tr>
                 }

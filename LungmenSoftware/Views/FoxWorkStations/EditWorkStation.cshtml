@@ -1,43 +1,42 @@
-﻿@model LungmenSoftware.Models.FoxWorkStation
+﻿@model LungmenSoftware.Models.ViewModel.WorkStationViewModelForEdit
 
 @{
-    ViewBag.Title = "EditWorkStation";
+    ViewBag.Title = "修改工作站相關資料";
 }
 
-<h2>EditWorkStation</h2>
+<h2>@ViewBag.Title</h2>
 
 
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
-    
+
     <div class="form-horizontal">
-        <h4>FoxWorkStation</h4>
-        <hr />
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        @Html.HiddenFor(model => model.WorkStationId)
+        <hr/>
+        @Html.ValidationSummary(true, "", new {@class = "text-danger"})
+        @Html.HiddenFor(model => model.FoxWorkStation.WorkStationId)
 
         <div class="form-group">
-            @Html.LabelFor(model => model.WorkStationName, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.FoxWorkStation.WorkStationName, htmlAttributes: new {@class = "control-label col-md-2"})
             <div class="col-md-10">
-                @Html.EditorFor(model => model.WorkStationName, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.WorkStationName, "", new { @class = "text-danger" })
+                @Html.EditorFor(model => model.FoxWorkStation.WorkStationName, new {htmlAttributes = new {@class = "form-control"}})
+                @Html.ValidationMessageFor(model => model.FoxWorkStation.WorkStationName, "", new {@class = "text-danger"})
             </div>
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.Owner, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.FoxWorkStation.Owner, htmlAttributes: new {@class = "control-label col-md-2"})
             <div class="col-md-10">
-                @Html.EditorFor(model => model.Owner, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Owner, "", new { @class = "text-danger" })
+                @Html.EditorFor(model => model.FoxWorkStation.Owner, new {htmlAttributes = new {@class = "form-control"}})
+                @Html.ValidationMessageFor(model => model.FoxWorkStation.Owner, "", new {@class = "text-danger"})
             </div>
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.WorkStationHardwareTypeId, "WorkStationHardwareTypeId", htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.FoxWorkStation.WorkStationHardwareTypeId, htmlAttributes: new {@class = "control-label col-md-2"})
             <div class="col-md-10">
-                @Html.EditorFor(model => model.WorkStationHardwareTypeId, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.WorkStationHardwareTypeId, "", new { @class = "text-danger" })
+                @Html.DropDownListFor(model => model.FoxWorkStation.WorkStationHardwareTypeId, Model.Types, new {@class = "form-control"} )
+                @Html.ValidationMessageFor(model => model.FoxWorkStation.WorkStationHardwareTypeId, "", new { @class = "text-danger" })
             </div>
         </div>
 

@@ -61,9 +61,9 @@
             <td>
                 @Html.ActionLink("修改", "EditUser", new {Id=item.UserId})
                 <br/>
-            @*
-    @Html.ActionLink("停用帳號","DeleteUser", new {Id=item.Id})
-            *@
+                @if (User.IsInRole("AccountAdmin")) { 
+                    @Html.ActionLink("刪除使用者","DeleteUser", new {Id=item.UserId})
+                }
             </td>
         </tr>
     }

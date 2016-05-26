@@ -6,11 +6,10 @@
 
 <h2>軟體修改清單</h2>
 
-@Html.ActionLink("新增軟體修改", "AddChangeRequest", null, new {@class="btn btn-primary"})
-@Html.ActionLink("歷史紀錄", "ChangeRequestHistorialData", null, new {@class="btn btn-max"})
+@Html.ActionLink("新增軟體修改", "AngularForm", null, new {@class="btn btn-primary"})
 <br/>
 
-<table class="table">
+<table class="table table-bordered table-condensed">
     <tr>
         <th>
             @Html.DisplayNameFor(model => model.ChangeRequests[0].SerialNumber)
@@ -34,7 +33,7 @@
 @foreach (var item in Model.ChangeRequests) {
     <tr>
         <td>
-            @item.SerialNumber
+            @Html.ActionLink(item.SerialNumber, "ChangeRequestDetail", new {id=item.ChangeRequestId})
         </td>
         <td>
             @item.Description
@@ -62,7 +61,10 @@
                 @Html.ActionLink("核准", "ReviewChangeRequest",
                     new { id = item.ChangeRequestId }, new { @class = "btn btn-primary" })
             }
-
+            @if (User.IsInRole("AccountAdmin"))
+            {
+                @Html.ActionLink("刪除軟體變更", "DeleteChangeRequest", new {id=item.ChangeRequestId})
+            }
         </td>
 
 

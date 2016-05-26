@@ -18,8 +18,8 @@ namespace LungmenSoftware.Models.Service
 
         public List<ChangeRequestInfo> GetChangeRequestHistory()
         {
-            var query = from cr in db.ChangeRequests
-                        join s in db.ChangeRequestStatuses
+            var query = from cr in db.ChangeRequests.Where(c=>c.IsActive==false)
+                        join s in db.ChangeRequestStatuses.Where(s=>s.IsCurrent==true)
                             on cr.ChangeRequestId equals s.ChangeRequestId
                         join t in db.ChangeRequestStatusTypes
                             on s.StatusTypeId equals t.StatusTypeId
@@ -96,7 +96,7 @@ namespace LungmenSoftware.Models.Service
 
         public List<ChangeRequestInfo> GetChangeRequestList()
         {
-            var query = from cr in db.ChangeRequests
+            var query = from cr in db.ChangeRequests.Where(r=>r.IsActive==true)
                 join s in db.ChangeRequestStatuses.Where(s=>s.EndDate ==null)
                     on cr.ChangeRequestId equals s.ChangeRequestId
                 join t in db.ChangeRequestStatusTypes
@@ -134,7 +134,7 @@ namespace LungmenSoftware.Models.Service
             {
                 new ChangeRequestStatus()
                 {
-                    InitialDate = DateTime.Today,
+                    InitialDate = DateTime.Now,
                     ChangeRequestId = crEntry.ChangeRequestId,
                     ChangeRequest = crEntry,
                     StatusTypeId = 1,
@@ -153,14 +153,14 @@ namespace LungmenSoftware.Models.Service
             ChangeRequest cr = new ChangeRequest();
             cr.ChangeRequestId = Guid.NewGuid();
             cr.CreatedBy = createdBy;
-            cr.CreateDate = DateTime.Today;
-            cr.LastModifiedDate = DateTime.Today;
+            cr.CreateDate = DateTime.Now;
+            cr.LastModifiedDate = DateTime.Now;
             cr.SerialNumber = GetSerialNumber();
             cr.ChangeRequestStatuses = new List<ChangeRequestStatus>()
             {
                 new ChangeRequestStatus()
                 {
-                    InitialDate = DateTime.Today,
+                    InitialDate = DateTime.Now,
                     ChangeRequestId = cr.ChangeRequestId,
                     ChangeRequest = cr,
                     StatusTypeId = 1,
@@ -172,7 +172,7 @@ namespace LungmenSoftware.Models.Service
         }
 
         //For AngularJS
-        public bool AddChangeRequestRecord(ChangeRequest crEntry)
+        public ChangeRequest AddChangeRequestRecord(ChangeRequest crEntry)
         {
             foreach (var item in crEntry.ChangeDeltas)
             {
@@ -180,14 +180,26 @@ namespace LungmenSoftware.Models.Service
                 item.ChangeRequestId = crEntry.ChangeRequestId;
                 item.ChangeDeltaId = Guid.NewGuid();
             }
+            db.ChangeRequestMessages.Add(new ChangeRequestMessage()
+            {
+                ChangeRequest = crEntry,
+                ChangeRequestId = crEntry.ChangeRequestId,
+                CreateBy = crEntry.CreatedBy,
+                CreateTime = DateTime.Now,
+                Message = "軟體變更需求送審"
+            });
+
+
             db.ChangeRequests.Add(crEntry);
             if (db.SaveChanges() != -1)
             {
-                return true;
+                return db.ChangeRequests
+                    .Include(c=>c.ChangeDeltas.Select(d=>d.RevInfos))
+                    .First(c => c.ChangeRequestId.Equals(crEntry.ChangeRequestId));
             }
             else
             {
-                return false;
+                return null;
             }
 
         }
@@ -215,7 +227,7 @@ namespace LungmenSoftware.Models.Service
             {
                 if (status.EndDate == null)
                 {
-                    status.EndDate=DateTime.Today;
+                    status.EndDate=DateTime.Now;
                     status.IsCurrent = false;
                 }
             }
@@ -229,12 +241,16 @@ namespace LungmenSoftware.Models.Service
 
         public string GetReviewer()
         {
-            //var reviewer = _identityDb.Roles.Single(r => r.Name.Equals("Reviewer"));
+            //var reviewers = (from r in _identityDb.Roles.Where(r => r.Name.Equals("Reviewer"))
+            //    join jt in _identityDb.ApplicationUserRoles
+            //        on r.Id equals jt.RoleId
+            //    join u in _identityDb.Users
+            //        on jt.UserId equals u.Id
+            //    select u).ToList();
 
-            //var query = from userRoles in reviewer.Users
-            //            join users in _identityDb.Users on userRoles.UserId equals users.Id
-            //            select users;
+            //Random seed=new Random();
 
+            //var reviewer=reviewers[seed.Next(0, reviewers.Count)].UserName;
             //return query.Last().UserName;
 
             return "test2@taipower.com.tw";
@@ -248,10 +264,10 @@ namespace LungmenSoftware.Models.Service
             {
                 ChangeRequestId = cr.ChangeRequestId,
                 ChangeRequest = cr,
-                ChangeDate = DateTime.Today,
+                ChangeDate = DateTime.Now,
                 StatusTypeId = 2,
                 ChangeRequestStatusType = db.ChangeRequestStatusTypes.Find(2),
-                InitialDate = DateTime.Today,
+                InitialDate = DateTime.Now,
                 IsCurrent = true
             });
 
@@ -266,10 +282,10 @@ namespace LungmenSoftware.Models.Service
             {
                 ChangeRequestId = cr.ChangeRequestId,
                 ChangeRequest = cr,
-                ChangeDate = DateTime.Today,
+                ChangeDate = DateTime.Now,
                 StatusTypeId = 1,
                 ChangeRequestStatusType = db.ChangeRequestStatusTypes.Find(1),
-                InitialDate = DateTime.Today,
+                InitialDate = DateTime.Now,
                 IsCurrent = true
             });
 
@@ -279,18 +295,18 @@ namespace LungmenSoftware.Models.Service
         public void StatusUpdateForApproval(ChangeRequest cr, string approver)
         {
             UpdatePreviousStatus(cr);
-
+            cr.Owner = "已核可";
             cr.IsActive = false;
             cr.ApprovedBy = approver;
             db.ChangeRequestStatuses.Add(new ChangeRequestStatus()
             {
                 ChangeRequestId = cr.ChangeRequestId,
                 ChangeRequest = cr,
-                ChangeDate = DateTime.Today,
+                ChangeDate = DateTime.Now,
                 StatusTypeId = 3,
                 ChangeRequestStatusType = db.ChangeRequestStatusTypes.Find(3),
-                EndDate = DateTime.Today,
-                InitialDate = DateTime.Today,
+                EndDate = DateTime.Now,
+                InitialDate = DateTime.Now,
                 IsCurrent = true
             });
 
@@ -302,16 +318,16 @@ namespace LungmenSoftware.Models.Service
             UpdatePreviousStatus(cr);
 
             cr.IsActive = false;
-
+            cr.Owner = "已取消";
             db.ChangeRequestStatuses.Add(new ChangeRequestStatus()
             {
                 ChangeRequestId = cr.ChangeRequestId,
                 ChangeRequest = cr,
-                ChangeDate = DateTime.Today,
+                ChangeDate = DateTime.Now,
                 StatusTypeId = 4,
                 ChangeRequestStatusType = db.ChangeRequestStatusTypes.Find(4),
-                EndDate = DateTime.Today,
-                InitialDate = DateTime.Today,
+                EndDate = DateTime.Now,
+                InitialDate = DateTime.Now,
 
             });
 
@@ -321,7 +337,7 @@ namespace LungmenSoftware.Models.Service
 
         public string GetSerialNumber()
         {
-            return String.Format("{0:yyyyMMdd}", DateTime.Today) + "E" + new Random().Next(1000, 9999);
+            return String.Format("{0:yyyyMMdd}", DateTime.Today) + "E0" + new Random().Next(000, 999);
         }
 
 
@@ -333,26 +349,26 @@ namespace LungmenSoftware.Models.Service
             }
             var deltas =
                 db.ChangeDeltas.Include(d => d.RevInfos)
-                .Where(d => d.ChangeRequestId.Equals(crEntry.ChangeRequestId));
-
-
+                .Where(d => d.ChangeRequestId.Equals(crEntry.ChangeRequestId)).ToList();
 
             foreach (var delta in deltas)
             {
+                
                 var currentSoftData=from s in ldb.FoxSoftwares.Where(s=>s.FoxSoftwareId==delta.FoxSoftwareId)
                         join j in ldb.WKAndFoxJoinTables on s.FoxSoftwareId equals j.FoxSoftwareId
                                     where j.Rev.Equals(delta.OriginalValue)
                                     select j;
 
-                if(delta.RevInfos.Count == currentSoftData.Count()) { 
-                    foreach (var item in delta.RevInfos)
-                    {
-                        var jointable = ldb.WKAndFoxJoinTables.Find(item.JoinTableId);
-                        jointable.Rev = delta.NewValue;
-                    }
+
+                foreach (var item in delta.RevInfos)
+                {
+                    var jointable = ldb.WKAndFoxJoinTables.Find(item.JoinTableId);
+                    jointable.Rev = delta.NewValue;
                 }
+            
 
             }
+
             if (ldb.SaveChanges() != -1)
             {
                 return true;
@@ -365,7 +381,183 @@ namespace LungmenSoftware.Models.Service
         }
 
 
-        
+        public ChangeRequest FindDetailCRByChangeRequestId(Guid id)
+        {
+            //var query = from cr in db.ChangeRequests
+            //    join s in db.ChangeRequestStatuses
+            //        on cr.ChangeRequestId equals s.ChangeRequestId
+            //    join t in db.ChangeRequestStatusTypes.Where(t=>t.StatusTypeId==1)
+            //        on s.StatusTypeId equals t.StatusTypeId
+            //    select new ChangeRequestInfo()
+            //    {
+
+            //    };
+
+            var query = db.ChangeRequests.Where(c=>c.ChangeRequestId.Equals(id))
+                .Include(c=>c.ChangeDeltas.Select(d=>d.RevInfos))
+                .Include(c=>c.ChangeRequestMessages)
+                .Include(c=>c.ChangeRequestStatuses.Select(s=>s.ChangeRequestStatusType))
+                .FirstOrDefault();
+            
+            return query;
+        }
+
+        public void UpdateChangeDeltas(Guid changeRequestId, List<ChangeDelta> changeDeltas)
+        {
+            var deltas = db.ChangeDeltas.Where(d => d.ChangeRequestId.Equals(changeRequestId))
+                .Include(d=>d.RevInfos).ToList();
+                //join d in db.ChangeDeltas
+                //    on c.ChangeRequestId equals d.ChangeRequestId
+                //join r in db.RevInfos
+                //    on d.ChangeDeltaId equals r.ChangeDeltaId
+                //select d;
+
+            if (deltas.Count() != changeDeltas.Count())
+            {
+                throw new Exception("The Count of ChangeDeltas Has Errors");
+            }
+
+            for (int i=0;i<deltas.Count();i++)
+            {
+                deltas[i].NewValue = changeDeltas[i].NewValue;
+            }
+
+        }
+
+        public void AddChangeRequestMessage(ChangeRequestMessage crm)
+        {
+            db.ChangeRequestMessages.Add(crm);
+            db.SaveChanges();
+        }
+
+        public List<ChangeRequestInfo> SearchChangeRequestsByForm(ChangeRequestSearchViewModel vm)
+        {
+           
+
+            var preChangeRequests =db.ChangeRequests.Where(c => 
+                    (String.IsNullOrEmpty(vm.SerialNumber) || c.SerialNumber.Contains(vm.SerialNumber)));
+            preChangeRequests = preChangeRequests.Where(c=> 
+                    (String.IsNullOrEmpty(vm.CreatedBy) || c.CreatedBy.Contains(vm.CreatedBy)));
+
+            preChangeRequests = preChangeRequests.Where(c =>
+                    (String.IsNullOrEmpty(vm.Description) || c.Description.Contains(vm.Description)));
+            //preChangeRequests = vm.IncludingCompleted == true
+            //    ? preChangeRequests
+            //    : preChangeRequests.Where(c => c.IsActive == true);
+
+            if (!String.IsNullOrEmpty(vm.CreateStartDate))
+            {
+                DateTime sd = Convert.ToDateTime(vm.CreateStartDate);
+                preChangeRequests = preChangeRequests.Where(c=>c.CreateDate >= sd);
+            }
+
+            if (!String.IsNullOrEmpty(vm.CreateEndDate))
+            {
+                DateTime ed = Convert.ToDateTime(vm.CreateEndDate);
+                preChangeRequests = preChangeRequests.Where(c =>c.CreateDate <= ed);
+            }
+
+            //||
+            //(String.IsNullOrEmpty(vm.CreateStartDate) || c.CreateDate >= Convert.ToDateTime(vm.CreateStartDate)) &&
+            //(String.IsNullOrEmpty(vm.CreateEndDate)|| c.CreateDate<=Convert.ToDateTime(vm.CreateEndDate))
+            //);
+            IQueryable<ChangeRequestStatus> preChangeRequestStatuses=db.ChangeRequestStatuses.Where(s => s.IsCurrent==true);
+            IQueryable<ChangeRequestStatusType> preChangeRequestStatusTypes = db.ChangeRequestStatusTypes;
+            IQueryable<ChangeRequestStatus> tempQuery = null;
+            if (vm.Status.Any(s => s.IsChecked==true))
+            {
+                 foreach (var item in vm.Status)
+                {
+                    if (item.IsChecked)
+                    {
+                        if (tempQuery == null)
+                        {
+                            tempQuery = preChangeRequestStatuses.Where(s => s.StatusTypeId == item.Value);
+                        }
+                        else { 
+                        tempQuery = tempQuery
+                            .Concat(preChangeRequestStatuses.Where(s => s.StatusTypeId == item.Value));
+                        }
+                    }
+                }
+                preChangeRequestStatuses = tempQuery;
+            }
+
+            
+
+
+            var query= from cr in preChangeRequests
+                join s in preChangeRequestStatuses on cr.ChangeRequestId equals s.ChangeRequestId
+                join t in preChangeRequestStatusTypes on s.StatusTypeId equals t.StatusTypeId
+                       select new ChangeRequestInfo
+                       {
+                           ChangeRequestId = cr.ChangeRequestId,
+                           ApprovedBy = cr.ApprovedBy,
+                           CreatedBy = cr.CreatedBy,
+                           ReviewBy = cr.ReviewBy,
+                           SerialNumber = cr.SerialNumber,
+                           StatusName = t.StatusName,
+                           CreateDate = cr.CreateDate,
+                           Description = cr.Description,
+                           Owner = cr.Owner,
+                           StatusTypeId = s.StatusTypeId,
+                           EndDate = s.EndDate
+                       };
+
+
+            //var query = from cr in db.ChangeRequests
+            //            join s in db.ChangeRequestStatuses
+            //                on cr.ChangeRequestId equals s.ChangeRequestId
+            //            join t in db.ChangeRequestStatusTypes
+            //                on s.StatusTypeId equals t.StatusTypeId
+            //            join d in db.ChangeDeltas
+            //                on cr.ChangeRequestId equals d.ChangeRequestId
+            //            join i in db.RevInfos
+            //                on d.ChangeDeltaId equals i.ChangeDeltaId
+            //            where (String.IsNullOrEmpty(vm.SerialNumber) || cr.SerialNumber.Contains(vm.SerialNumber)) &&
+            //                  (String.IsNullOrEmpty(vm.CreatedBy) || cr.CreatedBy.Contains(vm.CreatedBy)) &&
+            //                  s.StatusTypeId == vm.StatusTypeId &&
+            //                  cr.IsActive.Equals(vm.IsActive) &&
+            //                  (String.IsNullOrEmpty(vm.SoftwareName) || i.SoftwareName.Equals(vm.SoftwareName)) 
+            //&&
+            //      ((String.IsNullOrEmpty(vm.CreateStartDate)|| cr.CreateDate>= Convert.ToDateTime(vm.CreateStartDate)) &&
+            //      (String.IsNullOrEmpty(vm.CreateEndDate)|| cr.CreateDate<=Convert.ToDateTime(vm.CreateEndDate)))
+            //orderby cr.LastModifiedDate descending
+            //select new ChangeRequestInfo
+            //{
+            //    ChangeRequestId = cr.ChangeRequestId,
+            //    ApprovedBy = cr.ApprovedBy,
+            //    CreatedBy = cr.CreatedBy,
+            //    LastModifiedDate = cr.LastModifiedDate,
+            //    ReviewBy = cr.ReviewBy,
+            //    SerialNumber = cr.SerialNumber,
+            //    InitialDate = s.InitialDate,
+            //    StatusName = t.StatusName,
+            //    CreateDate = cr.CreateDate,
+            //    Description = cr.Description,
+            //    Owner = cr.Owner,
+            //    StatusTypeId = t.StatusTypeId
+            //};
+            return query.ToList();
+        }
+
+        public List<CheckBoxListModel> GetChangeRequestStatusTypessForCheckBox()
+        {
+            var checkboxList= db.ChangeRequestStatusTypes.Select(t => new CheckBoxListModel()
+            {
+                DisplayName = t.StatusName,
+                Value = t.StatusTypeId,
+                IsChecked = false
+            }).ToList();
+
+            return checkboxList;
+        }
+
+        public void DeleteChangeRequest(ChangeRequest r)
+        {
+            db.ChangeRequests.Remove(r);
+            db.SaveChanges();
+        }
     }
 
    

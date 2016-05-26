@@ -23,21 +23,17 @@
         <th>
             @Html.DisplayNameFor(model => model.ChangeRequests[0].InitialDate)
         </th>
-        <th>
-            @Html.DisplayNameFor(model => model.ChangeRequests[0].ChangeDate)
-        </th>
+        
         <th>
             @Html.DisplayNameFor(model => model.ChangeRequests[0].EndDate)
         </th>
-        <th>
-            狀態已完成
-        </th>
+        
     </tr>
 
 @foreach (var item in Model.ChangeRequests) {
     <tr>
         <td>
-            @item.SerialNumber
+            @Html.ActionLink(item.SerialNumber, "ChangeRequestDetail", new {id=item.ChangeRequestId}) 
         </td>
         <td>
             @item.Description
@@ -52,21 +48,9 @@
             @item.InitialDate
         </td>
         <td>
-            @item.ChangeDate
-        </td>
-        <td>
             @item.EndDate
         </td>
-        <td>
-            @if (item.EndDate == null)
-            {
-                <span>否</span>
-            }
-            else
-            {
-                <span>是</span>
-            }
-        </td>
+        
     </tr>
 }
 

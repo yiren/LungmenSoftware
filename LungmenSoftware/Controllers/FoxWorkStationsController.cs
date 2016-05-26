@@ -37,30 +37,35 @@ namespace LungmenSoftware.Controllers
         public ActionResult EditWorkStation(int id)
         {
             var wk = wkService.GetWorkStationById(id);
-            ViewBag.StationTypes = wkService.GetWKHardareTypes().Select(
-                d=> new SelectListItem()
-                {
-                    Text = d.HardwareTypeName,
-                    Value = d.HardwareTypeName
-                }).OrderBy(o=>o.Value);
             if (wk == null)
             {
                 return HttpNotFound();
             }
-            return View(wk);
+            WorkStationViewModelForEdit dataForView=new WorkStationViewModelForEdit()
+            {
+                
+                FoxWorkStation=wk,
+                Types= wkService.GetWKHardareTypes().Select(
+                d=> new SelectListItem()
+                    {
+                        Text = d.HardwareTypeName,
+                        Value = d.Id.ToString()
+                    }).OrderBy(o=>o.Value)
+                };
+            return View(dataForView);
         }
 
         [HttpPost]
-        public ActionResult EditWorkStation(FoxWorkStation wkToUpdate)
+        public ActionResult EditWorkStation(WorkStationViewModelForEdit vm)
         {
-            var wk = wkService.GetWorkStationById(wkToUpdate.WorkStationId);
+            var wk = wkService.GetWorkStationById(vm.FoxWorkStation.WorkStationId);
             if (wk == null)
             {
                 return HttpNotFound();
             }
-            wk.WorkStationName = wkToUpdate.WorkStationName;
-            wk.WorkStationHardwareTypeId = wkToUpdate.WorkStationHardwareTypeId;
-            wk.Owner = wkToUpdate.Owner;
+            wk.WorkStationName = vm.FoxWorkStation.WorkStationName;
+            wk.WorkStationHardwareTypeId = vm.FoxWorkStation.WorkStationHardwareTypeId;
+            wk.Owner = vm.FoxWorkStation.Owner;
             if (ModelState.IsValid)
             {
                 wkService.UpdateWorkStationInfo(wk);

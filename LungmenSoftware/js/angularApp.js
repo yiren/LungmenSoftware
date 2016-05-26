@@ -1,12 +1,67 @@
 ﻿(function() {
-    angular.module('simpleApp', [])
-    .controller('MainCtrl', ['$http','$log', '$scope', MainCtrl]
+    angular.module('simpleApp', ['ngRoute', 'ngAnimate'])
+    .controller('MainCtrl', ['$http', '$log', '$scope', 'dataService', MainCtrl])
+    .controller('ConfirmCtrl',['$log','dataService', ConfirmCtrl])
+    .factory('dataService', ['$http', '$log', dataService])
+    .config(['$routeProvider', function ($routeProvider) {
+        $routeProvider.when('/', {
+            templateUrl: "/changerequest/getangularform",
+            controller: "MainCtrl",
+            controllerAs:"m"
+
+            })
+            .when('/confirm', {
+                templateUrl: "/changerequest/confirmformdata",
+                controller: "ConfirmCtrl",
+                controllerAs: "c",
+                resolve: dataService.postData
+            })
+            
+            .otherwise({ redirectTo: '/' });
+    }])
+    ;
+
+    function dataService($http,$log) {
+        var postPromise;
         
-     );
+        function getPostPromise() {
+            return postPromise;
+        }
 
-    
+        function postDataToServer(data) {
+            $log.info("Invoke Function In dataService");
+            postPromise = $http.post('/changerequest/AddNewChangeRequestRecord', data);
+            $log.info(postPromise);
+            return postPromise;
+        }
 
-    function MainCtrl($http, $log, $scope) {
+        return {
+            postData: postDataToServer,
+            getPostPromise:getPostPromise
+        };
+    }
+
+    function ConfirmCtrl($log, dataService) {
+        var vm = this;
+        vm.message = "等候伺服器回應";
+        $log.info("From Confirm Controller------");
+        
+        dataService.getPostPromise().then(function (response) {
+            $log.info(response.data);
+            vm.message = "新增案件成功";
+            vm.data = response.data;
+        });
+
+
+
+        //dataService.postData.then(function(response) {
+        //    vm.data = response.data;
+        //}, function(errResponse) {
+        //    vm.data = errResponse;
+        //});
+    }
+
+    function MainCtrl($http, $log, $scope, dataService) {
         var vm = this;
         vm.message = 'Before Getting Data';
         //vm.newWorkstation = {};
@@ -112,7 +167,7 @@
                    */
                    //vm.revStations = [];
                    vm.data = response.data;
-                    $log.info(vm.data);
+                    
                    angular.forEach(vm.data, function (value, key) {
                        angular.forEach(value.RevInfos, function (value, key) {
                            value.isChecked = true;
@@ -120,7 +175,7 @@
 
 
                    });
-                   
+                   $log.info(vm.data);
 
                });
         }
@@ -220,12 +275,12 @@
         }
 
         
-
+        /*
         vm.showChecked = function (selected) {
 
             $log.info(selected);
         }
-
+        */
         vm.addToModList=function(originalValue, newValue, revInfos) {
             var revInfoForUpdate=[];
 
@@ -243,20 +298,19 @@
                 RevInfos:revInfoForUpdate
             };
             vm.modList.push(modItem);
-            //$log.info(vm.modList);
+            $log.info(vm.modList);
         }
-        
+        /*
         vm.removeWKFromChange = function (revInfos, index) {
-            //$log.info(index);
-            //$log.info(revInfos[index].isChecked);
+            $log.info(index);
+            //$log.info(revInfos);
             if (revInfos[index].isChecked === false) {
                 revInfos[index].isChecked = false;
             } else {
                 revInfos[index].isChecked = true;
-            }
-            
-            
+            }  
         }
+        */
 
         vm.clearModList=function() {
             vm.modList = [];
@@ -273,36 +327,42 @@
         vm.postModList = function () {
             vm.changeRequestData.ChangeDeltas = vm.modList;
             //$log.info(vm.changeRequestData);
-            $log.info(vm.changeRequestData);
-            $http.post('/changerequest/AddNewChangeRequestRecord', vm.changeRequestData)
-                .then(function(response) {
-                    $log.info(response.data);
-                }, function(errResponse) {
-                    $log.info(errResponse);
-                });
-            
+            dataService.postData(vm.changeRequestData);
+            //$http.post('/changerequest/AddNewChangeRequestRecord', vm.changeRequestData)
+            //    .then(function(response) {
+            //        $log.info(response.data);
+            //        $scope.NewRecord = response.data;
+            //    }, function(errResponse) {
+            //        $log.info(errResponse);
+            //    });            
         }
 
-        vm.isDividedByFive=function(index) {
+
+
+        vm.isDividedByFive = function (index) {
             if ((index + 1) % 5 == 0) {
+                //$log.info(index);
                 return true;
             } else {
                 return false;
             }
         }
+        
 
+        //Legacy Code
         vm.modifyRev=function(record, rev) {
             //vm.selectedSoftwareInfo;
             var softRevInfo = {
                 FoxSoftwareId: record.FoxSoftwareId,
                 Rev:rev
             };
-            $log.info(softRevInfo);
-            $http.post('/foxsoftwares/UpdateSoftwareRev', softRevInfo)
-                .then(function(response) {
-                    $log.info(response);
-                    vm.selectedSoftwareRev = response.data.Rev;
-                });
+            //$log.info(softRevInfo);
+            $scope.posted=dataService.postData(softRevInfo);
+            //$http.post('/foxsoftwares/UpdateSoftwareRev', softRevInfo)
+            //    .then(function(response) {
+            //        $log.info(response);
+            //        vm.selectedSoftwareRev = response.data.Rev;
+            //    });
         }
     }
 

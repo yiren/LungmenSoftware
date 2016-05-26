@@ -22,7 +22,7 @@ namespace LungmenSoftware.Models.CodeFirst
         public DbSet<ChangeRequestStatus> ChangeRequestStatuses { get; set; }
         public DbSet<ChangeDelta> ChangeDeltas { get; set; }
         public DbSet<RevInfo> RevInfos { get; set; }
-
+        public DbSet<ChangeRequestMessage> ChangeRequestMessages { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
@@ -31,13 +31,27 @@ namespace LungmenSoftware.Models.CodeFirst
             modelBuilder.Configurations.Add(new ChangeRequestStatusTypeConfiguration());
             modelBuilder.Configurations.Add(new ChangeDeltaConfiguration());
             modelBuilder.Configurations.Add(new RevInfoConfiguration());
+            modelBuilder.Configurations.Add(new ChangeRequestMessageConfiguration());
         }
 
-        
-
-        
     }
-        public class ChangeRequestConfiguration :
+
+    public class ChangeRequestMessageConfiguration
+        :EntityTypeConfiguration<ChangeRequestMessage>
+    {
+        public ChangeRequestMessageConfiguration()
+        {
+            HasKey(m => m.ChangeRequestMessageId);
+            Property(m => m.Message).IsRequired();
+            Property(m => m.CreateBy).IsRequired();
+            HasRequired(m => m.ChangeRequest)
+                .WithMany(c => c.ChangeRequestMessages)
+                .HasForeignKey(m => m.ChangeRequestId);
+
+        }
+    }
+
+    public class ChangeRequestConfiguration :
             EntityTypeConfiguration<ChangeRequest>
         {
             public ChangeRequestConfiguration()

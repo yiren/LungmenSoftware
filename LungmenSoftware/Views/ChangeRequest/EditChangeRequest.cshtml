@@ -1,88 +1,109 @@
-﻿@model LungmenSoftware.Models.CodeFirst.Entities.ChangeRequest
+﻿@model LungmenSoftware.Models.ViewModel.ChangeRequestViewModelForModification
 
 @{
-    ViewBag.Title = "EditChangeRequest";
+    ViewBag.Title = "修改/澄清軟體變更內容";
 }
 
-<h2>EditChangeRequest</h2>
+<h2>@ViewBag.Title</h2>
 
 
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
-    
+
     <div class="form-horizontal">
-        <h4>ChangeRequest</h4>
-        <hr />
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        @Html.HiddenFor(model => model.ChangeRequestId)
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.SerialNumber, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="row">
             <div class="col-md-10">
-                @Html.EditorFor(model => model.SerialNumber, new { htmlAttributes = new { @class = "form-control" , disabled="disabled"} })
-                @Html.ValidationMessageFor(model => model.SerialNumber, "", new { @class = "text-danger" })
+                <h4>請修改或確認相關資訊</h4>
+                <hr />
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                @Html.HiddenFor(model => model.ChangeRequest.ChangeRequestId)
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.ChangeRequest.SerialNumber, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.ChangeRequest.SerialNumber, new { htmlAttributes = new { @class = "form-control", disabled = "disabled" } })
+                        @Html.ValidationMessageFor(model => model.ChangeRequest.SerialNumber, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.ChangeRequest.Description, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.ChangeRequest.Description, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.ChangeRequest.Description, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.ChangeRequest.Note, htmlAttributes: new {@class = "control-label col-md-2"})
+                    <div class="col-md-10">
+                        @Html.TextAreaFor(model => model.ChangeRequest.Note, new {htmlAttributes = new {@class = "form-control"}})
+                        @Html.ValidationMessageFor(model => model.ChangeRequest.Note, "", new {@class = "text-danger"})
+                    </div>
+                </div>
+
             </div>
         </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.Description, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="row">
+            
             <div class="col-md-10">
-                @Html.EditorFor(model => model.Description, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
-            </div>
-        </div>
+                @for (int i = 0; i < Model.ChangeDeltas.Count; i++)
+                {
+                    @Html.HiddenFor(model => model.ChangeDeltas[i].ChangeDeltaId)
+                    <h4>軟體名稱: @Model.ChangeDeltas[i].RevInfos[0].SoftwareName</h4>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.ChangeDeltas[i].OriginalValue, htmlAttributes: new {@class = "control-label col-md-2"})
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => model.ChangeDeltas[i].OriginalValue, new {htmlAttributes = new {@class = "form-control", @disabled = true}})
+                            @Html.ValidationMessageFor(model => model.ChangeDeltas[i].OriginalValue, "", new {@class = "text-danger"})
+                        </div>
+                        @Html.LabelFor(model => model.ChangeDeltas[i].NewValue, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => model.ChangeDeltas[i].NewValue, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.ChangeDeltas[i].NewValue, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                }
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.CreatedBy, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.CreatedBy, new { htmlAttributes = new { @class = "form-control", disabled = "disabled" } })
-                @Html.ValidationMessageFor(model => model.CreatedBy, "", new { @class = "text-danger" })
-            </div>
-        </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.ChangeRequestMessage.Message, htmlAttributes: new {@class = "control-label col-md-2"})
+                    <div class="col-md-10">
+                        @Html.TextAreaFor(model => model.ChangeRequestMessage.Message, new {htmlAttributes = new {@class = "form-control", disabled = "disabled"}})
+                        @Html.ValidationMessageFor(model => model.ChangeRequestMessage.Message, "", new {@class = "text-danger"})
+                    </div>
+                </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.Owner, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Owner, new { htmlAttributes = new { @class = "form-control", disabled = "disabled" } })
-                @Html.ValidationMessageFor(model => model.Owner, "", new { @class = "text-danger" })
-            </div>
-        </div>
+                <br/>
+                <table class="table table-condensed table-striped table-hover">
+                    <tr>
+                        <th>內容</th>
+                        <th>回應人員</th>
+                        <th>日期</th>
+                    </tr>
+                    @foreach (var item in Model.ChangeRequestMessages)
+                    {
+                        <tr>
+                            <td>@item.Message</td>
+                            <td>@item.CreateBy</td>
+                            <td>@item.CreateTime</td>
+                        </tr>
+                    }
+                </table>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.CreateDate, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.CreateDate, new { htmlAttributes = new { @class = "form-control", disabled="disabled"} })
-                @Html.ValidationMessageFor(model => model.CreateDate, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.LastModifiedDate, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.LastModifiedDate, new { htmlAttributes = new { @class = "form-control", disabled = "disabled" } })
-                @Html.ValidationMessageFor(model => model.LastModifiedDate, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.Note, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Note, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Note, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Save" class="btn btn-default" />
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10">
+                        <input type="submit" value="送出" class="btn btn-primary"/>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 }
 
 <div>
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("回到軟體修改清單", "Index")
 </div>
 
 @section Scripts {

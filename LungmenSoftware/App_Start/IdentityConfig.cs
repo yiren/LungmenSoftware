@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
+using System.Net;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using System.Web;
@@ -19,9 +20,11 @@ namespace LungmenSoftware
         public Task SendAsync(IdentityMessage message)
         {
             // Plug in your email service here to send an email.
-            using (var mySmtp = new System.Net.Mail.SmtpClient("127.0.0.1", 25))
+            using (var mySmtp = new System.Net.Mail.SmtpClient("smtp.taipower.com.tw"))
             {
-                mySmtp.Send("Localhost", message.Destination,
+                mySmtp.Credentials=new NetworkCredential(
+                    "u162154", "2KSMZSEQ");
+                mySmtp.Send("u162154@taipower.com.tw", message.Destination,
                     message.Subject,
                     message.Body);
             }
@@ -59,7 +62,7 @@ namespace LungmenSoftware
             // Configure validation logic for passwords
             manager.PasswordValidator = new PasswordValidator
             {
-                RequiredLength = 4,
+                RequiredLength = 6,
                 RequireNonLetterOrDigit = false,
                 RequireDigit = false,
                 RequireLowercase = false,
@@ -95,9 +98,9 @@ namespace LungmenSoftware
     }
 
     public class ApplicationRoleManager : 
-        RoleManager<IdentityRole>
+        RoleManager<ApplicationRole>
     {
-        public ApplicationRoleManager(IRoleStore<IdentityRole, string> roleStore)
+        public ApplicationRoleManager(IRoleStore<ApplicationRole, string> roleStore)
             :base(roleStore)
         {
             
@@ -106,7 +109,7 @@ namespace LungmenSoftware
         public static ApplicationRoleManager
             Create(IdentityFactoryOptions<ApplicationRoleManager> options, IOwinContext context)
         {
-            return new ApplicationRoleManager(new RoleStore<IdentityRole>(context.Get<ApplicationDbContext>()));
+            return new ApplicationRoleManager(new RoleStore<ApplicationRole>(context.Get<ApplicationDbContext>()));
         }
     }
 
