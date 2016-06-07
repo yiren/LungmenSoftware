@@ -55,7 +55,7 @@ D:\GitRepository\LungmenSCM\LungmenSoftware\bin\NLog.dll
 D:\GitRepository\LungmenSCM\LungmenSoftware\bin\Owin.dll
 D:\GitRepository\LungmenSCM\LungmenSoftware\bin\PagedList.dll
 D:\GitRepository\LungmenSCM\LungmenSoftware\bin\PagedList.Mvc.dll
-D:\GitRepository\LungmenSCM\LungmenSoftware\bin\React.dll
+D:\GitRepository\LungmenSCM\LungmenSoftware\bin\React.Core.dll
 D:\GitRepository\LungmenSCM\LungmenSoftware\bin\React.Web.dll
 D:\GitRepository\LungmenSCM\LungmenSoftware\bin\React.Web.Mvc4.dll
 D:\GitRepository\LungmenSCM\LungmenSoftware\bin\System.Net.Http.Formatting.dll
@@ -69,6 +69,7 @@ D:\GitRepository\LungmenSCM\LungmenSoftware\bin\System.Web.Razor.dll
 D:\GitRepository\LungmenSCM\LungmenSoftware\bin\System.Web.WebPages.Deployment.dll
 D:\GitRepository\LungmenSCM\LungmenSoftware\bin\System.Web.WebPages.dll
 D:\GitRepository\LungmenSCM\LungmenSoftware\bin\System.Web.WebPages.Razor.dll
+D:\GitRepository\LungmenSCM\LungmenSoftware\bin\VroomJs.dll
 D:\GitRepository\LungmenSCM\LungmenSoftware\bin\WebActivatorEx.dll
 D:\GitRepository\LungmenSCM\LungmenSoftware\bin\WebGrease.dll
 D:\GitRepository\LungmenSCM\LungmenSoftware\bin\Antlr3.Runtime.pdb
@@ -92,7 +93,7 @@ D:\GitRepository\LungmenSCM\LungmenSoftware\bin\Microsoft.Owin.Security.Twitter.
 D:\GitRepository\LungmenSCM\LungmenSoftware\bin\Newtonsoft.Json.xml
 D:\GitRepository\LungmenSCM\LungmenSoftware\bin\PagedList.xml
 D:\GitRepository\LungmenSCM\LungmenSoftware\bin\PagedList.Mvc.xml
-D:\GitRepository\LungmenSCM\LungmenSoftware\bin\React.xml
+D:\GitRepository\LungmenSCM\LungmenSoftware\bin\React.Core.xml
 D:\GitRepository\LungmenSCM\LungmenSoftware\bin\React.Web.xml
 D:\GitRepository\LungmenSCM\LungmenSoftware\bin\React.Web.Mvc4.xml
 D:\GitRepository\LungmenSCM\LungmenSoftware\bin\System.Net.Http.Formatting.xml
@@ -111,3 +112,17 @@ D:\GitRepository\LungmenSCM\LungmenSoftware\bin\ru-ru\JavaScriptEngineSwitcher.V
 D:\GitRepository\LungmenSCM\LungmenSoftware\bin\ru-ru\MsieJavaScriptEngine.resources.dll
 D:\GitRepository\LungmenSCM\LungmenSoftware\obj\Debug\LungmenSoftware.dll
 D:\GitRepository\LungmenSCM\LungmenSoftware\obj\Debug\LungmenSoftware.pdb
+D:\GitRepository\LungmenSCM\LungmenSoftware\bin\roslyn\csc.exe
+D:\GitRepository\LungmenSCM\LungmenSoftware\bin\roslyn\Microsoft.Build.Tasks.CodeAnalysis.dll
+D:\GitRepository\LungmenSCM\LungmenSoftware\bin\roslyn\Microsoft.CodeAnalysis.CSharp.dll
+D:\GitRepository\LungmenSCM\LungmenSoftware\bin\roslyn\Microsoft.CodeAnalysis.dll
+D:\GitRepository\LungmenSCM\LungmenSoftware\bin\roslyn\Microsoft.CodeAnalysis.VisualBasic.dll
+D:\GitRepository\LungmenSCM\LungmenSoftware\bin\roslyn\Microsoft.CSharp.Core.targets
+D:\GitRepository\LungmenSCM\LungmenSoftware\bin\roslyn\Microsoft.VisualBasic.Core.targets
+D:\GitRepository\LungmenSCM\LungmenSoftware\bin\roslyn\System.Collections.Immutable.dll
+D:\GitRepository\LungmenSCM\LungmenSoftware\bin\roslyn\System.Reflection.Metadata.dll
+D:\GitRepository\LungmenSCM\LungmenSoftware\bin\roslyn\vbc.exe
+D:\GitRepository\LungmenSCM\LungmenSoftware\bin\roslyn\VBCSCompiler.exe
+D:\GitRepository\LungmenSCM\LungmenSoftware\bin\roslyn\VBCSCompiler.exe.config
+D:\GitRepository\LungmenSCM\LungmenSoftware\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll
+D:\GitRepository\LungmenSCM\LungmenSoftware\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml

@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Web;
 using System.Web.Mvc;
-using System.Web.Script.Serialization;
+
 using LungmenSoftware.Helper;
 using LungmenSoftware.Models;
 using LungmenSoftware.Models.CodeFirst.Entities;

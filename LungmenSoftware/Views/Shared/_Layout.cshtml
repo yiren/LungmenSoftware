@@ -34,6 +34,15 @@
                             <li>@Html.ActionLink("軟體資訊", "Index", "FoxSoftwares")</li>
                         </ul>
                     </li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                            NUMAC相關資訊<span class="caret"></span>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li>@Html.ActionLink("NUMAC EPROM資訊", "Index", "NUMACEPROM")</li>
+                            
+                        </ul>
+                    </li>
                     @if (User.Identity.IsAuthenticated)
                     {
                         <li class="dropdown">
