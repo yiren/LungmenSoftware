@@ -282,6 +282,7 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AngularController.cs" />
     <Compile Include="Controllers\ChangeRequestController.cs" />
+    <Compile Include="Controllers\ChassisController.cs" />
     <Compile Include="Controllers\FoxSoftwaresController.cs" />
     <Compile Include="Controllers\FoxWorkStationsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -356,6 +357,14 @@
       <DependentUpon>201510070520382_AddChtAliasColumn.cs</DependentUpon>
     </Compile>
     <Compile Include="MigrationForIdentity\Configuration.cs" />
+    <Compile Include="MigrationNumac\201606070132168_modifyColumn.cs" />
+    <Compile Include="MigrationNumac\201606070132168_modifyColumn.Designer.cs">
+      <DependentUpon>201606070132168_modifyColumn.cs</DependentUpon>
+    </Compile>
+    <Compile Include="MigrationNumac\201606070213347_addKey.cs" />
+    <Compile Include="MigrationNumac\201606070213347_addKey.Designer.cs">
+      <DependentUpon>201606070213347_addKey.cs</DependentUpon>
+    </Compile>
     <Compile Include="MigrationNumac\Configuration.cs" />
     <Compile Include="Models\ChangeRequest\ChangeProcessDbContext.cs" />
     <Compile Include="Models\ChangeRequest\Entities\ChangeDelta.cs" />
@@ -408,7 +417,9 @@
     <Compile Include="Models\NUMACFirmware\EPROM.cs" />
     <Compile Include="Models\NUMACFirmware\NumacFirewareDbContext.cs" />
     <Compile Include="Models\Service\ChangeRequestService.cs" />
+    <Compile Include="Models\ViewModel\FirmwareViewModel.cs" />
     <Compile Include="Models\Service\IUserService.cs" />
+    <Compile Include="Models\Service\NumacDataService.cs" />
     <Compile Include="Models\Service\UserService.cs" />
     <Compile Include="Models\ViewModel\ChangeRequestView.cs" />
     <Compile Include="Models\ViewModel\CheckBoxListModel.cs" />
@@ -1456,6 +1467,11 @@
     <Content Include="Views\User\DeleteUser.cshtml" />
     <Content Include="Views\ChangeRequest\DeleteChangeRequest.cshtml" />
     <Content Include="Scripts\version.json" />
+    <Content Include="Views\Chassis\Create.cshtml" />
+    <Content Include="Views\Chassis\Delete.cshtml" />
+    <Content Include="Views\Chassis\Details.cshtml" />
+    <Content Include="Views\Chassis\Edit.cshtml" />
+    <Content Include="Views\Chassis\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -1514,6 +1530,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="MigrationForIdentity\201510070520382_AddChtAliasColumn.resx">
       <DependentUpon>201510070520382_AddChtAliasColumn.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MigrationNumac\201606070132168_modifyColumn.resx">
+      <DependentUpon>201606070132168_modifyColumn.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MigrationNumac\201606070213347_addKey.resx">
+      <DependentUpon>201606070213347_addKey.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

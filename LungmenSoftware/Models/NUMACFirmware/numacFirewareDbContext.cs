@@ -19,7 +19,10 @@ namespace LungmenSoftware.Models.NUMACFirmware
         public DbSet<ChassisBoard> ChassisBoards { get; set; }
         public DbSet<EPROM> EPROMs { get; set; }
 
-
+        protected override void OnModelCreating(DbModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
+        }
     }
     
 }

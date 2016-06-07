@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -8,6 +9,7 @@ namespace LungmenSoftware.Models.NUMACFirmware
 {
     public class EPROM
     {
+        [Key]
         public Guid EPROMId { get; set; }
 
         public string SocketLocation { get; set; }
@@ -22,7 +24,7 @@ namespace LungmenSoftware.Models.NUMACFirmware
 
         public int EPROMProgramRev { get; set; }
 
-        public string ChassisBoardName { get; set; }
+        public string EPROMSerialNumber { get; set; }
 
         public Guid ChassisBoardId { get; set; }
 
