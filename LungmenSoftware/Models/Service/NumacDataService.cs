@@ -27,7 +27,7 @@ namespace LungmenSoftware.Models.Service
             var data = from c in db.Chassis.AsNoTracking()
                 join b in db.ChassisBoards.AsNoTracking() on c.ChassisId equals b.ChassisId
                 join e in db.EPROMs.AsNoTracking() on b.ChassisBoardId equals e.ChassisBoardId
-                orderby b.ChassBoardName, e.SocketLocation
+                orderby c.ChassisName, b.ChassBoardName, e.SocketLocation
                 select new FirmwareViewModel()
                 {
                     ChassisName = c.ChassisName,
