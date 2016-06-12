@@ -14,10 +14,6 @@ namespace LungmenSoftware.Models
     
     public partial class FoxSoftwareType
     {
-        public FoxSoftwareType()
-        {
-            this.FoxSoftwares = new HashSet<FoxSoftware>();
-        }
     
         public int Id { get; set; }
         public string SoftwareTypeName { get; set; }

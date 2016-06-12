@@ -12,7 +12,16 @@ namespace LungmenSoftware.Models.Service
     {
         NumacFirewareDbContext db = new NumacFirewareDbContext();
 
+        public List<Chassis> GetChassis()
+        {
+            return db.Chassis.ToList();
+        }
 
+        public List<ChassisBoard> GetChassisBoards()
+        {
+            return db.ChassisBoards.ToList();
+        }
+        
         public List<FirmwareViewModel> GetFirmwareList()
         {
             var data = from c in db.Chassis.AsNoTracking()
@@ -35,6 +44,16 @@ namespace LungmenSoftware.Models.Service
 
 
             return data.ToList();
+        }
+
+        public Chassis GetChassisById(Guid chassisId)
+        {
+            return db.Chassis.Find(chassisId);
+        }
+
+        public ChassisBoard GetChassisBoardById(Guid chassisBoardId)
+        {
+            return db.ChassisBoards.Find(chassisBoardId);
         }
     }
 }

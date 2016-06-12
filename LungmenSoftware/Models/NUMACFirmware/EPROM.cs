@@ -4,9 +4,11 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web.Mvc;
 
 namespace LungmenSoftware.Models.NUMACFirmware
 {
+    [Bind(Exclude = "EPROMId, LastModifiedBy, LastModifiedDate")]
     public class EPROM
     {
         [Key]
@@ -25,6 +27,14 @@ namespace LungmenSoftware.Models.NUMACFirmware
         public int EPROMProgramRev { get; set; }
 
         public string EPROMSerialNumber { get; set; }
+
+        public string LastModifiedBy { get; set; }
+
+        public string LastModifiedDate { get; set; }
+
+        public string ChassisName { get; set; }
+
+        public string ChassisBoardName { get; set; }
 
         public Guid ChassisBoardId { get; set; }
 

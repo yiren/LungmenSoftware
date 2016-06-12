@@ -107,7 +107,6 @@ D:\GitRepository\LungmenSCM\LungmenSoftware\bin\System.Web.Optimization.xml
 D:\GitRepository\LungmenSCM\LungmenSoftware\bin\ru-ru\JavaScriptEngineSwitcher.Core.resources.dll
 D:\GitRepository\LungmenSCM\LungmenSoftware\bin\ru-ru\JavaScriptEngineSwitcher.V8.resources.dll
 D:\GitRepository\LungmenSCM\LungmenSoftware\bin\ru-ru\MsieJavaScriptEngine.resources.dll
-D:\GitRepository\LungmenSCM\LungmenSoftware\obj\Debug\LungmenSoftware.csprojResolveAssemblyReference.cache
 D:\GitRepository\LungmenSCM\LungmenSoftware\obj\Debug\LungmenSoftware.MigrationForChangeRequestData.InitialConfiguration.resources
 D:\GitRepository\LungmenSCM\LungmenSoftware\obj\Debug\LungmenSoftware.MigrationForChangeRequestData.ResetToInitial.resources
 D:\GitRepository\LungmenSCM\LungmenSoftware\obj\Debug\LungmenSoftware.MigrationForChangeRequestData.AddCreateDateForChangeRequest.resources
@@ -128,3 +127,5 @@ D:\GitRepository\LungmenSCM\LungmenSoftware\obj\Debug\LungmenSoftware.MigrationN
 D:\GitRepository\LungmenSCM\LungmenSoftware\obj\Debug\LungmenSoftware.csproj.GenerateResource.Cache
 D:\GitRepository\LungmenSCM\LungmenSoftware\obj\Debug\LungmenSoftware.dll
 D:\GitRepository\LungmenSCM\LungmenSoftware\obj\Debug\LungmenSoftware.pdb
+D:\GitRepository\LungmenSCM\LungmenSoftware\obj\Debug\LungmenSoftware.MigrationNumac.AddLastModified.resources
+D:\GitRepository\LungmenSCM\LungmenSoftware\obj\Debug\LungmenSoftware.MigrationNumac.AddColumnForDisplay.resources

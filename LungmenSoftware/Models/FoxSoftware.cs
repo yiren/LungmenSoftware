@@ -14,10 +14,7 @@ namespace LungmenSoftware.Models
     
     public partial class FoxSoftware
     {
-        public FoxSoftware()
-        {
-            this.WKAndFoxJoinTables = new HashSet<WKAndFoxJoinTable>();
-        }
+       
     
         public int FoxSoftwareId { get; set; }
         public string SoftwareName { get; set; }

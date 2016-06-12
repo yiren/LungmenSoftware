@@ -4,9 +4,11 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web.Mvc;
 
 namespace LungmenSoftware.Models.NUMACFirmware
 {
+    [Bind(Exclude = "ChassisId, LastModifiedBy, LastModifiedDate")]
     public class Chassis
     {
         [Key]
@@ -19,6 +21,11 @@ namespace LungmenSoftware.Models.NUMACFirmware
         public string Equipment { get; set; }
 
         public string Panel { get; set; }
+
+
+        public string LastModifiedBy { get; set; }
+
+        public string LastModifiedDate { get; set; }
 
         public IEnumerable<ChassisBoard> ChassBoards { get; set; }
 

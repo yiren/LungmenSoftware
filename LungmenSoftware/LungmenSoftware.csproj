@@ -365,6 +365,14 @@
     <Compile Include="MigrationNumac\201606070213347_addKey.Designer.cs">
       <DependentUpon>201606070213347_addKey.cs</DependentUpon>
     </Compile>
+    <Compile Include="MigrationNumac\201606120334041_AddLastModified.cs" />
+    <Compile Include="MigrationNumac\201606120334041_AddLastModified.Designer.cs">
+      <DependentUpon>201606120334041_AddLastModified.cs</DependentUpon>
+    </Compile>
+    <Compile Include="MigrationNumac\201606120602466_AddColumnForDisplay.cs" />
+    <Compile Include="MigrationNumac\201606120602466_AddColumnForDisplay.Designer.cs">
+      <DependentUpon>201606120602466_AddColumnForDisplay.cs</DependentUpon>
+    </Compile>
     <Compile Include="MigrationNumac\Configuration.cs" />
     <Compile Include="Models\ChangeRequest\ChangeProcessDbContext.cs" />
     <Compile Include="Models\ChangeRequest\Entities\ChangeDelta.cs" />
@@ -1467,11 +1475,13 @@
     <Content Include="Views\User\DeleteUser.cshtml" />
     <Content Include="Views\ChangeRequest\DeleteChangeRequest.cshtml" />
     <Content Include="Scripts\version.json" />
-    <Content Include="Views\Chassis\Create.cshtml" />
+    <Content Include="Views\Chassis\CreateChassis.cshtml" />
     <Content Include="Views\Chassis\Delete.cshtml" />
     <Content Include="Views\Chassis\Details.cshtml" />
     <Content Include="Views\Chassis\Edit.cshtml" />
     <Content Include="Views\Chassis\Index.cshtml" />
+    <Content Include="Views\Chassis\CreateChassisBoard.cshtml" />
+    <Content Include="Views\Chassis\CreateEPROM.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -1536,6 +1546,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="MigrationNumac\201606070213347_addKey.resx">
       <DependentUpon>201606070213347_addKey.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MigrationNumac\201606120334041_AddLastModified.resx">
+      <DependentUpon>201606120334041_AddLastModified.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MigrationNumac\201606120602466_AddColumnForDisplay.resx">
+      <DependentUpon>201606120602466_AddColumnForDisplay.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
