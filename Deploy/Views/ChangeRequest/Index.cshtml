@@ -1,0 +1,75 @@
+﻿@model LungmenSoftware.Models.ViewModel.ChangeRequestView
+
+@{
+    ViewBag.Title = "軟體修改清單";
+}
+
+<h2>軟體修改清單</h2>
+
+@Html.ActionLink("新增軟體修改", "AngularForm", null, new {@class="btn btn-primary"})
+<br/>
+
+<table class="table table-bordered table-condensed">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.ChangeRequests[0].SerialNumber)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ChangeRequests[0].Description)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ChangeRequests[0].StatusName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ChangeRequests[0].CreatedBy)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ChangeRequests[0].Owner)
+        </th>
+        <th></th>
+
+    </tr>
+
+@foreach (var item in Model.ChangeRequests) {
+    <tr>
+        <td>
+            @Html.ActionLink(item.SerialNumber, "ChangeRequestDetail", new {id=item.ChangeRequestId})
+        </td>
+        <td>
+            @item.Description
+        </td>
+        <td>
+            @item.StatusName
+        </td>
+        <td>
+            @item.CreatedBy
+        </td>
+        <td>
+            @item.Owner
+        </td>
+        <td>
+
+            @if (item.CreatedBy.Equals(User.Identity.Name) && item.StatusTypeId==2)
+            {
+            @Html.ActionLink("修改", "EditChangeRequest",
+                    new { id = item.ChangeRequestId }, new { @class = "btn btn-info" })
+            @Html.ActionLink("取消", "CancelChangeRequest",
+                    new { id = item.ChangeRequestId }, new { @class = "btn btn-danger" })
+            }
+            @if (User.Identity.Name.Equals(item.Owner) && item.StatusTypeId==1)
+            {
+                @Html.ActionLink("核准", "ReviewChangeRequest",
+                    new { id = item.ChangeRequestId }, new { @class = "btn btn-primary" })
+            }
+            @if (User.IsInRole("AccountAdmin"))
+            {
+                @Html.ActionLink("刪除軟體變更", "DeleteChangeRequest", new {id=item.ChangeRequestId})
+            }
+        </td>
+
+
+
+    </tr>
+}
+
+</table>

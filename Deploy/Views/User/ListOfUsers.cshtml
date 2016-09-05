@@ -1,0 +1,83 @@
+﻿@model LungmenSoftware.Models.ViewModel.UserView
+
+@{
+    ViewBag.Title = "使用者清單";
+}
+
+<h2>使用者名單</h2>
+
+
+<table class="table table-bordered table-striped table-hover">
+    <tr>
+        <th>
+            帳號
+        </th>
+        <th>
+            權限
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Users[0].TPCId)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Users[0].EmployeeName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Users[0].Department)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Users[0].IsDisabled)
+        </th>
+        
+        
+        <th></th>
+    </tr>
+@if (!Model.UsersForList.Count.Equals(0))
+{
+    foreach (var item in Model.UsersForList)
+    {
+        <tr>
+            <td>
+                @Html.ActionLink(item.UserName, "UserDetail", new {Id = item.UserId})
+            </td>
+
+            <td>
+               @item.Role
+            </td>
+
+            <td>
+                @item.TPCId
+            </td>
+            <td>
+                @item.EmployeeName
+            </td>
+            <td>
+                @item.Department
+            </td>
+
+            <td>
+                @item.IsDisabled
+            </td>
+
+            <td>
+                @Html.ActionLink("修改", "EditUser", new {Id=item.UserId})
+                <br/>
+                @if (User.IsInRole("AccountAdmin")) { 
+                    @Html.ActionLink("刪除使用者","DeleteUser", new {Id=item.UserId})
+                }
+            </td>
+        </tr>
+    }
+}
+else
+{
+    <tr>
+        <td>
+            沒有資料!?
+        </td>
+    </tr>
+}
+
+</table>
+@*
+    @Html.Action("ListOfRoles", "Role")
+*@

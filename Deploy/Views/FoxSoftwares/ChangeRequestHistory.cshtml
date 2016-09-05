@@ -1,0 +1,85 @@
+﻿@model IEnumerable<LungmenSoftware.Models.ViewModel.ChangeRequestInfo>
+
+@{
+    ViewBag.Title = "ChangeRequestHistory";
+}
+
+<h2>版本修改歷史紀錄</h2>
+
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.SerialNumber)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Description)
+        </th>
+        <th>
+            軟體變更前版本前版本
+        </th>
+        <th>
+            軟體變更前版本後版本
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CreatedBy)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ReviewBy)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ApprovedBy)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CreateDate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.EndDate)
+        </th>
+        <th></th>
+    </tr>
+@if (!Model.Count().Equals(0))
+{
+    foreach (var item in Model)
+    {
+        <tr>
+            @Html.HiddenFor(model => item.ChangeRequestId)
+            <td>
+                @Html.DisplayFor(modelItem => item.SerialNumber)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Description)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.OriginalValue)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NewValue)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CreatedBy)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ReviewBy)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ApprovedBy)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CreateDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.EndDate)
+            </td>
+            <td></td>
+        </tr>
+    }
+}
+else
+{
+    <tr>
+        <td>無版本修改紀錄</td>
+    </tr>
+}
+
+</table>
