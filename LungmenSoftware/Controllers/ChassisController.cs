@@ -21,8 +21,14 @@ namespace LungmenSoftware.Controllers
         public ActionResult Index()
         {
 
-            var data=dataService.GetFirmwareList();
+            var data=dataService.GetFirmwareListV2();
             return View(data);
+        }
+
+        public ActionResult GetNumacData()
+        {
+            var data = dataService.GetFirmwareListV2();
+            return Json(data, JsonRequestBehavior.AllowGet);
         }
 
         // GET: Chassis/Details/5

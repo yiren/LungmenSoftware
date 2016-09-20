@@ -1,15 +1,32 @@
-﻿@model IEnumerable<LungmenSoftware.Models.ViewModel.FirmwareViewModel>
+﻿@model IEnumerable<LungmenSoftware.Models.ViewModel.FirmwareViewModelV2>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "NUMAC EPROM清單";
 }
 
-<h2>軟體清單</h2>
+<h2>NUMAC EPROM版本清單</h2>
 
-<a href="@Url.Action("CreateChassis")" class="btn btn-default" target="_blank">新增Chassis</a>
-<a href="@Url.Action("CreateChassisBoard")" class="btn btn-primary" target="_blank">新增ChassisBoard</a>
-<a href="@Url.Action("CreateEPROM")" class="btn btn-info" target="_blank">新增EPROM</a>
 <hr/>
+
+<div ng-app="numacApp">
+    <div ng-controller="numacDataGridCtrl as n">
+        <button id='toggleFiltering' style="margin-bottom:20px" ng-click="n.toggleFiltering()" class="btn btn-success"><span ng-bind="n.searchTextToggle"></span>簡易搜尋</button>
+        <div id="numacDataGrid" ui-grid="n.gridOptions" ui-grid-resize-columns ui-grid-selection ui-grid-pagination ui-grid-autoresize>
+        </div>
+    </div>  
+</div>
+
+@section scripts{
+    <script src="~/Scripts/angular.min.js"></script>
+    <script src="~/Scripts/angular-ui-router.min.js"></script>
+    <script src="~/Scripts/ui-grid.min.js"></script>
+
+    <script src="~/client/numacApp.js"></script>
+    <script src="~/client/controller/numacDataGridController.js"></script>
+    
+
+}
+<!--
 <table class="table table-bordered table-striped">
     <tr>
         <th>
@@ -75,3 +92,4 @@
 }
 
 </table>
+-->
