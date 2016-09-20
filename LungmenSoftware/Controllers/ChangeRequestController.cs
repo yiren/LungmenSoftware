@@ -14,7 +14,7 @@ using Newtonsoft.Json;
 
 namespace LungmenSoftware.Controllers
 {
-    [Authorize]
+    
     public class ChangeRequestController : Controller
     {
 
@@ -69,24 +69,49 @@ namespace LungmenSoftware.Controllers
             return View(dataForView);
         }
 
-        public ActionResult AddChangeRequest()
-        {
-            ChangeRequest cr=new ChangeRequest();
-            cr.ChangeRequestId = Guid.NewGuid();
+        //public ActionResult AddChangeRequest()
+        //{
+        //    ChangeRequest cr=new ChangeRequest();
+        //    cr.ChangeRequestId = Guid.NewGuid();
            
-            cr.SerialNumber = string.Format("{0:yyyyMMdd}", DateTime.Today) +"E0"+ new Random().Next(100, 999);
+        //    cr.SerialNumber = string.Format("{0:yyyyMMdd}", DateTime.Today) +"E0"+ new Random().Next(100, 999);
 
-            //這邊以後可能要修掉
+        //    //這邊以後可能要修掉
             
-            //ViewBag.   
-            return View(cr);
-        }
+        //    //ViewBag.   
+        //    return View(cr);
+        //}
 
-        public ActionResult AngularForm()
+        public ActionResult GetInvChangeForm()
         {
 
             return View();
         }
+
+        public ActionResult GetNumacChangeForm()
+        {
+            return View();
+        }
+
+
+
+        //For AngularJS
+        public ContentResult InitChangeRequest()
+        {
+            ChangeRequest crToJson = crService.InitNewChangeRequestRecord(User.Identity.Name);
+            string json = JsonConvert.SerializeObject(crToJson, new JsonSerializerSettings()
+            {
+                ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+                Formatting = Formatting.Indented
+            });
+
+            return new ContentResult()
+            {
+                Content = json,
+                ContentType = "application/json"
+            };
+        }
+
         //For AngularJS
         [HttpPost]
         public ContentResult AddNewChangeRequestRecord(ChangeRequest crEntry)
@@ -109,22 +134,7 @@ namespace LungmenSoftware.Controllers
                 ContentType = "application/json"
             };
         }
-        //For AngularJS
-        public ContentResult InitChangeRequest()
-        {
-            ChangeRequest crToJson= crService.InitNewChangeRequestRecord(User.Identity.Name);
-            string json = JsonConvert.SerializeObject(crToJson, new JsonSerializerSettings()
-            {
-                ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
-                Formatting = Formatting.Indented
-            });
-
-            return new ContentResult()
-            {
-                Content = json,
-                ContentType = "application/json"
-            };
-        }
+       
 
         [HttpPost]
         public ActionResult AddChangeRequest(ChangeRequest crEntry)

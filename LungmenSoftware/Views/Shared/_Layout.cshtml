@@ -40,35 +40,37 @@
                         </a>
                         <ul class="dropdown-menu">
                             <li>@Html.ActionLink("NUMAC EPROM資訊", "Index", "Chassis")</li>
-                            
+
+                        </ul>
+                    </li>
+
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                            軟體版本變更<span class="caret"></span>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li>@Html.ActionLink("新增軟體變更", "GetInvSoftChangeForm", "ChangeRequest")</li>
+                            <li role="separator" class="divider"></li>
+                            <li>@Html.ActionLink("進行中軟體修改清單", "Index", "ChangeRequest")</li>
+                            <li>@Html.ActionLink("已完成軟體修改清單", "ChangeRequestHistorialData", "ChangeRequest")</li>
+
+                            <li role="separator" class="divider"></li>
+
+                            <li>@Html.ActionLink("查詢軟體變更表單", "SearchChangeRequest", "ChangeRequest")</li>
                         </ul>
                     </li>
                     @if (User.Identity.IsAuthenticated)
                     {
-                        <li class="dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-                                軟體版本變更<span class="caret"></span>
-                            </a>
-                            <ul class="dropdown-menu">
-                                <li>@Html.ActionLink("新增軟體變更", "AngularForm", "ChangeRequest")</li>
-                                <li role="separator" class="divider"></li>
-                                <li>@Html.ActionLink("進行中軟體修改清單", "Index", "ChangeRequest")</li>
-                                <li>@Html.ActionLink("已完成軟體修改清單", "ChangeRequestHistorialData", "ChangeRequest")</li>
-
-                                <li role="separator" class="divider"></li>
-
-                                <li>@Html.ActionLink("查詢軟體變更表單", "SearchChangeRequest", "ChangeRequest")</li>
-                            </ul>
-                        </li>
                         <li>
                             @if (User.IsInRole("Reviewer") || User.IsInRole("AccountAdmin"))
                             {
                                 @Html.ActionLink("使用者管理", "Index", "User")
                             }
-                            
+
                         </li>
                     }
                 </ul>
+
                 @Html.Partial("_LoginPartial")
             </div>
 
@@ -84,7 +86,11 @@
 
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
-    
+    <script src="~/Scripts/angular.min.js"></script>
+    <script src="~/Scripts/angular-ui-router.min.js"></script>
+    <script src="~/Scripts/ui-grid.min.js"></script>
+    <script src="~/Scripts/api-check/dist/api-check.min.js"></script>
+    <script src="~/Scripts/angular-formly/dist/formly.min.js"></script>
     @RenderSection("scripts", required: false)
 </body>
 </html>

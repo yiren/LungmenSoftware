@@ -1,29 +1,29 @@
-﻿(function() {
+﻿(function () {
     angular.module('simpleApp', ['ngRoute', 'ngAnimate'])
     .controller('MainCtrl', ['$http', '$log', '$scope', 'dataService', MainCtrl])
-    .controller('ConfirmCtrl',['$log','dataService', ConfirmCtrl])
+    .controller('ConfirmCtrl', ['$log', 'dataService', ConfirmCtrl])
     .factory('dataService', ['$http', '$log', dataService])
     .config(['$routeProvider', function ($routeProvider) {
         $routeProvider.when('/', {
             templateUrl: "/changerequest/getangularform",
             controller: "MainCtrl",
-            controllerAs:"m"
+            controllerAs: "m"
 
-            })
+        })
             .when('/confirm', {
                 templateUrl: "/changerequest/confirmformdata",
                 controller: "ConfirmCtrl",
                 controllerAs: "c",
                 resolve: dataService.postData
             })
-            
+
             .otherwise({ redirectTo: '/' });
     }])
     ;
 
-    function dataService($http,$log) {
+    function dataService($http, $log) {
         var postPromise;
-        
+
         function getPostPromise() {
             return postPromise;
         }
@@ -37,7 +37,7 @@
 
         return {
             postData: postDataToServer,
-            getPostPromise:getPostPromise
+            getPostPromise: getPostPromise
         };
     }
 
@@ -45,7 +45,7 @@
         var vm = this;
         vm.message = "等候伺服器回應";
         $log.info("From Confirm Controller------");
-        
+
         dataService.getPostPromise().then(function (response) {
             $log.info(response.data);
             vm.message = "新增案件成功";
@@ -63,34 +63,32 @@
 
     function MainCtrl($http, $log, $scope, dataService) {
         var vm = this;
-        vm.message = 'Before Getting Data';
+        //vm.message = 'Before Getting Data';
         //vm.newWorkstation = {};
 
-        function UpdateWorkStationList(vm) {
+        function init() {
+            //Get A New ChangeRequest Record
+            $http.get('/changerequest/InitChangeRequest').then(function (response) {
+                $log.info(response.data);
+
+                vm.changeRequestData = response.data;
+            }, function (errResponse) {
+
+            });
+
+            //載入 Invensys工作站清單
             $http.get('/foxworkstations/getworkstations')
                 .success(function (data) {
                     vm.allWorkstations = data;
                     //$log.info("All Workstations " + data);
                     var processData = [];
-
-
                 })
                 .error(function () {
                     vm.message = 'Unexpected Error While Getting All Workstations';
                 });
-        }
 
-        $http.get('/changerequest/InitChangeRequest').then(function (response) {
-            $log.info(response.data);
-
-            vm.changeRequestData = response.data;
-        }, function(errResponse) {
-            
-        });
-
-        UpdateWorkStationList($http, vm);
-        vm.modList = [];
-        $http.get('/foxsoftwares/getsystemsoftwares')
+            //載入 Invensys系統軟體清單
+            $http.get('/foxsoftwares/getsystemsoftwares')
                .success(function (data) {
                    vm.message = 'Data Retrieves Successfully';
                    vm.softwareList = data;
@@ -100,47 +98,23 @@
                    vm.message = 'Unexpected Error When Getting All Softwares';
                });
 
-        
-        
-        vm.requestWorkStation=function() {
-            $http.get('/foxsoftwares/getsystemsoftwarelist')
-                .success(function(data) {
-                    vm.message = 'Data Retrieves Successfully';
-                    vm.softwareList = data;
-                    //$log.info(data);
-                })
-                .error(function() {
-                    vm.message = 'Unexpected Error While Getting Software List';
-                });
         }
 
+        init();
 
-        //For Test $http Only
-        vm.addNewWorkStation = function (wk) {
-            //$log.info(vm.newWorkstation);
-            $log.info("Add " + vm.newWorkstation);
-            $http.post('/foxworkstations/addnewworkstation', vm.newWorkstation)
-                .then(function(response) {
-                    console.log(response);
-                    UpdateWorkStationList($http,vm);
-                    vm.message = 'Add New Workstation Successfully';
-                });
+        vm.getSelectedWorkstationList = function (selected) {
+            //$log.info("Before Resetting");
+            //$log.info(vm.allWorkstations);
+            angular.forEach(vm.allWorkstations, function (value, key) {
+                value.isChecked = false;
+            });
+            //$log.info("After Resetting");
+            //$log.info(vm.allWorkstations);
+            //var tempAllWks = vm.allWorkstations;
+            vm.selected = selected;
+            $log.info(selected);
+            //$log.info(tempAllWks);
 
-        }
-        //Legacy Code
-        //vm.getWorkstationsByRev= function (rev) {
-        //    $log.info(rev);
-        //    $http.post('/foxsoftwares/GetWorkstationsByRev', rev)
-        //        .then(function(response) {
-        //            $log.info(response);
-        //            vm.revStations = response.data;
-        //        }, function(errResponse) {
-        //            $log.info(errResponse);
-        //        });
-        //}
-
-
-        function RefreshWorkstationList(selected) {
             $http.get('/foxsoftwares/GetRevListBySoftId/' + selected.FoxSoftwareId)
                .then(function (response) {
                    /* Legacy Code
@@ -167,31 +141,16 @@
                    */
                    //vm.revStations = [];
                    vm.data = response.data;
-                    
+
                    angular.forEach(vm.data, function (value, key) {
                        angular.forEach(value.RevInfos, function (value, key) {
                            value.isChecked = true;
                        });
-
-
                    });
                    $log.info(vm.data);
 
                });
-        }
-        vm.getSelectedWorkstationList = function (selected) {
-            //$log.info("Before Resetting");
-            //$log.info(vm.allWorkstations);
-            angular.forEach(vm.allWorkstations, function(value, key) {
-                value.isChecked = false;
-            });
-            //$log.info("After Resetting");
-            //$log.info(vm.allWorkstations);
-            var tempAllWks = vm.allWorkstations;
-            vm.selected = selected;
-            $log.info(selected);
-            //$log.info(tempAllWks);
-            RefreshWorkstationList(selected);
+
             /* Legacy Code
             for (var i = 0; i < data.length; i++) {
                 //$log.info(data[i].JoinTableData);
@@ -274,17 +233,43 @@
 
         }
 
-        
+
         /*
         vm.showChecked = function (selected) {
 
             $log.info(selected);
         }
         */
-        vm.addToModList=function(originalValue, newValue, revInfos) {
-            var revInfoForUpdate=[];
 
-            angular.forEach(revInfos, function(value, key) {
+
+        //For Test $http Only
+        //vm.addNewWorkStation = function (wk) {
+        //    //$log.info(vm.newWorkstation);
+        //    $log.info("Add " + vm.newWorkstation);
+        //    $http.post('/foxworkstations/addnewworkstation', vm.newWorkstation)
+        //        .then(function(response) {
+        //            console.log(response);
+        //            UpdateWorkStationList($http,vm);
+        //            vm.message = 'Add New Workstation Successfully';
+        //        });
+
+        //}
+        //Legacy Code
+        //vm.getWorkstationsByRev= function (rev) {
+        //    $log.info(rev);
+        //    $http.post('/foxsoftwares/GetWorkstationsByRev', rev)
+        //        .then(function(response) {
+        //            $log.info(response);
+        //            vm.revStations = response.data;
+        //        }, function(errResponse) {
+        //            $log.info(errResponse);
+        //        });
+        //}
+
+        vm.addToModList = function (originalValue, newValue, revInfos) {
+            var revInfoForUpdate = [];
+
+            angular.forEach(revInfos, function (value, key) {
                 if (value.isChecked === true) {
                     revInfoForUpdate.push(value);
                 }
@@ -295,7 +280,7 @@
                 FoxSoftwareId: vm.selected.FoxSoftwareId,
                 OriginalValue: originalValue,
                 NewValue: newValue,
-                RevInfos:revInfoForUpdate
+                RevInfos: revInfoForUpdate
             };
             vm.modList.push(modItem);
             $log.info(vm.modList);
@@ -312,7 +297,7 @@
         }
         */
 
-        vm.clearModList=function() {
+        vm.clearModList = function () {
             vm.modList = [];
             RefreshWorkstationList(vm.selected);
         }
@@ -338,7 +323,7 @@
         }
 
 
-
+        //每五項換行
         vm.isDividedByFive = function (index) {
             if ((index + 1) % 5 == 0) {
                 //$log.info(index);
@@ -347,24 +332,24 @@
                 return false;
             }
         }
-        
+
 
         //Legacy Code
-        vm.modifyRev=function(record, rev) {
-            //vm.selectedSoftwareInfo;
-            var softRevInfo = {
-                FoxSoftwareId: record.FoxSoftwareId,
-                Rev:rev
-            };
-            //$log.info(softRevInfo);
-            $scope.posted=dataService.postData(softRevInfo);
-            //$http.post('/foxsoftwares/UpdateSoftwareRev', softRevInfo)
-            //    .then(function(response) {
-            //        $log.info(response);
-            //        vm.selectedSoftwareRev = response.data.Rev;
-            //    });
-        }
+        //    vm.modifyRev=function(record, rev) {
+        //        //vm.selectedSoftwareInfo;
+        //        var softRevInfo = {
+        //            FoxSoftwareId: record.FoxSoftwareId,
+        //            Rev:rev
+        //        };
+        //        //$log.info(softRevInfo);
+        //        $scope.posted=dataService.postData(softRevInfo);
+        //        //$http.post('/foxsoftwares/UpdateSoftwareRev', softRevInfo)
+        //        //    .then(function(response) {
+        //        //        $log.info(response);
+        //        //        vm.selectedSoftwareRev = response.data.Rev;
+        //        //    });
+        //    }
     }
 
-    
-} )();
+
+})();

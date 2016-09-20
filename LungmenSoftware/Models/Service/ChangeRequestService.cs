@@ -147,8 +147,8 @@ namespace LungmenSoftware.Models.Service
         }
 
 
-        //For AngularJS
-        public ChangeRequest InitNewChangeRequestRecord(string createdBy)
+        //For AngularJS Inv
+        public ChangeRequest InitNewChangeRequestRecord(string createdBy="test2@taipower.com.tw")
         {
             ChangeRequest cr = new ChangeRequest();
             cr.ChangeRequestId = Guid.NewGuid();
@@ -170,6 +170,8 @@ namespace LungmenSoftware.Models.Service
             };
             return cr;
         }
+
+
 
         //For AngularJS
         public ChangeRequest AddChangeRequestRecord(ChangeRequest crEntry)

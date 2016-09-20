@@ -35,4 +35,23 @@ namespace LungmenSoftware.Models.CodeFirst.Entities
         public Guid ChangeDeltaId { get; set; }
         
     }
+
+    public class ModuleInfo
+    {
+        public int RevInfoId { get; set; }
+
+        public string ModuleBoardName { get; set; }
+
+        public string SocketLocation { get; set; }
+
+        public string SerialNumber { get; set; }
+
+        public string Program { get; set; }
+
+        public string Rev { get; set; }
+
+        public NumacChangeDelta NumacChangeDelta { get; set; }
+
+        public Guid NumacChangeDeltaId { get; set; }
+    }
 }

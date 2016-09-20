@@ -572,7 +572,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="client\controller\numacDataGridController.js" />
+    <Content Include="client\controller\numacFormCtrl.js" />
     <Content Include="client\numacApp.js" />
+    <Content Include="client\services\numacDataService.js" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
@@ -618,6 +620,39 @@
     <Content Include="Scripts\angular-cookies.js" />
     <Content Include="Scripts\angular-cookies.min.js" />
     <Content Include="Scripts\angular-csp.css" />
+    <Content Include="Scripts\angular-formly\.gitattributes" />
+    <Content Include="Scripts\angular-formly\dist\formly.js" />
+    <Content Include="Scripts\angular-formly\dist\formly.min.js" />
+    <Content Include="Scripts\angular-formly\gulpfile.js" />
+    <Content Include="Scripts\angular-formly\package.js" />
+    <Content Include="Scripts\angular-formly\src\angular-fix\index.js" />
+    <Content Include="Scripts\angular-formly\src\directives\formly-custom-validation.js" />
+    <Content Include="Scripts\angular-formly\src\directives\formly-custom-validation.test.js" />
+    <Content Include="Scripts\angular-formly\src\directives\formly-field.js" />
+    <Content Include="Scripts\angular-formly\src\directives\formly-field.test.js" />
+    <Content Include="Scripts\angular-formly\src\directives\formly-focus.js" />
+    <Content Include="Scripts\angular-formly\src\directives\formly-focus.test.js" />
+    <Content Include="Scripts\angular-formly\src\directives\formly-form.controller.js" />
+    <Content Include="Scripts\angular-formly\src\directives\formly-form.controller.test.js" />
+    <Content Include="Scripts\angular-formly\src\directives\formly-form.js" />
+    <Content Include="Scripts\angular-formly\src\directives\formly-form.test.js" />
+    <Content Include="Scripts\angular-formly\src\index.common.js" />
+    <Content Include="Scripts\angular-formly\src\index.js" />
+    <Content Include="Scripts\angular-formly\src\index.test.js" />
+    <Content Include="Scripts\angular-formly\src\providers\formlyApiCheck.js" />
+    <Content Include="Scripts\angular-formly\src\providers\formlyApiCheck.test.js" />
+    <Content Include="Scripts\angular-formly\src\providers\formlyConfig.js" />
+    <Content Include="Scripts\angular-formly\src\providers\formlyConfig.test.js" />
+    <Content Include="Scripts\angular-formly\src\providers\formlyUsability.js" />
+    <Content Include="Scripts\angular-formly\src\providers\formlyValidationMessages.js" />
+    <Content Include="Scripts\angular-formly\src\run\formlyCustomTags.js" />
+    <Content Include="Scripts\angular-formly\src\run\formlyCustomTags.test.js" />
+    <Content Include="Scripts\angular-formly\src\run\formlyNgModelAttrsManipulator.js" />
+    <Content Include="Scripts\angular-formly\src\run\formlyNgModelAttrsManipulator.test.js" />
+    <Content Include="Scripts\angular-formly\src\services\formlyUtil.js" />
+    <Content Include="Scripts\angular-formly\src\services\formlyUtil.test.js" />
+    <Content Include="Scripts\angular-formly\src\services\formlyWarn.js" />
+    <Content Include="Scripts\angular-formly\src\test.utils.js" />
     <Content Include="Scripts\angular-loader.js" />
     <Content Include="Scripts\angular-loader.min.js" />
     <Content Include="Scripts\angular-message-format.js" />
@@ -666,6 +701,20 @@
     <Content Include="Content\ui-grid.woff" />
     <Content Include="Content\ui-grid.ttf" />
     <Content Include="Content\ui-grid.eot" />
+    <Content Include="Scripts\api-check\dist\api-check.js" />
+    <Content Include="Scripts\api-check\dist\api-check.min.js" />
+    <Content Include="Scripts\api-check\index.html" />
+    <Content Include="Scripts\api-check\src\api-check-util.js" />
+    <Content Include="Scripts\api-check\src\api-check-util.test.js" />
+    <Content Include="Scripts\api-check\src\api-check.js" />
+    <Content Include="Scripts\api-check\src\api-check.test.js" />
+    <Content Include="Scripts\api-check\src\bugs.test.js" />
+    <Content Include="Scripts\api-check\src\checkers.js" />
+    <Content Include="Scripts\api-check\src\checkers.test.js" />
+    <Content Include="Scripts\api-check\src\index.js" />
+    <Content Include="Scripts\api-check\src\index.test.js" />
+    <Content Include="Scripts\api-check\src\prs-plz.test.js" />
+    <Content Include="Scripts\api-check\src\test.utils.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\errors.json" />
@@ -691,6 +740,26 @@
     <Content Include="Content\bootstrap-theme.css.map" />
     <None Include="Properties\PublishProfiles\Default Settings %282%29.pubxml" />
     <Content Include="Scripts\jquery-1.11.3.min.map" />
+    <Content Include="Scripts\angular-formly\.eslintignore" />
+    <Content Include="Scripts\angular-formly\.eslintrc" />
+    <Content Include="Scripts\angular-formly\.github\ISSUE_TEMPLATE.md" />
+    <Content Include="Scripts\angular-formly\.github\PULL_REQUEST_TEMPLATE.md" />
+    <Content Include="Scripts\angular-formly\.npmignore" />
+    <Content Include="Scripts\angular-formly\bower.json" />
+    <Content Include="Scripts\angular-formly\CHANGELOG.md" />
+    <Content Include="Scripts\angular-formly\CODE_OF_CONDUCT.md" />
+    <Content Include="Scripts\angular-formly\dist\formly.min.js.map" />
+    <Content Include="Scripts\angular-formly\LICENSE" />
+    <Content Include="Scripts\angular-formly\package.json" />
+    <Content Include="Scripts\angular-formly\PATRONS.md" />
+    <Content Include="Scripts\angular-formly\README.md" />
+    <Content Include="Scripts\api-check\.eslintrc" />
+    <Content Include="Scripts\api-check\bower.json" />
+    <Content Include="Scripts\api-check\CHANGELOG.md" />
+    <Content Include="Scripts\api-check\dist\api-check.min.js.map" />
+    <Content Include="Scripts\api-check\LICENSE" />
+    <Content Include="Scripts\api-check\package.json" />
+    <Content Include="Scripts\api-check\README.md" />
     <None Include="Scripts\jquery-1.12.3.intellisense.js" />
     <Content Include="Scripts\i18n\angular-locale_aa-dj.js" />
     <Content Include="Scripts\i18n\angular-locale_aa-er.js" />
@@ -1557,10 +1626,12 @@
     <Content Include="Views\Chassis\CreateChassisBoard.cshtml" />
     <Content Include="Views\Chassis\CreateEPROM.cshtml" />
     <Content Include="Scripts\version.json" />
+    <Content Include="Views\ChangeRequest\GetNumacChangeForm.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="client\templates\" />
+    <Folder Include="Controllers\Numac\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config">
