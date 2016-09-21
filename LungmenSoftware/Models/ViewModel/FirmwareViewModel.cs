@@ -14,7 +14,6 @@ namespace LungmenSoftware.Models.ViewModel
 
         public string Panel { get; set; }
 
-
         public string ChassisBoardName { get; set; }
 
         public string SocketLocation { get; set; }
@@ -55,6 +54,11 @@ namespace LungmenSoftware.Models.ViewModel
 
         public string Rev { get; set; }
 
+
+    }
+
+    public class SystemPanelViewModel
+    {
 
     }
 }

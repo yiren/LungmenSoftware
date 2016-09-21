@@ -15,6 +15,8 @@ namespace LungmenSoftware.Models.Service
         NumacFirewareDbContext db = new NumacFirewareDbContext();
         NumacDbContext db2 = new NumacDbContext();
 
+       
+
         public List<NUMACFirmware.Chassis> GetChassis()
         {
             return db.Chassis.ToList();
@@ -48,6 +50,8 @@ namespace LungmenSoftware.Models.Service
             return data.ToList();
         }
 
+        
+
         public List<FirmwareViewModel> GetFirmwareList()
         {
             var data = from c in db.Chassis.AsNoTracking()
@@ -72,7 +76,6 @@ namespace LungmenSoftware.Models.Service
             return data.ToList();
         }
 
-
         public NUMACFirmware.Chassis GetChassisById(Guid chassisId)
         {
             return db.Chassis.Find(chassisId);
@@ -81,6 +84,23 @@ namespace LungmenSoftware.Models.Service
         public ChassisBoard GetChassisBoardById(Guid chassisBoardId)
         {
             return db.ChassisBoards.Find(chassisBoardId);
+        }
+
+
+        public List<NumacSystem> GetSystemPanelList()
+        {
+            return db2.NumacSystems.OrderBy(o=>o.Panel).ToList();
+        }
+
+        public List<V2.Chassis> GetSubSystemById(Guid systemId)
+        {
+                                
+            return db2.Chassis.AsNoTracking().Where(c => c.SystemId.Equals(systemId)).OrderBy(c=>c.ChassisName).ToList();
+        }
+
+        public List<ModuleBoard> GetModulesById(Guid chassisId)
+        {
+            return db2.ModuleBoards.AsNoTracking().Where(b => b.ChassisId.Equals(chassisId)).OrderBy(b=>b.ModuleBoardName).ThenBy(b=>b.SocketLocation).ToList();
         }
     }
 }

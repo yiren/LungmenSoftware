@@ -29,9 +29,9 @@
         }
 
         function postDataToServer(data) {
-            $log.info("Invoke Function In dataService");
+            //$log.info("Invoke Function In dataService");
             postPromise = $http.post('/changerequest/AddNewChangeRequestRecord', data);
-            $log.info(postPromise);
+            //$log.info(postPromise);
             return postPromise;
         }
 

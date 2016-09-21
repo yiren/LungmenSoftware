@@ -396,7 +396,7 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AngularController.cs" />
     <Compile Include="Controllers\ChangeRequestController.cs" />
-    <Compile Include="Controllers\ChassisController.cs" />
+    <Compile Include="Controllers\NumacController.cs" />
     <Compile Include="Controllers\FoxSoftwaresController.cs" />
     <Compile Include="Controllers\FoxWorkStationsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -1604,7 +1604,7 @@
     <Content Include="Views\ChangeRequest\EditChangeRequest.cshtml" />
     <Content Include="Views\ChangeRequest\ReviewChangeRequest.cshtml" />
     <Content Include="Views\Angular\Index.cshtml" />
-    <Content Include="Views\ChangeRequest\AngularForm.cshtml" />
+    <Content Include="Views\ChangeRequest\GetInvChangeForm.cshtml" />
     <Content Include="Views\FoxSoftwares\ChangeRequestHistory.cshtml" />
     <Content Include="Views\Account\EmailNotConfirmMessage.cshtml" />
     <Content Include="Views\Account\EmailLinkPage.cshtml" />
@@ -1618,13 +1618,13 @@
     <Content Include="Views\ChangeRequest\_ConfirmFormData.cshtml" />
     <Content Include="Views\User\DeleteUser.cshtml" />
     <Content Include="Views\ChangeRequest\DeleteChangeRequest.cshtml" />
-    <Content Include="Views\Chassis\CreateChassis.cshtml" />
-    <Content Include="Views\Chassis\Delete.cshtml" />
-    <Content Include="Views\Chassis\Details.cshtml" />
-    <Content Include="Views\Chassis\Edit.cshtml" />
-    <Content Include="Views\Chassis\Index.cshtml" />
-    <Content Include="Views\Chassis\CreateChassisBoard.cshtml" />
-    <Content Include="Views\Chassis\CreateEPROM.cshtml" />
+    <Content Include="Views\Numac\CreateChassis.cshtml" />
+    <Content Include="Views\Numac\Delete.cshtml" />
+    <Content Include="Views\Numac\Details.cshtml" />
+    <Content Include="Views\Numac\Edit.cshtml" />
+    <Content Include="Views\Numac\Index.cshtml" />
+    <Content Include="Views\Numac\CreateChassisBoard.cshtml" />
+    <Content Include="Views\Numac\CreateEPROM.cshtml" />
     <Content Include="Scripts\version.json" />
     <Content Include="Views\ChangeRequest\GetNumacChangeForm.cshtml" />
   </ItemGroup>

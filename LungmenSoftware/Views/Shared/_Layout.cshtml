@@ -39,7 +39,8 @@
                             NUMAC相關資訊<span class="caret"></span>
                         </a>
                         <ul class="dropdown-menu">
-                            <li>@Html.ActionLink("NUMAC EPROM資訊", "Index", "Chassis")</li>
+                            <li>@Html.ActionLink("NUMAC EPROM資訊", "Index", "Numac")</li>
+                            <li>@Html.ActionLink("NUMAC 軟體變更", "GetNumacChangeForm", "ChangeRequest")</li>
 
                         </ul>
                     </li>
@@ -49,7 +50,7 @@
                             軟體版本變更<span class="caret"></span>
                         </a>
                         <ul class="dropdown-menu">
-                            <li>@Html.ActionLink("新增軟體變更", "GetInvSoftChangeForm", "ChangeRequest")</li>
+                            <li>@Html.ActionLink("新增軟體變更", "GetInvChangeForm", "ChangeRequest")</li>
                             <li role="separator" class="divider"></li>
                             <li>@Html.ActionLink("進行中軟體修改清單", "Index", "ChangeRequest")</li>
                             <li>@Html.ActionLink("已完成軟體修改清單", "ChangeRequestHistorialData", "ChangeRequest")</li>

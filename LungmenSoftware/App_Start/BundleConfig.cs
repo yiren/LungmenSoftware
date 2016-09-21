@@ -9,7 +9,7 @@ namespace LungmenSoftware
         public static void RegisterBundles(BundleCollection bundles)
         {
             bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
-                        "~/Scripts/jquery-{version}.js",
+                        "~/Scripts/jquery-1.11.3.js",
                         "~/Scripts/jquery-ui-1.11.4.min.js"
                         ));
 
