@@ -134,7 +134,18 @@ namespace LungmenSoftware.Controllers
                 ContentType = "application/json"
             };
         }
-       
+        
+        public JsonResult AddNumacChangeRequestRecord(ChangeRequest crEntry)
+        {
+            crEntry.ReviewBy = crService.GetReviewer();
+            crEntry.Owner = crEntry.ReviewBy;
+            crEntry.IsActive = true;
+
+            var newRecord = crService.AddNumacChangeRequestEntry(crEntry);
+
+            return Json(newRecord, JsonRequestBehavior.AllowGet);
+        }
+               
 
         [HttpPost]
         public ActionResult AddChangeRequest(ChangeRequest crEntry)
@@ -144,7 +155,7 @@ namespace LungmenSoftware.Controllers
             crEntry.CreateDate = DateTime.Now;
             crEntry.LastModifiedDate = DateTime.Now;
 
-            crEntry.Owner = "test2@taipower.com.tw";//crService.GetReviewer();
+            crEntry.Owner = "test2@taipower.com.tw"; //crService.GetReviewer();
             crEntry.ReviewBy = "test2@taipower.com.tw";
             if (ModelState.IsValid)
             {

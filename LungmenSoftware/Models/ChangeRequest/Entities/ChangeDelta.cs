@@ -20,18 +20,5 @@ namespace LungmenSoftware.Models.CodeFirst.Entities
         public Guid ChangeRequestId { get; set; }
         public ChangeRequest ChangeRequest { get; set; }
     }
-    public class NumacChangeDelta
-    {
-        public Guid NumacChangeDeltaId { get; set; }
-
-        public Guid ModuleBoardId { get; set; }
-
-        public string OriginalValue { get; set; }
-        [DisplayName("欲修改值")]
-        public string NewValue { get; set; }
-        public List<RevInfo> RevInfos { get; set; }
-
-        public Guid ChangeRequestId { get; set; }
-        public ChangeRequest ChangeRequest { get; set; }
-    }
+   
 }

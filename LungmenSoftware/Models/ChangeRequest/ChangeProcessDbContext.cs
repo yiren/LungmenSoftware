@@ -24,6 +24,10 @@ namespace LungmenSoftware.Models.CodeFirst
         public DbSet<RevInfo> RevInfos { get; set; }
         public DbSet<ChangeRequestMessage> ChangeRequestMessages { get; set; }
 
+        public DbSet<ModuleInfo> ModuleInfos { get; set; }
+
+        public DbSet<NumacChangeDelta> NumacChangeDeltas { get; set; }
+
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             modelBuilder.Configurations.Add(new ChangeRequestConfiguration());
@@ -32,8 +36,32 @@ namespace LungmenSoftware.Models.CodeFirst
             modelBuilder.Configurations.Add(new ChangeDeltaConfiguration());
             modelBuilder.Configurations.Add(new RevInfoConfiguration());
             modelBuilder.Configurations.Add(new ChangeRequestMessageConfiguration());
+            modelBuilder.Configurations.Add(new NumacChangeDeltaConfiguration());
+            modelBuilder.Configurations.Add(new ModuleInfoConfiguration());
         }
 
+    }
+
+    internal class ModuleInfoConfiguration : EntityTypeConfiguration<ModuleInfo>
+    {
+        public ModuleInfoConfiguration()
+        {
+            HasKey(m => m.ModuleInfoId);
+            HasRequired(m => m.NumacChangeDelta)
+                .WithMany(n => n.ModuleInfos)
+                .HasForeignKey(m => m.NumacChangeDeltaId);
+        }
+    }
+
+    internal class NumacChangeDeltaConfiguration : EntityTypeConfiguration<NumacChangeDelta>
+    {
+        public NumacChangeDeltaConfiguration()
+        {
+            HasKey(n => n.NumacChangeDeltaId);
+            HasRequired(n => n.ChangeRequest)
+                    .WithMany(m => m.NumacChangeDeltas)
+                    .HasForeignKey(d => d.ChangeRequestId);
+        }
     }
 
     public class ChangeRequestMessageConfiguration

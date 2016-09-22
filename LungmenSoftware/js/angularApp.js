@@ -52,8 +52,6 @@
             vm.data = response.data;
         });
 
-
-
         //dataService.postData.then(function(response) {
         //    vm.data = response.data;
         //}, function(errResponse) {

@@ -94,6 +94,8 @@ namespace LungmenSoftware.Models.Service
             return query.ToList();
         }
 
+        
+
         public List<ChangeRequestInfo> GetChangeRequestList()
         {
             var query = from cr in db.ChangeRequests.Where(r=>r.IsActive==true)
@@ -171,9 +173,38 @@ namespace LungmenSoftware.Models.Service
             return cr;
         }
 
+        //For AngularJS Numac
+        public ChangeRequest AddNumacChangeRequestEntry(ChangeRequest crEntry)
+        {
+            foreach (var item in crEntry.NumacChangeDeltas)
+            {
+                item.ChangeRequest = crEntry;
+                item.ChangeRequestId = crEntry.ChangeRequestId;
+                item.NumacChangeDeltaId = Guid.NewGuid();
+            }
+            db.ChangeRequestMessages.Add(new ChangeRequestMessage()
+            {
+                ChangeRequest = crEntry,
+                ChangeRequestId = crEntry.ChangeRequestId,
+                CreateBy = crEntry.CreatedBy,
+                CreateTime = DateTime.Now,
+                Message = "軟體變更需求送審"
+            });
 
+            db.ChangeRequests.Add(crEntry);
+            if (db.SaveChanges() != -1)
+            {
+                return db.ChangeRequests
+                    .Include(c => c.NumacChangeDeltas)
+                    .First(c => c.ChangeRequestId.Equals(crEntry.ChangeRequestId));
+            }
+            else
+            {
+                return null;
+            }
+        }
 
-        //For AngularJS
+        //For AngularJS Inv
         public ChangeRequest AddChangeRequestRecord(ChangeRequest crEntry)
         {
             foreach (var item in crEntry.ChangeDeltas)

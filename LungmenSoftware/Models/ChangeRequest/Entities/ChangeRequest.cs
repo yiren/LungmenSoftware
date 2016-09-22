@@ -20,6 +20,9 @@ namespace LungmenSoftware.Models.CodeFirst.Entities
         [DisplayName("軟體變更敘述")]
         public string Description { get; set; }
 
+        [DisplayName("變更設計文件")]
+        public string DesignDoc { get; set; }
+
         [DisplayName("申請人")]
         public string CreatedBy { get; set; }
 
@@ -52,6 +55,7 @@ namespace LungmenSoftware.Models.CodeFirst.Entities
 
         public List<ChangeRequestMessage> ChangeRequestMessages { get; set; }
 
+        public List<NumacChangeDelta> NumacChangeDeltas { get; set; }
         //Status Pattern Level 1
         //public DateTime CreateDate { get; set; }
 
