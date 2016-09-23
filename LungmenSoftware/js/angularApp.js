@@ -44,7 +44,7 @@
     function ConfirmCtrl($log, dataService) {
         var vm = this;
         vm.message = "等候伺服器回應";
-        $log.info("From Confirm Controller------");
+        $log.info("-----From Confirm Controller------");
 
         dataService.getPostPromise().then(function (response) {
             $log.info(response.data);

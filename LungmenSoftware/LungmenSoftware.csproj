@@ -472,6 +472,14 @@
     <Compile Include="MigrationForChangeRequestData\201609220900369_addDesignDocCol.Designer.cs">
       <DependentUpon>201609220900369_addDesignDocCol.cs</DependentUpon>
     </Compile>
+    <Compile Include="MigrationForChangeRequestData\201609230058307_addNumacDeltaCols.cs" />
+    <Compile Include="MigrationForChangeRequestData\201609230058307_addNumacDeltaCols.Designer.cs">
+      <DependentUpon>201609230058307_addNumacDeltaCols.cs</DependentUpon>
+    </Compile>
+    <Compile Include="MigrationForChangeRequestData\201609230723413_reAddModuleInfoCols.cs" />
+    <Compile Include="MigrationForChangeRequestData\201609230723413_reAddModuleInfoCols.Designer.cs">
+      <DependentUpon>201609230723413_reAddModuleInfoCols.cs</DependentUpon>
+    </Compile>
     <Compile Include="MigrationForChangeRequestData\Configuration.cs" />
     <Compile Include="MigrationForIdentity\201508210117075_InitialCreate.cs" />
     <Compile Include="MigrationForIdentity\201508210117075_InitialCreate.Designer.cs">
@@ -564,6 +572,7 @@
     <Compile Include="Models\Service\UserService.cs" />
     <Compile Include="Models\ViewModel\ChangeRequestView.cs" />
     <Compile Include="Models\ViewModel\CheckBoxListModel.cs" />
+    <Compile Include="Models\ViewModel\NumacConfirmFormViewModel.cs" />
     <Compile Include="Models\ViewModel\RoleView.cs" />
     <Compile Include="Models\Service\FoxSoftService.cs" />
     <Compile Include="Models\Service\IFoxAppSoftwareService.cs" />
@@ -586,10 +595,14 @@
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="client\controller\numacConfirmFormCtrl.js" />
     <Content Include="client\controller\numacDataGridController.js" />
     <Content Include="client\controller\numacFormCtrl.js" />
     <Content Include="client\numacApp.js" />
+    <Content Include="client\numacRouter.js" />
     <Content Include="client\services\numacDataService.js" />
+    <Content Include="client\templates\numac\confirmResponse.html" />
+    <Content Include="client\templates\numac\numacChangeForm.html" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
@@ -1645,7 +1658,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="client\templates\" />
     <Folder Include="Controllers\Numac\" />
   </ItemGroup>
   <ItemGroup>
@@ -1708,6 +1720,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="MigrationForChangeRequestData\201609220900369_addDesignDocCol.resx">
       <DependentUpon>201609220900369_addDesignDocCol.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MigrationForChangeRequestData\201609230058307_addNumacDeltaCols.resx">
+      <DependentUpon>201609230058307_addNumacDeltaCols.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MigrationForChangeRequestData\201609230723413_reAddModuleInfoCols.resx">
+      <DependentUpon>201609230723413_reAddModuleInfoCols.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="MigrationForIdentity\201508210117075_InitialCreate.resx">
       <DependentUpon>201508210117075_InitialCreate.cs</DependentUpon>

@@ -182,6 +182,7 @@ namespace LungmenSoftware.Models.Service
                 item.ChangeRequestId = crEntry.ChangeRequestId;
                 item.NumacChangeDeltaId = Guid.NewGuid();
             }
+
             db.ChangeRequestMessages.Add(new ChangeRequestMessage()
             {
                 ChangeRequest = crEntry,

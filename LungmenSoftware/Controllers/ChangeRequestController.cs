@@ -134,16 +134,26 @@ namespace LungmenSoftware.Controllers
                 ContentType = "application/json"
             };
         }
-        
-        public JsonResult AddNumacChangeRequestRecord(ChangeRequest crEntry)
+        [HttpPost]
+        public ContentResult AddNumacChangeRequestRecord(ChangeRequest crEntry)
         {
             crEntry.ReviewBy = crService.GetReviewer();
             crEntry.Owner = crEntry.ReviewBy;
             crEntry.IsActive = true;
+            if (crEntry.CreatedBy == null) crEntry.CreatedBy = "test2@taipower.com.tw";
 
             var newRecord = crService.AddNumacChangeRequestEntry(crEntry);
+            string json = JsonConvert.SerializeObject(newRecord, new JsonSerializerSettings()
+            {
+                ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+                Formatting = Formatting.Indented
+            });
 
-            return Json(newRecord, JsonRequestBehavior.AllowGet);
+            return new ContentResult()
+            {
+                Content = json,
+                ContentType = "application/json"
+            };
         }
                
 
