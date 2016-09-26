@@ -10,7 +10,10 @@ namespace LungmenSoftware.Models.ViewModel
     {
         public string SoftwareName { get; set; }
 
-        public int SoftwareId { get; set; }
+        public int FoxSoftwareId { get; set; }
+        public int FoxWorkStationId { get; set; }
+        public long JoinTableId { get; set; }
+        public string WorkstationName { get; set; }
         public string Rev { get; set; }
         public string Procedure { get; set; }
         public string Software_Library_Identification { get; set; }

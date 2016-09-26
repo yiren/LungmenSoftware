@@ -1,5 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.0\build\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props" Condition="Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.0\build\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" />
+  <Import Project="..\packages\Microsoft.Net.Compilers.1.0.0\build\Microsoft.Net.Compilers.props" Condition="Exists('..\packages\Microsoft.Net.Compilers.1.0.0\build\Microsoft.Net.Compilers.props')" />
+  <Import Project="..\packages\JavaScriptEngineSwitcher.V8.1.5.5\build\JavaScriptEngineSwitcher.V8.props" Condition="Exists('..\packages\JavaScriptEngineSwitcher.V8.1.5.5\build\JavaScriptEngineSwitcher.V8.props')" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.Default.props" Condition="Exists('$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.Default.props')" />
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
@@ -14,7 +17,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>LungmenSoftware</RootNamespace>
     <AssemblyName>LungmenSoftware</AssemblyName>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <MvcBuildViews>false</MvcBuildViews>
     <UseIISExpress>true</UseIISExpress>
     <IISExpressSSLPort />
@@ -23,8 +26,11 @@
     <IISExpressUseClassicPipelineMode />
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
     <RestorePackages>true</RestorePackages>
-    <TypeScriptToolsVersion>1.0</TypeScriptToolsVersion>
+    <TypeScriptToolsVersion>1.8</TypeScriptToolsVersion>
     <UseGlobalApplicationHostFile />
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -48,12 +54,8 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Antlr.3.5.0.2\lib\Antlr3.Runtime.dll</HintPath>
     </Reference>
-    <Reference Include="AspNet.ScriptManager.jQuery, Version=2.1.2.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\AspNet.ScriptManager.jQuery.2.1.4\lib\net45\AspNet.ScriptManager.jQuery.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="ClearScript, Version=5.4.2.1, Culture=neutral, PublicKeyToken=935d0c957da47c73, processorArchitecture=MSIL">
-      <HintPath>..\packages\JavaScriptEngineSwitcher.V8.1.2.9\lib\net40\ClearScript.dll</HintPath>
+    <Reference Include="ClearScript, Version=5.4.6.0, Culture=neutral, PublicKeyToken=935d0c957da47c73, processorArchitecture=MSIL">
+      <HintPath>..\packages\JavaScriptEngineSwitcher.V8.1.5.5\lib\net40\ClearScript.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
@@ -64,19 +66,24 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
-    <Reference Include="JavaScriptEngineSwitcher.Core">
-      <HintPath>..\packages\JavaScriptEngineSwitcher.Core.1.2.4\lib\net40\JavaScriptEngineSwitcher.Core.dll</HintPath>
-    </Reference>
-    <Reference Include="JavaScriptEngineSwitcher.Msie, Version=1.2.10.0, Culture=neutral, PublicKeyToken=c608b2a8cc9e4472, processorArchitecture=MSIL">
-      <HintPath>..\packages\JavaScriptEngineSwitcher.Msie.1.2.10\lib\net40\JavaScriptEngineSwitcher.Msie.dll</HintPath>
+    <Reference Include="ExcelReport, Version=2.0.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\ExcelReport.2.0.1.0\lib\net40\ExcelReport.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="JavaScriptEngineSwitcher.V8, Version=1.2.9.0, Culture=neutral, PublicKeyToken=c608b2a8cc9e4472, processorArchitecture=MSIL">
-      <HintPath>..\packages\JavaScriptEngineSwitcher.V8.1.2.9\lib\net40\JavaScriptEngineSwitcher.V8.dll</HintPath>
+    <Reference Include="ICSharpCode.SharpZipLib, Version=0.86.0.518, Culture=neutral, PublicKeyToken=1b03e6acf1164f73, processorArchitecture=MSIL">
+      <HintPath>..\packages\SharpZipLib.0.86.0\lib\20\ICSharpCode.SharpZipLib.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="JSPool, Version=0.3.0.0, Culture=neutral, PublicKeyToken=2fc7775f73072640, processorArchitecture=MSIL">
-      <HintPath>..\packages\JSPool.0.3.0\lib\net40-Client\JSPool.dll</HintPath>
+    <Reference Include="JavaScriptEngineSwitcher.Core, Version=1.5.0.0, Culture=neutral, PublicKeyToken=c608b2a8cc9e4472, processorArchitecture=MSIL">
+      <HintPath>..\packages\JavaScriptEngineSwitcher.Core.1.5.0\lib\net40\JavaScriptEngineSwitcher.Core.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="JavaScriptEngineSwitcher.Msie, Version=1.5.4.0, Culture=neutral, PublicKeyToken=c608b2a8cc9e4472, processorArchitecture=MSIL">
+      <HintPath>..\packages\JavaScriptEngineSwitcher.Msie.1.5.4\lib\net40\JavaScriptEngineSwitcher.Msie.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="JavaScriptEngineSwitcher.V8, Version=1.5.5.0, Culture=neutral, PublicKeyToken=c608b2a8cc9e4472, processorArchitecture=MSIL">
+      <HintPath>..\packages\JavaScriptEngineSwitcher.V8.1.5.5\lib\net40\JavaScriptEngineSwitcher.V8.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.AspNet.Identity.Core, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
@@ -97,7 +104,15 @@
     <Reference Include="Microsoft.AspNet.SignalR.SystemWeb">
       <HintPath>..\packages\Microsoft.AspNet.SignalR.SystemWeb.2.2.0\lib\net45\Microsoft.AspNet.SignalR.SystemWeb.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.CodeDom.Providers.DotNetCompilerPlatform, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.0\lib\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Microsoft.DotNet.InternalAbstractions, Version=1.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.DotNet.InternalAbstractions.1.0.0\lib\net451\Microsoft.DotNet.InternalAbstractions.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Microsoft.Owin, Version=3.0.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Microsoft.Owin.3.0.1\lib\net45\Microsoft.Owin.dll</HintPath>
@@ -134,27 +149,50 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Microsoft.Owin.Security.Twitter.3.0.1\lib\net45\Microsoft.Owin.Security.Twitter.dll</HintPath>
     </Reference>
-    <Reference Include="MsieJavaScriptEngine, Version=1.5.5.0, Culture=neutral, PublicKeyToken=a3a2846a37ac0d3e, processorArchitecture=MSIL">
-      <HintPath>..\packages\MsieJavaScriptEngine.1.5.5\lib\net40\MsieJavaScriptEngine.dll</HintPath>
+    <Reference Include="Microsoft.Win32.Primitives, Version=4.0.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Win32.Primitives.4.0.1\lib\net46\Microsoft.Win32.Primitives.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="MvcCheckBoxList">
-      <HintPath>..\packages\MvcCheckBoxList.1.4.4.5\lib\net45\MvcCheckBoxList.dll</HintPath>
+    <Reference Include="MsieJavaScriptEngine, Version=1.7.1.0, Culture=neutral, PublicKeyToken=a3a2846a37ac0d3e, processorArchitecture=MSIL">
+      <HintPath>..\packages\MsieJavaScriptEngine.1.7.1\lib\net40-client\MsieJavaScriptEngine.dll</HintPath>
+      <Private>True</Private>
     </Reference>
-    <Reference Include="MySql.Data">
-      <HintPath>..\packages\MySql.Data.6.9.6\lib\net45\MySql.Data.dll</HintPath>
+    <Reference Include="MvcCheckBoxList, Version=1.4.4.5, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\MvcCheckBoxList.1.4.4.5\lib\net45\MvcCheckBoxList.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="MySql.Data.Entity">
       <HintPath>..\packages\MySQL.NET.6.6.4\lib\net40\MySql.Data.Entity.dll</HintPath>
     </Reference>
-    <Reference Include="MySql.Data.Entity.EF6">
-      <HintPath>..\packages\MySql.Data.Entity.6.9.6\lib\net45\MySql.Data.Entity.EF6.dll</HintPath>
-    </Reference>
     <Reference Include="MySql.Web">
       <HintPath>..\packages\MySQL.NET.6.6.4\lib\net40\MySql.Web.dll</HintPath>
     </Reference>
-    <Reference Include="Newtonsoft.Json, Version=7.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <HintPath>..\packages\Newtonsoft.Json.7.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+    <Reference Include="Newtonsoft.Json, Version=9.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.9.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c, processorArchitecture=MSIL">
+      <HintPath>..\packages\NLog.4.4.0-beta11\lib\net45\NLog.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="NPOI, Version=2.2.1.0, Culture=neutral, PublicKeyToken=0df73ec7942b34e1, processorArchitecture=MSIL">
+      <HintPath>..\packages\NPOI.2.2.1\lib\net40\NPOI.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="NPOI.Extend, Version=1.0.3.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\NPOI.Extend.1.0.3.0\lib\net40\NPOI.Extend.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="NPOI.OOXML, Version=2.2.1.0, Culture=neutral, PublicKeyToken=0df73ec7942b34e1, processorArchitecture=MSIL">
+      <HintPath>..\packages\NPOI.2.2.1\lib\net40\NPOI.OOXML.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="NPOI.OpenXml4Net, Version=2.2.1.0, Culture=neutral, PublicKeyToken=0df73ec7942b34e1, processorArchitecture=MSIL">
+      <HintPath>..\packages\NPOI.2.2.1\lib\net40\NPOI.OpenXml4Net.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="NPOI.OpenXmlFormats, Version=2.2.1.0, Culture=neutral, PublicKeyToken=0df73ec7942b34e1, processorArchitecture=MSIL">
+      <HintPath>..\packages\NPOI.2.2.1\lib\net40\NPOI.OpenXmlFormats.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="PagedList">
@@ -163,62 +201,156 @@
     <Reference Include="PagedList.Mvc">
       <HintPath>..\packages\PagedList.Mvc.4.5.0.0\lib\net40\PagedList.Mvc.dll</HintPath>
     </Reference>
-    <Reference Include="React, Version=1.5.0.0, Culture=neutral, PublicKeyToken=9aed67b161f7db78, processorArchitecture=MSIL">
-      <HintPath>..\packages\React.Core.1.5.2\lib\net40\React.dll</HintPath>
+    <Reference Include="RestSharp, Version=105.2.3.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\RestSharp.105.2.3\lib\net46\RestSharp.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="React.Web, Version=1.5.0.0, Culture=neutral, PublicKeyToken=9aed67b161f7db78, processorArchitecture=MSIL">
-      <HintPath>..\packages\React.Web.1.5.2\lib\net40\React.Web.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="React.Web.Mvc4, Version=1.5.0.0, Culture=neutral, PublicKeyToken=9aed67b161f7db78, processorArchitecture=MSIL">
-      <HintPath>..\packages\React.Web.Mvc4.1.5.2\lib\net40\React.Web.Mvc4.dll</HintPath>
+    <Reference Include="Swashbuckle.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=cd1bb07a5ac7c7bc, processorArchitecture=MSIL">
+      <HintPath>..\packages\Swashbuckle.Core.5.4.0\lib\net40\Swashbuckle.Core.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.AppContext, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.AppContext.4.1.0\lib\net46\System.AppContext.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Buffers, Version=4.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Buffers.4.0.0\lib\netstandard1.1\System.Buffers.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.ComponentModel.Composition" />
+    <Reference Include="System.ComponentModel.Primitives, Version=4.1.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.ComponentModel.Primitives.4.1.0\lib\net45\System.ComponentModel.Primitives.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.ComponentModel.TypeConverter, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.ComponentModel.TypeConverter.4.1.0\lib\net45\System.ComponentModel.TypeConverter.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Console, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Console.4.0.0\lib\net46\System.Console.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System.Data" />
+    <Reference Include="System.Diagnostics.DiagnosticSource, Version=4.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Diagnostics.DiagnosticSource.4.0.0\lib\net46\System.Diagnostics.DiagnosticSource.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Globalization.Calendars, Version=4.0.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Globalization.Calendars.4.0.1\lib\net46\System.Globalization.Calendars.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.IO.Compression, Version=4.1.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.IO.Compression.4.1.0\lib\net46\System.IO.Compression.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.IO.Compression.FileSystem" />
+    <Reference Include="System.IO.Compression.ZipFile, Version=4.0.1.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.IO.Compression.ZipFile.4.0.1\lib\net46\System.IO.Compression.ZipFile.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.IO.FileSystem, Version=4.0.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.IO.FileSystem.4.0.1\lib\net46\System.IO.FileSystem.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.IO.FileSystem.Primitives, Version=4.0.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.IO.FileSystem.Primitives.4.0.1\lib\net46\System.IO.FileSystem.Primitives.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Net.Http.Formatting, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Client.5.2.3\lib\net45\System.Net.Http.Formatting.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Net.Sockets, Version=4.1.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Net.Sockets.4.1.0\lib\net46\System.Net.Sockets.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Numerics" />
+    <Reference Include="System.Runtime.InteropServices.RuntimeInformation, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Runtime.InteropServices.RuntimeInformation.4.0.0\lib\net45\System.Runtime.InteropServices.RuntimeInformation.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Security" />
+    <Reference Include="System.Security.Cryptography.Algorithms, Version=4.1.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Security.Cryptography.Algorithms.4.2.0\lib\net461\System.Security.Cryptography.Algorithms.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Security.Cryptography.Encoding, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Security.Cryptography.Encoding.4.0.0\lib\net46\System.Security.Cryptography.Encoding.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Security.Cryptography.Primitives, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Security.Cryptography.Primitives.4.0.0\lib\net46\System.Security.Cryptography.Primitives.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Security.Cryptography.X509Certificates, Version=4.1.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Security.Cryptography.X509Certificates.4.1.0\lib\net461\System.Security.Cryptography.X509Certificates.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.ServiceModel" />
+    <Reference Include="System.Text.Encodings.Web, Version=4.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Text.Encodings.Web.4.0.0\lib\netstandard1.0\System.Text.Encodings.Web.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Transactions" />
+    <Reference Include="System.Web.Cors, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Cors.5.2.3\lib\net45\System.Web.Cors.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
-    <Reference Include="System.Core" />
-    <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Web.Helpers, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.Helpers.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Web.Mvc, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Microsoft.AspNet.Mvc.5.2.3\lib\net45\System.Web.Mvc.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Web.Optimization.React, Version=1.5.0.0, Culture=neutral, PublicKeyToken=9aed67b161f7db78, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Web.Optimization.React.1.5.2\lib\net40\System.Web.Optimization.React.dll</HintPath>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3-beta1\lib\net45\System.Web.Helpers.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="System.Web.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Microsoft.AspNet.Razor.3.2.3\lib\net45\System.Web.Razor.dll</HintPath>
+    <Reference Include="System.Web.Http, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Core.5.2.3\lib\net45\System.Web.Http.dll</HintPath>
+      <Private>True</Private>
     </Reference>
+    <Reference Include="System.Web.Http.Cors, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Cors.5.2.3\lib\net45\System.Web.Http.Cors.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.Http.Owin, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Owin.5.2.3\lib\net45\System.Web.Http.Owin.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.Http.SelfHost, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.SelfHost.5.2.3\lib\net45\System.Web.Http.SelfHost.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.Http.WebHost, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.WebHost.5.2.3\lib\net45\System.Web.Http.WebHost.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.Mvc, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Mvc.5.2.3-beta1\lib\net45\System.Web.Mvc.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Abstractions" />
+    <Reference Include="System.Web.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Razor.3.2.3-beta1\lib\net45\System.Web.Razor.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.Routing" />
     <Reference Include="System.Web.WebPages, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.WebPages.dll</HintPath>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3-beta1\lib\net45\System.Web.WebPages.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="System.Web.WebPages.Deployment, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.WebPages.Deployment.dll</HintPath>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3-beta1\lib\net45\System.Web.WebPages.Deployment.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="System.Web.WebPages.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.WebPages.Razor.dll</HintPath>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3-beta1\lib\net45\System.Web.WebPages.Razor.dll</HintPath>
+      <Private>True</Private>
     </Reference>
-    <Reference Include="System.Xml.Linq" />
-    <Reference Include="System.Web" />
-    <Reference Include="System.Web.Extensions" />
-    <Reference Include="System.Web.Abstractions" />
-    <Reference Include="System.Web.Routing" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Web.Services" />
@@ -227,16 +359,15 @@
       <Private>True</Private>
       <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
     </Reference>
-    <Reference Include="System.Net.Http">
-    </Reference>
     <Reference Include="System.Net.Http.WebRequest">
     </Reference>
     <Reference Include="System.Web.Optimization">
       <HintPath>..\packages\Microsoft.AspNet.Web.Optimization.1.1.3\lib\net40\System.Web.Optimization.dll</HintPath>
     </Reference>
+    <Reference Include="System.Xml.Linq" />
     <Reference Include="WebActivatorEx, Version=2.0.0.0, Culture=neutral, PublicKeyToken=7b26dc2a43f6a0d4, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\WebActivatorEx.2.0.6\lib\net40\WebActivatorEx.dll</HintPath>
+      <HintPath>..\packages\WebActivatorEx.2.1.0\lib\net40\WebActivatorEx.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="WebGrease, Version=1.6.5135.21930, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -252,29 +383,154 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\IdentityConfig.cs" />
-    <Compile Include="App_Start\ReactConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
+    <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\AngularController.cs" />
+    <Compile Include="Controllers\ChangeRequestController.cs" />
+    <Compile Include="Controllers\NumacController.cs" />
     <Compile Include="Controllers\FoxSoftwaresController.cs" />
     <Compile Include="Controllers\FoxWorkStationsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
-    <Compile Include="Models\ChangeDelta.cs">
-      <DependentUpon>LungmenData.tt</DependentUpon>
+    <Compile Include="Controllers\RoleController.cs" />
+    <Compile Include="Controllers\UserController.cs" />
+    <Compile Include="Controllers\WebAPI\ModuleBoardsController.cs" />
+    <Compile Include="Controllers\WebAPI\NumacDataController.cs" />
+    <Compile Include="Helper\EFToJSONConverter.cs" />
+    <Compile Include="Helper\Extensions\BoxPosition.cs" />
+    <Compile Include="Helper\Extensions\CheckBoxListExtension.cs" />
+    <Compile Include="Helper\GeneralData.cs" />
+    <Compile Include="Helper\JsonDotNetValueProviderFactory.cs" />
+    <Compile Include="Helper\RoleHelper.cs" />
+    <Compile Include="MigrationForChangeRequestData\201508270313558_InitialConfiguration.cs" />
+    <Compile Include="MigrationForChangeRequestData\201508270313558_InitialConfiguration.Designer.cs">
+      <DependentUpon>201508270313558_InitialConfiguration.cs</DependentUpon>
     </Compile>
-    <Compile Include="Models\ChangeRequest.cs">
-      <DependentUpon>LungmenData.tt</DependentUpon>
+    <Compile Include="MigrationForChangeRequestData\201508270539103_ResetToInitial.cs" />
+    <Compile Include="MigrationForChangeRequestData\201508270539103_ResetToInitial.Designer.cs">
+      <DependentUpon>201508270539103_ResetToInitial.cs</DependentUpon>
     </Compile>
-    <Compile Include="Models\ChangeRequestProcessLog.cs">
-      <DependentUpon>LungmenData.tt</DependentUpon>
+    <Compile Include="MigrationForChangeRequestData\201508270721583_AddCreateDateForChangeRequest.cs" />
+    <Compile Include="MigrationForChangeRequestData\201508270721583_AddCreateDateForChangeRequest.Designer.cs">
+      <DependentUpon>201508270721583_AddCreateDateForChangeRequest.cs</DependentUpon>
     </Compile>
-    <Compile Include="Models\ChangeRequestType.cs">
-      <DependentUpon>LungmenData.tt</DependentUpon>
+    <Compile Include="MigrationForChangeRequestData\201508270826281_ChangeLastModifiedDateToNullable.cs" />
+    <Compile Include="MigrationForChangeRequestData\201508270826281_ChangeLastModifiedDateToNullable.Designer.cs">
+      <DependentUpon>201508270826281_ChangeLastModifiedDateToNullable.cs</DependentUpon>
     </Compile>
-    <Compile Include="Models\ChangeStatu.cs">
-      <DependentUpon>LungmenData.tt</DependentUpon>
+    <Compile Include="MigrationForChangeRequestData\201508280013241_UnknownModelChanges.cs" />
+    <Compile Include="MigrationForChangeRequestData\201508280013241_UnknownModelChanges.Designer.cs">
+      <DependentUpon>201508280013241_UnknownModelChanges.cs</DependentUpon>
     </Compile>
+    <Compile Include="MigrationForChangeRequestData\201508280143430_AddDescriptionInChangeRequest.cs" />
+    <Compile Include="MigrationForChangeRequestData\201508280143430_AddDescriptionInChangeRequest.Designer.cs">
+      <DependentUpon>201508280143430_AddDescriptionInChangeRequest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="MigrationForChangeRequestData\201508280154466_AddNoteInChangeRequest.cs" />
+    <Compile Include="MigrationForChangeRequestData\201508280154466_AddNoteInChangeRequest.Designer.cs">
+      <DependentUpon>201508280154466_AddNoteInChangeRequest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="MigrationForChangeRequestData\201508310654597_AddNextStatusIsCurrentAndOwner.cs" />
+    <Compile Include="MigrationForChangeRequestData\201508310654597_AddNextStatusIsCurrentAndOwner.Designer.cs">
+      <DependentUpon>201508310654597_AddNextStatusIsCurrentAndOwner.cs</DependentUpon>
+    </Compile>
+    <Compile Include="MigrationForChangeRequestData\201508310858317_AddIsActive.cs" />
+    <Compile Include="MigrationForChangeRequestData\201508310858317_AddIsActive.Designer.cs">
+      <DependentUpon>201508310858317_AddIsActive.cs</DependentUpon>
+    </Compile>
+    <Compile Include="MigrationForChangeRequestData\201509090141056_AddChnageDeltaEntity.cs" />
+    <Compile Include="MigrationForChangeRequestData\201509090141056_AddChnageDeltaEntity.Designer.cs">
+      <DependentUpon>201509090141056_AddChnageDeltaEntity.cs</DependentUpon>
+    </Compile>
+    <Compile Include="MigrationForChangeRequestData\201509140506475_AddRevInfo.cs" />
+    <Compile Include="MigrationForChangeRequestData\201509140506475_AddRevInfo.Designer.cs">
+      <DependentUpon>201509140506475_AddRevInfo.cs</DependentUpon>
+    </Compile>
+    <Compile Include="MigrationForChangeRequestData\201509140908439_RemoveChangeStatusesCollectionInChangeStatusType.cs" />
+    <Compile Include="MigrationForChangeRequestData\201509140908439_RemoveChangeStatusesCollectionInChangeStatusType.Designer.cs">
+      <DependentUpon>201509140908439_RemoveChangeStatusesCollectionInChangeStatusType.cs</DependentUpon>
+    </Compile>
+    <Compile Include="MigrationForChangeRequestData\201510120505576_AddChangeRequestMessage.cs" />
+    <Compile Include="MigrationForChangeRequestData\201510120505576_AddChangeRequestMessage.Designer.cs">
+      <DependentUpon>201510120505576_AddChangeRequestMessage.cs</DependentUpon>
+    </Compile>
+    <Compile Include="MigrationForChangeRequestData\201609220603568_AddNumacChangeDelta.cs" />
+    <Compile Include="MigrationForChangeRequestData\201609220603568_AddNumacChangeDelta.Designer.cs">
+      <DependentUpon>201609220603568_AddNumacChangeDelta.cs</DependentUpon>
+    </Compile>
+    <Compile Include="MigrationForChangeRequestData\201609220624463_updateModuleInfoColumn.cs" />
+    <Compile Include="MigrationForChangeRequestData\201609220624463_updateModuleInfoColumn.Designer.cs">
+      <DependentUpon>201609220624463_updateModuleInfoColumn.cs</DependentUpon>
+    </Compile>
+    <Compile Include="MigrationForChangeRequestData\201609220632339_updateNumacChangeDelta.cs" />
+    <Compile Include="MigrationForChangeRequestData\201609220632339_updateNumacChangeDelta.Designer.cs">
+      <DependentUpon>201609220632339_updateNumacChangeDelta.cs</DependentUpon>
+    </Compile>
+    <Compile Include="MigrationForChangeRequestData\201609220900369_addDesignDocCol.cs" />
+    <Compile Include="MigrationForChangeRequestData\201609220900369_addDesignDocCol.Designer.cs">
+      <DependentUpon>201609220900369_addDesignDocCol.cs</DependentUpon>
+    </Compile>
+    <Compile Include="MigrationForChangeRequestData\201609230058307_addNumacDeltaCols.cs" />
+    <Compile Include="MigrationForChangeRequestData\201609230058307_addNumacDeltaCols.Designer.cs">
+      <DependentUpon>201609230058307_addNumacDeltaCols.cs</DependentUpon>
+    </Compile>
+    <Compile Include="MigrationForChangeRequestData\201609230723413_reAddModuleInfoCols.cs" />
+    <Compile Include="MigrationForChangeRequestData\201609230723413_reAddModuleInfoCols.Designer.cs">
+      <DependentUpon>201609230723413_reAddModuleInfoCols.cs</DependentUpon>
+    </Compile>
+    <Compile Include="MigrationForChangeRequestData\201609260519025_AddOriginalValueCols.cs" />
+    <Compile Include="MigrationForChangeRequestData\201609260519025_AddOriginalValueCols.Designer.cs">
+      <DependentUpon>201609260519025_AddOriginalValueCols.cs</DependentUpon>
+    </Compile>
+    <Compile Include="MigrationForChangeRequestData\201609260611298_deleteUnnecessaryCols.cs" />
+    <Compile Include="MigrationForChangeRequestData\201609260611298_deleteUnnecessaryCols.Designer.cs">
+      <DependentUpon>201609260611298_deleteUnnecessaryCols.cs</DependentUpon>
+    </Compile>
+    <Compile Include="MigrationForChangeRequestData\201609260653047_addMissingCols.cs" />
+    <Compile Include="MigrationForChangeRequestData\201609260653047_addMissingCols.Designer.cs">
+      <DependentUpon>201609260653047_addMissingCols.cs</DependentUpon>
+    </Compile>
+    <Compile Include="MigrationForChangeRequestData\Configuration.cs" />
+    <Compile Include="MigrationForIdentity\201508210117075_InitialCreate.cs" />
+    <Compile Include="MigrationForIdentity\201508210117075_InitialCreate.Designer.cs">
+      <DependentUpon>201508210117075_InitialCreate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="MigrationForIdentity\201510070520382_AddChtAliasColumn.cs" />
+    <Compile Include="MigrationForIdentity\201510070520382_AddChtAliasColumn.Designer.cs">
+      <DependentUpon>201510070520382_AddChtAliasColumn.cs</DependentUpon>
+    </Compile>
+    <Compile Include="MigrationForIdentity\Configuration.cs" />
+    <Compile Include="MigrationNumac\201606070132168_modifyColumn.cs" />
+    <Compile Include="MigrationNumac\201606070132168_modifyColumn.Designer.cs">
+      <DependentUpon>201606070132168_modifyColumn.cs</DependentUpon>
+    </Compile>
+    <Compile Include="MigrationNumac\201606070213347_addKey.cs" />
+    <Compile Include="MigrationNumac\201606070213347_addKey.Designer.cs">
+      <DependentUpon>201606070213347_addKey.cs</DependentUpon>
+    </Compile>
+    <Compile Include="MigrationNumac\201606120334041_AddLastModified.cs" />
+    <Compile Include="MigrationNumac\201606120334041_AddLastModified.Designer.cs">
+      <DependentUpon>201606120334041_AddLastModified.cs</DependentUpon>
+    </Compile>
+    <Compile Include="MigrationNumac\201606120602466_AddColumnForDisplay.cs" />
+    <Compile Include="MigrationNumac\201606120602466_AddColumnForDisplay.Designer.cs">
+      <DependentUpon>201606120602466_AddColumnForDisplay.cs</DependentUpon>
+    </Compile>
+    <Compile Include="MigrationNumac\201609220601028_AddNumacChangeDelta.cs" />
+    <Compile Include="MigrationNumac\201609220601028_AddNumacChangeDelta.Designer.cs">
+      <DependentUpon>201609220601028_AddNumacChangeDelta.cs</DependentUpon>
+    </Compile>
+    <Compile Include="MigrationNumac\Configuration.cs" />
+    <Compile Include="Models\ChangeRequest\ChangeProcessDbContext.cs" />
+    <Compile Include="Models\ChangeRequest\Entities\ChangeDelta.cs" />
+    <Compile Include="Models\ChangeRequest\Entities\ChangeRequest.cs" />
+    <Compile Include="Models\ChangeRequest\Entities\ChangeRequestMessage.cs" />
+    <Compile Include="Models\ChangeRequest\Entities\ChangeRequestStatus.cs" />
+    <Compile Include="Models\ChangeRequest\Entities\ChangeRequestStatusType.cs" />
+    <Compile Include="Models\ChangeRequest\Entities\NumacChangeDelta.cs" />
+    <Compile Include="Models\ChangeRequest\Entities\ModuleInfos.cs" />
     <Compile Include="Models\FoxSoftware.cs">
       <DependentUpon>LungmenData.tt</DependentUpon>
     </Compile>
@@ -287,15 +543,10 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Models\HistorialChangeRecord.cs">
-      <DependentUpon>LungmenData.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\ImpDoc.cs">
-      <DependentUpon>LungmenData.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\ImpDocType.cs">
-      <DependentUpon>LungmenData.tt</DependentUpon>
-    </Compile>
+    <Compile Include="Models\HOS\FDDR.cs" />
+    <Compile Include="Models\HOS\FddrToFdi.cs" />
+    <Compile Include="Models\HOS\FDI.cs" />
+    <Compile Include="Models\HOS\HOSDbContext.cs" />
     <Compile Include="Models\LungmenData.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -314,16 +565,35 @@
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
+    <Compile Include="Models\Metadata\ChangeRequestMetadata.cs" />
     <Compile Include="Models\Metadata\FoxAppSoftware.cs" />
+    <Compile Include="Models\Metadata\FoxSoftwareMetadata.cs" />
     <Compile Include="Models\Metadata\FoxWorkStation.cs" />
+    <Compile Include="Models\Metadata\WKAndFoxJoinTableMetaData.cs" />
     <Compile Include="Models\Metadata\WorkStationHardwareType.cs" />
+    <Compile Include="Models\NUMACFirmware\ChassisBoard.cs" />
+    <Compile Include="Models\NUMACFirmware\Chassis.cs" />
+    <Compile Include="Models\NUMACFirmware\EPROM.cs" />
+    <Compile Include="Models\NUMACFirmware\NumacDbContext.cs" />
+    <Compile Include="Models\NUMACFirmware\NumacFirewareDbContext.cs" />
+    <Compile Include="Models\NUMACFirmware\NumacModel.cs" />
+    <Compile Include="Models\Service\ChangeRequestService.cs" />
+    <Compile Include="Models\ViewModel\FirmwareViewModel.cs" />
+    <Compile Include="Models\Service\IUserService.cs" />
+    <Compile Include="Models\Service\NumacDataService.cs" />
+    <Compile Include="Models\Service\UserService.cs" />
+    <Compile Include="Models\ViewModel\ChangeRequestView.cs" />
+    <Compile Include="Models\ViewModel\CheckBoxListModel.cs" />
+    <Compile Include="Models\ViewModel\NumacConfirmFormViewModel.cs" />
+    <Compile Include="Models\ViewModel\RoleView.cs" />
     <Compile Include="Models\Service\FoxSoftService.cs" />
     <Compile Include="Models\Service\IFoxAppSoftwareService.cs" />
     <Compile Include="Models\Service\IWorkStationService.cs" />
     <Compile Include="Models\Service\WorkStationService.cs" />
+    <Compile Include="Models\ViewModel\UserView.cs" />
     <Compile Include="Models\ViewModel\FoxSoftView.cs" />
     <Compile Include="Models\ViewModel\FoxSoftwareInfo.cs" />
-    <Compile Include="Models\ViewModel\FoxWorkStationInfo.cs" />
+    <Compile Include="Models\ChangeRequest\Entities\RevInfo.cs" />
     <Compile Include="Models\ViewModel\FoxWorkStationView.cs" />
     <Compile Include="Models\ViewModel\WorkStationSearchViewModel.cs" />
     <Compile Include="Models\ViewModel\WorkStationsSearchViewModel.cs" />
@@ -337,66 +607,34 @@
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="ClearScript.V8\ClearScriptV8-32.dll">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="ClearScript.V8\ClearScriptV8-64.dll">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="ClearScript.V8\v8-ia32.dll">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="ClearScript.V8\v8-x64.dll">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
+    <Content Include="client\controller\numacConfirmFormCtrl.js" />
+    <Content Include="client\controller\numacDataGridController.js" />
+    <Content Include="client\controller\numacFormCtrl.js" />
+    <Content Include="client\numacApp.js" />
+    <Content Include="client\numacRouter.js" />
+    <Content Include="client\services\numacDataService.js" />
+    <Content Include="client\templates\numac\confirmResponse.html" />
+    <Content Include="client\templates\numac\numacChangeForm.html" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
-    <Content Include="Content\metro-icons.css" />
-    <Content Include="Content\metro-icons.min.css" />
-    <Content Include="Content\metro.css" />
-    <Content Include="Content\metro.min.css" />
     <Content Include="Content\PagedList.css" />
-    <Content Include="Content\themes\base\accordion.css" />
-    <Content Include="Content\themes\base\all.css" />
-    <Content Include="Content\themes\base\autocomplete.css" />
-    <Content Include="Content\themes\base\base.css" />
-    <Content Include="Content\themes\base\button.css" />
-    <Content Include="Content\themes\base\core.css" />
-    <Content Include="Content\themes\base\datepicker.css" />
-    <Content Include="Content\themes\base\dialog.css" />
-    <Content Include="Content\themes\base\draggable.css" />
-    <Content Include="Content\themes\base\images\ui-bg_flat_0_aaaaaa_40x100.png" />
-    <Content Include="Content\themes\base\images\ui-bg_flat_75_ffffff_40x100.png" />
-    <Content Include="Content\themes\base\images\ui-bg_glass_55_fbf9ee_1x400.png" />
-    <Content Include="Content\themes\base\images\ui-bg_glass_65_ffffff_1x400.png" />
-    <Content Include="Content\themes\base\images\ui-bg_glass_75_dadada_1x400.png" />
-    <Content Include="Content\themes\base\images\ui-bg_glass_75_e6e6e6_1x400.png" />
-    <Content Include="Content\themes\base\images\ui-bg_glass_95_fef1ec_1x400.png" />
-    <Content Include="Content\themes\base\images\ui-bg_highlight-soft_75_cccccc_1x100.png" />
-    <Content Include="Content\themes\base\images\ui-icons_222222_256x240.png" />
-    <Content Include="Content\themes\base\images\ui-icons_2e83ff_256x240.png" />
-    <Content Include="Content\themes\base\images\ui-icons_454545_256x240.png" />
-    <Content Include="Content\themes\base\images\ui-icons_888888_256x240.png" />
-    <Content Include="Content\themes\base\images\ui-icons_cd0a0a_256x240.png" />
-    <Content Include="Content\themes\base\menu.css" />
-    <Content Include="Content\themes\base\progressbar.css" />
-    <Content Include="Content\themes\base\resizable.css" />
-    <Content Include="Content\themes\base\selectable.css" />
-    <Content Include="Content\themes\base\selectmenu.css" />
-    <Content Include="Content\themes\base\slider.css" />
-    <Content Include="Content\themes\base\sortable.css" />
-    <Content Include="Content\themes\base\spinner.css" />
-    <Content Include="Content\themes\base\tabs.css" />
-    <Content Include="Content\themes\base\theme.css" />
-    <Content Include="Content\themes\base\tooltip.css" />
+    <Content Include="Content\ui-bootstrap-csp.css" />
+    <Content Include="Content\ui-grid.css" />
+    <Content Include="Content\ui-grid.min.css" />
+    <Content Include="Content\ui-grid.svg" />
+    <Content Include="css\materialize.css" />
+    <Content Include="css\materialize.min.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
-    <Content Include="fonts\metro.svg" />
+    <Content Include="font\material-design-icons\LICENSE.txt" />
+    <Content Include="font\material-design-icons\Material-Design-Icons.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
-    <Content Include="Icon.png" />
+    <Content Include="js\angularApp.js" />
+    <Content Include="js\materialize.js" />
+    <Content Include="js\materialize.min.js" />
     <Content Include="js\myjQuery.js" />
     <EntityDeploy Include="Models\LungmenData.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
@@ -415,7 +653,6 @@
       <DependentUpon>LungmenData.edmx</DependentUpon>
       <LastGenOutput>LungmenData.cs</LastGenOutput>
     </Content>
-    <Content Include="readme.txt" />
     <Content Include="Scripts\angular-animate.js" />
     <Content Include="Scripts\angular-animate.min.js" />
     <Content Include="Scripts\angular-aria.js" />
@@ -423,6 +660,39 @@
     <Content Include="Scripts\angular-cookies.js" />
     <Content Include="Scripts\angular-cookies.min.js" />
     <Content Include="Scripts\angular-csp.css" />
+    <Content Include="Scripts\angular-formly\.gitattributes" />
+    <Content Include="Scripts\angular-formly\dist\formly.js" />
+    <Content Include="Scripts\angular-formly\dist\formly.min.js" />
+    <Content Include="Scripts\angular-formly\gulpfile.js" />
+    <Content Include="Scripts\angular-formly\package.js" />
+    <Content Include="Scripts\angular-formly\src\angular-fix\index.js" />
+    <Content Include="Scripts\angular-formly\src\directives\formly-custom-validation.js" />
+    <Content Include="Scripts\angular-formly\src\directives\formly-custom-validation.test.js" />
+    <Content Include="Scripts\angular-formly\src\directives\formly-field.js" />
+    <Content Include="Scripts\angular-formly\src\directives\formly-field.test.js" />
+    <Content Include="Scripts\angular-formly\src\directives\formly-focus.js" />
+    <Content Include="Scripts\angular-formly\src\directives\formly-focus.test.js" />
+    <Content Include="Scripts\angular-formly\src\directives\formly-form.controller.js" />
+    <Content Include="Scripts\angular-formly\src\directives\formly-form.controller.test.js" />
+    <Content Include="Scripts\angular-formly\src\directives\formly-form.js" />
+    <Content Include="Scripts\angular-formly\src\directives\formly-form.test.js" />
+    <Content Include="Scripts\angular-formly\src\index.common.js" />
+    <Content Include="Scripts\angular-formly\src\index.js" />
+    <Content Include="Scripts\angular-formly\src\index.test.js" />
+    <Content Include="Scripts\angular-formly\src\providers\formlyApiCheck.js" />
+    <Content Include="Scripts\angular-formly\src\providers\formlyApiCheck.test.js" />
+    <Content Include="Scripts\angular-formly\src\providers\formlyConfig.js" />
+    <Content Include="Scripts\angular-formly\src\providers\formlyConfig.test.js" />
+    <Content Include="Scripts\angular-formly\src\providers\formlyUsability.js" />
+    <Content Include="Scripts\angular-formly\src\providers\formlyValidationMessages.js" />
+    <Content Include="Scripts\angular-formly\src\run\formlyCustomTags.js" />
+    <Content Include="Scripts\angular-formly\src\run\formlyCustomTags.test.js" />
+    <Content Include="Scripts\angular-formly\src\run\formlyNgModelAttrsManipulator.js" />
+    <Content Include="Scripts\angular-formly\src\run\formlyNgModelAttrsManipulator.test.js" />
+    <Content Include="Scripts\angular-formly\src\services\formlyUtil.js" />
+    <Content Include="Scripts\angular-formly\src\services\formlyUtil.test.js" />
+    <Content Include="Scripts\angular-formly\src\services\formlyWarn.js" />
+    <Content Include="Scripts\angular-formly\src\test.utils.js" />
     <Content Include="Scripts\angular-loader.js" />
     <Content Include="Scripts\angular-loader.min.js" />
     <Content Include="Scripts\angular-message-format.js" />
@@ -430,6 +700,8 @@
     <Content Include="Scripts\angular-messages.js" />
     <Content Include="Scripts\angular-messages.min.js" />
     <Content Include="Scripts\angular-mocks.js" />
+    <Content Include="Scripts\angular-parse-ext.js" />
+    <Content Include="Scripts\angular-parse-ext.min.js" />
     <Content Include="Scripts\angular-resource.js" />
     <Content Include="Scripts\angular-resource.min.js" />
     <Content Include="Scripts\angular-route.js" />
@@ -439,28 +711,96 @@
     <Content Include="Scripts\angular-scenario.js" />
     <Content Include="Scripts\angular-touch.js" />
     <Content Include="Scripts\angular-touch.min.js" />
+    <Content Include="Scripts\angular-ui-router.js" />
+    <Content Include="Scripts\angular-ui-router.min.js" />
+    <Content Include="Scripts\angular-ui\ui-bootstrap-tpls.js" />
+    <Content Include="Scripts\angular-ui\ui-bootstrap-tpls.min.js" />
+    <Content Include="Scripts\angular-ui\ui-bootstrap.js" />
+    <Content Include="Scripts\angular-ui\ui-bootstrap.min.js" />
     <Content Include="Scripts\angular.js" />
     <Content Include="Scripts\angular.min.js" />
+    <Content Include="font\material-design-icons\Material-Design-Icons.eot" />
+    <Content Include="font\material-design-icons\Material-Design-Icons.ttf" />
+    <Content Include="font\material-design-icons\Material-Design-Icons.woff" />
+    <Content Include="font\material-design-icons\Material-Design-Icons.woff2" />
+    <Content Include="font\roboto\Roboto-Bold.ttf" />
+    <Content Include="font\roboto\Roboto-Bold.woff" />
+    <Content Include="font\roboto\Roboto-Bold.woff2" />
+    <Content Include="font\roboto\Roboto-Light.ttf" />
+    <Content Include="font\roboto\Roboto-Light.woff" />
+    <Content Include="font\roboto\Roboto-Light.woff2" />
+    <Content Include="font\roboto\Roboto-Medium.ttf" />
+    <Content Include="font\roboto\Roboto-Medium.woff" />
+    <Content Include="font\roboto\Roboto-Medium.woff2" />
+    <Content Include="font\roboto\Roboto-Regular.ttf" />
+    <Content Include="font\roboto\Roboto-Regular.woff" />
+    <Content Include="font\roboto\Roboto-Regular.woff2" />
+    <Content Include="font\roboto\Roboto-Thin.ttf" />
+    <Content Include="font\roboto\Roboto-Thin.woff" />
+    <Content Include="font\roboto\Roboto-Thin.woff2" />
+    <Content Include="Content\ui-grid.woff" />
+    <Content Include="Content\ui-grid.ttf" />
+    <Content Include="Content\ui-grid.eot" />
+    <Content Include="Scripts\api-check\dist\api-check.js" />
+    <Content Include="Scripts\api-check\dist\api-check.min.js" />
+    <Content Include="Scripts\api-check\index.html" />
+    <Content Include="Scripts\api-check\src\api-check-util.js" />
+    <Content Include="Scripts\api-check\src\api-check-util.test.js" />
+    <Content Include="Scripts\api-check\src\api-check.js" />
+    <Content Include="Scripts\api-check\src\api-check.test.js" />
+    <Content Include="Scripts\api-check\src\bugs.test.js" />
+    <Content Include="Scripts\api-check\src\checkers.js" />
+    <Content Include="Scripts\api-check\src\checkers.test.js" />
+    <Content Include="Scripts\api-check\src\index.js" />
+    <Content Include="Scripts\api-check\src\index.test.js" />
+    <Content Include="Scripts\api-check\src\prs-plz.test.js" />
+    <Content Include="Scripts\api-check\src\test.utils.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
-    <Content Include="fonts\glyphicons-halflings-regular.woff2" />
-    <Content Include="fonts\glyphicons-halflings-regular.woff" />
-    <Content Include="fonts\glyphicons-halflings-regular.ttf" />
-    <Content Include="fonts\glyphicons-halflings-regular.eot" />
-    <Content Include="Content\bootstrap-theme.css.map" />
-    <Content Include="Content\bootstrap.css.map" />
     <Content Include="Scripts\errors.json" />
+    <Content Include="Scripts\angular.min.js.map" />
     <Content Include="Scripts\angular-touch.min.js.map" />
     <Content Include="Scripts\angular-sanitize.min.js.map" />
     <Content Include="Scripts\angular-route.min.js.map" />
     <Content Include="Scripts\angular-resource.min.js.map" />
+    <Content Include="Scripts\angular-parse-ext.min.js.map" />
     <Content Include="Scripts\angular-messages.min.js.map" />
     <Content Include="Scripts\angular-message-format.min.js.map" />
     <Content Include="Scripts\angular-loader.min.js.map" />
     <Content Include="Scripts\angular-cookies.min.js.map" />
     <Content Include="Scripts\angular-aria.min.js.map" />
     <Content Include="Scripts\angular-animate.min.js.map" />
-    <Content Include="Scripts\angular.min.js.map" />
+    <Content Include="fonts\glyphicons-halflings-regular.woff2" />
+    <Content Include="fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="Content\bootstrap.min.css.map" />
+    <Content Include="Content\bootstrap.css.map" />
+    <Content Include="Content\bootstrap-theme.min.css.map" />
+    <Content Include="Content\bootstrap-theme.css.map" />
+    <None Include="Properties\PublishProfiles\Default Settings %282%29.pubxml" />
+    <Content Include="Scripts\jquery-1.11.3.min.map" />
+    <Content Include="Scripts\angular-formly\.eslintignore" />
+    <Content Include="Scripts\angular-formly\.eslintrc" />
+    <Content Include="Scripts\angular-formly\.github\ISSUE_TEMPLATE.md" />
+    <Content Include="Scripts\angular-formly\.github\PULL_REQUEST_TEMPLATE.md" />
+    <Content Include="Scripts\angular-formly\.npmignore" />
+    <Content Include="Scripts\angular-formly\bower.json" />
+    <Content Include="Scripts\angular-formly\CHANGELOG.md" />
+    <Content Include="Scripts\angular-formly\CODE_OF_CONDUCT.md" />
+    <Content Include="Scripts\angular-formly\dist\formly.min.js.map" />
+    <Content Include="Scripts\angular-formly\LICENSE" />
+    <Content Include="Scripts\angular-formly\package.json" />
+    <Content Include="Scripts\angular-formly\PATRONS.md" />
+    <Content Include="Scripts\angular-formly\README.md" />
+    <Content Include="Scripts\api-check\.eslintrc" />
+    <Content Include="Scripts\api-check\bower.json" />
+    <Content Include="Scripts\api-check\CHANGELOG.md" />
+    <Content Include="Scripts\api-check\dist\api-check.min.js.map" />
+    <Content Include="Scripts\api-check\LICENSE" />
+    <Content Include="Scripts\api-check\package.json" />
+    <Content Include="Scripts\api-check\README.md" />
+    <None Include="Scripts\jquery-1.12.3.intellisense.js" />
     <Content Include="Scripts\i18n\angular-locale_aa-dj.js" />
     <Content Include="Scripts\i18n\angular-locale_aa-er.js" />
     <Content Include="Scripts\i18n\angular-locale_aa-et.js" />
@@ -1102,6 +1442,7 @@
     <Content Include="Scripts\i18n\angular-locale_sv-fi.js" />
     <Content Include="Scripts\i18n\angular-locale_sv-se.js" />
     <Content Include="Scripts\i18n\angular-locale_sv.js" />
+    <Content Include="Scripts\i18n\angular-locale_sw-cd.js" />
     <Content Include="Scripts\i18n\angular-locale_sw-ke.js" />
     <Content Include="Scripts\i18n\angular-locale_sw-tz.js" />
     <Content Include="Scripts\i18n\angular-locale_sw-ug.js" />
@@ -1204,15 +1545,11 @@
     <Content Include="Scripts\i18n\angular-locale_zh.js" />
     <Content Include="Scripts\i18n\angular-locale_zu-za.js" />
     <Content Include="Scripts\i18n\angular-locale_zu.js" />
-    <Content Include="fonts\selection.json" />
-    <Content Include="fonts\metro.woff" />
-    <Content Include="fonts\metro.ttf" />
-    <Content Include="fonts\metro.eot" />
-    <None Include="Scripts\jquery-2.1.4.intellisense.js" />
-    <Content Include="Scripts\jquery-2.1.4.js" />
-    <Content Include="Scripts\jquery-2.1.4.min.js" />
-    <Content Include="Scripts\jquery-2.1.4.min.map" />
-    <None Include="Scripts\jquery.validate-vsdoc.js" />
+    <None Include="Scripts\jquery-1.11.3.intellisense.js" />
+    <Content Include="Scripts\jquery-1.11.3.js" />
+    <Content Include="Scripts\jquery-1.11.3.min.js" />
+    <Content Include="Scripts\jquery-1.12.3.js" />
+    <Content Include="Scripts\jquery-1.12.3.min.js" />
     <Content Include="Scripts\jquery-ui-1.11.4.js" />
     <Content Include="Scripts\jquery-ui-1.11.4.min.js" />
     <Content Include="Scripts\jquery.easing.1.3.js" />
@@ -1220,28 +1557,26 @@
     <Content Include="Scripts\jquery.signalR-2.2.0.min.js" />
     <Content Include="Scripts\jquery.unobtrusive-ajax.js" />
     <Content Include="Scripts\jquery.unobtrusive-ajax.min.js" />
+    <Content Include="Scripts\jquery-1.12.3.min.map" />
+    <None Include="Scripts\jquery.validate-vsdoc.js" />
     <Content Include="Scripts\jquery.validate.js" />
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
-    <Content Include="Scripts\metro.js" />
-    <Content Include="Scripts\metro.min.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
-    <Content Include="Scripts\npm.js" />
-    <Content Include="Scripts\react\JSXTransformer-0.13.1.js" />
-    <Content Include="Scripts\react\react-0.13.1.js" />
-    <Content Include="Scripts\react\react-0.13.1.min.js" />
-    <Content Include="Scripts\react\react-with-addons-0.13.1.js" />
-    <Content Include="Scripts\react\react-with-addons-0.13.1.min.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.matchmedia.addListener.js" />
     <Content Include="Scripts\respond.matchmedia.addListener.min.js" />
     <Content Include="Scripts\respond.min.js" />
+    <Content Include="Scripts\ui-grid.js" />
+    <Content Include="Scripts\ui-grid.min.js" />
     <Content Include="Scripts\_references.js" />
     <Content Include="Views\FoxAppSoftwares\FoxAppDetails.cshtml">
       <SubType>Code</SubType>
     </Content>
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
@@ -1292,22 +1627,148 @@
     <Content Include="Views\FoxAppSoftwares\ListOfSoftwares.cshtml" />
     <Content Include="Views\FoxAppSoftwares\FoxSysDetails.cshtml" />
     <Content Include="Views\FoxWorkStations\search.cshtml" />
-    <Content Include="Scripts\version.json" />
     <Content Include="Views\FoxWorkStations\EditWorkStation.cshtml" />
     <Content Include="Views\FoxWorkStations\InstalledSoftwaresByWorkStationId.cshtml" />
     <Content Include="Views\FoxSoftwares\Index.cshtml" />
     <Content Include="Views\FoxSoftwares\InstalledInWorkstations.cshtml" />
+    <Content Include="Views\User\EditUser.cshtml" />
+    <Content Include="Views\User\ListOfUsers.cshtml" />
+    <Content Include="Views\Role\CreateRole.cshtml" />
+    <Content Include="Views\Role\EditRole.cshtml" />
+    <Content Include="Views\Role\ListOfRoles.cshtml" />
+    <Content Include="Views\User\UserDetail.cshtml" />
+    <Content Include="Views\ChangeRequest\Index.cshtml" />
+    <Content Include="Views\ChangeRequest\AddChangeRequest.cshtml" />
+    <Content Include="Views\ChangeRequest\CancelChangeRequest.cshtml" />
+    <Content Include="Views\ChangeRequest\ChangeRequestHistorialData.cshtml" />
+    <Content Include="Views\ChangeRequest\EditChangeRequest.cshtml" />
+    <Content Include="Views\ChangeRequest\ReviewChangeRequest.cshtml" />
+    <Content Include="Views\Angular\Index.cshtml" />
+    <Content Include="Views\ChangeRequest\GetInvChangeForm.cshtml" />
+    <Content Include="Views\FoxSoftwares\ChangeRequestHistory.cshtml" />
+    <Content Include="Views\Account\EmailNotConfirmMessage.cshtml" />
+    <Content Include="Views\Account\EmailLinkPage.cshtml" />
+    <Content Include="Views\ChangeRequest\_ChangeDeltasForModification.cshtml" />
+    <Content Include="Views\Angular\Home.cshtml" />
+    <Content Include="Views\Angular\Second.cshtml" />
+    <Content Include="Views\Angular\Third.cshtml" />
+    <Content Include="Views\ChangeRequest\SearchChangeRequest.cshtml" />
+    <Content Include="Views\ChangeRequest\ChangeRequestDetail.cshtml" />
+    <Content Include="Views\ChangeRequest\_GetAngularForm.cshtml" />
+    <Content Include="Views\ChangeRequest\_ConfirmFormData.cshtml" />
+    <Content Include="Views\User\DeleteUser.cshtml" />
+    <Content Include="Views\ChangeRequest\DeleteChangeRequest.cshtml" />
+    <Content Include="Views\Numac\CreateChassis.cshtml" />
+    <Content Include="Views\Numac\Delete.cshtml" />
+    <Content Include="Views\Numac\Details.cshtml" />
+    <Content Include="Views\Numac\Edit.cshtml" />
+    <Content Include="Views\Numac\Index.cshtml" />
+    <Content Include="Views\Numac\CreateChassisBoard.cshtml" />
+    <Content Include="Views\Numac\CreateEPROM.cshtml" />
+    <Content Include="Scripts\version.json" />
+    <Content Include="Views\ChangeRequest\GetNumacChangeForm.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Helper\" />
+    <Folder Include="Controllers\Numac\" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="packages.config" />
+    <Content Include="packages.config">
+      <SubType>Designer</SubType>
+    </Content>
     <None Include="Project_Readme.html" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="MigrationForChangeRequestData\201508270313558_InitialConfiguration.resx">
+      <DependentUpon>201508270313558_InitialConfiguration.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MigrationForChangeRequestData\201508270539103_ResetToInitial.resx">
+      <DependentUpon>201508270539103_ResetToInitial.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MigrationForChangeRequestData\201508270721583_AddCreateDateForChangeRequest.resx">
+      <DependentUpon>201508270721583_AddCreateDateForChangeRequest.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MigrationForChangeRequestData\201508270826281_ChangeLastModifiedDateToNullable.resx">
+      <DependentUpon>201508270826281_ChangeLastModifiedDateToNullable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MigrationForChangeRequestData\201508280013241_UnknownModelChanges.resx">
+      <DependentUpon>201508280013241_UnknownModelChanges.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MigrationForChangeRequestData\201508280143430_AddDescriptionInChangeRequest.resx">
+      <DependentUpon>201508280143430_AddDescriptionInChangeRequest.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MigrationForChangeRequestData\201508280154466_AddNoteInChangeRequest.resx">
+      <DependentUpon>201508280154466_AddNoteInChangeRequest.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MigrationForChangeRequestData\201508310654597_AddNextStatusIsCurrentAndOwner.resx">
+      <DependentUpon>201508310654597_AddNextStatusIsCurrentAndOwner.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MigrationForChangeRequestData\201508310858317_AddIsActive.resx">
+      <DependentUpon>201508310858317_AddIsActive.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MigrationForChangeRequestData\201509090141056_AddChnageDeltaEntity.resx">
+      <DependentUpon>201509090141056_AddChnageDeltaEntity.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MigrationForChangeRequestData\201509140506475_AddRevInfo.resx">
+      <DependentUpon>201509140506475_AddRevInfo.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MigrationForChangeRequestData\201509140908439_RemoveChangeStatusesCollectionInChangeStatusType.resx">
+      <DependentUpon>201509140908439_RemoveChangeStatusesCollectionInChangeStatusType.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MigrationForChangeRequestData\201510120505576_AddChangeRequestMessage.resx">
+      <DependentUpon>201510120505576_AddChangeRequestMessage.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MigrationForChangeRequestData\201609220603568_AddNumacChangeDelta.resx">
+      <DependentUpon>201609220603568_AddNumacChangeDelta.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MigrationForChangeRequestData\201609220624463_updateModuleInfoColumn.resx">
+      <DependentUpon>201609220624463_updateModuleInfoColumn.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MigrationForChangeRequestData\201609220632339_updateNumacChangeDelta.resx">
+      <DependentUpon>201609220632339_updateNumacChangeDelta.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MigrationForChangeRequestData\201609220900369_addDesignDocCol.resx">
+      <DependentUpon>201609220900369_addDesignDocCol.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MigrationForChangeRequestData\201609230058307_addNumacDeltaCols.resx">
+      <DependentUpon>201609230058307_addNumacDeltaCols.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MigrationForChangeRequestData\201609230723413_reAddModuleInfoCols.resx">
+      <DependentUpon>201609230723413_reAddModuleInfoCols.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MigrationForChangeRequestData\201609260519025_AddOriginalValueCols.resx">
+      <DependentUpon>201609260519025_AddOriginalValueCols.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MigrationForChangeRequestData\201609260611298_deleteUnnecessaryCols.resx">
+      <DependentUpon>201609260611298_deleteUnnecessaryCols.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MigrationForChangeRequestData\201609260653047_addMissingCols.resx">
+      <DependentUpon>201609260653047_addMissingCols.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MigrationForIdentity\201508210117075_InitialCreate.resx">
+      <DependentUpon>201508210117075_InitialCreate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MigrationForIdentity\201510070520382_AddChtAliasColumn.resx">
+      <DependentUpon>201510070520382_AddChtAliasColumn.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MigrationNumac\201606070132168_modifyColumn.resx">
+      <DependentUpon>201606070132168_modifyColumn.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MigrationNumac\201606070213347_addKey.resx">
+      <DependentUpon>201606070213347_addKey.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MigrationNumac\201606120334041_AddLastModified.resx">
+      <DependentUpon>201606120334041_AddLastModified.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MigrationNumac\201606120602466_AddColumnForDisplay.resx">
+      <DependentUpon>201606120602466_AddColumnForDisplay.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MigrationNumac\201609220601028_AddNumacChangeDelta.resx">
+      <DependentUpon>201609220601028_AddNumacChangeDelta.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
@@ -1344,6 +1805,9 @@
       <ErrorText>This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
     </PropertyGroup>
     <Error Condition="!Exists('$(SolutionDir)\.nuget\NuGet.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)\.nuget\NuGet.targets'))" />
+    <Error Condition="!Exists('..\packages\JavaScriptEngineSwitcher.V8.1.5.5\build\JavaScriptEngineSwitcher.V8.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\JavaScriptEngineSwitcher.V8.1.5.5\build\JavaScriptEngineSwitcher.V8.props'))" />
+    <Error Condition="!Exists('..\packages\Microsoft.Net.Compilers.1.0.0\build\Microsoft.Net.Compilers.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.Net.Compilers.1.0.0\build\Microsoft.Net.Compilers.props'))" />
+    <Error Condition="!Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.0\build\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.0\build\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props'))" />
   </Target>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
        Other similar extension points exist, see Microsoft.Common.targets.

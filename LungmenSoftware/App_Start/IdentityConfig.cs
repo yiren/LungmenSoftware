@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
+using System.Net;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using System.Web;
@@ -19,6 +20,14 @@ namespace LungmenSoftware
         public Task SendAsync(IdentityMessage message)
         {
             // Plug in your email service here to send an email.
+            using (var mySmtp = new System.Net.Mail.SmtpClient("smtp.taipower.com.tw"))
+            {
+                mySmtp.Credentials=new NetworkCredential(
+                    "u162154", "2KSMZSEQ");
+                mySmtp.Send("u162154@taipower.com.tw", message.Destination,
+                    message.Subject,
+                    message.Body);
+            }
             return Task.FromResult(0);
         }
     }
@@ -54,10 +63,10 @@ namespace LungmenSoftware
             manager.PasswordValidator = new PasswordValidator
             {
                 RequiredLength = 6,
-                RequireNonLetterOrDigit = true,
-                RequireDigit = true,
-                RequireLowercase = true,
-                RequireUppercase = true,
+                RequireNonLetterOrDigit = false,
+                RequireDigit = false,
+                RequireLowercase = false,
+                RequireUppercase = false,
             };
 
             // Configure user lockout defaults
@@ -85,6 +94,22 @@ namespace LungmenSoftware
                     new DataProtectorTokenProvider<ApplicationUser>(dataProtectionProvider.Create("ASP.NET Identity"));
             }
             return manager;
+        }
+    }
+
+    public class ApplicationRoleManager : 
+        RoleManager<ApplicationRole>
+    {
+        public ApplicationRoleManager(IRoleStore<ApplicationRole, string> roleStore)
+            :base(roleStore)
+        {
+            
+        }
+
+        public static ApplicationRoleManager
+            Create(IdentityFactoryOptions<ApplicationRoleManager> options, IOwinContext context)
+        {
+            return new ApplicationRoleManager(new RoleStore<ApplicationRole>(context.Get<ApplicationDbContext>()));
         }
     }
 

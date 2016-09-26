@@ -11,7 +11,7 @@
     <hr />
     <table class="table table-bordered table-hover table-striped">
         <tr>
-            <th>@Html.DisplayNameFor(model => model.WorkStationsBySoftwareId[0].WorkStationName)</th>
+            <th>@Html.DisplayNameFor(model => model.WorkStationsBySoftwareId[0].WorkstationName)</th>
             <th>@Html.DisplayNameFor(model => model.WorkStationsBySoftwareId[0].Rev)</th>
             <th>@Html.DisplayNameFor(model => model.WorkStationsBySoftwareId[0].Procedure)</th>
             <th>@Html.DisplayNameFor(model => model.WorkStationsBySoftwareId[0].Note)</th>
@@ -20,11 +20,11 @@
         @foreach (var item in Model.WorkStationsBySoftwareId)
         {
             <tr>
-                <td>@Html.DisplayFor(model => item.WorkStationName)</td>
+                <td>@Html.DisplayFor(model => item.WorkstationName)</td>
                 <td>@Html.DisplayFor(model => item.Rev)</td>
                 <td>@Html.DisplayFor(model => item.Procedure)</td>
                 <td>@Html.DisplayFor(model => item.Note)</td>
-                <td>@Html.ActionLink("修改", "FoxAppRevModify")</td>
+                <td>@Html.ActionLink("修改歷史紀錄","ChangeRequestHistory", new {k=item.JoinTableId})</td>
             </tr>
         }
 

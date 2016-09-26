@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Web;
 using System.ComponentModel.DataAnnotations;
+using Newtonsoft.Json;
 
 namespace LungmenSoftware.Models
 {
@@ -12,8 +14,21 @@ namespace LungmenSoftware.Models
         public class FoxWorkStationMetaData{
             
             [Required]
-            [Display(Name="工作站名稱")]
+            [Display(Name = "工作站名稱")]
             public string WorkStationName { get; set; }
+
+            [JsonIgnore]
+            public virtual ICollection<WKAndFoxJoinTable> WKAndFoxJoinTables { get; set; }
+
+            [JsonIgnore]
+            [DisplayName("工作站類型")]
+            public virtual WorkStationHardwareType WorkStationHardwareType { get; set; }
+
+            [DisplayName("工作站分類")]
+            public Nullable<int> WorkStationHardwareTypeId { get; set; }
+
+            [DisplayName("負責人")]
+            public string Owner { get; set; }
         }
     }
 }

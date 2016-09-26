@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Web.Mvc;
 
 namespace LungmenSoftware.Models
 {
@@ -55,30 +56,45 @@ namespace LungmenSoftware.Models
 
         [Required]
         [DataType(DataType.Password)]
-        [Display(Name = "Password")]
+        [Display(Name = "密碼")]
         public string Password { get; set; }
 
-        [Display(Name = "Remember me?")]
+        [Display(Name = "記得我")]
         public bool RememberMe { get; set; }
     }
 
     public class RegisterViewModel
     {
         [Required]
-        [EmailAddress]
-        [Display(Name = "Email")]
-        public string Email { get; set; }
+        [StringLength(7,MinimumLength = 2, ErrorMessage = "姓名代號長度錯誤，請輸入正確姓名代號")]
+        [Display(Name = "姓名代號")]
+        public string TPCId { get; set; }
 
         [Required]
-        [StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 6)]
+        [Display(Name = "請輸入再次姓名代號")]
+        [System.ComponentModel.DataAnnotations.Compare("TPCId", ErrorMessage = "請確認姓名代號輸入一致")]
+        public string ConfirmTPCId { get; set; }
+
+        [Required]
+        [Display(Name = "員工姓名")]
+        public string EmployeeName { get; set; }
+
+        [Required]
+        [Display(Name = "單位")]
+        public string Department { get; set; }
+
+        [Required]
+        [StringLength(100, ErrorMessage = "{0} 必須至少 {2} 六位英文與數字的組合.", MinimumLength = 6)]
         [DataType(DataType.Password)]
         [Display(Name = "Password")]
         public string Password { get; set; }
 
         [DataType(DataType.Password)]
         [Display(Name = "Confirm password")]
-        [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
+        [System.ComponentModel.DataAnnotations.Compare("Password", ErrorMessage = "兩次密碼輸入不一致")]
         public string ConfirmPassword { get; set; }
+
+        public IEnumerable<SelectListItem> Departments { get; set; }
     }
 
     public class ResetPasswordViewModel
@@ -91,12 +107,12 @@ namespace LungmenSoftware.Models
         [Required]
         [StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 6)]
         [DataType(DataType.Password)]
-        [Display(Name = "Password")]
+        [Display(Name = "新密碼")]
         public string Password { get; set; }
 
         [DataType(DataType.Password)]
-        [Display(Name = "Confirm password")]
-        [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
+        [Display(Name = "確認新密碼")]
+        [System.ComponentModel.DataAnnotations.Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
         public string ConfirmPassword { get; set; }
 
         public string Code { get; set; }

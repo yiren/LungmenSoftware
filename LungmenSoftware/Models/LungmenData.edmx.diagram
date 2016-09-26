@@ -5,30 +5,15 @@
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
       <Diagram DiagramId="5964e69133a442bb96171f49fbe625d6" Name="Diagram1" ZoomLevel="108">
-        <EntityTypeShape EntityType="LungmenSoftwareDataModel.ChangeDelta" Width="1.5" PointX="7.5" PointY="10" />
-        <EntityTypeShape EntityType="LungmenSoftwareDataModel.ChangeRequestProcessLog" Width="1.5" PointX="0.75" PointY="2.5" />
-        <EntityTypeShape EntityType="LungmenSoftwareDataModel.ChangeRequest" Width="1.5" PointX="3" PointY="12.25" />
-        <EntityTypeShape EntityType="LungmenSoftwareDataModel.ChangeRequestType" Width="1.5" PointX="0.75" PointY="14.625" />
-        <EntityTypeShape EntityType="LungmenSoftwareDataModel.ChangeStatu" Width="1.5" PointX="0.75" PointY="12.25" />
-        <EntityTypeShape EntityType="LungmenSoftwareDataModel.FoxSoftware" Width="1.5" PointX="3" PointY="5.625" />
-        <EntityTypeShape EntityType="LungmenSoftwareDataModel.FoxSoftwareType" Width="1.5" PointX="0.75" PointY="6.25" />
-        <EntityTypeShape EntityType="LungmenSoftwareDataModel.FoxWorkStation" Width="1.5" PointX="6" PointY="0.75" />
-        <EntityTypeShape EntityType="LungmenSoftwareDataModel.HistorialChangeRecord" Width="1.5" PointX="8.75" PointY="2.5" />
-        <EntityTypeShape EntityType="LungmenSoftwareDataModel.ImpDoc" Width="1.5" PointX="5.25" PointY="5" />
-        <EntityTypeShape EntityType="LungmenSoftwareDataModel.ImpDocType" Width="1.5" PointX="3" PointY="10" />
-        <EntityTypeShape EntityType="LungmenSoftwareDataModel.WKAndFoxJoinTable" Width="1.5" PointX="8.25" PointY="5.5" />
-        <EntityTypeShape EntityType="LungmenSoftwareDataModel.WorkStationHardwareType" Width="1.5" PointX="3.75" PointY="2.375" />
-        <AssociationConnector Association="LungmenSoftwareDataModel.FK_ImpDocChangeDetail" />
-        <AssociationConnector Association="LungmenSoftwareDataModel.FK_ChangeRequestChangeStatus" />
-        <AssociationConnector Association="LungmenSoftwareDataModel.FK_ChangeRequestImpDoc" />
-        <AssociationConnector Association="LungmenSoftwareDataModel.FK_ChangeRequestTypeChangeRequest" />
+        <EntityTypeShape EntityType="LungmenSoftwareDataModel.FoxSoftware" Width="1.5" PointX="3" PointY="1" />
+        <EntityTypeShape EntityType="LungmenSoftwareDataModel.FoxSoftwareType" Width="1.5" PointX="0.75" PointY="1.625" />
+        <EntityTypeShape EntityType="LungmenSoftwareDataModel.FoxWorkStation" Width="1.5" PointX="3" PointY="5.125" />
+        <EntityTypeShape EntityType="LungmenSoftwareDataModel.WKAndFoxJoinTable" Width="1.5" PointX="5.25" PointY="1" />
+        <EntityTypeShape EntityType="LungmenSoftwareDataModel.WorkStationHardwareType" Width="1.5" PointX="0.75" PointY="5.625" />
         <AssociationConnector Association="LungmenSoftwareDataModel.FK_FoxSoftwareTypeFoxSoftware" />
         <AssociationConnector Association="LungmenSoftwareDataModel.FK_FoxSysSoftwareWKAndSysJoinTable" />
         <AssociationConnector Association="LungmenSoftwareDataModel.FK_FoxWorkStationWKAndSysJoinTable" />
         <AssociationConnector Association="LungmenSoftwareDataModel.FK_WorkStationHardwareTypeFoxWorkStation" />
-        <AssociationConnector Association="LungmenSoftwareDataModel.FK_ImpDocTypeImpDoc" />
-        <AssociationConnector Association="LungmenSoftwareDataModel.ImpDocFoxSoftware" />
-        <AssociationConnector Association="LungmenSoftwareDataModel.ImpDocFoxWorkStation" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

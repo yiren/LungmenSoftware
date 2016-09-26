@@ -8,6 +8,7 @@ using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
+using LungmenSoftware.Helper;
 using LungmenSoftware.Models;
 
 namespace LungmenSoftware.Controllers
@@ -51,13 +52,14 @@ namespace LungmenSoftware.Controllers
                 _userManager = value;
             }
         }
-
+        
         //
         // GET: /Account/Login
         [AllowAnonymous]
         public ActionResult Login(string returnUrl)
         {
             ViewBag.ReturnUrl = returnUrl;
+            
             return View();
         }
 
@@ -72,6 +74,25 @@ namespace LungmenSoftware.Controllers
             {
                 return View(model);
             }
+            
+            var user = await UserManager.FindByNameAsync(model.Email);
+            if (user != null)
+            {
+                if (!await UserManager.IsEmailConfirmedAsync(user.Id))
+                {
+                    //重新送出啟用連結
+                    string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
+                    var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
+                    await UserManager.SendEmailAsync(user.Id, "請啟用龍門構型管理系統帳號", "啟用帳號請點選" + callbackUrl);
+
+                    ViewBag.ConfirmLink = callbackUrl;
+                    ViewBag.errorMessage 
+                        = "您尚未完成Email驗證，請至您的註冊信箱收信(即使用者代號+@taipower.com.tw)並點選啟用帳號連結";
+                    
+                    return View("EmailNotConfirmMessage");
+                }
+            }
+
 
             // This doesn't count login failures towards account lockout
             // To enable password failures to trigger account lockout, change to shouldLockout: true
@@ -79,6 +100,7 @@ namespace LungmenSoftware.Controllers
             switch (result)
             {
                 case SignInStatus.Success:
+                    //GeneralData.CurrentUser=UserManager.FindByName(model.Email);
                     return RedirectToLocal(returnUrl);
                 case SignInStatus.LockedOut:
                     return View("Lockout");
@@ -139,7 +161,12 @@ namespace LungmenSoftware.Controllers
         [AllowAnonymous]
         public ActionResult Register()
         {
-            return View();
+            RegisterViewModel vm=new RegisterViewModel()
+            {
+                Departments = new SelectList(GeneralData.GetDeparments)
+            };
+            
+            return View(vm);
         }
 
         //
@@ -151,19 +178,39 @@ namespace LungmenSoftware.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
+                var email = model.TPCId + "@taipower.com.tw";
+                var user = new ApplicationUser
+                {
+                    UserName = email,
+                    Email = email,
+                    EmployeeName = model.EmployeeName,
+                    Department = model.Department,
+                    TPCId = model.TPCId,
+                    CreateDate = DateTime.Now,
+                    LastModifiedDate = DateTime.Now
+                };
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
-                    await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
+                    //await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
+                    UserManager.AddToUserRole(user.Id, "User");
+                    
                     
                     // For more information on how to enable account confirmation and password reset please visit http://go.microsoft.com/fwlink/?LinkID=320771
                     // Send an email with this link
-                    // string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
-                    // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
-                    // await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
+                    string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
+                    var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
+                    await UserManager.SendEmailAsync(user.Id, "請啟用龍門構型管理系統帳號", "啟用帳號請點選" + callbackUrl );
 
-                    return RedirectToAction("Index", "Home");
+                    // Uncomment to debug locally 
+                    ViewBag.ConfirmLink = callbackUrl;
+
+                    ViewBag.Message = "已寄出帳號啟用連結至您的信箱，帳號必須啟用後才能登入";
+
+                    return View("EmailLinkPage");
+
+
+                    //return RedirectToAction("Index", "Home");
                 }
                 AddErrors(result);
             }
@@ -208,13 +255,14 @@ namespace LungmenSoftware.Controllers
                     // Don't reveal that the user does not exist or is not confirmed
                     return View("ForgotPasswordConfirmation");
                 }
-
+                
                 // For more information on how to enable account confirmation and password reset please visit http://go.microsoft.com/fwlink/?LinkID=320771
                 // Send an email with this link
-                // string code = await UserManager.GeneratePasswordResetTokenAsync(user.Id);
-                // var callbackUrl = Url.Action("ResetPassword", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);		
-                // await UserManager.SendEmailAsync(user.Id, "Reset Password", "Please reset your password by clicking <a href=\"" + callbackUrl + "\">here</a>");
-                // return RedirectToAction("ForgotPasswordConfirmation", "Account");
+                 string code = await UserManager.GeneratePasswordResetTokenAsync(user.Id);
+                 var callbackUrl = Url.Action("ResetPassword", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);		
+                 await UserManager.SendEmailAsync(user.Id, "重設密碼", "重設密碼請點選" + callbackUrl );
+                 ViewBag.PWResetLink = callbackUrl;
+                 return View("ForgotPasswordConfirmation");
             }
 
             // If we got this far, something failed, redisplay form
@@ -391,7 +439,7 @@ namespace LungmenSoftware.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult LogOff()
         {
-            AuthenticationManager.SignOut();
+            AuthenticationManager.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
             return RedirectToAction("Index", "Home");
         }
 

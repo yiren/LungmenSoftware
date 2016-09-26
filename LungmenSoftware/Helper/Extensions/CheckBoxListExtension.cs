@@ -9,7 +9,7 @@ using System.Web.Routing;
 
 namespace LungmenSoftware.Helper.Extensions
 {
-    public class CheckBoxListExtension
+    public static class CheckBoxListExtension
     {
          
 

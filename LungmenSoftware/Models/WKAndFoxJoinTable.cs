@@ -20,8 +20,6 @@ namespace LungmenSoftware.Models
         public Nullable<int> FoxWorkStationId { get; set; }
         public Nullable<int> FoxSoftwareId { get; set; }
         public string LastModifier { get; set; }
-        public string Software_Library_Identification { get; set; }
-        public string Media_Identification { get; set; }
         public string Note { get; set; }
         public Nullable<bool> IsLocked { get; set; }
     

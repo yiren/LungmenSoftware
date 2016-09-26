@@ -14,10 +14,7 @@ namespace LungmenSoftware.Models
     
     public partial class WorkStationHardwareType
     {
-        public WorkStationHardwareType()
-        {
-            this.FoxWorkStations = new HashSet<FoxWorkStation>();
-        }
+      
     
         public int Id { get; set; }
         public string HardwareTypeName { get; set; }
