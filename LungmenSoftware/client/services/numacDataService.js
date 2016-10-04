@@ -11,6 +11,9 @@
         
         var numacChangeRequestPromise;
 
+        this.getNumacData = function () {
+            return $http.get('/numac/getnumacdata');
+        }
 
         this.getChangeRequestRecord = function () {
             return $http.get('/changerequest/InitChangeRequest');
