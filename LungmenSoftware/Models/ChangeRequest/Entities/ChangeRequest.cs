@@ -20,7 +20,7 @@ namespace LungmenSoftware.Models.CodeFirst.Entities
         [DisplayName("軟體變更敘述")]
         public string Description { get; set; }
 
-        [DisplayName("變更設計文件")]
+        [DisplayName("軟體變更文件")]
         public string DesignDoc { get; set; }
 
         [DisplayName("申請人")]

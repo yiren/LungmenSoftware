@@ -189,7 +189,8 @@ namespace LungmenSoftware.Controllers
                 ChangeRequest = crEntry,
                 ChangeDeltas = crEntry.ChangeDeltas,
                 ChangeRequestMessages = crEntry.ChangeRequestMessages,
-                ChangeRequestStatuses = crEntry.ChangeRequestStatuses
+                ChangeRequestStatuses = crEntry.ChangeRequestStatuses,
+                NumacChangeDeltas=crEntry.NumacChangeDeltas
             };
             return View(dataForView);
         }
@@ -201,10 +202,11 @@ namespace LungmenSoftware.Controllers
             {
                 return HttpNotFound();
             }
-            ChangeRequestViewModelForModification dataForView=new ChangeRequestViewModelForModification()
+            ChangeRequestViewModelForDetail dataForView=new ChangeRequestViewModelForDetail()
             {
                 ChangeRequest = crEntry,
                 ChangeDeltas = crEntry.ChangeDeltas,
+                NumacChangeDeltas=crEntry.NumacChangeDeltas,
                 ChangeRequestMessages = crEntry.ChangeRequestMessages
             };
 
@@ -213,7 +215,7 @@ namespace LungmenSoftware.Controllers
         }
 
         [HttpPost]
-        public ActionResult EditChangeRequest(ChangeRequestViewModelForModification crEntry)
+        public ActionResult EditChangeRequest(ChangeRequestViewModelForDetail crEntry)
         {
             var crToUpdate = crService.FindByChangeRequestId(crEntry.ChangeRequest.ChangeRequestId);
             if (crToUpdate == null)
@@ -233,11 +235,20 @@ namespace LungmenSoftware.Controllers
                 crService.AddChangeRequestMessage(crm);
 
                 crToUpdate.Description = crEntry.ChangeRequest.Description;
+                crToUpdate.DesignDoc = crEntry.ChangeRequest.DesignDoc;
                 crToUpdate.Note = crEntry.ChangeRequest.Note;
                 crToUpdate.Owner = crToUpdate.ReviewBy;
-                
+
                 //crToUpdate.ChangeDeltas = crEntry.ChangeDeltas;
-                crService.UpdateChangeDeltas(crEntry.ChangeRequest.ChangeRequestId, crEntry.ChangeDeltas);
+                if (crEntry.ChangeDeltas !=null)
+                {
+                    crService.UpdateChangeDeltas(crEntry.ChangeRequest.ChangeRequestId, crEntry.ChangeDeltas);
+                }
+                if (crEntry.NumacChangeDeltas != null)
+                {
+                    crService.UpdateNumacChangeDeltas(crEntry.ChangeRequest.ChangeRequestId, crEntry.NumacChangeDeltas);
+                }
+
                 crService.StatusUpdateForClarification(crToUpdate);
             }
             return RedirectToAction("Index");
@@ -282,18 +293,19 @@ namespace LungmenSoftware.Controllers
                 return HttpNotFound();
             }
 
-            ChangeRequestViewModelForModification vm=new ChangeRequestViewModelForModification()
+            ChangeRequestViewModelForDetail vm=new ChangeRequestViewModelForDetail()
             {
                 ChangeRequest = crEntry,
                 ChangeDeltas = crEntry.ChangeDeltas,
                 ChangeRequestMessages = crEntry.ChangeRequestMessages,
+                NumacChangeDeltas=crEntry.NumacChangeDeltas
             };
 
             return View(vm);
         }
 
         [HttpPost]
-        public ActionResult ReviewChangeRequest(ChangeRequestViewModelForModification vm, 
+        public ActionResult ReviewChangeRequest(ChangeRequestViewModelForDetail vm, 
                                     params string[] reviewOptions)
         {
             var crEntry = crService.FindDetailCRByChangeRequestId(vm.ChangeRequest.ChangeRequestId);
@@ -341,11 +353,12 @@ namespace LungmenSoftware.Controllers
                 return RedirectToAction("Index");
             }
 
-            ChangeRequestViewModelForModification oldData = new ChangeRequestViewModelForModification()
+            ChangeRequestViewModelForDetail oldData = new ChangeRequestViewModelForDetail()
             {
                 ChangeDeltas = crEntry.ChangeDeltas,
                 ChangeRequest = crEntry,
-                ChangeRequestMessages = crEntry.ChangeRequestMessages
+                ChangeRequestMessages = crEntry.ChangeRequestMessages,
+                NumacChangeDeltas=crEntry.NumacChangeDeltas
             };
 
             ViewBag.Error = "沒有選取審查選項";

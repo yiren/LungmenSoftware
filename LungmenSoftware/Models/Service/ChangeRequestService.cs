@@ -214,6 +214,8 @@ namespace LungmenSoftware.Models.Service
             }
         }
 
+        
+
         //For AngularJS Inv
         public ChangeRequest AddChangeRequestRecord(ChangeRequest crEntry)
         {
@@ -390,27 +392,34 @@ namespace LungmenSoftware.Models.Service
             {
                 return false;
             }
-            var deltas =
+            if(crEntry.ChangeDeltas != null)
+            {
+                var deltas =
                 db.ChangeDeltas.Include(d => d.RevInfos)
                 .Where(d => d.ChangeRequestId.Equals(crEntry.ChangeRequestId)).ToList();
 
-            foreach (var delta in deltas)
+                foreach (var delta in deltas)
+                {
+
+                    var currentSoftData = from s in ldb.FoxSoftwares.Where(s => s.FoxSoftwareId == delta.FoxSoftwareId)
+                                          join j in ldb.WKAndFoxJoinTables on s.FoxSoftwareId equals j.FoxSoftwareId
+                                          where j.Rev.Equals(delta.OriginalValue)
+                                          select j;
+
+
+                    foreach (var item in delta.RevInfos)
+                    {
+                        var jointable = ldb.WKAndFoxJoinTables.Find(item.JoinTableId);
+                        jointable.Rev = delta.NewValue;
+                    }
+                }
+            }
+
+            if (crEntry.NumacChangeDeltas != null)
             {
                 
-                var currentSoftData=from s in ldb.FoxSoftwares.Where(s=>s.FoxSoftwareId==delta.FoxSoftwareId)
-                        join j in ldb.WKAndFoxJoinTables on s.FoxSoftwareId equals j.FoxSoftwareId
-                                    where j.Rev.Equals(delta.OriginalValue)
-                                    select j;
-
-
-                foreach (var item in delta.RevInfos)
-                {
-                    var jointable = ldb.WKAndFoxJoinTables.Find(item.JoinTableId);
-                    jointable.Rev = delta.NewValue;
-                }
-            
-
             }
+            
 
             if (ldb.SaveChanges() != -1)
             {
@@ -438,6 +447,7 @@ namespace LungmenSoftware.Models.Service
 
             var query = db.ChangeRequests.Where(c=>c.ChangeRequestId.Equals(id))
                 .Include(c=>c.ChangeDeltas.Select(d=>d.RevInfos))
+                .Include(c=>c.NumacChangeDeltas)
                 .Include(c=>c.ChangeRequestMessages)
                 .Include(c=>c.ChangeRequestStatuses.Select(s=>s.ChangeRequestStatusType))
                 .FirstOrDefault();
@@ -466,7 +476,28 @@ namespace LungmenSoftware.Models.Service
             }
 
         }
+        public void UpdateNumacChangeDeltas(Guid changeRequestId, List<NumacChangeDelta> numacChangeDeltas)
+        {
+            var deltas = db.NumacChangeDeltas.Where(n => n.ChangeRequestId.Equals(changeRequestId)).ToList();
+            //join d in db.ChangeDeltas
+            //    on c.ChangeRequestId equals d.ChangeRequestId
+            //join r in db.RevInfos
+            //    on d.ChangeDeltaId equals r.ChangeDeltaId
+            //select d;
 
+            if (deltas.Count() != numacChangeDeltas.Count())
+            {
+                throw new Exception("The Count of ChangeDeltas Has Errors");
+            }
+
+            for (int i = 0; i < deltas.Count(); i++)
+            {
+                deltas[i].Assembly = numacChangeDeltas[i].Assembly;
+                deltas[i].Program = numacChangeDeltas[i].Program;
+                deltas[i].SerialNumber = numacChangeDeltas[i].SerialNumber;
+                deltas[i].Rev = numacChangeDeltas[i].Rev;
+            }
+        }
         public void AddChangeRequestMessage(ChangeRequestMessage crm)
         {
             db.ChangeRequestMessages.Add(crm);
