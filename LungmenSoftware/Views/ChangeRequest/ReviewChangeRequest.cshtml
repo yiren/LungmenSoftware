@@ -1,4 +1,4 @@
-﻿@model LungmenSoftware.Models.ViewModel.ChangeRequestViewModelForModification
+﻿@model LungmenSoftware.Models.ViewModel.ChangeRequestViewModelForDetail
 
 @{
     ViewBag.Title = "審查軟體修改要求";
@@ -18,10 +18,12 @@
                 <dt>
                     @Html.DisplayNameFor(model => model.ChangeRequest.ChangeRequestStatuses[0].ChangeRequestStatusType.StatusName)
                 </dt>
-                    @Html.DisplayFor(model => model.ChangeRequest.ChangeRequestStatuses.First().ChangeRequestStatusType.StatusName)
-                <dd>
                     
+                <dd>
+                    @Html.DisplayFor(model => model.ChangeRequest.ChangeRequestStatuses[0].ChangeRequestStatusType.StatusName)
                 </dd>
+
+                
 
                 <dt>
                     @Html.DisplayNameFor(model => model.ChangeRequest.Description)
@@ -30,7 +32,13 @@
                 <dd>
                     @Html.DisplayFor(model => model.ChangeRequest.Description)
                 </dd>
+                <dt>
+                    @Html.DisplayNameFor(model => model.ChangeRequest.DesignDoc)
+                </dt>
 
+                <dd>
+                    @Html.DisplayFor(model => model.ChangeRequest.DesignDoc)
+                </dd>
                 <dt>
                     @Html.DisplayNameFor(model => model.ChangeRequest.CreatedBy)
                 </dt>
@@ -71,52 +79,103 @@
 </div>
 
 
-<p>
     <div class="row">
-        @foreach (var delta in Model.ChangeDeltas)
-        {
-            <div class="col-md-8">
+        
+            <div class="col-md-12">
                 <table class="table table-bordered table-condensed">
-                    <tr>
-                        <th>
-                            @Html.DisplayNameFor(model => delta.RevInfos[0].SoftwareName)
-                        </th>
-                        <th>
-                            @Html.DisplayNameFor(model => delta.OriginalValue)
-                        </th>
-                        <th>
-                            @Html.DisplayNameFor(model => delta.NewValue)
-                        </th>
-                        <th>
-                            影響工作站
-                        </th>
-                    </tr>
-                    <tr>
-                        <td>
-                            @Html.DisplayFor(model => delta.RevInfos[0].SoftwareName)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(model => delta.OriginalValue)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(model => delta.NewValue)
-                        </td>
-                        <td>
-                            <ul>
-                                @foreach (var record in delta.RevInfos)
-                                {
-                                    <li>@record.WorkStationName</li>
-                                }
-                            </ul>
-                        </td>
-                    </tr>
+                    @if (Model.ChangeDeltas.Count > 0)
+                    {
+                        foreach (var delta in Model.ChangeDeltas)
+                        {
+                            <thead>
+                                <tr>
+                                    <th>
+                                        @Html.DisplayNameFor(model => delta.RevInfos[0].SoftwareName)
+                                    </th>
+                                    <th>
+                                        @Html.DisplayNameFor(model => delta.OriginalValue)
+                                    </th>
+                                    <th>
+                                        @Html.DisplayNameFor(model => delta.NewValue)
+                                    </th>
+                                    <th>
+                                        影響工作站
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>
+                                        @Html.DisplayFor(model => delta.RevInfos[0].SoftwareName)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(model => delta.OriginalValue)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(model => delta.NewValue)
+                                    </td>
+                                    <td>
+                                        <ul>
+                                            @foreach (var record in delta.RevInfos)
+                                            {
+                                                <li>@record.WorkStationName</li>
+                                            }
+                                        </ul>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        }
+                    }
+
+                    @if (Model.NumacChangeDeltas.Count > 0)
+                    {
+                        <thead>
+                            <tr>
+                                <th>Panel</th>
+                                <th>Subsystem</th>
+                                <th>Module Name</th>
+                                <th>Socket Location</th>
+                                <th>Assembly</th>
+                                <th>Serial Number</th>
+                                <th>Program</th>
+                                <th>Revision</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model.NumacChangeDeltas)
+                            {
+                                <tr>
+                                    <td>@item.Panel</td>
+                                    <td>@item.ChassisName</td>
+                                    <td>@item.ModuleBoardName</td>
+                                    <td>@item.SocketLocation</td>
+                                    <td>
+                                        <div>建置值: @item.OriAssembly</div>
+                                        <div>變更值: @item.Assembly</div>
+                                    </td>
+                                    <td>
+                                        <div>建置值: @item.OriSerialNumber</div>
+                                        <div>變更值: @item.SerialNumber</div>
+                                    </td>
+                                    <td>
+                                        <div>建置值: @item.OriProgram</div>
+                                        <div>變更值: @item.Program</div>
+                                    </td>
+                                    <td>
+                                        <div>建置值: @item.OriRev</div>
+                                        <div>變更值: @item.Rev</div>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    }
+                  
                 </table>
             </div>
-        }
+        
         
     </div>
-   
-</p>
+
 
 <div class="row">
     <div class="col-md-8">

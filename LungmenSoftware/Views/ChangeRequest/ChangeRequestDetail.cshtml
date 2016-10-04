@@ -112,16 +112,20 @@
     <div class="panel-heading">軟體變更資訊</div>
     <div class="panel-body">
         <table class="table table-condensed table-striped table-bordered">
-            <tr>
-                <th>軟體名稱</th>
-                <th>原建置值</th>
-                <th>欲變更值</th>
-                <th>影響工作站</th>
-            </tr>
-            @if (Model.ChangeDeltas != null)
+            @if (Model.ChangeDeltas.Count >0)
             {
-                foreach (var item in Model.ChangeDeltas)
-                {
+                <thead>
+                    <tr>
+                        <th>軟體名稱</th>
+                        <th>原建置值</th>
+                        <th>欲變更值</th>
+                        <th>影響工作站</th>
+
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model.ChangeDeltas)
+                    {
                     <tr>
                         <td>@item.RevInfos[0].SoftwareName</td>
                         <td>@item.OriginalValue</td>
@@ -135,13 +139,53 @@
                             </ul>
                         </td>
                     </tr>
-                }
+                    }
+                </tbody>
+
             }
-            else
+            
+            
+            @if (Model.NumacChangeDeltas.Count >0)
             {
-                <tr>
-                    <td>資料可能有誤，請洽系統管理員。</td>
-                </tr>
+                <thead>
+                    <tr>
+                        <th>Panel</th>
+                        <th>Subsystem</th>
+                        <th>Module Name</th>
+                        <th>Socket Location</th>
+                        <th>Assembly</th>
+                        <th>Serial Number</th>
+                        <th>Program</th>
+                        <th>Revision</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model.NumacChangeDeltas)
+                    {
+                        <tr>
+                            <td>@item.Panel</td>
+                            <td>@item.ChassisName</td>
+                            <td>@item.ModuleBoardName</td>
+                            <td>@item.SocketLocation</td>
+                            <td>
+                                <div>建置值: @item.OriAssembly</div>
+                                <div>變更值: @item.Assembly</div>
+                            </td>
+                            <td>
+                                <div>建置值: @item.OriSerialNumber</div>
+                                <div>變更值: @item.SerialNumber</div>
+                            </td>
+                            <td>
+                                <div>建置值: @item.OriProgram</div>
+                                <div>變更值: @item.Program</div>
+                            </td>
+                            <td>
+                                <div>建置值: @item.OriRev</div>
+                                <div>變更值: @item.Rev</div>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
             }
 
         </table>

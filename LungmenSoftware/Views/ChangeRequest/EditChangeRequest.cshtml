@@ -1,4 +1,4 @@
-﻿@model LungmenSoftware.Models.ViewModel.ChangeRequestViewModelForModification
+﻿@model LungmenSoftware.Models.ViewModel.ChangeRequestViewModelForDetail
 
 @{
     ViewBag.Title = "修改/澄清軟體變更內容";
@@ -36,10 +36,18 @@
                 </div>
 
                 <div class="form-group">
-                    @Html.LabelFor(model => model.ChangeRequest.Note, htmlAttributes: new {@class = "control-label col-md-2"})
+                    @Html.LabelFor(model => model.ChangeRequest.DesignDoc, htmlAttributes: new { @class = "control-label col-md-2" })
                     <div class="col-md-10">
-                        @Html.TextAreaFor(model => model.ChangeRequest.Note, new {htmlAttributes = new {@class = "form-control"}})
-                        @Html.ValidationMessageFor(model => model.ChangeRequest.Note, "", new {@class = "text-danger"})
+                        @Html.EditorFor(model => model.ChangeRequest.DesignDoc, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.ChangeRequest.DesignDoc, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.ChangeRequest.Note, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.TextAreaFor(model => model.ChangeRequest.Note, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.ChangeRequest.Note, "", new { @class = "text-danger" })
                     </div>
                 </div>
 
@@ -47,35 +55,102 @@
         </div>
 
         <div class="row">
-            
-            <div class="col-md-10">
-                @for (int i = 0; i < Model.ChangeDeltas.Count; i++)
+
+            <div class="col-md-12">
+                @if (Model.ChangeDeltas.Count > 0)
                 {
-                    @Html.HiddenFor(model => model.ChangeDeltas[i].ChangeDeltaId)
-                    <h4>軟體名稱: @Model.ChangeDeltas[i].RevInfos[0].SoftwareName</h4>
-                    <div class="form-group">
-                        @Html.LabelFor(model => model.ChangeDeltas[i].OriginalValue, htmlAttributes: new {@class = "control-label col-md-2"})
-                        <div class="col-md-10">
-                            @Html.EditorFor(model => model.ChangeDeltas[i].OriginalValue, new {htmlAttributes = new {@class = "form-control", @disabled = true}})
-                            @Html.ValidationMessageFor(model => model.ChangeDeltas[i].OriginalValue, "", new {@class = "text-danger"})
+                    for (int i = 0; i < Model.ChangeDeltas.Count; i++)
+                    {
+                        @Html.HiddenFor(model => model.ChangeDeltas[i].ChangeDeltaId)
+                        <h4>軟體名稱: @Model.ChangeDeltas[i].RevInfos[0].SoftwareName</h4>
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.ChangeDeltas[i].OriginalValue, htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-10">
+                                @Html.EditorFor(model => model.ChangeDeltas[i].OriginalValue, new { htmlAttributes = new { @class = "form-control", @disabled = true } })
+                                @Html.ValidationMessageFor(model => model.ChangeDeltas[i].OriginalValue, "", new { @class = "text-danger" })
+                            </div>
+                            @Html.LabelFor(model => model.ChangeDeltas[i].NewValue, htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-10">
+                                @Html.EditorFor(model => model.ChangeDeltas[i].NewValue, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.ChangeDeltas[i].NewValue, "", new { @class = "text-danger" })
+                            </div>
                         </div>
-                        @Html.LabelFor(model => model.ChangeDeltas[i].NewValue, htmlAttributes: new { @class = "control-label col-md-2" })
-                        <div class="col-md-10">
-                            @Html.EditorFor(model => model.ChangeDeltas[i].NewValue, new { htmlAttributes = new { @class = "form-control" } })
-                            @Html.ValidationMessageFor(model => model.ChangeDeltas[i].NewValue, "", new { @class = "text-danger" })
-                        </div>
-                    </div>
+                    }
+
+                }
+
+                @if (Model.NumacChangeDeltas.Count > 0)
+                {
+                    <table class="table table-bordered table-condensed table-striped">
+                        <caption>修改清單</caption>
+                        <thead>
+                            <tr>
+                                <td>Panel</td>
+                                <td>Subsystem</td>
+                                <th>Module Name</th>
+                                <th>Socket Location</th>
+                                <th>Assembly</th>
+                                <th>Serial Number</th>
+                                <th>Program</th>
+                                <th>Revision</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @for (var i=0;i<Model.NumacChangeDeltas.Count;i++)
+                            {
+                                <tr>
+                                    <td>@Model.NumacChangeDeltas[i].Panel</td>
+                                    <td>@Model.NumacChangeDeltas[i].ChassisName</td>
+                                    <td>@Model.NumacChangeDeltas[i].ModuleBoardName</td>
+                                    <td>@Model.NumacChangeDeltas[i].SocketLocation</td>
+                                    <td>
+                                        <div>建置值: @Model.NumacChangeDeltas[i].OriAssembly</div>
+                                        <div>
+                                            @Html.Label("變更值") 
+                                            @Html.EditorFor(model=>model.NumacChangeDeltas[i].Assembly, new { htmlAttributes = new { @class = "form-control" } })
+                                            @Html.ValidationMessageFor(model => model.NumacChangeDeltas[i].Assembly, "", new { @class = "text-danger" })
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div>建置值: @Model.NumacChangeDeltas[i].OriSerialNumber</div>
+                                        <div>
+                                            @Html.Label("變更值")
+                                            @Html.EditorFor(model => model.NumacChangeDeltas[i].SerialNumber, new { htmlAttributes = new { @class = "form-control" } })
+                                            @Html.ValidationMessageFor(model => model.NumacChangeDeltas[i].SerialNumber, "", new { @class = "text-danger" })
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div>建置值: @Model.NumacChangeDeltas[i].OriProgram</div>
+                                        <div>
+                                            @Html.Label("變更值")
+                                            @Html.EditorFor(model => model.NumacChangeDeltas[i].Program, new { htmlAttributes = new { @class = "form-control" } })
+                                            @Html.ValidationMessageFor(model => model.NumacChangeDeltas[i].Program, "", new { @class = "text-danger" })
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div>建置值: @Model.NumacChangeDeltas[i].OriRev</div>
+                                        <div>
+                                            @Html.Label("變更值")
+                                            @Html.EditorFor(model => model.NumacChangeDeltas[i].Rev, new { htmlAttributes = new { @class = "form-control" } })
+                                            @Html.ValidationMessageFor(model => model.NumacChangeDeltas[i].Rev, "", new { @class = "text-danger" })
+                                        </div>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
                 }
 
                 <div class="form-group">
-                    @Html.LabelFor(model => model.ChangeRequestMessage.Message, htmlAttributes: new {@class = "control-label col-md-2"})
+                    @Html.LabelFor(model => model.ChangeRequestMessage.Message, htmlAttributes: new { @class = "control-label col-md-2" })
                     <div class="col-md-10">
-                        @Html.TextAreaFor(model => model.ChangeRequestMessage.Message, new {htmlAttributes = new {@class = "form-control", disabled = "disabled"}})
-                        @Html.ValidationMessageFor(model => model.ChangeRequestMessage.Message, "", new {@class = "text-danger"})
+                        @Html.TextAreaFor(model => model.ChangeRequestMessage.Message, new { htmlAttributes = new { @class = "form-control", disabled = "disabled" } })
+                        @Html.ValidationMessageFor(model => model.ChangeRequestMessage.Message, "", new { @class = "text-danger" })
                     </div>
                 </div>
 
-                <br/>
+                <br />
                 <table class="table table-condensed table-striped table-hover">
                     <tr>
                         <th>內容</th>
@@ -94,7 +169,7 @@
 
                 <div class="form-group">
                     <div class="col-md-offset-2 col-md-10">
-                        <input type="submit" value="送出" class="btn btn-primary"/>
+                        <input type="submit" value="送出" class="btn btn-primary" />
                     </div>
                 </div>
             </div>
