@@ -30,9 +30,11 @@
                             Invensys相關資訊<span class="caret"></span>
                         </a>
                         <ul class="dropdown-menu">
-                            <li>@Html.ActionLink("工作站資訊", "Index", "FoxWorkStations")</li>
-                            <li role="separator" class="divider"></li>
+                            <li>@Html.ActionLink("工作站資訊", "Index", "FoxWorkStations")</li>                           
                             <li>@Html.ActionLink("軟體資訊", "Index", "FoxSoftwares")</li>
+                            <li role="separator" class="divider"></li>
+                            <li>@Html.ActionLink("新增Invensys軟體變更", "GetInvChangeForm", "ChangeRequest")</li>
+                            
                         </ul>
                     </li>
                     <li class="dropdown">
@@ -41,6 +43,7 @@
                         </a>
                         <ul class="dropdown-menu">
                             <li>@Html.ActionLink("NUMAC EPROM資訊", "Index", "Numac")</li>
+                            <li role="separator" class="divider"></li>
                             <li>@Html.ActionLink("NUMAC 軟體變更", "GetNumacChangeForm", "ChangeRequest")</li>
 
                         </ul>
@@ -51,8 +54,7 @@
                             軟體版本變更<span class="caret"></span>
                         </a>
                         <ul class="dropdown-menu">
-                            <li>@Html.ActionLink("新增軟體變更", "GetInvChangeForm", "ChangeRequest")</li>
-                            <li role="separator" class="divider"></li>
+                            
                             <li>@Html.ActionLink("進行中軟體修改清單", "Index", "ChangeRequest")</li>
                             <li>@Html.ActionLink("已完成軟體修改清單", "ChangeRequestHistorialData", "ChangeRequest")</li>
 

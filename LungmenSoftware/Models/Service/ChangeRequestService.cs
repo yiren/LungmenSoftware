@@ -392,7 +392,7 @@ namespace LungmenSoftware.Models.Service
             {
                 return false;
             }
-            if(crEntry.ChangeDeltas != null)
+            if(crEntry.ChangeDeltas.Count>0)
             {
                 var deltas =
                 db.ChangeDeltas.Include(d => d.RevInfos)
@@ -413,22 +413,37 @@ namespace LungmenSoftware.Models.Service
                         jointable.Rev = delta.NewValue;
                     }
                 }
+                if (ldb.SaveChanges() != -1)
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
             }
 
-            if (crEntry.NumacChangeDeltas != null)
+            if (crEntry.NumacChangeDeltas.Count>0)
             {
+                var deltas = db.NumacChangeDeltas.Where(n => n.ChangeRequestId.Equals(crEntry.ChangeRequestId)).ToList();
+                foreach (var delta in deltas)
+                {
+                    var currentModule = numacDataService.GetModuleByModuleId(delta.ModuleBoardId);
+                    currentModule.Program = delta.Program;
+                    currentModule.Assembly = delta.Assembly;
+                    currentModule.SerialNumber = delta.SerialNumber;
+                    currentModule.Rev = delta.Rev;
+                    
+                }
+                //
+                var isUpdated = numacDataService.IsUpdated();
+                return isUpdated;
                 
             }
-            
 
-            if (ldb.SaveChanges() != -1)
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
+
+            return false;
+            
 
         }
 
