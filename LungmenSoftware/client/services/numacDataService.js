@@ -43,5 +43,9 @@
             return numacChangeRequestPromise;
         }
 
+        this.getNumacChangeRequestRecordById=function(ChassisBoardId){
+            return $http.get('/numac/GetNumacChangeRequestRecordById/?ChassisBoardId='+ChassisBoardId);
+        }
+
     }
 })();

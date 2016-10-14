@@ -34,11 +34,12 @@
                     { name: "Program", field: "Program", enableColumnMenu: false },
                     { name: "Rev", field: "Rev", enableColumnMenu: false },
 
-                    //{
-                    //    name: "檔案下載", enableColumnMenu: false, cellTemplate: '<div>' +
+                    {
+                       name: "Note", enableColumnMenu: false, cellTemplate: '<div>' +
+                       '<button class="btn btn-default" ng-click="grid.appScope.getHistory(row)">修改歷史紀錄</button>'+
                     //    '<p class="center"><a href="/meetings/download/?p={{row.entity.MeetingFiles[0].FileId}}{{row.entity.MeetingFiles[0].Extension}}&d={{row.entity.MeetingFiles[0].FileName}}"> <span class="fa fa-download"></span></a></p>' +
-                    //    '</div>'
-                    //}
+                       '</div>'
+                    }
 
                      //ui-grid的相關設定
                    
@@ -63,11 +64,24 @@
 
 
             }
+            
         }
 
         init();
 
         
+        $scope.getHistory=function(row){
+            numacDataService.getNumacChangeRequestRecordById(row.entity.ChassisBoardId).then(
+                function(res){
+                    console.log(res.data);
+                    vm.changeRequestRecord=res.data;
+                },function(err){
+
+                }
+            );
+
+            
+        }
 
         ////多個檔案
         //function attachmentFileLoop(row) {

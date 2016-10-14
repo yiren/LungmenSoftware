@@ -7,6 +7,7 @@ using LungmenSoftware.Models.CodeFirst;
 using LungmenSoftware.Models.CodeFirst.Entities;
 using LungmenSoftware.Models.ViewModel;
 using Microsoft.AspNet.Identity.EntityFramework;
+using System.Data.Entity.Validation;
 
 namespace LungmenSoftware.Models.Service
 {
@@ -42,6 +43,12 @@ namespace LungmenSoftware.Models.Service
                             Description = cr.Description
                         };
             return query.ToList();
+        }
+
+        public List<NumacChangeDelta> GetNumacChangeRequestRecordById(string chassisBoardId)
+        {
+            var id = new Guid(chassisBoardId);
+            return db.NumacChangeDeltas.Where(d=>d.ModuleBoardId.Equals(chassisBoardId)).ToList();
         }
 
         public List<ChangeRequestInfo> GetChangeRequestHistoryByJoinTable(WKAndFoxJoinTable record)
@@ -224,7 +231,14 @@ namespace LungmenSoftware.Models.Service
                 item.ChangeRequest = crEntry;
                 item.ChangeRequestId = crEntry.ChangeRequestId;
                 item.ChangeDeltaId = Guid.NewGuid();
+                foreach (var revInfo in item.RevInfos)
+                {
+                    revInfo.ChangeDeltaId = item.ChangeDeltaId;
+                    revInfo.FoxSoftwareId = item.FoxSoftwareId;
+                }
             }
+            
+
             db.ChangeRequestMessages.Add(new ChangeRequestMessage()
             {
                 ChangeRequest = crEntry,
@@ -236,17 +250,26 @@ namespace LungmenSoftware.Models.Service
 
 
             db.ChangeRequests.Add(crEntry);
-            if (db.SaveChanges() != -1)
+            try
             {
-                return db.ChangeRequests
-                    .Include(c=>c.ChangeDeltas.Select(d=>d.RevInfos))
-                    .First(c => c.ChangeRequestId.Equals(crEntry.ChangeRequestId));
-            }
-            else
+                if (db.SaveChanges() != -1)
+                {
+                    return db.ChangeRequests
+                        .Include(c => c.ChangeDeltas.Select(d => d.RevInfos))
+                        .First(c => c.ChangeRequestId.Equals(crEntry.ChangeRequestId));
+                }
+                else
+                {
+                    return null;
+                }
+            }catch(DbEntityValidationException ex)
             {
-                return null;
+                var entityError = ex.EntityValidationErrors.SelectMany(x => x.ValidationErrors).Select(x => x.ErrorMessage);
+                var getFullMessage = string.Join("; ", entityError);
+                var exceptionMessage = string.Concat(ex.Message, "errors are: ", getFullMessage);
             }
 
+            return null;
         }
 
         public ChangeRequest FindByChangeRequestId(Guid changeRequestId)
@@ -647,6 +670,9 @@ namespace LungmenSoftware.Models.Service
             db.ChangeRequests.Remove(r);
             db.SaveChanges();
         }
+
+       
+
     }
 
    

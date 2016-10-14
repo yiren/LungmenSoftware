@@ -17,7 +17,7 @@ namespace LungmenSoftware.Controllers
     {
         private NumacFirewareDbContext db = new NumacFirewareDbContext();
         private NumacDataService dataService=new NumacDataService();
-
+        private ChangeRequestService crSerice = new ChangeRequestService();
 
         // GET: Chassis
         public ActionResult Index()
@@ -56,6 +56,11 @@ namespace LungmenSoftware.Controllers
             return Json(data, JsonRequestBehavior.AllowGet);
         }
 
+        public JsonResult GetNumacChangeRequestRecordById(string ChassisBoardId)
+        {
+            var data = crSerice.GetNumacChangeRequestRecordById(ChassisBoardId);
+            return Json(data, JsonRequestBehavior.AllowGet);
+        }
 
 
         // GET: Chassis/Details/5

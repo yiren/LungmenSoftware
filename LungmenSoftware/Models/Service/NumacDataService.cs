@@ -7,6 +7,7 @@ using LungmenSoftware.Models.NUMACFirmware;
 using LungmenSoftware.Models.ViewModel;
 //using LungmenSoftware.Models;
 using LungmenSoftware.Models.V2;
+using LungmenSoftware.Models.CodeFirst.Entities;
 
 namespace LungmenSoftware.Models.Service
 {
@@ -14,7 +15,7 @@ namespace LungmenSoftware.Models.Service
     {
         NumacFirewareDbContext db = new NumacFirewareDbContext();
         NumacDbContext db2 = new NumacDbContext();
-
+       
 
 
         public List<NUMACFirmware.Chassis> GetChassis()
@@ -50,7 +51,7 @@ namespace LungmenSoftware.Models.Service
             return data.ToList();
         }
 
-
+        
 
         public List<FirmwareViewModel> GetFirmwareList()
         {

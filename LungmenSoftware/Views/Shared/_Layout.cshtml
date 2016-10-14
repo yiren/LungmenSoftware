@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@ViewBag.Title</title>
+    <title>龍門軟體構型管理系統</title>
     
     @Scripts.Render("~/bundles/modernizr")
     
@@ -30,8 +30,7 @@
                             Invensys相關資訊<span class="caret"></span>
                         </a>
                         <ul class="dropdown-menu">
-                            <li>@Html.ActionLink("工作站資訊", "Index", "FoxWorkStations")</li>                           
-                            <li>@Html.ActionLink("軟體資訊", "Index", "FoxSoftwares")</li>
+                            <li>@Html.ActionLink("Invensys 軟體資訊", "Index", "FoxSoftwares")</li>
                             <li role="separator" class="divider"></li>
                             <li>@Html.ActionLink("新增Invensys軟體變更", "GetInvChangeForm", "ChangeRequest")</li>
                             
@@ -90,11 +89,8 @@
 
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
-    <script src="~/Scripts/angular.min.js" type="text/javascript"></script>
-    <script src="~/Scripts/angular-ui-router.min.js" type="text/javascript"></script>
-    <script src="~/Scripts/ui-grid.min.js" type="text/javascript"></script>
-    <script src="~/Scripts/api-check/dist/api-check.min.js" type="text/javascript"></script>
-    <script src="~/Scripts/angular-formly/dist/formly.min.js" type="text/javascript"></script>
+    @Scripts.Render("~/bundles/angularjs")
+    
     @RenderSection("scripts", required: false)
 </body>
 </html>
