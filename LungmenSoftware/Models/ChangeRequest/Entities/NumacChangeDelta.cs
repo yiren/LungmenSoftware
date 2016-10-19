@@ -28,7 +28,6 @@ namespace LungmenSoftware.Models.CodeFirst.Entities
 
         public string OriRev { get; set; }
 
-        public string OriSocketLocation { get; set; }
 
 
         public string Assembly { get; set; }
@@ -41,7 +40,6 @@ namespace LungmenSoftware.Models.CodeFirst.Entities
 
         public string SocketLocation { get; set; }
 
-        public List<ModuleInfo> ModuleInfos { get; set; }
 
         public Guid ChangeRequestId { get; set; }
 

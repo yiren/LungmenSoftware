@@ -17,6 +17,7 @@
             numacDataService.getNumacData().then(suc, err);
             function suc(res) {
                 vm.gridOptions.data = res.data;
+                
             }
             function err(err) {
 
@@ -36,7 +37,7 @@
 
                     {
                        name: "Note", enableColumnMenu: false, cellTemplate: '<div>' +
-                       '<button class="btn btn-default" ng-click="grid.appScope.getHistory(row)">修改歷史紀錄</button>'+
+                       '<a class="btn btn-default" href="/numac/NumacChangeRequestHistory?moduleId={{row.entity.ChassisBoardId}}" target="_blank">修改歷史紀錄</a>' +
                     //    '<p class="center"><a href="/meetings/download/?p={{row.entity.MeetingFiles[0].FileId}}{{row.entity.MeetingFiles[0].Extension}}&d={{row.entity.MeetingFiles[0].FileName}}"> <span class="fa fa-download"></span></a></p>' +
                        '</div>'
                     }
@@ -100,7 +101,7 @@
         vm.toggleFiltering = function () {
             //過濾狀態判斷
             vm.gridOptions.enableFiltering = !vm.gridOptions.enableFiltering;
-            if (vm.gridOptions.enableFiltering == true) {
+            if (vm.gridOptions.enableFiltering === true) {
                 vm.searchTextToggle = "關閉";
             } else {
                 vm.searchTextToggle = "啟用";

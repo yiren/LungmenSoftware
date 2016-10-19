@@ -45,10 +45,32 @@ namespace LungmenSoftware.Models.Service
             return query.ToList();
         }
 
-        public List<NumacChangeDelta> GetNumacChangeRequestRecordById(string chassisBoardId)
+        public List<NumacChangeDetailViewModel> GetNumacChangeRequestRecordById(string chassisBoardId)
         {
             var id = new Guid(chassisBoardId);
-            return db.NumacChangeDeltas.Where(d=>d.ModuleBoardId.Equals(chassisBoardId)).ToList();
+            var query = from d in db.NumacChangeDeltas.Where(d => d.ModuleBoardId.Equals(id))
+                            join  r in db.ChangeRequests on d.ChangeRequestId equals r.ChangeRequestId
+                        select new NumacChangeDetailViewModel()
+                        {
+                            FormSerialNumber=r.SerialNumber,
+                            ApprovedBy=r.ApprovedBy,
+                            ReviewBy=r.ReviewBy,
+                            CreatedBy=r.CreatedBy,
+                            CreateDate=r.CreateDate,
+                            LastModifiedDate=r.LastModifiedDate,
+                            ModuleBoardName=d.ModuleBoardName,
+                            OriAssembly=d.OriAssembly,
+                            OriProgram=d.OriProgram,
+                            OriRev=d.OriRev,
+                            OriSerialNumber=d.OriSerialNumber,
+                            DesignDoc=r.DesignDoc,
+                            Assembly=d.Assembly,
+                            Program=d.Program,
+                            Rev=d.Rev,
+                            SerialNumber=d.SerialNumber
+                        }
+                        ;
+            return query.ToList();
         }
 
         public List<ChangeRequestInfo> GetChangeRequestHistoryByJoinTable(WKAndFoxJoinTable record)

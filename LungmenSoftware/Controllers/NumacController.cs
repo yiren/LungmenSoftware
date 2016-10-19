@@ -63,6 +63,13 @@ namespace LungmenSoftware.Controllers
         }
 
 
+        public ActionResult NumacChangeRequestHistory(string moduleId)
+        {
+            var data = crSerice.GetNumacChangeRequestRecordById(moduleId);
+
+            return View(data);
+        }
+
         // GET: Chassis/Details/5
         public ActionResult Details(Guid? id)
         {
