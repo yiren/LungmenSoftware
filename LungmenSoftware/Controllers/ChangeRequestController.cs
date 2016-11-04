@@ -261,7 +261,7 @@ namespace LungmenSoftware.Controllers
 
         public ActionResult CancelChangeRequest(Guid id)
         {
-            var crEntry= crService.FindByChangeRequestId(id);
+            var crEntry = crService.FindByChangeRequestId(id);
             if (crEntry == null)
             {
                 return HttpNotFound();

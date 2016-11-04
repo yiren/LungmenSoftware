@@ -6,59 +6,163 @@
 
 <h2>取消 @Model.SerialNumber 軟體修改</h2>
 
-<div>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.SerialNumber)
-        </dt>
+<div class="row">
+    <div class="col-md-4">
+        <h4>軟體變更表單基本資訊</h4>
+        <hr />
+        <dl class="dl-horizontal">
+            
+            <dt>
+                @Html.DisplayNameFor(model => model.Description)
+            </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.SerialNumber)
-        </dd>
+            <dd>
+                @Html.DisplayFor(model => model.Description)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.DesignDoc)
+            </dt>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Description)
-        </dt>
+            <dd>
+                @Html.DisplayFor(model => model.DesignDoc)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.CreatedBy)
+            </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.Description)
-        </dd>
+            <dd>
+                @Html.DisplayFor(model => model.CreatedBy)
+            </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.CreatedBy)
-        </dt>
+            <dt>
+                @Html.DisplayNameFor(model => model.CreateDate)
+            </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.CreatedBy)
-        </dd>
+            <dd>
+                @Html.DisplayFor(model => model.CreateDate)
+            </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.CreateDate)
-        </dt>
+            <dt>
+                @Html.DisplayNameFor(model => model.LastModifiedDate)
+            </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.CreateDate)
-        </dd>
+            <dd>
+                @Html.DisplayFor(model => model.LastModifiedDate)
+            </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.LastModifiedDate)
-        </dt>
+            <dt>
+                @Html.DisplayNameFor(model => model.Note)
+            </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.LastModifiedDate)
-        </dd>
+            <dd>
+                @Html.DisplayFor(model => model.Note)
+            </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Note)
-        </dt>
+        </dl>
 
-        <dd>
-            @Html.DisplayFor(model => model.Note)
-        </dd>
+    </div>
 
-    </dl>
+
 </div>
+
+
+<div class="row">
+
+    <div class="col-md-12">
+        <table class="table table-bordered table-condensed">
+            @if (Model.ChangeDeltas.Count > 0)
+            {
+                foreach (var delta in Model.ChangeDeltas)
+                {
+                    <thead>
+                        <tr>
+                            <th>
+                                @Html.DisplayNameFor(model => delta.RevInfos[0].SoftwareName)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => delta.OriginalValue)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => delta.NewValue)
+                            </th>
+                            <th>
+                                影響工作站
+                            </th>
+                        </tr>
+                    </thead>
+                            <tbody>
+                                <tr>
+                                    <td>
+                                        @Html.DisplayFor(model => delta.RevInfos[0].SoftwareName)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(model => delta.OriginalValue)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(model => delta.NewValue)
+                                    </td>
+                                    <td>
+                                        <ul>
+                                            @foreach (var record in delta.RevInfos)
+                                            {
+                                                <li>@record.WorkStationName</li>
+                                            }
+                                        </ul>
+                                    </td>
+                                </tr>
+                            </tbody>
+                }
+            }
+
+            @if (Model.NumacChangeDeltas.Count > 0)
+            {
+                <thead>
+                    <tr>
+                        <th>Panel</th>
+                        <th>Subsystem</th>
+                        <th>Module Name</th>
+                        <th>Socket Location</th>
+                        <th>Assembly</th>
+                        <th>Serial Number</th>
+                        <th>Program</th>
+                        <th>Revision</th>
+                    </tr>
+                </thead>
+                        <tbody>
+                            @foreach (var item in Model.NumacChangeDeltas)
+                            {
+                                <tr>
+                                    <td>@item.Panel</td>
+                                    <td>@item.ChassisName</td>
+                                    <td>@item.ModuleBoardName</td>
+                                    <td>@item.SocketLocation</td>
+                                    <td>
+                                        <div>建置值: @item.OriAssembly</div>
+                                        <div>變更值: @item.Assembly</div>
+                                    </td>
+                                    <td>
+                                        <div>建置值: @item.OriSerialNumber</div>
+                                        <div>變更值: @item.SerialNumber</div>
+                                    </td>
+                                    <td>
+                                        <div>建置值: @item.OriProgram</div>
+                                        <div>變更值: @item.Program</div>
+                                    </td>
+                                    <td>
+                                        <div>建置值: @item.OriRev</div>
+                                        <div>變更值: @item.Rev</div>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+            }
+
+        </table>
+    </div>
+
+
+</div>
+
 <p>
     @using (Html.BeginForm())
     {

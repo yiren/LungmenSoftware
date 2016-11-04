@@ -297,7 +297,7 @@ namespace LungmenSoftware.Models.Service
         public ChangeRequest FindByChangeRequestId(Guid changeRequestId)
         {
            
-            return db.ChangeRequests.Find(changeRequestId);
+            return db.ChangeRequests.Include(c=>c.ChangeRequestStatuses).Include(c=>c.ChangeRequestMessages).Include(c=>c.ChangeDeltas).Include(c=>c.NumacChangeDeltas).FirstOrDefault(c=>c.ChangeRequestId.Equals(changeRequestId));
         }
 
         public void SaveChangeRequestTemp(ChangeRequest cr)
@@ -409,6 +409,13 @@ namespace LungmenSoftware.Models.Service
 
             cr.IsActive = false;
             cr.Owner = "已取消";
+            db.ChangeRequestMessages.Add(new ChangeRequestMessage() {
+                ChangeRequest = cr,
+                ChangeRequestId = cr.ChangeRequestId,
+                CreateBy = cr.CreatedBy,
+                CreateTime = DateTime.Now,
+                Message = cr.CreatedBy+"取消軟體變更需求"
+            });
             db.ChangeRequestStatuses.Add(new ChangeRequestStatus()
             {
                 ChangeRequestId = cr.ChangeRequestId,
@@ -418,7 +425,7 @@ namespace LungmenSoftware.Models.Service
                 ChangeRequestStatusType = db.ChangeRequestStatusTypes.Find(4),
                 EndDate = DateTime.Now,
                 InitialDate = DateTime.Now,
-
+                IsCurrent=true
             });
 
             db.SaveChanges();
@@ -623,6 +630,7 @@ namespace LungmenSoftware.Models.Service
             var query= from cr in preChangeRequests
                 join s in preChangeRequestStatuses on cr.ChangeRequestId equals s.ChangeRequestId
                 join t in preChangeRequestStatusTypes on s.StatusTypeId equals t.StatusTypeId
+                orderby cr.CreateDate descending
                        select new ChangeRequestInfo
                        {
                            ChangeRequestId = cr.ChangeRequestId,
