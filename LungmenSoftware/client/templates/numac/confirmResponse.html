@@ -1,0 +1,45 @@
+﻿<div class="alert alert-success"><h3>{{c.message}}</h3></div>
+
+<div class="alert alert-info"><h4>案件已送<span ng-bind="c.data.ReviewBy"></span>審查</h4></div>
+
+<div class="panel panel-default">
+    <div class="panel-heading">表單內容</div>
+    <div class="panel-body">
+        <label>表單編號:<span ng-bind="c.data.SerialNumber"></span></label>
+        <br />
+        <label>申請人:<span ng-bind="c.data.CreatedBy"></span></label>
+        <br />
+        <label>申請時間:<span ng-bind="c.data.CreateDate"></span></label>
+        <br />
+        <label>變更說明:</label>
+        <p ng-bind="c.data.Note"></p>
+        <hr />
+
+        <table class="table table-condensed table-bordered table-striped">
+            <tr>
+                <td>Panel</td>
+                <td>Subsystem</td>
+                <th>Module Name</th>
+                <th>Socket Location</th>
+                <th>Assembly</th>
+                <th>Serial Number</th>
+                <th>Program</th>
+                <th>Revision</th>
+            </tr>
+            <tr ng-repeat="l in c.data.NumacChangeDeltas">
+                <td>{{l.Panel}}</td>
+                <td>{{l.ChassisName}}</td>
+                <td>{{l.ModuleBoardName}}</td>
+                <td>{{l.SocketLocation}}</td>
+                <td ng-bind="l.Assembly" /></td>
+                <td ng-bind="l.SerialNumber" /></td>
+                <td ng-bind="l.Program" /></td>
+                <td ng-bind="l.Rev" /></td>
+            </tr>
+        </table>
+    </div>
+</div>
+<p>
+    <a></a>
+</p>
+
