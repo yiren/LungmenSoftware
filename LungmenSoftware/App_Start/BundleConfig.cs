@@ -25,6 +25,16 @@ namespace LungmenSoftware
                       "~/Scripts/bootstrap.min.js",
                       "~/Scripts/respond.js"));
 
+            bundles.Add(new ScriptBundle("~/bundles/angularjs").Include(
+                      "~/Scripts/angular.min.js",
+                      "~/Scripts/angular-ui-router.min.js",
+                      "~/Scripts/angular-route.min.js",
+                      "~/Scripts/angular-animate.min.js",
+                      "~/Scripts/ui-grid.min.js"
+                        ));
+
+           
+
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.min.css",
                       "~/Content/themes/cupertino/jquery-ui.cupertino.css",
@@ -32,6 +42,10 @@ namespace LungmenSoftware
                       "~/Content/themes/base/core.css",
                       "~/Content/site.css", "~/Content/ui-grid.min.css")
                       );
+
+           
+            BundleTable.EnableOptimizations = true;
+           
         }
     }
 }

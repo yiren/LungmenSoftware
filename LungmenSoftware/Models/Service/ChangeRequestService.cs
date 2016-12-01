@@ -7,6 +7,7 @@ using LungmenSoftware.Models.CodeFirst;
 using LungmenSoftware.Models.CodeFirst.Entities;
 using LungmenSoftware.Models.ViewModel;
 using Microsoft.AspNet.Identity.EntityFramework;
+using System.Data.Entity.Validation;
 
 namespace LungmenSoftware.Models.Service
 {
@@ -15,6 +16,7 @@ namespace LungmenSoftware.Models.Service
         private ChangeProcessDbContext db=new ChangeProcessDbContext();
         private LungmenSoftwareDataEntities ldb=new LungmenSoftwareDataEntities();
         private ApplicationDbContext _identityDb=new ApplicationDbContext();
+        private NumacDataService numacDataService = new NumacDataService();
 
         public List<ChangeRequestInfo> GetChangeRequestHistory()
         {
@@ -40,6 +42,34 @@ namespace LungmenSoftware.Models.Service
                             CreateDate = cr.CreateDate,
                             Description = cr.Description
                         };
+            return query.ToList();
+        }
+
+        public List<NumacChangeDetailViewModel> GetNumacChangeRequestRecordById(string chassisBoardId)
+        {
+            var id = new Guid(chassisBoardId);
+            var query = from d in db.NumacChangeDeltas.Where(d => d.ModuleBoardId.Equals(id))
+                            join  r in db.ChangeRequests on d.ChangeRequestId equals r.ChangeRequestId
+                        select new NumacChangeDetailViewModel()
+                        {
+                            FormSerialNumber=r.SerialNumber,
+                            ApprovedBy=r.ApprovedBy,
+                            ReviewBy=r.ReviewBy,
+                            CreatedBy=r.CreatedBy,
+                            CreateDate=r.CreateDate,
+                            LastModifiedDate=r.LastModifiedDate,
+                            ModuleBoardName=d.ModuleBoardName,
+                            OriAssembly=d.OriAssembly,
+                            OriProgram=d.OriProgram,
+                            OriRev=d.OriRev,
+                            OriSerialNumber=d.OriSerialNumber,
+                            DesignDoc=r.DesignDoc,
+                            Assembly=d.Assembly,
+                            Program=d.Program,
+                            Rev=d.Rev,
+                            SerialNumber=d.SerialNumber
+                        }
+                        ;
             return query.ToList();
         }
 
@@ -176,8 +206,16 @@ namespace LungmenSoftware.Models.Service
         //For AngularJS Numac
         public ChangeRequest AddNumacChangeRequestEntry(ChangeRequest crEntry)
         {
+            
+
             foreach (var item in crEntry.NumacChangeDeltas)
             {
+                var oriModule = numacDataService.GetModuleByModuleId(item.ModuleBoardId);
+                item.OriAssembly = oriModule.Assembly;
+                item.OriProgram = oriModule.Program;
+                item.OriSerialNumber = oriModule.SerialNumber;
+                item.OriRev = oriModule.Rev;
+                item.SocketLocation = oriModule.SocketLocation;
                 item.ChangeRequest = crEntry;
                 item.ChangeRequestId = crEntry.ChangeRequestId;
                 item.NumacChangeDeltaId = Guid.NewGuid();
@@ -205,6 +243,8 @@ namespace LungmenSoftware.Models.Service
             }
         }
 
+        
+
         //For AngularJS Inv
         public ChangeRequest AddChangeRequestRecord(ChangeRequest crEntry)
         {
@@ -213,7 +253,14 @@ namespace LungmenSoftware.Models.Service
                 item.ChangeRequest = crEntry;
                 item.ChangeRequestId = crEntry.ChangeRequestId;
                 item.ChangeDeltaId = Guid.NewGuid();
+                foreach (var revInfo in item.RevInfos)
+                {
+                    revInfo.ChangeDeltaId = item.ChangeDeltaId;
+                    revInfo.FoxSoftwareId = item.FoxSoftwareId;
+                }
             }
+            
+
             db.ChangeRequestMessages.Add(new ChangeRequestMessage()
             {
                 ChangeRequest = crEntry,
@@ -225,23 +272,32 @@ namespace LungmenSoftware.Models.Service
 
 
             db.ChangeRequests.Add(crEntry);
-            if (db.SaveChanges() != -1)
+            try
             {
-                return db.ChangeRequests
-                    .Include(c=>c.ChangeDeltas.Select(d=>d.RevInfos))
-                    .First(c => c.ChangeRequestId.Equals(crEntry.ChangeRequestId));
-            }
-            else
+                if (db.SaveChanges() != -1)
+                {
+                    return db.ChangeRequests
+                        .Include(c => c.ChangeDeltas.Select(d => d.RevInfos))
+                        .First(c => c.ChangeRequestId.Equals(crEntry.ChangeRequestId));
+                }
+                else
+                {
+                    return null;
+                }
+            }catch(DbEntityValidationException ex)
             {
-                return null;
+                var entityError = ex.EntityValidationErrors.SelectMany(x => x.ValidationErrors).Select(x => x.ErrorMessage);
+                var getFullMessage = string.Join("; ", entityError);
+                var exceptionMessage = string.Concat(ex.Message, "errors are: ", getFullMessage);
             }
 
+            return null;
         }
 
         public ChangeRequest FindByChangeRequestId(Guid changeRequestId)
         {
            
-            return db.ChangeRequests.Find(changeRequestId);
+            return db.ChangeRequests.Include(c=>c.ChangeRequestStatuses).Include(c=>c.ChangeRequestMessages).Include(c=>c.ChangeDeltas).Include(c=>c.NumacChangeDeltas).FirstOrDefault(c=>c.ChangeRequestId.Equals(changeRequestId));
         }
 
         public void SaveChangeRequestTemp(ChangeRequest cr)
@@ -353,6 +409,13 @@ namespace LungmenSoftware.Models.Service
 
             cr.IsActive = false;
             cr.Owner = "已取消";
+            db.ChangeRequestMessages.Add(new ChangeRequestMessage() {
+                ChangeRequest = cr,
+                ChangeRequestId = cr.ChangeRequestId,
+                CreateBy = cr.CreatedBy,
+                CreateTime = DateTime.Now,
+                Message = cr.CreatedBy+"取消軟體變更需求"
+            });
             db.ChangeRequestStatuses.Add(new ChangeRequestStatus()
             {
                 ChangeRequestId = cr.ChangeRequestId,
@@ -362,7 +425,7 @@ namespace LungmenSoftware.Models.Service
                 ChangeRequestStatusType = db.ChangeRequestStatusTypes.Find(4),
                 EndDate = DateTime.Now,
                 InitialDate = DateTime.Now,
-
+                IsCurrent=true
             });
 
             db.SaveChanges();
@@ -381,36 +444,58 @@ namespace LungmenSoftware.Models.Service
             {
                 return false;
             }
-            var deltas =
+            if(crEntry.ChangeDeltas.Count>0)
+            {
+                var deltas =
                 db.ChangeDeltas.Include(d => d.RevInfos)
                 .Where(d => d.ChangeRequestId.Equals(crEntry.ChangeRequestId)).ToList();
 
-            foreach (var delta in deltas)
-            {
-                
-                var currentSoftData=from s in ldb.FoxSoftwares.Where(s=>s.FoxSoftwareId==delta.FoxSoftwareId)
-                        join j in ldb.WKAndFoxJoinTables on s.FoxSoftwareId equals j.FoxSoftwareId
-                                    where j.Rev.Equals(delta.OriginalValue)
-                                    select j;
-
-
-                foreach (var item in delta.RevInfos)
+                foreach (var delta in deltas)
                 {
-                    var jointable = ldb.WKAndFoxJoinTables.Find(item.JoinTableId);
-                    jointable.Rev = delta.NewValue;
+
+                    var currentSoftData = from s in ldb.FoxSoftwares.Where(s => s.FoxSoftwareId == delta.FoxSoftwareId)
+                                          join j in ldb.WKAndFoxJoinTables on s.FoxSoftwareId equals j.FoxSoftwareId
+                                          where j.Rev.Equals(delta.OriginalValue)
+                                          select j;
+
+
+                    foreach (var item in delta.RevInfos)
+                    {
+                        var jointable = ldb.WKAndFoxJoinTables.Find(item.JoinTableId);
+                        jointable.Rev = delta.NewValue;
+                    }
                 }
+                if (ldb.SaveChanges() != -1)
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+
+            if (crEntry.NumacChangeDeltas.Count>0)
+            {
+                var deltas = db.NumacChangeDeltas.Where(n => n.ChangeRequestId.Equals(crEntry.ChangeRequestId)).ToList();
+                foreach (var delta in deltas)
+                {
+                    var currentModule = numacDataService.GetModuleByModuleId(delta.ModuleBoardId);
+                    currentModule.Program = delta.Program;
+                    currentModule.Assembly = delta.Assembly;
+                    currentModule.SerialNumber = delta.SerialNumber;
+                    currentModule.Rev = delta.Rev;
+                    
+                }
+                //
+                var isUpdated = numacDataService.IsUpdated();
+                return isUpdated;
+                
+            }
+
+
+            return false;
             
-
-            }
-
-            if (ldb.SaveChanges() != -1)
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
 
         }
 
@@ -429,6 +514,7 @@ namespace LungmenSoftware.Models.Service
 
             var query = db.ChangeRequests.Where(c=>c.ChangeRequestId.Equals(id))
                 .Include(c=>c.ChangeDeltas.Select(d=>d.RevInfos))
+                .Include(c=>c.NumacChangeDeltas)
                 .Include(c=>c.ChangeRequestMessages)
                 .Include(c=>c.ChangeRequestStatuses.Select(s=>s.ChangeRequestStatusType))
                 .FirstOrDefault();
@@ -457,7 +543,28 @@ namespace LungmenSoftware.Models.Service
             }
 
         }
+        public void UpdateNumacChangeDeltas(Guid changeRequestId, List<NumacChangeDelta> numacChangeDeltas)
+        {
+            var deltas = db.NumacChangeDeltas.Where(n => n.ChangeRequestId.Equals(changeRequestId)).ToList();
+            //join d in db.ChangeDeltas
+            //    on c.ChangeRequestId equals d.ChangeRequestId
+            //join r in db.RevInfos
+            //    on d.ChangeDeltaId equals r.ChangeDeltaId
+            //select d;
 
+            if (deltas.Count() != numacChangeDeltas.Count())
+            {
+                throw new Exception("The Count of ChangeDeltas Has Errors");
+            }
+
+            for (int i = 0; i < deltas.Count(); i++)
+            {
+                deltas[i].Assembly = numacChangeDeltas[i].Assembly;
+                deltas[i].Program = numacChangeDeltas[i].Program;
+                deltas[i].SerialNumber = numacChangeDeltas[i].SerialNumber;
+                deltas[i].Rev = numacChangeDeltas[i].Rev;
+            }
+        }
         public void AddChangeRequestMessage(ChangeRequestMessage crm)
         {
             db.ChangeRequestMessages.Add(crm);
@@ -523,6 +630,7 @@ namespace LungmenSoftware.Models.Service
             var query= from cr in preChangeRequests
                 join s in preChangeRequestStatuses on cr.ChangeRequestId equals s.ChangeRequestId
                 join t in preChangeRequestStatusTypes on s.StatusTypeId equals t.StatusTypeId
+                orderby cr.CreateDate descending
                        select new ChangeRequestInfo
                        {
                            ChangeRequestId = cr.ChangeRequestId,
@@ -592,6 +700,9 @@ namespace LungmenSoftware.Models.Service
             db.ChangeRequests.Remove(r);
             db.SaveChanges();
         }
+
+       
+
     }
 
    

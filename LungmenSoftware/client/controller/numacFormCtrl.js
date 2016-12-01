@@ -57,7 +57,7 @@
             if ($scope.subsystem != undefined) {
                 numacDataService.getModulesById(subsystemId).then(
                 function (res) {
-                    //console.log(res.data)
+                    console.log(res.data)
                     $scope.modules = res.data;
                 }, function (err) {
 
@@ -71,12 +71,13 @@
 
         $scope.addToModList = function (module) {
             var indexForRemoval = $scope.modules.indexOf(module);
-                       
+                     
             module.Panel = $scope.system.Panel;
             module.ChassisName = $scope.subsystem.ChassisName;
+            //module.SocketLocation=$scope..SocketLocation;
             $scope.modList.push(module);
             $scope.modules.splice(indexForRemoval, 1);
-            //console.log($scope.modList);
+            console.log($scope.modList);
         }
         
         function ResetSelectData() {

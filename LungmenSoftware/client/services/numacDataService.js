@@ -11,6 +11,9 @@
         
         var numacChangeRequestPromise;
 
+        this.getNumacData = function () {
+            return $http.get('/numac/getnumacdata');
+        }
 
         this.getChangeRequestRecord = function () {
             return $http.get('/changerequest/InitChangeRequest');
@@ -38,6 +41,10 @@
 
         this.getNumacChangeRequestPromise=function(){
             return numacChangeRequestPromise;
+        }
+
+        this.getNumacChangeRequestRecordById=function(ChassisBoardId){
+            return $http.get('/numac/GetNumacChangeRequestRecordById/?ChassisBoardId='+ChassisBoardId);
         }
 
     }

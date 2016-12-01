@@ -7,6 +7,7 @@ using LungmenSoftware.Models.NUMACFirmware;
 using LungmenSoftware.Models.ViewModel;
 //using LungmenSoftware.Models;
 using LungmenSoftware.Models.V2;
+using LungmenSoftware.Models.CodeFirst.Entities;
 
 namespace LungmenSoftware.Models.Service
 {
@@ -14,8 +15,8 @@ namespace LungmenSoftware.Models.Service
     {
         NumacFirewareDbContext db = new NumacFirewareDbContext();
         NumacDbContext db2 = new NumacDbContext();
-
        
+
 
         public List<NUMACFirmware.Chassis> GetChassis()
         {
@@ -32,12 +33,12 @@ namespace LungmenSoftware.Models.Service
             var data = from c in db2.NumacSystems.AsNoTracking()
                        join b in db2.Chassis.AsNoTracking() on c.SystemId equals b.SystemId
                        join e in db2.ModuleBoards.AsNoTracking() on b.ChassisId equals e.ChassisId
-                       orderby b.ChassisName,e.ModuleBoardName
+                       orderby b.ChassisName, e.ModuleBoardName
                        select new FirmwareViewModelV2()
                        {
                            ChassisName = c.Name,
                            SerialNumber = e.SerialNumber,
-                           SubSystem=b.ChassisName,
+                           SubSystem = b.ChassisName,
                            Assembly = e.Assembly,
                            ChassisBoardName = e.ModuleBoardName,
                            Program = e.Program,
@@ -87,20 +88,37 @@ namespace LungmenSoftware.Models.Service
         }
 
 
+
         public List<NumacSystem> GetSystemPanelList()
         {
-            return db2.NumacSystems.OrderBy(o=>o.Panel).ToList();
+            return db2.NumacSystems.OrderBy(o => o.Panel).ToList();
         }
 
         public List<V2.Chassis> GetSubSystemById(Guid systemId)
         {
-                                
-            return db2.Chassis.AsNoTracking().Where(c => c.SystemId.Equals(systemId)).OrderBy(c=>c.ChassisName).ToList();
+
+            return db2.Chassis.AsNoTracking().Where(c => c.SystemId.Equals(systemId)).OrderBy(c => c.ChassisName).ToList();
         }
 
         public List<ModuleBoard> GetModulesById(Guid chassisId)
         {
-            return db2.ModuleBoards.AsNoTracking().Where(b => b.ChassisId.Equals(chassisId)).OrderBy(b=>b.ModuleBoardName).ThenBy(b=>b.SocketLocation).ToList();
+            return db2.ModuleBoards.AsNoTracking().Where(b => b.ChassisId.Equals(chassisId)).OrderBy(b => b.ModuleBoardName).ThenBy(b => b.SocketLocation).ToList();
+        }
+
+        public ModuleBoard GetModuleByModuleId(Guid moduleId)
+        {
+            return db2.ModuleBoards.FirstOrDefault(m => m.ModuleBoardId.Equals(moduleId));
+        }
+
+        public bool IsUpdated()
+        {
+            if (db2.SaveChanges() != -1)
+            {
+                return true;
+            }else
+            {
+                return false;
+            }
         }
     }
 }

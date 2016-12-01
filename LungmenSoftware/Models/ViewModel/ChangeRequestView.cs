@@ -5,6 +5,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using LungmenSoftware.Models.CodeFirst.Entities;
+using System.ComponentModel.DataAnnotations;
 
 namespace LungmenSoftware.Models.ViewModel
 {
@@ -25,7 +26,7 @@ namespace LungmenSoftware.Models.ViewModel
         public string CreateEndDate { get; set; }
         [DisplayName("變更敘述")]
         public string Description { get; set; }
-        
+
         //Status
         [DisplayName("軟體名稱")]
         public string SoftwareName { get; set; }
@@ -51,8 +52,12 @@ namespace LungmenSoftware.Models.ViewModel
     public class ChangeRequestViewModelForDetail
     {
         public ChangeRequest ChangeRequest { get; set; }
-        public List<ChangeRequestStatus> ChangeRequestStatuses { get; set; }  
+        public List<ChangeRequestStatus> ChangeRequestStatuses { get; set; }
+
         public List<ChangeDelta> ChangeDeltas { get; set; }
+
+        public List<NumacChangeDelta> NumacChangeDeltas { get; set; }
+        public ChangeRequestMessage ChangeRequestMessage { get; set; }
         public List<ChangeRequestMessage> ChangeRequestMessages { get; set; }
     }
 
@@ -103,6 +108,54 @@ namespace LungmenSoftware.Models.ViewModel
 
         [DisplayName("變更值")]
         public string NewValue { get; set; }
+
+    }
+
+    public class NumacChangeDetailViewModel{
+
+        
+        public string OriAssembly { get; set; }
+
+        
+        public string OriSerialNumber { get; set; }
+
+     
+        public string OriProgram { get; set; }
+
+        
+        public string OriRev { get; set; }
+
+        public string ModuleBoardName { get; set; }
+
+        public string Assembly { get; set; }
+
+
+        public string SerialNumber { get; set; }
+        
+        public string Program { get; set; }
+
        
+        public string Rev { get; set; }
+
+    
+        public DateTime CreateDate { get; set; }
+
+        public DateTime LastModifiedDate { get; set; }
+
+
+        [DisplayName("表單編號")]
+        public string FormSerialNumber { get; set; }
+
+        [DisplayName("軟體變更文件")]
+        public string DesignDoc { get; set; }
+
+        [DisplayName("負責人")]
+        public string CreatedBy { get; set; }
+        
+        [DisplayName("審查")]
+        public string ReviewBy { get; set; }
+        
+        [DisplayName("核準")]
+        public string ApprovedBy { get; set; }
     }
 }
