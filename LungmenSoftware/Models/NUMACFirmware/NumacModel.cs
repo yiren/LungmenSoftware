@@ -1,0 +1,54 @@
+﻿using Newtonsoft.Json;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace LungmenSoftware.Models.V2
+{
+    class NumacModel
+    {
+
+    }
+
+    public class NumacSystem
+    {
+        public Guid SystemId { get; set; }
+        public string Name { get; set; }
+        public string Panel { get; set; }
+
+        [JsonIgnore]
+        public ICollection<Chassis> Chassis { get; set; }
+    }
+
+    public class Chassis
+    {
+        public Guid ChassisId { get; set; }
+        public string ChassisName { get; set; }
+       
+        public Guid SystemId { get; set; }
+        public NumacSystem NumacSystem { get; set; }
+        [JsonIgnore]
+        public ICollection<ModuleBoard> ModuleBoards { get; set; }
+
+        
+    }
+
+    public class ModuleBoard
+    {
+        public Guid ModuleBoardId { get; set; }
+        public string ModuleBoardName { get; set; }
+        public string SocketLocation { get; set; }
+        public string SerialNumber { get; set; }
+        public string Assembly { get; set; }
+        public string Program { get; set; }
+        public string Rev { get; set; }
+
+
+        public Guid ChassisId { get; set; }
+        [JsonIgnore]
+        public Chassis Chassis { get; set; }
+    }
+}

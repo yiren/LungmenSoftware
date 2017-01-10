@@ -1,0 +1,85 @@
+﻿
+    <div class="form-group">
+        <select id="panel" ng-model="system" ng-options="s.Panel group by s.Name  for s in numacPanels track by s.SystemId"
+                ng-change="f.getSubsystemById(system.SystemId)" class="form-control">
+            <option value=''>選擇盤面</option>
+        </select>
+    </div>
+
+    <div class="form-group">
+        <select id="subsystem" ng-disabled="!system" ng-model="subsystem" ng-options="s.ChassisName for s  in subSystems track by s.ChassisId"
+                ng-change="f.getModulesById(subsystem.ChassisId)" class="form-control">
+            <option value=''>選擇子系統</option>
+        </select>
+    </div>
+
+    <table class="table table-bordered table-condensed table-striped">
+        <thead>
+            <tr>
+                <th>Module Name</th>
+                <th>Socket Location</th>
+                <th>Assembly</th>
+                <th>Serial Number</th>
+                <th>Program</th>
+                <th>Revision</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="m in modules track by m.ModuleBoardId">
+
+                <td>{{m.ModuleBoardName}}</td>
+                <td>{{m.SocketLocation}}</td>
+                <td>{{m.Assembly}}</td>
+                <td>{{m.SerialNumber}}</td>
+                <td>{{m.Program}}</td>
+                <td>{{m.Rev}}</td>
+                <td><button class="btn btn-default" ng-click="addToModList(m)">加入修改</button></td>
+            </tr>
+        </tbody>
+    </table>
+    <hr />
+    <div ng-if="modList">
+        <table class="table table-bordered table-condensed table-striped">
+            <caption>修改清單</caption>
+            <thead>
+                <tr>
+                    <td>Panel</td>
+                    <td>Subsystem</td>
+                    <th>Module Name</th>
+                    <th>Socket Location</th>
+                    <th>Assembly</th>
+                    <th>Serial Number</th>
+                    <th>Program</th>
+                    <th>Revision</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="l in modList">
+                    <td>{{l.Panel}}</td>
+                    <td>{{l.ChassisName}}</td>
+                    <td>{{l.ModuleBoardName}}</td>
+                    <td>{{l.SocketLocation}}</td>
+                    <td><input type="text" ng-model="l.Assembly" /></td>
+                    <td><input type="text" ng-model="l.SerialNumber" /></td>
+                    <td><input type="text" ng-model="l.Program" /></td>
+                    <td><input type="text" ng-model="l.Rev" /></td>
+                    <td><button class="btn btn-default" ng-click="f.deleteModItem(l)">刪除</button></td>
+                </tr>
+            </tbody>
+        </table>
+        <div class="form-group">
+            <label>軟體變更修改簡述</label>
+            <input class="form-control" type="text" ng-model="f.changeRequestData.Description" />
+        </div>
+        <div class="form-group">
+            <label>依據文件</label>
+            <input class="form-control" type="text" ng-model="f.changeRequestData.DesignDoc" placeholder="FDDR/DCN" />
+        </div>
+        <div class="form-group">
+            <label>變更說明</label>
+            <textarea class="form-control" rows="3" ng-model="f.changeRequestData.Note"></textarea>
+        </div>
+        <a class="btn btn-primary" ng-click="f.postModList()">送出表單</a>
+    </div>
