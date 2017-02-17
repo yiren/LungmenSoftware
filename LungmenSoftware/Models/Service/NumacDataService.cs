@@ -3,9 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using LungmenSoftware.Models.NUMACFirmware;
 using LungmenSoftware.Models.ViewModel;
-//using LungmenSoftware.Models;
 using LungmenSoftware.Models.V2;
 using LungmenSoftware.Models.CodeFirst.Entities;
 
@@ -13,22 +11,22 @@ namespace LungmenSoftware.Models.Service
 {
     public class NumacDataService
     {
-        NumacFirewareDbContext db = new NumacFirewareDbContext();
+        
         NumacDbContext db2 = new NumacDbContext();
        
 
 
-        public List<NUMACFirmware.Chassis> GetChassis()
-        {
-            return db.Chassis.ToList();
-        }
+        //public List<NUMACFirmware.Chassis> GetChassis()
+        //{
+        //    return db.Chassis.ToList();
+        //}
 
-        public List<ChassisBoard> GetChassisBoards()
-        {
-            return db.ChassisBoards.ToList();
-        }
+        //public List<ChassisBoard> GetChassisBoards()
+        //{
+        //    return db.ChassisBoards.ToList();
+        //}
 
-        public List<FirmwareViewModelV2> GetFirmwareListV2()
+        public List<FirmwareViewModelV2> GetFirmwareList()
         {
             var data = from c in db2.NumacSystems.AsNoTracking()
                        join b in db2.Chassis.AsNoTracking() on c.SystemId equals b.SystemId
@@ -50,44 +48,6 @@ namespace LungmenSoftware.Models.Service
                        };
             return data.ToList();
         }
-
-        
-
-        public List<FirmwareViewModel> GetFirmwareList()
-        {
-            var data = from c in db.Chassis.AsNoTracking()
-                       join b in db.ChassisBoards.AsNoTracking() on c.ChassisId equals b.ChassisId
-                       join e in db.EPROMs.AsNoTracking() on b.ChassisBoardId equals e.ChassisBoardId
-                       orderby c.ChassisName, b.ChassBoardName, e.SocketLocation
-                       select new FirmwareViewModel()
-                       {
-                           ChassisName = c.ChassisName,
-                           SerialNumber = e.EPROMSerialNumber,
-                           Assembly = e.EPROMAssembly,
-                           ChassisBoardName = b.ChassBoardName,
-                           Program = e.EPROMProgram,
-                           Rev = e.EPROMProgramRev,
-                           SocketLocation = e.SocketLocation,
-                           Panel = c.Panel,
-                           ChassisId = c.ChassisId,
-                           ChassisBoardId = b.ChassisBoardId
-                       };
-
-
-            return data.ToList();
-        }
-
-        public NUMACFirmware.Chassis GetChassisById(Guid chassisId)
-        {
-            return db.Chassis.Find(chassisId);
-        }
-
-        public ChassisBoard GetChassisBoardById(Guid chassisBoardId)
-        {
-            return db.ChassisBoards.Find(chassisBoardId);
-        }
-
-
 
         public List<NumacSystem> GetSystemPanelList()
         {
