@@ -475,27 +475,6 @@
       <DependentUpon>201510070520382_AddChtAliasColumn.cs</DependentUpon>
     </Compile>
     <Compile Include="MigrationForIdentity\Configuration.cs" />
-    <Compile Include="MigrationNumac\201606070132168_modifyColumn.cs" />
-    <Compile Include="MigrationNumac\201606070132168_modifyColumn.Designer.cs">
-      <DependentUpon>201606070132168_modifyColumn.cs</DependentUpon>
-    </Compile>
-    <Compile Include="MigrationNumac\201606070213347_addKey.cs" />
-    <Compile Include="MigrationNumac\201606070213347_addKey.Designer.cs">
-      <DependentUpon>201606070213347_addKey.cs</DependentUpon>
-    </Compile>
-    <Compile Include="MigrationNumac\201606120334041_AddLastModified.cs" />
-    <Compile Include="MigrationNumac\201606120334041_AddLastModified.Designer.cs">
-      <DependentUpon>201606120334041_AddLastModified.cs</DependentUpon>
-    </Compile>
-    <Compile Include="MigrationNumac\201606120602466_AddColumnForDisplay.cs" />
-    <Compile Include="MigrationNumac\201606120602466_AddColumnForDisplay.Designer.cs">
-      <DependentUpon>201606120602466_AddColumnForDisplay.cs</DependentUpon>
-    </Compile>
-    <Compile Include="MigrationNumac\201609220601028_AddNumacChangeDelta.cs" />
-    <Compile Include="MigrationNumac\201609220601028_AddNumacChangeDelta.Designer.cs">
-      <DependentUpon>201609220601028_AddNumacChangeDelta.cs</DependentUpon>
-    </Compile>
-    <Compile Include="MigrationNumac\Configuration.cs" />
     <Compile Include="Models\ChangeRequest\ChangeProcessDbContext.cs" />
     <Compile Include="Models\ChangeRequest\Entities\ChangeDelta.cs" />
     <Compile Include="Models\ChangeRequest\Entities\ChangeRequest.cs" />
@@ -503,6 +482,8 @@
     <Compile Include="Models\ChangeRequest\Entities\ChangeRequestStatus.cs" />
     <Compile Include="Models\ChangeRequest\Entities\ChangeRequestStatusType.cs" />
     <Compile Include="Models\ChangeRequest\Entities\NumacChangeDelta.cs" />
+    <Compile Include="Models\DRS\DrsDbContext.cs" />
+    <Compile Include="Models\DRS\DrsModel.cs" />
     <Compile Include="Models\FoxSoftware.cs">
       <DependentUpon>LungmenData.tt</DependentUpon>
     </Compile>
@@ -529,10 +510,10 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>LungmenData.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\LungmenData.Designer.cs">
+    <Compile Include="Models\Invensys.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>LungmenData.edmx</DependentUpon>
+      <DependentUpon>Invensys.edmx</DependentUpon>
     </Compile>
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\IdentityModels.cs" />
@@ -543,12 +524,8 @@
     <Compile Include="Models\Metadata\FoxWorkStation.cs" />
     <Compile Include="Models\Metadata\WKAndFoxJoinTableMetaData.cs" />
     <Compile Include="Models\Metadata\WorkStationHardwareType.cs" />
-    <Compile Include="Models\NUMACFirmware\ChassisBoard.cs" />
-    <Compile Include="Models\NUMACFirmware\Chassis.cs" />
-    <Compile Include="Models\NUMACFirmware\EPROM.cs" />
-    <Compile Include="Models\NUMACFirmware\NumacDbContext.cs" />
-    <Compile Include="Models\NUMACFirmware\NumacFirewareDbContext.cs" />
-    <Compile Include="Models\NUMACFirmware\NumacModel.cs" />
+    <Compile Include="Models\NUMAC\NumacDbContext.cs" />
+    <Compile Include="Models\NUMAC\NumacModel.cs" />
     <Compile Include="Models\Service\ChangeRequestService.cs" />
     <Compile Include="Models\ViewModel\FirmwareViewModel.cs" />
     <Compile Include="Models\Service\IUserService.cs" />
@@ -607,21 +584,21 @@
     <Content Include="js\materialize.js" />
     <Content Include="js\materialize.min.js" />
     <Content Include="js\myjQuery.js" />
-    <EntityDeploy Include="Models\LungmenData.edmx">
+    <EntityDeploy Include="Models\Invensys.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>LungmenData.Designer.cs</LastGenOutput>
+      <LastGenOutput>Invensys.Designer.cs</LastGenOutput>
     </EntityDeploy>
     <Content Include="Models\LungmenData.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>LungmenData.edmx</DependentUpon>
+      <DependentUpon>Invensys.edmx</DependentUpon>
       <LastGenOutput>LungmenData.Context.cs</LastGenOutput>
     </Content>
-    <Content Include="Models\LungmenData.edmx.diagram">
-      <DependentUpon>LungmenData.edmx</DependentUpon>
+    <Content Include="Models\Invensys.edmx.diagram">
+      <DependentUpon>Invensys.edmx</DependentUpon>
     </Content>
     <Content Include="Models\LungmenData.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>LungmenData.edmx</DependentUpon>
+      <DependentUpon>Invensys.edmx</DependentUpon>
       <LastGenOutput>LungmenData.cs</LastGenOutput>
     </Content>
     <Content Include="Scripts\angular-animate.js" />
@@ -1515,7 +1492,7 @@
     <Content Include="Scripts\angular-cookies.min.js.map" />
     <Content Include="Scripts\angular-aria.min.js.map" />
     <Content Include="Scripts\angular-animate.min.js.map" />
-    <None Include="Properties\PublishProfiles\Default Settings %283%29.pubxml" />
+    <None Include="Properties\PublishProfiles\10.20.1.6.pubxml" />
     <None Include="Properties\PublishProfiles\localhost.pubxml" />
     <None Include="Scripts\jquery-1.12.3.intellisense.js" />
     <None Include="Scripts\jquery-1.11.3.intellisense.js" />
@@ -1730,21 +1707,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="MigrationForIdentity\201510070520382_AddChtAliasColumn.resx">
       <DependentUpon>201510070520382_AddChtAliasColumn.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="MigrationNumac\201606070132168_modifyColumn.resx">
-      <DependentUpon>201606070132168_modifyColumn.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="MigrationNumac\201606070213347_addKey.resx">
-      <DependentUpon>201606070213347_addKey.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="MigrationNumac\201606120334041_AddLastModified.resx">
-      <DependentUpon>201606120334041_AddLastModified.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="MigrationNumac\201606120602466_AddColumnForDisplay.resx">
-      <DependentUpon>201606120602466_AddColumnForDisplay.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="MigrationNumac\201609220601028_AddNumacChangeDelta.resx">
-      <DependentUpon>201609220601028_AddNumacChangeDelta.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

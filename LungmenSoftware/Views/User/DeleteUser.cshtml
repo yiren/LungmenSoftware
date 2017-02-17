@@ -1,0 +1,88 @@
+﻿@model LungmenSoftware.Models.ApplicationUser
+
+@{
+    ViewBag.Title = "DeleteUser";
+}
+
+<h2>DeleteUser</h2>
+
+<div>
+    <h4>ApplicationUser</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.IsDisabled)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.IsDisabled)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TPCId)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TPCId)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.EmployeeName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.EmployeeName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Department)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Department)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CreateDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CreateDate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.LastModifiedDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.LastModifiedDate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Email)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Email)
+        </dd>
+
+
+        <dt>
+            @Html.DisplayNameFor(model => model.UserName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.UserName)
+        </dd>
+
+    </dl>
+</div>
+@using (Html.BeginForm())
+{
+    @Html.HiddenFor(u=>u.Id)
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" value="刪除使用者" class="btn btn-danger" />
+        </div>
+    </div>
+}

@@ -1,0 +1,88 @@
+﻿@model IEnumerable<LungmenSoftware.Models.ViewModel.NumacChangeDetailViewModel>
+
+@{
+    ViewBag.Title = "EPROM修改紀錄";
+}
+
+<h2>EPROM修改紀錄</h2>
+
+
+@if (Model.Count() < 1)
+{
+    <h3>無修改紀錄</h3>
+}
+else
+{
+    <table class="table table-bordered table-hover">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.FormSerialNumber)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.DesignDoc)
+                </th>
+               
+                
+
+                <th>
+                    @Html.DisplayNameFor(model => model.Assembly)
+                </th>
+
+                <th>
+                    @Html.DisplayNameFor(model => model.SerialNumber)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Program)
+                </th>
+
+                <th>
+                    @Html.DisplayNameFor(model => model.Rev)
+                </th>
+
+                <th>
+                    @Html.DisplayNameFor(model => model.CreatedBy)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.CreateDate)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.LastModifiedDate)
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.FormSerialNumber</td>
+                    <td>@item.DesignDoc</td>
+                    
+                    <td>
+                        <div>建置值: @item.OriAssembly</div>
+                        <div>變更值: @item.Assembly</div>
+                    </td>
+                    <td>
+                        <div>建置值: @item.OriSerialNumber</div>
+                        <div>變更值: @item.SerialNumber</div>
+                    </td>
+                    <td>
+                        <div>建置值: @item.OriProgram</div>
+                        <div>變更值: @item.Program</div>
+                    </td>
+                    <td>
+                        <div>建置值: @item.OriRev</div>
+                        <div>變更值: @item.Rev</div>
+                    </td>
+                    <td>@item.CreatedBy</td>
+                    <td>@item.CreateDate</td>
+                    <td>@item.LastModifiedDate</td>
+                </tr>
+            }
+        </tbody>
+
+    </table>
+
+}
+

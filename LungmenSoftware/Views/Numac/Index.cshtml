@@ -1,0 +1,154 @@
+﻿@model IEnumerable<LungmenSoftware.Models.ViewModel.FirmwareViewModelV2>
+
+@{
+    ViewBag.Title = "NUMAC EPROM清單";
+}
+
+<h2>NUMAC EPROM版本清單</h2>
+
+<hr/>
+
+ <!--[if IE 9]>
+   <style>
+     .ui-grid-header-cell-wrapper {
+       display: block;
+     }
+ 
+     .ui-grid-header-cell-row {
+       display: block;
+     }
+ 
+     .ui-grid-header-cell {
+       display: block;
+       float: left;
+     }
+   </style>
+ <![endif]-->
+
+<div class="row" ng-app="numacApp" ng-controller="numacDataGridCtrl as n">
+    <div class="col-md-12" >
+        <button id='toggleFiltering' style="margin-bottom:20px" ng-click="n.toggleFiltering()" class="btn btn-success"><span ng-bind="n.searchTextToggle"></span>簡易搜尋</button>
+        <div id="numacDataGrid" ui-grid="n.gridOptions" ui-grid-resize-columns ui-grid-selection ui-grid-pagination ui-grid-autoresize>
+        </div>
+    </div>  
+    <hr>
+    <div class="col-md-12" ng-if="n.crRecords">
+        <h3>{{n.crRecords[0].ModuleBoardName}}變更歷史紀錄</h3>
+         <table class="table table-bordered table-condensed table-striped">
+        <thead>
+            <tr>
+                <th>Module Name</th>
+                <th>Socket Location</th>
+                <th>Assembly</th>
+                <th>Serial Number</th>
+                <th>Program</th>
+                <th>Revision</th>
+                
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="c in n.crRecords track by m.ModuleBoardId">
+
+                <td>{{c.ModuleBoardName}}</td>
+                <td>{{c.SocketLocation}}</td>
+                <td>
+                    <div>建置值: {{c.OriAssembly}}</div>
+                    <div>變更值: {{c.item.Assembly}}</div>
+                </td>
+                <td>
+                    <div>建置值: {{c.OriSerialNumber}}}</div>
+                    <div>變更值: {{c.SerialNumber}}</div>
+                </td>
+                <td>{{m.Program}}
+                    <div>建置值: {{c.OriProgam}}}</div>
+                    <div>變更值: {{c.Program}}</div>
+                </td>
+                <td>{{m.Rev}}
+                    <div>建置值: {{c.OriRev}}}</div>
+                    <div>變更值: {{c.Rev}}</div>
+                </td>
+                
+            </tr>
+        </tbody>
+    </table>
+    </div>
+</div>
+
+
+
+@section scripts{
+    
+
+    <script src="~/client/numacApp.js"></script>
+    <script src="~/client/services/numacDataService.js"></script>
+    <script src="~/client/controller/numacDataGridController.js"></script>
+    
+
+}
+<!--
+<table class="table table-bordered table-striped">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.ChassisName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Panel)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ChassisBoardName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.SocketLocation)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Assembly)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.SerialNumber)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Program)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Rev)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.ChassisName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Panel)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ChassisBoardName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.SocketLocation)
+        </td>
+
+        <td>
+            @Html.DisplayFor(modelItem => item.Assembly)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.SerialNumber)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Program)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Rev)
+        </td>
+        <td>
+           
+            @Html.ActionLink("Details", "Details", new { id=item.ChassisId })
+            
+        </td>
+    </tr>
+}
+
+</table>
+-->

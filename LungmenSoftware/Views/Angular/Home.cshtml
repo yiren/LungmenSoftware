@@ -1,0 +1,14 @@
+﻿<div ng-controller="gridCtrl as g">
+    <h4 ng-bind="g.message"></h4>
+    <div ui-grid="g.gridOptions" class="grid"></div>
+</div>
+
+<div style="border: 1px solid blueviolet; margin: 15px; 
+    padding: 10px; height: 300px; width: 500px; box-sizing: content-box;
+    overflow: scroll">
+    <p style="background: red">This is "Home"</p>
+    <h4 ng-bind="route.message" style="background: greenyellow"></h4>
+</div>
+
+
+

@@ -1,0 +1,21 @@
+﻿
+@{
+    ViewBag.Title = "NUMAC軟體變更表單";
+}
+
+<h2>NUMAC EPROM軟體變更表單</h2>
+<br />
+<div ng-app="numacApp">
+    <div ui-view></div>
+</div>
+
+
+
+
+@section scripts{
+    <script src="~/client/numacApp.js"></script>
+    <script src="~/client/numacRouter.js"></script>
+    <script src="~/client/services/numacDataService.js"></script>
+    <script src="~/client/controller/numacFormCtrl.js"></script>
+    <script src="~/client/controller/numacConfirmFormCtrl.js"></script>
+}

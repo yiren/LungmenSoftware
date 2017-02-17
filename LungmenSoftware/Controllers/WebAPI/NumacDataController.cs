@@ -18,7 +18,7 @@ namespace LungmenSoftware.Controllers.WebAPI
         }
         public IHttpActionResult GetNumacList()
         {
-            var data = dataService.GetFirmwareListV2();
+            var data = dataService.GetFirmwareList();
 
             return Ok(data);
         }

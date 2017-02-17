@@ -1,0 +1,260 @@
+﻿@model LungmenSoftware.Models.ViewModel.ChangeRequestViewModelForDetail
+
+@{
+    ViewBag.Title = Model.ChangeRequest.SerialNumber + "詳細資訊";
+}
+
+<h2>@ViewBag.Title</h2>
+
+
+
+<div class="panel panel-default">
+    <div class="panel-heading">基本資訊</div>
+    <div class="panel-body">
+        <div class="col-md-5">
+            <dl class="dl-horizontal">
+                <dt>
+                    @Html.DisplayNameFor(model => model.ChangeRequest.ChangeRequestStatuses[0].ChangeRequestStatusType.StatusName)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.ChangeRequestStatuses.Last().ChangeRequestStatusType.StatusName)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.ChangeRequest.Description)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.ChangeRequest.Description)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.ChangeRequest.CreatedBy)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.ChangeRequest.CreatedBy)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.ChangeRequest.CreateDate)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.ChangeRequest.CreateDate)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.ChangeRequest.LastModifiedDate)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.ChangeRequest.LastModifiedDate)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.ChangeRequest.IsActive)
+                </dt>
+
+                <dd>
+                    @if (Model.ChangeRequest.IsActive == null)
+                    {
+                        
+                    }else if (Model.ChangeRequest.IsActive == true)
+                    {
+                    <text>進行中</text>
+                    }else if (Model.ChangeRequest.IsActive == false)
+                    {
+                    <text>已完成</text>
+                    }
+                    else
+                    {
+                    <text></text>
+                    }
+
+                </dd>
+            </dl>
+        </div>
+        <div class="col-md-5">
+            <dl class="dl-horizontal">
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.ChangeRequest.Owner)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.ChangeRequest.Owner)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.ChangeRequest.ReviewBy)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.ChangeRequest.ReviewBy)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.ChangeRequest.ApprovedBy)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.ChangeRequest.ApprovedBy)
+                </dd>
+
+            </dl>
+        </div>
+    </div>
+</div>
+<hr/>
+<div class="panel panel-default">
+    <div class="panel-heading">軟體變更資訊</div>
+    <div class="panel-body">
+        <table class="table table-condensed table-striped table-bordered">
+            @if (Model.ChangeDeltas.Count >0)
+            {
+                <thead>
+                    <tr>
+                        <th>軟體名稱</th>
+                        <th>原建置值</th>
+                        <th>欲變更值</th>
+                        <th>影響工作站</th>
+
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model.ChangeDeltas)
+                    {
+                    <tr>
+                        <td>@item.RevInfos[0].SoftwareName</td>
+                        <td>@item.OriginalValue</td>
+                        <td>@item.NewValue</td>
+                        <td>
+                            <ul>
+                                @foreach (var wk in item.RevInfos)
+                                {
+                                    <li>@wk.WorkStationName</li>
+                                }
+                            </ul>
+                        </td>
+                    </tr>
+                    }
+                </tbody>
+
+            }
+            
+            
+            @if (Model.NumacChangeDeltas.Count >0)
+            {
+                <thead>
+                    <tr>
+                        <th>Panel</th>
+                        <th>Subsystem</th>
+                        <th>Module Name</th>
+                        <th>Socket Location</th>
+                        <th>Assembly</th>
+                        <th>Serial Number</th>
+                        <th>Program</th>
+                        <th>Revision</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model.NumacChangeDeltas)
+                    {
+                        <tr>
+                            <td>@item.Panel</td>
+                            <td>@item.ChassisName</td>
+                            <td>@item.ModuleBoardName</td>
+                            <td>@item.SocketLocation</td>
+                            <td>
+                                <div>建置值: @item.OriAssembly</div>
+                                <div>變更值: @item.Assembly</div>
+                            </td>
+                            <td>
+                                <div>建置值: @item.OriSerialNumber</div>
+                                <div>變更值: @item.SerialNumber</div>
+                            </td>
+                            <td>
+                                <div>建置值: @item.OriProgram</div>
+                                <div>變更值: @item.Program</div>
+                            </td>
+                            <td>
+                                <div>建置值: @item.OriRev</div>
+                                <div>變更值: @item.Rev</div>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            }
+
+        </table>
+    </div>
+</div>
+<hr/>
+<div class="panel panel-default">
+    <div class="panel-heading">審查意見</div>
+    <div class="panel-body">
+        <table class="table table-condensed table-striped table-bordered">
+            <tr>
+                <th>內容</th>
+                <th>回應人員</th>
+                <th>日期</th>
+            </tr>
+            @if (Model.ChangeRequestMessages != null)
+            {
+                foreach (var item in Model.ChangeRequestMessages)
+                {
+                    <tr>
+                        <td>@item.Message</td>
+                        <td>@item.CreateBy</td>
+                        <td>@item.CreateTime</td>
+                    </tr>
+                }
+            }
+            else
+            {
+                <tr>
+                    <td>資料可能有誤，請洽系統管理員。</td>
+                </tr>
+            }
+
+        </table>
+    </div>
+</div>
+<hr />
+<div class="panel panel-default">
+    <div class="panel-heading">案件處理過程</div>
+    <div class="panel-body">
+        <table class="table table-bordered table-striped table-condensed">
+            <tr>
+                <th>狀態</th>
+                <th>狀態起始日期</th>
+                <th>狀態結束日期</th>
+            </tr>
+            @if (Model.ChangeRequestStatuses != null)
+            {
+                foreach (var item in Model.ChangeRequestStatuses)
+                {
+                    <tr>
+                        <td>@Html.DisplayFor(m => item.ChangeRequestStatusType.StatusName)</td>
+                        <td>@Html.DisplayFor(m => item.InitialDate)</td>
+                        <td>@Html.DisplayFor(m => item.EndDate)</td>
+                    </tr>
+                }
+            }
+            else
+            {
+                <tr>
+                    <td>資料可能有誤，請洽系統管理員。</td>
+                </tr>
+            }
+
+
+        </table>
+    </div>
+</div>
+
+<p>
+    @Html.ActionLink("回到清單", "Index")
+</p>
