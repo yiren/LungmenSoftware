@@ -482,6 +482,8 @@
     <Compile Include="Models\ChangeRequest\Entities\ChangeRequestStatus.cs" />
     <Compile Include="Models\ChangeRequest\Entities\ChangeRequestStatusType.cs" />
     <Compile Include="Models\ChangeRequest\Entities\NumacChangeDelta.cs" />
+    <Compile Include="Models\DRS\DrsDbContext.cs" />
+    <Compile Include="Models\DRS\DrsModel.cs" />
     <Compile Include="Models\FoxSoftware.cs">
       <DependentUpon>LungmenData.tt</DependentUpon>
     </Compile>
@@ -1620,7 +1622,6 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Controllers\Numac\" />
-    <Folder Include="Models\DRS\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config">

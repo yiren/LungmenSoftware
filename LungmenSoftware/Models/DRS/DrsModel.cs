@@ -22,7 +22,7 @@ namespace LungmenSoftware.Models.DRS
 
     public class DrsPanel
     {
-        public Guid PanelId { get; set; }
+        public Guid DrsPanelId { get; set; }
         public string DrsPanelName { get; set; }
 
         public Guid SystemId { get; set; }
@@ -38,23 +38,23 @@ namespace LungmenSoftware.Models.DRS
 
         public string Description { get; set; }
 
-        [StringLength(50)]
+        
         public string FidDiagramNo { get; set; }
 
-        [StringLength(50)]
+       
         public string ModuleType { get; set; }
 
         public int Division { get; set; }
 
-        [StringLength(20)]
+        
         public string EPROMSpecNo { get; set; }
-        [StringLength(25)]
+        
         public string Checksum { get; set; }
 
-        [StringLength(15)]
+        
         public string Rev { get; set; }
         public Guid DrsPanelId { get; set; }
-        [JsonIgnore]
-        public Panel DrsPanel { get; set; }
+       
+        public DrsPanel DrsPanel { get; set; }
     }
 }
