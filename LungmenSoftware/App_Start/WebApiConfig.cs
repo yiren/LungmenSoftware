@@ -2,8 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
+using System.Net.Http.Formatting;
 using System.Web.Http;
 using Microsoft.Owin.Security.OAuth;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 
 namespace LungmenSoftware
@@ -27,6 +29,10 @@ namespace LungmenSoftware
             );
 
             config.Formatters.Remove(config.Formatters.XmlFormatter);
+            JsonMediaTypeFormatter jsonFormatter = config.Formatters.JsonFormatter;
+            jsonFormatter.SerializerSettings.DateFormatHandling=DateFormatHandling.IsoDateFormat;
+            jsonFormatter.SerializerSettings.StringEscapeHandling=StringEscapeHandling.EscapeHtml;
+            ;
         }
     }
 }

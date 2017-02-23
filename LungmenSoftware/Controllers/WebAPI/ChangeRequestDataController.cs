@@ -23,7 +23,7 @@ namespace LungmenSoftware.Controllers.WebAPI
         [Route("")]
         public IEnumerable Get()
         {
-            return crService.GetChangeRequestHistory();
+            return crService.GetChangeRequestList();
 
         }
         //public string Get()
