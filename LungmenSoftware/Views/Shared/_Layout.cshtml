@@ -47,6 +47,17 @@
 
                         </ul>
                     </li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                            NUMAC相關資訊<span class="caret"></span>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li>@Html.ActionLink("DRS FID資訊", "Index", "DRS")</li>
+                            <li role="separator" class="divider"></li>
+                            <li>@Html.ActionLink("NUMAC 軟體變更", "GetDrsChangeForm", "ChangeRequest")</li>
+
+                        </ul>
+                    </li>
 
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
@@ -79,18 +90,25 @@
 
         </div>
     </div>
-    <div class="container body-content">
-        @RenderBody()
-        <hr />
-        <footer>
-            <p>&copy; @DateTime.Now.Year - DNE Instrument and Control Section</p>
-        </footer>
-    </div>
+<div class="container body-content">
+    @RenderBody()
+    <hr />
+    <footer>
+        <p>&copy; @DateTime.Now.Year - DNE Instrument and Control Section</p>
+    </footer>
+</div>
+
+<app-root>Loading...</app-root>
 
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
     @Scripts.Render("~/bundles/angularjs")
-    
+    <script type="text/javascript" src="../../ng2/inline.bundle.js"></script>
+    <script type="text/javascript" src="../../ng2/polyfills.bundle.js"></script>
+    <script type="text/javascript" src="../../ng2/scripts.bundle.js"></script>
+    <script type="text/javascript" src="../../ng2/styles.bundle.js"></script>
+    <script type="text/javascript" src="../../ng2/vendor.bundle.js"></script>
+    <script type="text/javascript" src="../../ng2/main.bundle.js"></script>
     @RenderSection("scripts", required: false)
 </body>
 </html>

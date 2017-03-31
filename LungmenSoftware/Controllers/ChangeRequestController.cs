@@ -449,5 +449,10 @@ namespace LungmenSoftware.Controllers
             crService.DeleteChangeRequest(r);
             return RedirectToAction("Index");
         }
+
+        public ActionResult GetDrsChangeForm()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

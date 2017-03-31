@@ -1,5 +1,4 @@
-﻿using Newtonsoft.Json;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -9,25 +8,67 @@ namespace LungmenSoftware.Models.DRS
 {
     public class DrsModel
     {
+        public string SystemName { get; set; }
+        public string DRSPanelName { get; set; }
+        public string Description { get; set; }
+        public string FIDDiagramNo { get; set; }
+        public string ModuleType { get; set; }
+        public int Division { get; set; }
+        public string EPROMSpecNo { get; set; }
+        public string Checksum { get; set; }
+        public string FIDRev { get; set; }
+        public string EPROMRev { get; set; }
+    }
+
+    public class DrsListViewModel
+    {
+        public string SystemName { get; set; }
+
+        public string DRSPanelName { get; set; }
+
+        public string Description { get; set; }
+
+        public string FIDDiagramNo { get; set; }
+
+        public string ModuleType { get; set; }
+
+        public int Division { get; set; }
+
+        public string EPROMSpecNo { get; set; }
+
+        public string Checksum { get; set; }
+
+        public string FIDRev { get; set; }
+
+        public string EPROMRev { get; set; }
+
+        public Guid SystemId { get; set; }
+
+        public Guid DrsPanelId { get; set; }
+
+        public Guid FidId { get; set; }
+
     }
 
     public class DrsSystem
     {
         public Guid SystemId { get; set; }
         public string SystemName { get; set; }
+       
 
-        [JsonIgnore]
         public ICollection<DrsPanel> DrsPanel { get; set; }
     }
 
     public class DrsPanel
     {
         public Guid DrsPanelId { get; set; }
-        public string DrsPanelName { get; set; }
+
+        public string DRSPanelName { get; set; }
 
         public Guid SystemId { get; set; }
+
         public DrsSystem DrsSystem { get; set; }
-        [JsonIgnore]
+   
         public ICollection<FID> FIDs { get; set; }
 
     }
@@ -38,21 +79,20 @@ namespace LungmenSoftware.Models.DRS
 
         public string Description { get; set; }
 
-        
-        public string FidDiagramNo { get; set; }
+        public string FIDDiagramNo { get; set; }
 
-       
         public string ModuleType { get; set; }
 
         public int Division { get; set; }
 
-        
         public string EPROMSpecNo { get; set; }
         
         public string Checksum { get; set; }
+ 
+        public string FIDRev { get; set; }
 
-        
-        public string Rev { get; set; }
+        public string EPROMRev { get; set; }
+
         public Guid DrsPanelId { get; set; }
        
         public DrsPanel DrsPanel { get; set; }

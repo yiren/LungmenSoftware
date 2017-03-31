@@ -25,7 +25,7 @@
     <IISExpressUseClassicPipelineMode />
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
     <RestorePackages>true</RestorePackages>
-    <TypeScriptToolsVersion>1.8</TypeScriptToolsVersion>
+    <TypeScriptToolsVersion>2.1</TypeScriptToolsVersion>
     <UseGlobalApplicationHostFile />
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
@@ -358,6 +358,7 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AngularController.cs" />
     <Compile Include="Controllers\ChangeRequestController.cs" />
+    <Compile Include="Controllers\DrsController.cs" />
     <Compile Include="Controllers\NumacController.cs" />
     <Compile Include="Controllers\FoxSoftwaresController.cs" />
     <Compile Include="Controllers\FoxWorkStationsController.cs" />
@@ -366,6 +367,7 @@
     <Compile Include="Controllers\RoleController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Controllers\WebAPI\ChangeRequestDataController.cs" />
+    <Compile Include="Controllers\WebAPI\DrsDataController.cs" />
     <Compile Include="Controllers\WebAPI\ModuleBoardsController.cs" />
     <Compile Include="Controllers\WebAPI\NumacDataController.cs" />
     <Compile Include="Helper\EFToJSONConverter.cs" />
@@ -528,6 +530,7 @@
     <Compile Include="Models\NUMAC\NumacDbContext.cs" />
     <Compile Include="Models\NUMAC\NumacModel.cs" />
     <Compile Include="Models\Service\ChangeRequestService.cs" />
+    <Compile Include="Models\Service\DrsDataService.cs" />
     <Compile Include="Models\ViewModel\FirmwareViewModel.cs" />
     <Compile Include="Models\Service\IUserService.cs" />
     <Compile Include="Models\Service\NumacDataService.cs" />
@@ -559,7 +562,9 @@
     <Content Include="client\controller\numacConfirmFormCtrl.js" />
     <Content Include="client\controller\numacDataGridController.js" />
     <Content Include="client\controller\numacFormCtrl.js" />
+    <Content Include="client\drsApp.js" />
     <Content Include="client\numacApp.js" />
+    <Content Include="client\drsRouter.js" />
     <Content Include="client\numacRouter.js" />
     <Content Include="client\services\numacDataService.js" />
     <Content Include="client\templates\numac\confirmResponse.html" />
@@ -602,6 +607,16 @@
       <DependentUpon>Invensys.edmx</DependentUpon>
       <LastGenOutput>LungmenData.cs</LastGenOutput>
     </Content>
+    <Content Include="ng2\favicon.ico" />
+    <Content Include="ng2\fontawesome-webfont.svg" />
+    <Content Include="ng2\index.html" />
+    <Content Include="ng2\inline.bundle.js" />
+    <Content Include="ng2\line.gif" />
+    <Content Include="ng2\main.bundle.js" />
+    <Content Include="ng2\polyfills.bundle.js" />
+    <Content Include="ng2\scripts.bundle.js" />
+    <Content Include="ng2\styles.bundle.js" />
+    <Content Include="ng2\vendor.bundle.js" />
     <Content Include="Scripts\angular-animate.js" />
     <Content Include="Scripts\angular-animate.min.js" />
     <Content Include="Scripts\angular-aria.js" />
@@ -714,6 +729,16 @@
     <Content Include="Content\ui-grid.woff" />
     <Content Include="Content\ui-grid.ttf" />
     <Content Include="Content\ui-grid.eot" />
+    <Content Include="ng2\fontawesome-webfont.eot" />
+    <Content Include="ng2\fontawesome-webfont.ttf" />
+    <Content Include="ng2\fontawesome-webfont.woff" />
+    <Content Include="ng2\fontawesome-webfont.woff2" />
+    <Content Include="ng2\inline.bundle.js.map" />
+    <Content Include="ng2\main.bundle.js.map" />
+    <Content Include="ng2\polyfills.bundle.js.map" />
+    <Content Include="ng2\scripts.bundle.js.map" />
+    <Content Include="ng2\styles.bundle.js.map" />
+    <Content Include="ng2\vendor.bundle.js.map" />
     <None Include="Properties\PublishProfiles\Default Settings %282%29.pubxml" />
     <Content Include="Scripts\i18n\angular-locale_aa-dj.js" />
     <Content Include="Scripts\i18n\angular-locale_aa-er.js" />
@@ -1619,10 +1644,12 @@
     <Content Include="Views\ChangeRequest\GetNumacChangeForm.cshtml" />
     <Content Include="Scripts\version.json" />
     <Content Include="Views\Numac\NumacChangeRequestHistory.cshtml" />
+    <Content Include="Views\Drs\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Controllers\Numac\" />
+    <Folder Include="ng2\assets\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config">
