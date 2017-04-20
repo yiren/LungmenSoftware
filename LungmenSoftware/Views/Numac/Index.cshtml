@@ -1,4 +1,4 @@
-﻿@model IEnumerable<LungmenSoftware.Models.ViewModel.FirmwareViewModelV2>
+﻿
 
 @{
     ViewBag.Title = "NUMAC EPROM清單";
@@ -85,70 +85,3 @@
     
 
 }
-<!--
-<table class="table table-bordered table-striped">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.ChassisName)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Panel)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.ChassisBoardName)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.SocketLocation)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Assembly)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.SerialNumber)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Program)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Rev)
-        </th>
-        <th></th>
-    </tr>
-
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.ChassisName)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Panel)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.ChassisBoardName)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.SocketLocation)
-        </td>
-
-        <td>
-            @Html.DisplayFor(modelItem => item.Assembly)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.SerialNumber)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Program)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Rev)
-        </td>
-        <td>
-           
-            @Html.ActionLink("Details", "Details", new { id=item.ChassisId })
-            
-        </td>
-    </tr>
-}
-
-</table>
--->

@@ -1,7 +1,7 @@
 ﻿(function () {
     'use strict';
 
-    angular.module('numacApp', [
+    angular.module('drsApp', [
         // Angular modules 
        
         // Custom modules 

@@ -21,6 +21,10 @@ namespace LungmenSoftware.Controllers.WebAPI
             return dataService.GetAllDrsDataList();
         }
 
+
+         
+
+
         // GET api/<controller>/5
         public string Get(int id)
         {

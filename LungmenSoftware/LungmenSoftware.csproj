@@ -559,14 +559,20 @@
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="client\controller\drsConfirmFormCtrl.js" />
     <Content Include="client\controller\numacConfirmFormCtrl.js" />
+    <Content Include="client\controller\drsDataGridController.js" />
     <Content Include="client\controller\numacDataGridController.js" />
     <Content Include="client\controller\numacFormCtrl.js" />
+    <Content Include="client\controller\drsFormCtrl.js" />
     <Content Include="client\drsApp.js" />
     <Content Include="client\numacApp.js" />
     <Content Include="client\drsRouter.js" />
     <Content Include="client\numacRouter.js" />
+    <Content Include="client\services\drsDataService.js" />
     <Content Include="client\services\numacDataService.js" />
+    <Content Include="client\templates\drs\confirmResponse.html" />
+    <Content Include="client\templates\drs\drsChangeForm.html" />
     <Content Include="client\templates\numac\confirmResponse.html" />
     <Content Include="client\templates\numac\numacChangeForm.html" />
     <Content Include="Content\bootstrap-theme.css" />
@@ -1645,6 +1651,7 @@
     <Content Include="Scripts\version.json" />
     <Content Include="Views\Numac\NumacChangeRequestHistory.cshtml" />
     <Content Include="Views\Drs\Index.cshtml" />
+    <Content Include="Views\ChangeRequest\GetDrsChangeForm.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

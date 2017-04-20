@@ -2,49 +2,42 @@
     'use strict';
 
     angular
-        .module("numacApp")
-        
+        .module("drsApp")
         .config(
-                function ($stateProvider, $urlRouterProvider) {
+            function($stateProvider, $urlRouterProvider) {
 
-                    
-                    $urlRouterProvider.otherwise('/');
-                    
-                    $stateProvider
-                        //Get Numac Change Form
-                        .state('form', {
-                            url: '/',
-                            templateUrl: '/../client/templates/numac/drsChangeForm.html',
-                            controller: 'numacFormCtrl',
-                            controllerAs:'f'
-                        })
-                        //
-                        .state('drsConfirmForm', {
+
+                $urlRouterProvider.otherwise('/');
+
+                $stateProvider
+                    //Get Numac Change Form
+                    .state('form',
+                    {
+                        url: '/',
+                        templateUrl: '/../client/templates/drs/drsChangeForm.html',
+                        controller: 'drsFormCtrl',
+                        controllerAs: 'f'
+                    })
+                    //
+                    .state('drsConfirmForm',
+                        {
                             url: '/drsConfirmForm',
-                            templateUrl: '/../client/templates/numac/confirmresponse.html',
-                            controller:'drsConfirmFormCtrl',
-                            controllerAs:'d',
+                            templateUrl: '/../client/templates/drs/confirmresponse.html',
+                            controller: 'drsConfirmFormCtrl',
+                            controllerAs: 'c',
                             // resolve: {
                             //     numacFormData:['numacDataService', function(numacDataService){
                             //         return numacDataService.getNumacChangeRequestPromise();
                             //     } ]
                             //     }
-                            resovle:{
-                                numacDataForm:function(){
-                                    // return numacDataService.getNumacChangeRequestPromise().then(
-                                    //     function(res){
-                                    //         return res.data;
-                                    //     },function(err){
+                            resovle: {
+                                numacDataForm: function() {
 
-                                    //     }
-                                    // );
-                                   return {value:"Hello"};
+                                    return { value: "Hello" };
                                 }
                             }
-                            }
-                        )
-                        
-                    ;
-                })
+                        }
+                    );
+            });
 
 })();

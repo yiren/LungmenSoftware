@@ -94,6 +94,10 @@ namespace LungmenSoftware.Controllers
         }
 
 
+        public ActionResult GetDrsChangeForm()
+        {
+           return View();
+        }
 
         //For AngularJS
         public ContentResult InitChangeRequest()
@@ -450,9 +454,6 @@ namespace LungmenSoftware.Controllers
             return RedirectToAction("Index");
         }
 
-        public ActionResult GetDrsChangeForm()
-        {
-            throw new NotImplementedException();
-        }
+        
     }
 }

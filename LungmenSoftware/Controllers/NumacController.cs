@@ -21,8 +21,8 @@ namespace LungmenSoftware.Controllers
         public ActionResult Index()
         {
 
-            var data=dataService.GetFirmwareList();
-            return View(data);
+            
+            return View();
         }
 
         //For AngularJS

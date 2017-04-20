@@ -1,0 +1,78 @@
+﻿
+    <div class="form-group">
+        <select id="panel" ng-model="panel" ng-options="panel in drsPanels track by panel.DrsPanelId"
+                ng-change="f.getFidsById(panel.DrsPanelId)" class="form-control">
+            <option value=''>選擇盤面</option>
+        </select>
+    </div>
+
+    
+    <table class="table table-bordered table-condensed table-striped">
+        <thead>
+            <tr>
+                <th>FID No</th>
+                <th>Description</th>
+                <th>Div</th>
+                <th>Module Type</th>
+                <th>Serial Number</th>
+                <th>EPROM Rev</th>
+                <th>Checksum</th> 
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="f in fids track by m.FidId">
+                <td>{{f.FIDDiagamNo}}</td>
+                <td>{{f.Description}}</td>
+                <td>{{f.Division}}</td>
+                <td>{{f.ModuleType}}</td>
+                <td>{{f.SerialNumber}}</td>
+                <td>{{f.EPROMRev}}</td>
+                <td>{{f.Checksum}}</td>
+                <td><button class="btn btn-default" ng-click="addToModList(m)">加入修改</button></td>
+            </tr>
+        </tbody>
+    </table>
+    <hr />
+    <div ng-if="modList">
+        <table class="table table-bordered table-condensed table-striped">
+            <caption>修改清單</caption>
+            <thead>
+                <tr>
+                    <th>FID No</th>
+                    <th>Description</th>
+                    <th>Div</th>
+                    <th>Module Type</th>
+                    <th>Serial Number</th>
+                    <th>EPROM Rev</th>
+                    <th>Checksum</th> 
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="l in modList">
+                    <td>{{l.FIDDiagamNo}}</td>
+                    <td>{{l.Description}}</td>
+                    <td>{{l.Division}}</td>                   
+                    <td><input type="text" ng-model="l.ModuleType" /></td>
+                    <td><input type="text" ng-model="l.SerialNumber" /></td>
+                    <td><input type="text" ng-model="l.EPROMRev" /></td>
+                    <td><input type="text" ng-model="l.Checksum" /></td>
+                    <td><button class="btn btn-default" ng-click="f.deleteModItem(l)">刪除</button></td>
+                </tr>
+            </tbody>
+        </table>
+        <div class="form-group">
+            <label>軟體變更修改簡述</label>
+            <input class="form-control" type="text" ng-model="f.changeRequestData.Description" />
+        </div>
+        <div class="form-group">
+            <label>依據文件</label>
+            <input class="form-control" type="text" ng-model="f.changeRequestData.DesignDoc" placeholder="FDDR/DCN" />
+        </div>
+        <div class="form-group">
+            <label>變更說明</label>
+            <textarea class="form-control" rows="3" ng-model="f.changeRequestData.Note"></textarea>
+        </div>
+        <a class="btn btn-primary" ng-click="f.postModList()">送出表單</a>
+    </div>

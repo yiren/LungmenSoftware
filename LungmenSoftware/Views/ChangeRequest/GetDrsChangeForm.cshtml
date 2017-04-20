@@ -1,0 +1,20 @@
+﻿@{
+    ViewBag.Title = "DRS軟體變更表單";
+}
+
+<h2>DRS FID 軟體變更表單</h2>
+<br />
+<div ng-app="drsApp">
+    <div ui-view></div>
+</div>
+
+
+
+
+@section scripts{
+    <script src="~/client/drsApp.js"></script>
+    <script src="~/client/drsRouter.js"></script>
+    <script src="~/client/services/drsDataService.js"></script>
+    <script src="~/client/controller/drsFormCtrl.js"></script>
+    <script src="~/client/controller/drsConfirmFormCtrl.js"></script>
+}

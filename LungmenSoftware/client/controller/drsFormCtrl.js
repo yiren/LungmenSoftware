@@ -2,47 +2,48 @@
     'use strict';
 
     angular
-        .module('numacApp')
-        .controller('numacFormCtrl', numacFormCtrl);
+        .module('drsApp')
+        .controller('drsFormCtrl', drsFormCtrl);
 
-    numacFormCtrl.$inject = ['$scope', '$state', 'numacDataService']; 
+    drsFormCtrl.$inject = ['$scope', '$state', 'drsDataService']; 
 
-    function numacFormCtrl($scope, $state, numacDataService) {
+    function drsFormCtrl($scope, $state, drsDataService) {
         /* jshint validthis:true */
         var vm = this;
         
         function init() {
             
-            numacDataService.getChangeRequestRecord().then(function (res) {
+            drsDataService.getChangeRequestRecord().then(function (res) {
                 vm.changeRequestData = res.data;
                 //console.log(vm.changeRequestData);
             }, function (err) {
+
             });
 
-            numacDataService.getSystemPanelList().then(function (res) {
+            drsDataService.getDrsPanelList().then(function (res) {
                 
-                $scope.numacPanels = res.data;
+                $scope.drsPanels = res.data;
                 //console.log($scope.numacPanels);
 
             }, function (err) {
 
             });
-            $scope.subSystems = [];
+            $scope.fids = [];
             $scope.modList = [];
-            $scope.tempModules = [];
+            $scope.tempFids = [];
         }
 
         init();
         
-        vm.getSubsystemById = function (systemId) {
+        vm.getFidsById = function (panelId) {
             //console.log($scope.system);
             //console.log(systemId);
             if ($scope.system !== undefined) {
                 //console.log($scope.system);
-                numacDataService.getSubSystemBySytemId(systemId).then(
+                drsDataService.getFidsById(panelId).then(
                 function (res) {
                     //console.log(res.data);
-                    $scope.subSystems = res.data;
+                    $scope.fids = res.data;
                 }, function (err) {
 
                 }
@@ -52,26 +53,9 @@
             }
         }
         
-        vm.getModulesById = function (subsystemId) {
-            //console.log(subsystemId);
-            if ($scope.subsystem !== undefined) {
-                numacDataService.getModulesById(subsystemId).then(
-                    function(res) {
-                        //console.log(res.data)
-                        $scope.modules = res.data;
-                    },
-                    function(err) {
 
-                    }
-                );
-            } else {
-                ResetSelectData();
-            }
-            
-        }
-
-        $scope.addToModList = function (module) {
-            var indexForRemoval = $scope.modules.indexOf(module);
+        $scope.addToModList = function (fid) {
+            var indexForRemoval = $scope.fids.indexOf(fid);
                      
             module.Panel = $scope.system.Panel;
             module.ChassisName = $scope.subsystem.ChassisName;
@@ -96,12 +80,9 @@
         vm.postModList = function () {
             vm.changeRequestData.NumacChangeDeltas = $scope.modList;
             //console.log(vm.changeRequestData);
-            numacDataService.postChangeRequestData(vm.changeRequestData);
-            $state.go('numacConfirmForm');
+            drsDataService.postChangeRequestData(vm.changeRequestData);
+            $state.go('drsConfirmForm');
                    
         }
-
-
-
     }
 })();
