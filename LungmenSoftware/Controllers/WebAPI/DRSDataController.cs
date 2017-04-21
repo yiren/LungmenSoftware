@@ -6,6 +6,7 @@ using System.Net.Http;
 using System.Web.Http;
 using LungmenSoftware.Models.DRS;
 using LungmenSoftware.Models.Service;
+using System.Collections;
 
 namespace LungmenSoftware.Controllers.WebAPI
 {
@@ -21,7 +22,21 @@ namespace LungmenSoftware.Controllers.WebAPI
             return dataService.GetAllDrsDataList();
         }
 
+        [Route("GetDrsSystemPanelList")]
+        public IEnumerable<DrsSystemPanelViewModel> GetDrsSystemPanelList()
+        {
+            return dataService.GetDrsSystemPanelList().OrderBy(p=>p.DRSPanelName);
+        }
 
+
+        [Route("GetFidsByPanelId/{panelId}")]
+        public IEnumerable<FID> GetFidsById(string panelId)
+        {
+            return dataService.GetFidsById(panelId);
+        }
+
+        
+        
          
 
 

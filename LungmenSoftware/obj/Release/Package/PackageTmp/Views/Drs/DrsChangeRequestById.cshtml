@@ -1,0 +1,102 @@
+﻿@model IEnumerable<LungmenSoftware.Models.ViewModel.DrsChangeDetailViewModel>
+
+@{
+    ViewBag.Title = "FID 修改紀錄";
+}
+
+<h2>FID 修改紀錄</h2>
+@if (Model.Count() < 1)
+{
+    <h3>無修改紀錄</h3>
+}
+else
+{
+    <table class="table">
+        <tr>
+           
+            <th>
+                @Html.DisplayNameFor(model => model.FormSerialNumber)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DesignDoc)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FIDDiagramNo)
+            </th>
+            
+            
+            <th>
+                @Html.DisplayNameFor(model => model.ModuleType)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.EPROMRev)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Checksum)
+            </th>
+            
+            
+            <th>
+                @Html.DisplayNameFor(model => model.CreatedBy)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CreateDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ApprovedBy)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.LastModifiedDate)
+            </th>
+            <th></th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FormSerialNumber)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DesignDoc)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FIDDiagramNo)
+                </td>
+                
+                <td>
+                    <div>建置值: @item.OriModuleType</div>
+                    <div>變更值: @item.ModuleType</div>
+                </td>
+                <td>
+                    <div>建置值: @item.OriEPROMRev</div>
+                    <div>變更值: @item.EPROMRev</div>
+                </td>
+                <td>
+                    <div>建置值: @item.OriChecksum</div>
+                    <div>變更值: @item.Checksum</div>
+                </td>
+                
+               
+                
+                <td>
+                    @Html.DisplayFor(modelItem => item.CreatedBy)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CreateDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ApprovedBy)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.LastModifiedDate)
+                </td>
+                <td>
+                   
+                </td>
+            </tr>
+        }
+
+    </table>
+
+}

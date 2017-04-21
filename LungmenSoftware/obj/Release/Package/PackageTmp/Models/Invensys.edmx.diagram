@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="5964e69133a442bb96171f49fbe625d6" Name="Diagram1" ZoomLevel="108">
+        <EntityTypeShape EntityType="LungmenSoftwareDataModel.FoxSoftware" Width="1.5" PointX="3" PointY="1" />
+        <EntityTypeShape EntityType="LungmenSoftwareDataModel.FoxSoftwareType" Width="1.5" PointX="0.75" PointY="1.625" />
+        <EntityTypeShape EntityType="LungmenSoftwareDataModel.FoxWorkStation" Width="1.5" PointX="3" PointY="5.125" />
+        <EntityTypeShape EntityType="LungmenSoftwareDataModel.WKAndFoxJoinTable" Width="1.5" PointX="5.25" PointY="1" />
+        <EntityTypeShape EntityType="LungmenSoftwareDataModel.WorkStationHardwareType" Width="1.5" PointX="0.75" PointY="5.625" />
+        <AssociationConnector Association="LungmenSoftwareDataModel.FK_FoxSoftwareTypeFoxSoftware" />
+        <AssociationConnector Association="LungmenSoftwareDataModel.FK_FoxSysSoftwareWKAndSysJoinTable" />
+        <AssociationConnector Association="LungmenSoftwareDataModel.FK_FoxWorkStationWKAndSysJoinTable" />
+        <AssociationConnector Association="LungmenSoftwareDataModel.FK_WorkStationHardwareTypeFoxWorkStation" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

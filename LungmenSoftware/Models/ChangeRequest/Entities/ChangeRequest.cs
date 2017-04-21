@@ -56,6 +56,7 @@ namespace LungmenSoftware.Models.CodeFirst.Entities
         public List<ChangeRequestMessage> ChangeRequestMessages { get; set; }
 
         public List<NumacChangeDelta> NumacChangeDeltas { get; set; }
+        public List<DrsChangeDelta> DrsChangeDeltas { get; set; }
         //Status Pattern Level 1
         //public DateTime CreateDate { get; set; }
 

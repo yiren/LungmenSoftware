@@ -468,6 +468,18 @@
     <Compile Include="MigrationForChangeRequestData\201610190849001_removeunnecessaryCols.Designer.cs">
       <DependentUpon>201610190849001_removeunnecessaryCols.cs</DependentUpon>
     </Compile>
+    <Compile Include="MigrationForChangeRequestData\201704200339432_addDrsChangeDelta.cs" />
+    <Compile Include="MigrationForChangeRequestData\201704200339432_addDrsChangeDelta.Designer.cs">
+      <DependentUpon>201704200339432_addDrsChangeDelta.cs</DependentUpon>
+    </Compile>
+    <Compile Include="MigrationForChangeRequestData\201704200627529_addDrsDeltaCol.cs" />
+    <Compile Include="MigrationForChangeRequestData\201704200627529_addDrsDeltaCol.Designer.cs">
+      <DependentUpon>201704200627529_addDrsDeltaCol.cs</DependentUpon>
+    </Compile>
+    <Compile Include="MigrationForChangeRequestData\201704200644336_addDrsDeltaCol1.cs" />
+    <Compile Include="MigrationForChangeRequestData\201704200644336_addDrsDeltaCol1.Designer.cs">
+      <DependentUpon>201704200644336_addDrsDeltaCol1.cs</DependentUpon>
+    </Compile>
     <Compile Include="MigrationForChangeRequestData\Configuration.cs" />
     <Compile Include="MigrationForIdentity\201508210117075_InitialCreate.cs" />
     <Compile Include="MigrationForIdentity\201508210117075_InitialCreate.Designer.cs">
@@ -484,6 +496,7 @@
     <Compile Include="Models\ChangeRequest\Entities\ChangeRequestMessage.cs" />
     <Compile Include="Models\ChangeRequest\Entities\ChangeRequestStatus.cs" />
     <Compile Include="Models\ChangeRequest\Entities\ChangeRequestStatusType.cs" />
+    <Compile Include="Models\ChangeRequest\Entities\DrsChangeDelta.cs" />
     <Compile Include="Models\ChangeRequest\Entities\NumacChangeDelta.cs" />
     <Compile Include="Models\DRS\DrsDbContext.cs" />
     <Compile Include="Models\DRS\DrsModel.cs" />
@@ -1652,6 +1665,7 @@
     <Content Include="Views\Numac\NumacChangeRequestHistory.cshtml" />
     <Content Include="Views\Drs\Index.cshtml" />
     <Content Include="Views\ChangeRequest\GetDrsChangeForm.cshtml" />
+    <Content Include="Views\Drs\DrsChangeRequestById.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -1736,6 +1750,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="MigrationForChangeRequestData\201610190849001_removeunnecessaryCols.resx">
       <DependentUpon>201610190849001_removeunnecessaryCols.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MigrationForChangeRequestData\201704200339432_addDrsChangeDelta.resx">
+      <DependentUpon>201704200339432_addDrsChangeDelta.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MigrationForChangeRequestData\201704200627529_addDrsDeltaCol.resx">
+      <DependentUpon>201704200627529_addDrsDeltaCol.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MigrationForChangeRequestData\201704200644336_addDrsDeltaCol1.resx">
+      <DependentUpon>201704200644336_addDrsDeltaCol1.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="MigrationForIdentity\201508210117075_InitialCreate.resx">
       <DependentUpon>201508210117075_InitialCreate.cs</DependentUpon>

@@ -57,6 +57,7 @@ namespace LungmenSoftware.Models.ViewModel
         public List<ChangeDelta> ChangeDeltas { get; set; }
 
         public List<NumacChangeDelta> NumacChangeDeltas { get; set; }
+        public List<DrsChangeDelta> DrsChangeDeltas { get; set; }
         public ChangeRequestMessage ChangeRequestMessage { get; set; }
         public List<ChangeRequestMessage> ChangeRequestMessages { get; set; }
     }
@@ -110,7 +111,53 @@ namespace LungmenSoftware.Models.ViewModel
         public string NewValue { get; set; }
 
     }
+    public class DrsChangeDetailViewModel
+    {
+ 
+        public string OriEPROMRev { get; set; }
 
+
+        public string OriModuleType { get; set; }
+
+
+        public string OriChecksum { get; set; }
+
+
+        public string Description { get; set; }
+
+        public string FIDDiagramNo { get; set; }
+
+        public string DRSPanelName { get; set; }
+
+
+        public string Checksum { get; set; }
+
+        public string ModuleType { get; set; }
+
+
+        public string EPROMRev { get; set; }
+
+
+        public DateTime CreateDate { get; set; }
+
+        public DateTime LastModifiedDate { get; set; }
+
+
+        [DisplayName("表單編號")]
+        public string FormSerialNumber { get; set; }
+
+        [DisplayName("軟體變更文件")]
+        public string DesignDoc { get; set; }
+
+        [DisplayName("負責人")]
+        public string CreatedBy { get; set; }
+
+        [DisplayName("審查")]
+        public string ReviewBy { get; set; }
+
+        [DisplayName("核準")]
+        public string ApprovedBy { get; set; }
+    }
     public class NumacChangeDetailViewModel{
 
         

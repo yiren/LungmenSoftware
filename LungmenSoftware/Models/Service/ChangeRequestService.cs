@@ -8,6 +8,7 @@ using LungmenSoftware.Models.CodeFirst.Entities;
 using LungmenSoftware.Models.ViewModel;
 using Microsoft.AspNet.Identity.EntityFramework;
 using System.Data.Entity.Validation;
+using LungmenSoftware.Models.DRS;
 
 namespace LungmenSoftware.Models.Service
 {
@@ -17,6 +18,7 @@ namespace LungmenSoftware.Models.Service
         private LungmenSoftwareDataEntities ldb=new LungmenSoftwareDataEntities();
         private ApplicationDbContext _identityDb=new ApplicationDbContext();
         private NumacDataService numacDataService = new NumacDataService();
+        private DrsDataService drsDataService = new DrsDataService();
 
         public List<ChangeRequestInfo> GetChangeRequestHistory()
         {
@@ -42,6 +44,34 @@ namespace LungmenSoftware.Models.Service
                             CreateDate = cr.CreateDate,
                             Description = cr.Description
                         };
+            return query.ToList();
+        }
+
+        public List<DrsChangeDetailViewModel> GetDrsChangeRequestRecordById(string fidId)
+        {
+            var id = new Guid(fidId);
+            var query = from d in db.DrsChangeDeltas.Where(d => d.FidId.Equals(id))
+                        join r in db.ChangeRequests on d.ChangeRequestId equals r.ChangeRequestId
+                        select new DrsChangeDetailViewModel()
+                        {
+                            FormSerialNumber = r.SerialNumber,
+                            ApprovedBy = r.ApprovedBy,
+                            ReviewBy = r.ReviewBy,
+                            CreatedBy = r.CreatedBy,
+                            CreateDate = r.CreateDate,
+                            LastModifiedDate = r.LastModifiedDate,
+                            OriChecksum=d.OriChecksum,
+                            OriEPROMRev=d.OriEPROMRev,
+                            OriModuleType=d.OriModuleType,
+                            Checksum=d.Checksum,
+                            EPROMRev=d.EPROMRev,
+                            ModuleType=d.ModuleType,
+                            Description=d.Description,
+                            FIDDiagramNo=d.FIDDiagramNo,
+                            DesignDoc=r.DesignDoc
+                            
+                        }
+                        ;
             return query.ToList();
         }
 
@@ -98,6 +128,8 @@ namespace LungmenSoftware.Models.Service
                 };
             return query.ToList();
         }
+
+       
 
         //Failed.....
         public List<ChangeRequestInfo> GetChangeRequestHistoryBySoftId(int foxSoftwareId)
@@ -201,6 +233,42 @@ namespace LungmenSoftware.Models.Service
                 }
             };
             return cr;
+        }
+
+        
+
+        public ChangeRequest AddDrsChangeRequestEntry(ChangeRequest crEntry)
+        {
+            foreach(var item in crEntry.DrsChangeDeltas)
+            {
+                FID oriFid = drsDataService.GetFidById(item.FidId);
+                item.OriChecksum = oriFid.Checksum;
+                item.OriEPROMRev = oriFid.EPROMRev;
+                item.OriModuleType = oriFid.ModuleType;
+                item.ChangeRequestId = crEntry.ChangeRequestId;
+                item.ChangeRequest = crEntry;
+                item.DrsChangeDeltaId = Guid.NewGuid();
+            }
+            db.ChangeRequestMessages.Add(new ChangeRequestMessage()
+            {
+                ChangeRequest = crEntry,
+                ChangeRequestId = crEntry.ChangeRequestId,
+                CreateBy = crEntry.CreatedBy,
+                CreateTime = DateTime.Now,
+                Message = "軟體變更需求送審"
+            });
+
+            db.ChangeRequests.Add(crEntry);
+            if (db.SaveChanges() != -1)
+            {
+                return db.ChangeRequests
+                    .Include(c => c.DrsChangeDeltas)
+                    .First(c => c.ChangeRequestId.Equals(crEntry.ChangeRequestId));
+            }
+            else
+            {
+                return null;
+            }
         }
 
         //For AngularJS Numac
@@ -488,11 +556,27 @@ namespace LungmenSoftware.Models.Service
                     
                 }
                 //
-                var isUpdated = numacDataService.IsUpdated();
-                return isUpdated;
                 
-            }
+                return numacDataService.IsUpdated();
 
+            }
+            if (crEntry.DrsChangeDeltas.Count > 0)
+            {
+                var deltas = db.DrsChangeDeltas.Where(n => n.ChangeRequestId.Equals(crEntry.ChangeRequestId)).ToList();
+                foreach (var delta in deltas)
+                {
+                    var currentFid = drsDataService.GetFidById(delta.FidId);
+                    currentFid.ModuleType = delta.ModuleType;
+                    currentFid.EPROMRev = delta.EPROMRev;
+                    currentFid.Checksum = delta.Checksum;
+                    
+
+                }
+                //
+
+                return drsDataService.IsUpdated();
+
+            }
 
             return false;
             
@@ -515,6 +599,7 @@ namespace LungmenSoftware.Models.Service
             var query = db.ChangeRequests.Where(c=>c.ChangeRequestId.Equals(id))
                 .Include(c=>c.ChangeDeltas.Select(d=>d.RevInfos))
                 .Include(c=>c.NumacChangeDeltas)
+                .Include(c=>c.DrsChangeDeltas)
                 .Include(c=>c.ChangeRequestMessages)
                 .Include(c=>c.ChangeRequestStatuses.Select(s=>s.ChangeRequestStatusType))
                 .FirstOrDefault();
@@ -543,6 +628,23 @@ namespace LungmenSoftware.Models.Service
             }
 
         }
+
+        public void UpdateDrsChangeDeltas(Guid changeRequestId, List<DrsChangeDelta> drsChangeDeltas)
+        {
+            var deltas = db.DrsChangeDeltas.Where(n => n.ChangeRequestId.Equals(changeRequestId)).ToList();
+            if (deltas.Count() != drsChangeDeltas.Count())
+            {
+                throw new Exception("The Count of ChangeDeltas Has Errors");
+            }
+
+            for (int i = 0; i < deltas.Count(); i++)
+            {
+                deltas[i].ModuleType = drsChangeDeltas[i].ModuleType;
+                deltas[i].EPROMRev = drsChangeDeltas[i].EPROMRev;
+                deltas[i].Checksum = drsChangeDeltas[i].Checksum;
+            }
+        }
+
         public void UpdateNumacChangeDeltas(Guid changeRequestId, List<NumacChangeDelta> numacChangeDeltas)
         {
             var deltas = db.NumacChangeDeltas.Where(n => n.ChangeRequestId.Equals(changeRequestId)).ToList();

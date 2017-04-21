@@ -1,0 +1,70 @@
+﻿@model LungmenSoftware.Models.ViewModel.FoxSysAndAppViewModel
+
+@{
+    ViewBag.Title = "相關軟體清單";
+}
+
+
+
+<h2>List of Softwares</h2>
+
+<div class="row">
+    <div class="col-md-8">
+        <h3>Fox Application Softwares</h3>
+        <table class="table table-bordered table-hover">
+            <caption>不同工作站可能軟體版本不同</caption>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model =>model.foxAppModel.Name)
+                </th>
+                <th>
+                    安裝此軟體之相關工作站
+                </th>
+            </tr>
+
+            @foreach (var item in Model.FoxAppSoftware)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Name)
+                    </td>
+                    <td>
+                        @Html.ActionLink("工作站清單", "FoxAppDetails", new { id = item.Id }) 
+                    </td>
+                </tr>
+            }
+            
+        </table>
+
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-8">
+        <h3>Fox System Softwares</h3>
+        <table class="table table-bordered table-hover">
+            <caption>不同工作站可能軟體版本不同</caption>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.foxSysModel.Name)
+                </th>
+                <th>
+                    安裝此軟體之相關工作站
+                </th>
+            </tr>
+
+            @foreach (var item in Model.FoxSysSoftware)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item)
+                    </td>
+                    <td>
+                        @Html.ActionLink("工作站清單", "FoxSysDetails", new { id = item}) 
+                    </td>
+                </tr>
+            }
+
+        </table>
+    </div>
+</div>

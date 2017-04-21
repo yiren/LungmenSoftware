@@ -1,0 +1,50 @@
+﻿@model LungmenSoftware.Models.FoxWorkStation
+
+
+<h2>Softwares Installed in @Model.Name</h2>
+
+<div>
+    <hr />
+    <div class="row">
+        <div class="col-md-6">
+            <table class="table table-bordered table-striped table-hover">
+                <thead>Fox Application Softwares</thead>
+                <tr>
+                    <th>@Html.DisplayNameFor(model => model.FoxAppSoftwares.SingleOrDefault().Name)</th>
+                    <th>@Html.DisplayNameFor(model=>model.FoxAppSoftwares.SingleOrDefault().Rev)</th>
+                    <th>Change Log</th>
+                </tr>
+                    @foreach (var app in Model.FoxAppSoftwares)
+                    {
+                        <tr>
+                            <td>@app.Name</td>
+                            <td>@app.Rev</td>
+                            <td><a href="#">Click</a></td>
+                        </tr>
+                    }
+            </table>
+        </div>
+        <div class="col-md-6">
+            <table class="table table-bordered table-striped table-hover">
+                <thead>Fox System Softwares</thead>
+                <tr>
+                    <th>@Html.DisplayNameFor(model => model.FoxSysSoftwares.SingleOrDefault().Name)</th>
+                    <th>@Html.DisplayNameFor(model => model.FoxSysSoftwares.SingleOrDefault().Rev)</th>
+                    <th>Change Log</th>
+                </tr>
+                @foreach (var sys in Model.FoxSysSoftwares)
+                {
+                    <tr>
+                        <td>@sys.Name</td>
+                        <td>@sys.Rev</td>
+                        <td><a href="#">Click</a></td>
+                    </tr>
+                }
+            </table>
+        </div>
+    </div>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("Back to List", "ListOfWorkstations")
+</p>

@@ -1,0 +1,36 @@
+﻿@{
+    ViewBag.Title = "龍門非安全軟體構型管理系統";
+}
+
+<div class="jumbotron" style="background-color:whitesmoke">
+    <h2><strong>龍門軟體構型管理系統</strong> </h2>
+    <p class="lead" >本管理系統提供Invensys/NUMAC軟體建置資訊，並提供線上軟體修改管控機制，以達軟體構型管理之功能</p>
+</div>
+
+<div class="row">
+    <div id="invensys" class="col-md-4">
+        <h3>Invensys軟體相關資訊</h3>
+        <p>
+            提供龍門DCIS廠家Invensys工作站及對應之安裝軟體資訊。
+        </p>
+        <p><a class="btn btn-default" href="@Url.Action("Index", new { Controller="FoxSoftwares"})">Learn more &raquo;</a></p>
+    </div>
+    <div class="col-md-4">
+        <h3>NUMAC盤面EPROM資訊</h3>
+        <p>
+            提供龍門DCIS廠家NUMAC盤面、系統及EPROM資訊。
+        </p>
+        <p><a class="btn btn-default" href="@Url.Action("Index", new { Controller="Numac"})">Learn more &raquo;</a></p>
+    </div>
+    <div class="col-md-4">
+        <h3>軟體修改流程及管控</h3>
+        <p>透過線上作業流程管控軟體修改，使得相關軟體版本可具追溯性，以達軟體構型管理之功能</p>
+        <p><a class="btn btn-default" href="@Url.Action("Index", new { Controller="ChangeRequest"})">Learn more &raquo;</a></p>
+    </div>
+</div>
+
+
+
+@section scripts{
+    <script src="~/js/myjQuery.js"></script>
+}

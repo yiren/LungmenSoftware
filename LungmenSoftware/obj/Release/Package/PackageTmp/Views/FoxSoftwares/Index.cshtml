@@ -1,0 +1,38 @@
+﻿@model LungmenSoftware.Models.ViewModel.FoxSoftView
+
+@{
+    ViewBag.Title = "Invensys 系統軟體/驅動程式清單";
+}
+
+<h2>Invensys 系統軟體/驅動程式清單</h2>
+
+<div class="row">
+    <div class="col-md-6">
+        <h3></h3>
+        <table class="table table-bordered table-hover">
+            <caption>不同工作站可能軟體/驅動程式版本不同</caption>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.OSs[0].SoftwareName)
+                </th>
+
+                <th>
+                    安裝此軟體之相關工作站
+                </th>
+            </tr>
+
+            @foreach (var item in Model.OSs)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.SoftwareName)
+                    </td>
+                    <td>
+                        @Html.ActionLink("工作站清單", "InstalledInWorkstations", new { id = item.FoxSoftwareId })
+                    </td>
+                </tr>
+            }
+
+        </table>
+    </div>
+</div>

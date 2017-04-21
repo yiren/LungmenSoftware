@@ -1,0 +1,160 @@
+﻿@using LungmenSoftware.Models
+@model IEnumerable<FoxWorkStation>
+
+@{
+    ViewBag.Title = "工作站清單";
+    List<FoxWorkStation> WPs = Model.Where(k => k.FoxSysSoftwareType.Name.Contains("WP")).ToList();
+    List<FoxWorkStation> AWs = Model.Where(k => k.FoxSysSoftwareType.Name.Contains("AW")).ToList();
+    List<FoxWorkStation> Others = Model.Where(k => k.FoxSysSoftwareType.Name.Contains("Window")).ToList();
+    var WPItems= WPs.Select(x => new SelectListItem
+    {
+        Text=x.Name,
+        Value=x.Id.ToString()
+    });
+    var AWItems = AWs.Select(x => new SelectListItem
+    {
+        Text = x.Name,
+        Value = x.Id.ToString()
+    });
+    var OtherItems = Others.Select(x => new SelectListItem
+    {
+        Text = x.Name,
+        Value = x.Id.ToString()
+    });
+}
+
+    <h2>工作站清單</h2>
+
+    <p>
+        @Html.ActionLink("Search","search")
+    </p>
+
+@using (Html.BeginForm("search", "FoxWorkStations", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+    <div class="form-horizontal">
+        <h4>Search</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="form-group">
+            @Html.LabelFor(model => model.FirstOrDefault().Name, htmlAttributes: new { @class = "col-md-2 control-label" })
+            <div class="col-md-2">
+                @Html.TextBoxFor(model=>model.FirstOrDefault().Name, htmlAttributes: new{@class="form-control"})
+                @Html.ValidationMessageFor(model => model.FirstOrDefault().Name, "", new { @class = "text-danger" })
+            </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.FirstOrDefault().Name, htmlAttributes: new { @class = "col-md-2 control-label" })
+                <div class="col-md-2">
+                    @Html.DropDownListFor(model => model.FirstOrDefault().Id, WPItems, "請選擇WP工作站", htmlAttributes: new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.FirstOrDefault().Name, "", new { @class = "text-danger" })
+                </div>
+                <div class="col-md-2">
+                    @Html.DropDownListFor(model => model.FirstOrDefault().Id, AWItems, "請選擇AW工作站", htmlAttributes: new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.FirstOrDefault().Name, "", new { @class = "text-danger" })
+                </div>
+            <div class="col-md-2">
+                @Html.DropDownListFor(model => model.FirstOrDefault().Id, OtherItems, "請選擇其他工作站", htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.FirstOrDefault().Name, "", new { @class = "text-danger" })
+            </div>
+        </div>
+            <div class="form-group">
+                <div class="col-md-2 col-md-offset-2">
+                    <input type="submit" value="Search" class="btn btn-default" />
+                </div>
+            </div>
+        </div>
+}
+
+<br />
+    <div class="row">
+        <div class="col-md-5">
+           
+                        <table class="table table-bordered table-striped table-hover">
+                            <thead>WP Workstations</thead>
+                            <tr>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.Name)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.WorkStationType.Name)
+                                </th>
+                                <th>軟體安裝資訊</th>
+                            </tr>
+
+                            @foreach (var item in WPs)
+                {
+                                <tr>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Name)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.WorkStationType.Name)
+                                    </td>
+                                    <td>
+                                        @Html.ActionLink("相關已安裝軟體", "Details", new { id = item.Id })
+                                    </td>
+                                </tr>
+                }
+                        </table>
+
+                        <table class="table table-bordered table-striped table-hover">
+                            <thead>Other Workstations</thead>
+                            <tr>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.Name)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.WorkStationType.Name)
+                                </th>
+                                <th>軟體安裝資訊</th>
+                            </tr>
+
+                            @foreach (var item in Others)
+                {
+                                <tr>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Name)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.WorkStationType.Name)
+                                    </td>
+                                    <td>
+                                        @Html.ActionLink("相關已安裝軟體", "Details", new { id = item.Id })
+                                    </td>
+                                </tr>
+                }
+                        </table>
+                    </div>
+
+                    <div class="col-md-5">
+                        <table class="table table-bordered table-striped table-hover">
+                            <thead>AW Workstations</thead>
+                            <tr>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.Name)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.WorkStationType.Name)
+                                </th>
+                                <th>軟體安裝資訊</th>
+                            </tr>
+
+                            @foreach (var item in AWs)
+                {
+                                <tr>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Name)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.WorkStationType.Name)
+                                    </td>
+                                    <td>
+                                        @Html.ActionLink("相關已安裝軟體", "Details", new { id = item.Id })
+                                    </td>
+                                </tr>
+                }
+                        </table>
+                    </div>
+                </div>
+

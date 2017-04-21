@@ -6,10 +6,7 @@ using System.Web;
 using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
-using LungmenSoftware.Helper;
 using LungmenSoftware.Models.CodeFirst;
-using Microsoft.Ajax.Utilities;
-using WebGrease.Configuration;
 using System.Web.Http;
 
 namespace LungmenSoftware

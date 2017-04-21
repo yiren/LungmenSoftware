@@ -54,8 +54,6 @@ namespace LungmenSoftware.Models.DRS
     {
         public Guid SystemId { get; set; }
         public string SystemName { get; set; }
-       
-
         public ICollection<DrsPanel> DrsPanel { get; set; }
     }
 
@@ -96,5 +94,16 @@ namespace LungmenSoftware.Models.DRS
         public Guid DrsPanelId { get; set; }
        
         public DrsPanel DrsPanel { get; set; }
+    }
+
+    public class DrsSystemPanelViewModel
+    {
+        public string DRSPanelName { get; set; }
+        public string SystemName { get; set; }
+
+        public Guid DrsPanelId { get; set; }
+
+        public Guid SystemId { get; set; }
+
     }
 }

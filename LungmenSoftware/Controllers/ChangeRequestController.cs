@@ -142,6 +142,29 @@ namespace LungmenSoftware.Controllers
                 ContentType = "application/json"
             };
         }
+
+        [HttpPost]
+        public ContentResult AddDrsChangeRequestRecord(ChangeRequest crEntry)
+        {
+            crEntry.ReviewBy = crService.GetReviewer();
+            crEntry.Owner = crEntry.ReviewBy;
+            crEntry.IsActive = true;
+            if (crEntry.CreatedBy == null) crEntry.CreatedBy = "test2@taipower.com.tw";
+
+            var newRecord = crService.AddDrsChangeRequestEntry(crEntry);
+            string json = JsonConvert.SerializeObject(newRecord, new JsonSerializerSettings()
+            {
+                ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+                Formatting = Formatting.Indented
+            });
+
+            return new ContentResult()
+            {
+                Content = json,
+                ContentType = "application/json"
+            };
+        }
+
         [HttpPost]
         public ContentResult AddNumacChangeRequestRecord(ChangeRequest crEntry)
         {
@@ -198,6 +221,7 @@ namespace LungmenSoftware.Controllers
                 ChangeDeltas = crEntry.ChangeDeltas,
                 ChangeRequestMessages = crEntry.ChangeRequestMessages,
                 ChangeRequestStatuses = crEntry.ChangeRequestStatuses,
+                DrsChangeDeltas=crEntry.DrsChangeDeltas,
                 NumacChangeDeltas=crEntry.NumacChangeDeltas
             };
             return View(dataForView);
@@ -215,6 +239,7 @@ namespace LungmenSoftware.Controllers
                 ChangeRequest = crEntry,
                 ChangeDeltas = crEntry.ChangeDeltas,
                 NumacChangeDeltas=crEntry.NumacChangeDeltas,
+                DrsChangeDeltas=crEntry.DrsChangeDeltas,
                 ChangeRequestMessages = crEntry.ChangeRequestMessages
             };
 
@@ -255,6 +280,10 @@ namespace LungmenSoftware.Controllers
                 if (crEntry.NumacChangeDeltas != null)
                 {
                     crService.UpdateNumacChangeDeltas(crEntry.ChangeRequest.ChangeRequestId, crEntry.NumacChangeDeltas);
+                }
+                if (crEntry.DrsChangeDeltas != null)
+                {
+                    crService.UpdateDrsChangeDeltas(crEntry.ChangeRequest.ChangeRequestId, crEntry.DrsChangeDeltas);
                 }
 
                 crService.StatusUpdateForClarification(crToUpdate);
@@ -306,7 +335,8 @@ namespace LungmenSoftware.Controllers
                 ChangeRequest = crEntry,
                 ChangeDeltas = crEntry.ChangeDeltas,
                 ChangeRequestMessages = crEntry.ChangeRequestMessages,
-                NumacChangeDeltas=crEntry.NumacChangeDeltas
+                NumacChangeDeltas=crEntry.NumacChangeDeltas,
+                DrsChangeDeltas=crEntry.DrsChangeDeltas
             };
 
             return View(vm);
@@ -366,7 +396,8 @@ namespace LungmenSoftware.Controllers
                 ChangeDeltas = crEntry.ChangeDeltas,
                 ChangeRequest = crEntry,
                 ChangeRequestMessages = crEntry.ChangeRequestMessages,
-                NumacChangeDeltas=crEntry.NumacChangeDeltas
+                NumacChangeDeltas=crEntry.NumacChangeDeltas,
+                DrsChangeDeltas=crEntry.DrsChangeDeltas
             };
 
             ViewBag.Error = "沒有選取審查選項";

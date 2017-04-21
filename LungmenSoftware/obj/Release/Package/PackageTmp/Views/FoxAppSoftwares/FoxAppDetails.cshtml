@@ -1,0 +1,28 @@
+﻿@model LungmenSoftware.Models.FoxAppSoftware
+@{
+    ViewBag.Title = "相關工作站清單";
+}
+
+<h2>@Model.Name 安裝於以下工作站</h2>
+
+<div>
+    <h4>Fox Workstations</h4>
+    <hr />
+    <table class="table table-bordered table-hover table-striped">
+        <tr>
+            <th>@Html.DisplayNameFor(model=>model.FoxWorkStations.FirstOrDefault().Name)</th>
+            <th>@Html.DisplayNameFor(model => model.FoxWorkStations.FirstOrDefault().WorkStationType.Name)</th>
+        </tr>
+        @foreach (var item in Model.FoxWorkStations)
+        {
+            <tr>
+                <td>@Html.DisplayFor(model=>item.Name)</td>
+                <td>@Html.DisplayFor(model=>item.WorkStationType.Name)</td>
+            </tr>
+        }
+            
+    </table> 
+</div>
+<p>
+    @Html.ActionLink("Back to List", "ListOfSoftwares")
+</p>
