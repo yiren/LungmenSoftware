@@ -151,3 +151,4 @@ E:\GitRepository\LungmenSCM2\LungmenSoftware\obj\Release\LungmenSoftware.Migrati
 E:\GitRepository\LungmenSCM2\LungmenSoftware\obj\Release\LungmenSoftware.csproj.GenerateResource.Cache
 E:\GitRepository\LungmenSCM2\LungmenSoftware\obj\Release\LungmenSoftware.dll
 E:\GitRepository\LungmenSCM2\LungmenSoftware\obj\Release\LungmenSoftware.pdb
+E:\GitRepository\LungmenSCM2\LungmenSoftware\obj\Release\LungmenSoftware.csprojResolveAssemblyReference.cache

@@ -52,6 +52,7 @@ namespace LungmenSoftware.Models.Service
             var id = new Guid(fidId);
             var query = from d in db.DrsChangeDeltas.Where(d => d.FidId.Equals(id))
                         join r in db.ChangeRequests on d.ChangeRequestId equals r.ChangeRequestId
+                        orderby r.LastModifiedDate descending
                         select new DrsChangeDetailViewModel()
                         {
                             FormSerialNumber = r.SerialNumber,
@@ -80,6 +81,7 @@ namespace LungmenSoftware.Models.Service
             var id = new Guid(chassisBoardId);
             var query = from d in db.NumacChangeDeltas.Where(d => d.ModuleBoardId.Equals(id))
                             join  r in db.ChangeRequests on d.ChangeRequestId equals r.ChangeRequestId
+                            orderby r.LastModifiedDate descending
                         select new NumacChangeDetailViewModel()
                         {
                             FormSerialNumber=r.SerialNumber,

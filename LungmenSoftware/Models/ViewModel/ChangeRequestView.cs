@@ -124,7 +124,7 @@ namespace LungmenSoftware.Models.ViewModel
 
 
         public string Description { get; set; }
-
+        [DisplayName("FID編號")]
         public string FIDDiagramNo { get; set; }
 
         public string DRSPanelName { get; set; }
@@ -139,7 +139,7 @@ namespace LungmenSoftware.Models.ViewModel
 
 
         public DateTime CreateDate { get; set; }
-
+        [DisplayName("結案日期")]
         public DateTime LastModifiedDate { get; set; }
 
 
