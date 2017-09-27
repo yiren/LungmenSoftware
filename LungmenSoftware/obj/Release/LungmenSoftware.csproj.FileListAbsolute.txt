@@ -152,3 +152,4 @@ E:\GitRepository\LungmenSCM2\LungmenSoftware\obj\Release\LungmenSoftware.csproj.
 E:\GitRepository\LungmenSCM2\LungmenSoftware\obj\Release\LungmenSoftware.dll
 E:\GitRepository\LungmenSCM2\LungmenSoftware\obj\Release\LungmenSoftware.pdb
 E:\GitRepository\LungmenSCM2\LungmenSoftware\obj\Release\LungmenSoftware.csprojResolveAssemblyReference.cache
+E:\GitRepository\LungmenSCM2\LungmenSoftware\obj\Release\LungmenSoftware.csproj.CoreCompileInputs.cache

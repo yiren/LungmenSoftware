@@ -10,32 +10,32 @@
     function numacDataService($http) {
         
         var numacChangeRequestPromise;
-
+        var routePrefix = "lungscm";
         this.getNumacData = function () {
-            return $http.get('/numac/getnumacdata');
+            return $http.get(routePrefix+'/numac/getnumacdata');
         }
 
         this.getChangeRequestRecord = function () {
-            return $http.get('/changerequest/InitChangeRequest');
+            return $http.get(routePrefix +'/changerequest/InitChangeRequest');
         }
 
         this.getSystemPanelList = function () {
-            return $http.get("/numac/getsystempanellist");
+            return $http.get(routePrefix +"/numac/getsystempanellist");
         }
 
         this.getNumacData = function () {
-            return $http.get("/numac/getnumacdata");
+            return $http.get(routePrefix +"/numac/getnumacdata");
         }
 
         this.getSubSystemBySytemId = function (systemId) {
-            return $http.get('/numac/GetSubSystemById/?systemId=' + systemId);
+            return $http.get(routePrefix +'/numac/GetSubSystemById/?systemId=' + systemId);
         }
         this.getModulesById=function(chassisId) {
-            return $http.get('/numac/GetModulesById/?chassisId=' + chassisId);
+            return $http.get(routePrefix +'/numac/GetModulesById/?chassisId=' + chassisId);
         }
 
         this.postChangeRequestData = function (changeRequestData) {
-            numacChangeRequestPromise=$http.post('/changerequest/AddNumacChangeRequestRecord', changeRequestData);
+            numacChangeRequestPromise = $http.post(routePrefix +'/changerequest/AddNumacChangeRequestRecord', changeRequestData);
             return numacChangeRequestPromise;
         }
 
@@ -44,7 +44,7 @@
         }
 
         this.getNumacChangeRequestRecordById=function(ChassisBoardId){
-            return $http.get('/numac/GetNumacChangeRequestRecordById/?ChassisBoardId='+ChassisBoardId);
+            return $http.get(routePrefix +'/numac/GetNumacChangeRequestRecordById/?ChassisBoardId='+ChassisBoardId);
         }
 
     }

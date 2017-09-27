@@ -10,27 +10,27 @@
     function drsDataService($http) {
         
         var drsChangeRequestPromise;
-
-        this.getDrsData = function() {
-            return $http.get('/drsData');
+        var routePrefix = "lungscm";
+        this.getDrsData = function () {
+            return $http.get(routePrefix+'/drsData');
         };
 
-        this.getChangeRequestRecord = function() {
-            return $http.get('/changerequest/InitChangeRequest');
+        this.getChangeRequestRecord = function () {
+            return $http.get(routePrefix+'/changerequest/InitChangeRequest');
         };
 
         this.getDrsSystemPanelList = function () {
-            return $http.get("/drsData/GetDrsSystemPanelList");
+            return $http.get(routePrefix+"/drsData/GetDrsSystemPanelList");
         };
 
         this.getFidsByPanelId = function (panelId) {
 
-            return $http.get('/drsData/GetFidsByPanelId/' + panelId);
+            return $http.get(routePrefix+'/drsData/GetFidsByPanelId/' + panelId);
         };
 
 
-        this.postChangeRequestData = function(changeRequestData) {
-            drsChangeRequestPromise = $http.post('/changerequest/AddDrsChangeRequestRecord', changeRequestData);
+        this.postChangeRequestData = function (changeRequestData) {
+            drsChangeRequestPromise = $http.post(routePrefix+'/changerequest/AddDrsChangeRequestRecord', changeRequestData);
             return drsChangeRequestPromise;
         };
 
