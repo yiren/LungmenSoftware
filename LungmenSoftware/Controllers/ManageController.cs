@@ -10,6 +10,7 @@ using LungmenSoftware.Models;
 
 namespace LungmenSoftware.Controllers
 {
+    [RoutePrefix("manage")]
     [Authorize]
     public class ManageController : Controller
     {

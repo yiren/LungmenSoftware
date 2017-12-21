@@ -13,6 +13,7 @@ using LungmenSoftware.Models;
 
 namespace LungmenSoftware.Controllers
 {
+    [RoutePrefix("account")]
     [Authorize]
     public class AccountController : Controller
     {

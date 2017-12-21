@@ -16,6 +16,7 @@ using Newtonsoft.Json.Linq;
 
 namespace LungmenSoftware.Controllers
 {
+    [RoutePrefix("foxsoftwares")]
     public class FoxSoftwaresController : Controller
     {
         private FoxSoftService softService;

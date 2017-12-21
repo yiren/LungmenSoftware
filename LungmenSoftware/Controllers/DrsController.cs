@@ -7,6 +7,7 @@ using System.Web.Mvc;
 
 namespace LungmenSoftware.Controllers
 {
+    [RoutePrefix("drs")]
     public class DrsController : Controller
     {
         private ChangeRequestService crSerice = new ChangeRequestService();

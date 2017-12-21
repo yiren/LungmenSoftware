@@ -14,7 +14,7 @@
                     .state('form',
                     {
                         url: '/',
-                        templateUrl: '/../client/templates/drs/drsChangeForm.html',
+                        templateUrl: '../client/templates/drs/drsChangeForm.html',
                         controller: 'drsFormCtrl',
                         controllerAs: 'f'
                     })
@@ -22,7 +22,7 @@
                     .state('drsConfirmForm',
                         {
                             url: '/drsConfirmForm',
-                            templateUrl: '/../client/templates/drs/confirmresponse.html',
+                            templateUrl: '../client/templates/drs/confirmresponse.html',
                             controller: 'drsConfirmFormCtrl',
                             controllerAs: 'c',
                             // resolve: {

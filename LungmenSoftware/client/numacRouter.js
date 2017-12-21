@@ -14,14 +14,14 @@
                         //Get Numac Change Form
                         .state('form', {
                             url: '/',
-                            templateUrl: '/../client/templates/numac/numacChangeForm.html',
+                            templateUrl: '../client/templates/numac/numacChangeForm.html',
                             controller: 'numacFormCtrl',
                             controllerAs:'f'
                         })
                         //
                         .state('numacConfirmForm', {
                             url: '/numacConfirmForm',
-                            templateUrl: '/../client/templates/numac/confirmresponse.html',
+                            templateUrl: '../client/templates/numac/confirmresponse.html',
                             controller:'numacConfirmFormCtrl',
                             controllerAs:'c',
                             // resolve: {

@@ -34,7 +34,7 @@
                     { name: "Checksum", width: 100, field: "Checksum", enableColumnMenu: false },
                     {
                         name: "Note", width: 100, enableColumnMenu: false, cellTemplate: '<div>' +
-                       '<a class="btn btn-default" href="/drs/drsChangeRequestById?fidId={{row.entity.FidId}}" target="_blank">修改歷史紀錄</a>' +
+                       '<a class="btn btn-default" href="drs/drsChangeRequestById?fidId={{row.entity.FidId}}" target="_blank">修改歷史紀錄</a>' +
                     //    '<p class="center"><a href="/meetings/download/?p={{row.entity.MeetingFiles[0].FileId}}{{row.entity.MeetingFiles[0].Extension}}&d={{row.entity.MeetingFiles[0].FileName}}"> <span class="fa fa-download"></span></a></p>' +
                        '</div>'
                     }

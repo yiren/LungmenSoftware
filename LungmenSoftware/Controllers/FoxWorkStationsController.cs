@@ -11,6 +11,7 @@ using Newtonsoft.Json;
 
 namespace LungmenSoftware.Controllers
 {
+    [RoutePrefix("foxworkstations")]
     public class FoxWorkStationsController : Controller
     {
         private WorkStationService wkService;

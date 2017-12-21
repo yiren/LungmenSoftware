@@ -14,7 +14,7 @@ using Newtonsoft.Json;
 
 namespace LungmenSoftware.Controllers
 {
-    
+    [RoutePrefix("changerequest")]
     public class ChangeRequestController : Controller
     {
 

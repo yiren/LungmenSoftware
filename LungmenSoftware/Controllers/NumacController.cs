@@ -12,6 +12,7 @@ using Newtonsoft.Json;
 
 namespace LungmenSoftware.Controllers
 {
+    [RoutePrefix("numac")]
     public class NumacController : Controller
     {
         private NumacDataService dataService=new NumacDataService();
