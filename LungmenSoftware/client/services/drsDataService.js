@@ -16,21 +16,21 @@
         };
 
         this.getChangeRequestRecord = function () {
-            return $http.get('changerequest/InitChangeRequest');
+            return $http.get('/changerequest/InitChangeRequest');
         };
 
         this.getDrsSystemPanelList = function () {
-            return $http.get("drsData/GetDrsSystemPanelList");
+            return $http.get("/drsData/GetDrsSystemPanelList");
         };
 
         this.getFidsByPanelId = function (panelId) {
 
-            return $http.get('drsData/GetFidsByPanelId/' + panelId);
+            return $http.get('/drsData/GetFidsByPanelId/' + panelId);
         };
 
 
         this.postChangeRequestData = function (changeRequestData) {
-            drsChangeRequestPromise = $http.post('changerequest/AddDrsChangeRequestRecord', changeRequestData);
+            drsChangeRequestPromise = $http.post('/changerequest/AddDrsChangeRequestRecord', changeRequestData);
             return drsChangeRequestPromise;
         };
 
